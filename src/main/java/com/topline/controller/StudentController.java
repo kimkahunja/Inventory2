@@ -2,8 +2,6 @@ package com.topline.controller;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -59,16 +57,16 @@ public class StudentController extends BaseController {
 		 System.out.println("testing abc.....");
 		try {		
 
-			String userid = null;
+			//String userid = null;
 			
 			HashMap<String, Object> data = new HashMap<String, Object>();
-			Map<String, Object> map = new HashMap<String, Object>();
+			/*Map<String, Object> map = new HashMap<String, Object>();
 			String criteria = GlobalCC.CheckNullValues(request
 					.getParameter("criteria"));
 			String searchString = GlobalCC.CheckNullValues(request
 					.getParameter("txtSearch"));
 			String date = GlobalCC.CheckNullValues(request
-					.getParameter("date"));
+					.getParameter("date"));*/
 			
 			String limit = GlobalCC.CheckNullValues(request
 					.getParameter("limit"));

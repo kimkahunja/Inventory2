@@ -6,7 +6,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.topline.mappers.CategoriesMapper;
+import com.topline.mappers.LocationsMapper;
+import com.topline.mappers.ProductsMapper;
 import com.topline.mappers.StudentMapper;
+import com.topline.mappers.SubLocationsMapper;
+import com.topline.mappers.UnitsMapper;
+import com.topline.mappers.VatMapper;
 import com.topline.web.StandardJsonResponse;
 
 public class BaseController extends MultiActionController {
@@ -20,6 +26,10 @@ public class BaseController extends MultiActionController {
 	
 	@Autowired(required=true)
 	StudentMapper studentMapper;
-	
-	
+	CategoriesMapper categoryMapper;
+	LocationsMapper  locationMapper;
+	ProductsMapper productMapper;
+	SubLocationsMapper subLocationMapper;
+	UnitsMapper unitMapper;
+	VatMapper vatMapper;
 }

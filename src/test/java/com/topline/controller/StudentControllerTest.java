@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,9 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration({ "classpath:config/springConfig.xml" })
 public class StudentControllerTest {
-	 private final String createJson = "{\"id\":%d,\"first\":\"%s\",\"last\":\"%s\"}";
-	 private final String membersJson = "[{\"id\":1,\"first\":\"One\",\"last\":\"One\"},{\"id\":2,\"first\":\"Two\",\"last\":\"Two\"},{\"id\":3,\"first\":\"Three\",\"last\":\"Three\"}]";
-	 private final String updatedMembersJson = "[{\"id\":1,\"first\":\"One\",\"last\":\"OneUpdated\"},{\"id\":2,\"first\":\"Two\",\"last\":\"Two\"},{\"id\":3,\"first\":\"Three\",\"last\":\"Three\"}]";
+	// private final String createJson = "{\"id\":%d,\"first\":\"%s\",\"last\":\"%s\"}";
+	// private final String membersJson = "[{\"id\":1,\"first\":\"One\",\"last\":\"One\"},{\"id\":2,\"first\":\"Two\",\"last\":\"Two\"},{\"id\":3,\"first\":\"Three\",\"last\":\"Three\"}]";
+	// private final String updatedMembersJson = "[{\"id\":1,\"first\":\"One\",\"last\":\"OneUpdated\"},{\"id\":2,\"first\":\"Two\",\"last\":\"Two\"},{\"id\":3,\"first\":\"Three\",\"last\":\"Three\"}]";
 	 
 	 @Autowired 
 	 WebApplicationContext wac; 
@@ -77,7 +76,7 @@ public class StudentControllerTest {
 	        .andExpect(status().isOk())
 	        .andExpect(view().name("test"))	       
 	        .andReturn(); */ 
-	    	final String media_type="application/json;charset=UTF-8";
+	    	//final String media_type="application/json;charset=UTF-8";
 	    	MockHttpServletRequestBuilder postRequest=post("/signup");
 	    	postRequest=postRequest.param("id", "456");	
 	    	postRequest=postRequest.param("dateofbirth", "01/12/2012");	
@@ -86,7 +85,7 @@ public class StudentControllerTest {
 	    	postRequest=postRequest.param("lastname", "Kahunja");	
 	    	postRequest=postRequest.param("password", "123456");	
 	    	postRequest=postRequest.param("username", "kimkahunja");	
-	    	ResultActions resultActions=mockMvc.perform(postRequest);
+	    	//ResultActions resultActions=mockMvc.perform(postRequest);
 	    	//resultActions.andDo(print());
 	    	//resultActions.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	    	//resultActions.andExpect(status().isOk());
