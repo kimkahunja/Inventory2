@@ -1,5 +1,142 @@
 package com.topline.controller;
 
-public class LocationController extends BaseController {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.topline.model.Locations;
+import com.topline.model.LocationsExample;
+import com.topline.utils.GlobalCC;
+import com.topline.web.StandardJsonResponse;
+
+@Controller
+@RequestMapping(value = "/locations")
+public class LocationController extends BaseController {
+	//save location
+		@RequestMapping(value="/saveLocation.action", method=RequestMethod.POST)
+		private @ResponseBody StandardJsonResponse saveLocation(HttpServletRequest request){
+			try{
+				String locCode=GlobalCC.CheckNullValues(request.getParameter("locCode"));
+				String locShtDesc=GlobalCC.CheckNullValues(request.getParameter("locShtDesc"));
+				String locDescription=GlobalCC.CheckNullValues(request.getParameter("locDescription"));
+				
+				Locations locations=new Locations();
+				locations.setLocCode(locCode==null?null:Integer.parseInt(locCode));
+				locations.setLocShtDesc(locShtDesc);
+				locations.setLocDescription(locDescription);
+				if (locCode==null){
+					locationMapper.insert(locations);
+					jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);
+				}
+				else{
+					locationMapper.updateByPrimaryKey(locations);
+					jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+				}
+				jsonResponse.setSuccess(true);	
+				ObjectMapper mapper = new ObjectMapper();
+		        String json = mapper.writeValueAsString(jsonResponse);
+		        System.out.println(json);
+		        
+				return jsonResponse;
+			}catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonResponse;
+			}
+		}
+		
+		//fetch locations
+		@RequestMapping(value="/fetchLocations.action", method=RequestMethod.GET)
+		private @ResponseBody
+		StandardJsonResponse fetchLocations(HttpServletRequest request)	{
+			try{
+				HashMap<String, Object> data = new HashMap<String, Object>();
+				
+				Map<String, Object> map = new HashMap<String, Object>();		
+				
+				String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+				String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+				if (limit == null) {
+					limit = "50";
+				}
+				if (start == null) {
+					start = "0";
+				}
+				
+				LocationsExample locationsExample=new LocationsExample();
+				List<Locations> list=locationMapper.selectByExample(locationsExample);
+				
+				if (list != null) {
+					int count = list.size();
+					data.put("total", count);
+				}
+				
+				data.put("results", list);
+				jsonResponse.setData(data);
+				
+				ObjectMapper mapper = new ObjectMapper();
+		        String json = mapper.writeValueAsString(jsonResponse);
+		        System.out.println(json);
+		        
+				return jsonResponse;
+			}catch(Exception e){
+				
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonResponse;				
+			}
+		}
+		
+		//delete location
+		@RequestMapping(value="/deleteLocation.action")
+		private @ResponseBody
+		StandardJsonResponse deleteLocation(HttpServletRequest request){
+			try{
+				String locCode=GlobalCC.CheckNullValues(request.getParameter("locCode"));
+				if(locCode!=null){
+					locationMapper.deleteByPrimaryKey(Integer.parseInt(locCode));
+					jsonResponse.setSuccess(true);
+					jsonResponse.addMessage("message", DELETED_SUCCESSFULLY);
+				}
+				jsonResponse.setData(null);
+				
+				ObjectMapper mapper = new ObjectMapper();
+		        String json = mapper.writeValueAsString(jsonResponse);
+		        System.out.println(json);
+		        
+				return jsonResponse;
+			}
+			catch (DataIntegrityViolationException ex) {
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				logger.error(ex);
+				jsonResponse.addMessage("message",
+						"The Location has Dependencies it cannot be Deleted");
+				return jsonResponse;
+
+			}
+			catch(Exception e){
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				logger.error(e.getLocalizedMessage());
+				jsonResponse.addMessage(
+								"message",
+								e.getLocalizedMessage() == null ? "OOPS ! ERROR:: Occured while deleting....."
+										: e.getLocalizedMessage());
+				return jsonResponse;
+			}
+		}
 }

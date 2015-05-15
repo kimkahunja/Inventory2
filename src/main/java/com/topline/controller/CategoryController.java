@@ -128,7 +128,7 @@ public class CategoryController extends BaseController {
 			jsonResponse.setSuccess(false);
 			logger.error(ex);
 			jsonResponse.addMessage("message",
-					"The Categories has Dependencies it cannot be Deleted");
+					"The Category has Dependencies it cannot be Deleted");
 			return jsonResponse;
 
 		}
