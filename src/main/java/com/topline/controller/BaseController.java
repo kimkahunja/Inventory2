@@ -20,16 +20,22 @@ public class BaseController extends MultiActionController {
 	protected StandardJsonResponse jsonResponse;
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	public   final String  SAVED_SUCCESSFULLY ="RECORD SAVED SUCCESSFULLY";
-	public   final String  UPDATED_SUCCESSFULLY ="RECORD UPDATED SUCCESSFULLY";
-	public   final String  DELETED_SUCCESSFULLY ="RECORD DELETED SUCCESSFULLY";
+	public   final String  SAVED_SUCCESSFULLY ="Record Successfully Saved...";
+	public   final String  UPDATED_SUCCESSFULLY ="Record Successfully Updated...";
+	public   final String  DELETED_SUCCESSFULLY ="Record Successfully Deleted...";
 	
 	@Autowired(required=true)
 	StudentMapper studentMapper;
+	@Autowired(required=true)
 	CategoriesMapper categoryMapper;
+	@Autowired(required=true)
 	LocationsMapper  locationMapper;
+	@Autowired(required=true)
 	ProductsMapper productMapper;
+	@Autowired(required=true)
 	SubLocationsMapper subLocationMapper;
+	@Autowired(required=true)
 	UnitsMapper unitMapper;
+	@Autowired(required=true)
 	VatMapper vatMapper;
 }

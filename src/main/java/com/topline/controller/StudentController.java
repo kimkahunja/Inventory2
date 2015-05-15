@@ -82,8 +82,7 @@ public class StudentController extends BaseController {
 			List<Student> list=studentMapper.selectByExample(studentExample);
 			System.out.println("kimkahunja.... "+ list.size());
 			System.out.println("kimkahunja22222.... "+ list.get(0));
-			data.put("results", list);
-			
+			data.put("results", list);			
 			Student student=list.get(0);
 			System.out.println("kimkahunja---data.... "+ student.getEmailaddress());
 			System.out.println("kimkahunja---data.... "+ student.getFirstname());
