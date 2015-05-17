@@ -13,6 +13,7 @@ import com.topline.mappers.StudentMapper;
 import com.topline.mappers.SubLocationsMapper;
 import com.topline.mappers.UnitsMapper;
 import com.topline.mappers.VatMapper;
+import com.topline.model.wrappers.SubLocationWrapper;
 import com.topline.web.StandardJsonResponse;
 
 public class BaseController extends MultiActionController {

@@ -2,7 +2,11 @@ package com.topline.mappers;
 
 import com.topline.model.SubLocations;
 import com.topline.model.SubLocationsExample;
+import com.topline.model.wrappers.SubLocationWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface SubLocationsMapper {
@@ -93,4 +97,7 @@ public interface SubLocationsMapper {
      * @mbggenerated Wed May 13 15:02:10 EAT 2015
      */
     int updateByPrimaryKey(SubLocations record);
+    
+    //add methods
+    List<SubLocationWrapper> fetchSubLocations(Map<String,Object> map);
 }

@@ -1,0 +1,10 @@
+{
+    "count":1,
+    "data":[ 
+        {"pdtCode":1,"pdtBarCode":"000012345655","pdtDescription":"Gold",
+         "pdtBp":20.50,"pdtSp":23.50,"pdtStatus":"ACTIVE","pdtCurrentQty":21,
+         "pdtUnit":1,"pdtBinLoc":1,"pdtVat":"A","_pdtUnit":"1111","_pdtBinLoc":"22222",
+         "_pdtVat":"A"
+        }
+		]
+}

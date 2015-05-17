@@ -268,4 +268,15 @@
       sloc_description = #{slocDescription,jdbcType=VARCHAR}
     where sloc_code = #{slocCode,jdbcType=INTEGER}
   </update>
+   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.SubLocationWrapper" >    
+    <result column="loc_sht_desc" property="locShtDesc" jdbcType="VARCHAR" />
+    <result column="loc_description" property="locDescription" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="fetchSubLocations" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	   SELECT sloc_code,sloc_loc_code,sloc_sht_desc,sloc_description,loc_sht_desc,loc_description  
+	   FROM inv_locations, inv_sub_locations
+	<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+		 inv_sub_locations.sloc_loc_code = inv_locations.loc_code
+    </trim>
+   </select>
 </mapper>
