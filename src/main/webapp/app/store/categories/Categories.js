@@ -17,14 +17,20 @@ Ext.define('InventoryApp.store.categories.Categories',{
     pageSize: 20,
     proxy: {
         type: 'ajax',
-        url: 'CategoryServlet',//'resources/categories.json',
         extraParams: {
-            store_id: 1
+            store_id: 3
+        },
+       // url:'Categories/fetchCategories.action',//'resources/categories.json'
+        api: {
+            create  : 'Categories/saveCategory.action',
+            read    : 'Categories/fetchCategories.action',
+            update  : 'Categories/saveCategory.action',
+            destroy : 'Categories/deleteCategory.action'
         },
         reader: {
             type: 'json',
-            totalProperty: 'count',
-            root: 'data',
+            totalProperty: 'data.count',
+            root: 'data.data',
             successProperty: 'success'
         },
      }

@@ -160,15 +160,16 @@ Ext.define('InventoryApp.controller.Categories', {
     },
     
     editCategory : function(editor, obj) {
+    	var me = this,
+		store = this.getCategoryList().getStore();
         //check if record is dirty 
         if(obj.record.dirty){        	
-            //check if the record is valid   
-            console.log('kim Editing111 '+ obj.record.validate());
+            //check if the record is valid               
             if(obj.record.validate().isValid()){
-                //Make your Ajax request to sync data
-                mode = (obj.record.get('catCode') === null) ? 'insert': 'update';
-                console.log('kim Editing222= '+ obj.record.get('catCode')+ 'mode= '+mode);
-                this.syncData(obj.rowIdx, mode);
+                //Make your Ajax request to sync data               
+                this.syncData(obj.rowIdx,'save');
+                store.load();
+             
             }
         }
     },
@@ -197,22 +198,25 @@ Ext.define('InventoryApp.controller.Categories', {
     	})
     },
     //Sync data with the server 
-    syncData : function(rowIndex, mode) {    	
+    syncData : function(rowIndex,action) { 
+    	var url='Categories/saveCategory.action';
+    	if(action=='delete'){
+    		url = 'Categories/deleteCategory.action';    		
+    		}
+    			
+    	
         Ext.Ajax.request({
-               url: 'CategoryServlet',
+               url:url,
             params: {
-                    store_id: 1,
-                    action: mode,
-                    rowIndex: rowIndex,
-                    recordInfo: Ext.encode(this.getCategoryList().getStore().getAt(rowIndex).data)
+                    data: Ext.encode(this.getCategoryList().getStore().getAt(rowIndex).data)
             },
             
             scope:this,
             //method to call when the request is successful
-            success: this.onSaveSuccess,
+            success: InventoryApp.Utilities.onSaveSuccess,
             //method to call when the request is a failure
-            failure: this.onSaveFailure
+            failure: InventoryApp.Utilities.onSaveFailure
         });
-        this.getCategoryList().getStore().load();
+       // this.getCategoryList().getStore().load();
     },
 });

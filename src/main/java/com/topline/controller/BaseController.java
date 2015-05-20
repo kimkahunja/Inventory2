@@ -1,8 +1,13 @@
 package com.topline.controller;
 
 
+import java.io.IOException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -39,4 +44,21 @@ public class BaseController extends MultiActionController {
 	UnitsMapper unitMapper;
 	@Autowired(required=true)
 	VatMapper vatMapper;
+	public String jsonObject(StandardJsonResponse jsonResponse){
+		String json=null;
+		ObjectMapper mapper = new ObjectMapper();
+        try {
+			json = mapper.writeValueAsString(jsonResponse);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return json;
+	}
 }

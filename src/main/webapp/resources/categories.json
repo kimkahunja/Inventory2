@@ -1,6 +1,2 @@
-{
-    "count":1,
-    "data":[ 
-        {"CAT_CODE":1,"CAT_SHT_DESC":"BB","CAT_DESCRIPTION":"Gold"}
-		]
-}
+"data":{"total":5,
+"results":[{"catCode":2,"catShtDesc":"TEST","catDescription":"TEST DESCRIPTION"},{"catCode":3,"catShtDesc":"TEST","catDescription":"TEST DESCRIPTION"},{"catCode":4,"catShtDesc":"TEST","catDescription":"TEST DESCRIPTION"},{"catCode":5,"catShtDesc":"TEST","catDescription":"TEST DESCRIPTION"},{"catCode":6,"catShtDesc":"TEST","catDescription":"TEST DESCRIPTION"}]}

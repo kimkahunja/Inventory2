@@ -14,14 +14,14 @@ Ext.define('InventoryApp.Utilities', {
                }
                ;
                result.success = false;
-               result.msg = conn.responseText;
+               result.messages.message = conn.responseText;
             }
             if (result.success)
             {
             	Ext.Msg.show(
                         {                    
                            title : 'Success!',
-                           msg : result.msg,
+                           msg : result.messages.message,
                            icon : Ext.Msg.INFO,
                            buttons : Ext.Msg.OK
                         }
@@ -33,7 +33,7 @@ Ext.define('InventoryApp.Utilities', {
                Ext.Msg.show(
                {                    
                   title : 'Fail!',
-                  msg : result.msg,
+                  msg : result.messages.message,
                   icon : Ext.Msg.ERROR,
                   buttons : Ext.Msg.OK
                }

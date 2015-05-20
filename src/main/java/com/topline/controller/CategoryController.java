@@ -1,18 +1,27 @@
 package com.topline.controller;
 
-import java.math.BigDecimal;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
+
+
+
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import sun.misc.IOUtils;
 
 import com.topline.model.Categories;
 import com.topline.model.CategoriesExample;
@@ -23,21 +32,16 @@ import com.topline.web.StandardJsonResponse;
 @RequestMapping(value = "/Categories")
 public class CategoryController extends BaseController {
 	//save Category
-	@RequestMapping(value="/saveCategory.action", method=RequestMethod.POST)
-	private @ResponseBody StandardJsonResponse saveCategory(HttpServletRequest request){
-		System.out.println("save category action...");
+	@RequestMapping(value="/saveCategory.action")
+	private @ResponseBody String saveCategory(HttpServletRequest request){
+		ObjectMapper mapper = new ObjectMapper();
+		
 		try{
+			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+			Categories categories=mapper.readValue(data, Categories.class);
+			System.out.println(" data "+data);		
 			
-			String catCode=GlobalCC.CheckNullValues(request.getParameter("catCode"));
-			String catShtDesc=GlobalCC.CheckNullValues(request.getParameter("catShtDesc"));
-			String catDescription=GlobalCC.CheckNullValues(request.getParameter("catDescription"));
-			
-			Categories categories=new Categories();
-			categories.setCatCode(catCode==null?null:Integer.parseInt(catCode));
-			categories.setCatShtDesc(catShtDesc);
-			categories.setCatDescription(catDescription);
-			
-			if (catCode == null) {				
+			if (categories.getCatCode() == null) {				
 				categoryMapper.insert(categories);
 				jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);
 			} else {
@@ -47,25 +51,23 @@ public class CategoryController extends BaseController {
 			}
 			jsonResponse.setSuccess(true);	
 			
-			ObjectMapper mapper = new ObjectMapper();
-	        String json = mapper.writeValueAsString(jsonResponse);
-	        System.out.println(json);
 	        
-			return jsonResponse;
+	        return jsonObject(jsonResponse);
 		}
 		catch(Exception e){
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);
 			jsonResponse.addMessage("message", e.getLocalizedMessage());
-			return jsonResponse;
+			return jsonObject(jsonResponse);
 		}
 		
 	}
 	//fetch categories
 	@RequestMapping(value="/fetchCategories.action", method=RequestMethod.GET)
 	private @ResponseBody
-	StandardJsonResponse fetchCategories(HttpServletRequest request){
+	String fetchCategories(HttpServletRequest request){
+		
 		try{
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			
@@ -84,23 +86,23 @@ public class CategoryController extends BaseController {
 			
 			if (list != null) {
 				int count = list.size();
-				data.put("total", count);
+				data.put("count", count);
 			}
-			data.put("results", list);
+			data.put("data", list);
 			jsonResponse.setData(data);
+			jsonResponse.setSuccess(true);
 			
-			ObjectMapper mapper = new ObjectMapper();
-	        String json = mapper.writeValueAsString(jsonResponse);
-	        System.out.println(json);
+			return jsonObject(jsonResponse);
 	        
-			return jsonResponse;
+			 
 		}
 		catch(Exception e){
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);
 			jsonResponse.addMessage("message", e.getLocalizedMessage());
-			return jsonResponse;	
+			
+			return jsonObject(jsonResponse);
 		}
 			
 	}
