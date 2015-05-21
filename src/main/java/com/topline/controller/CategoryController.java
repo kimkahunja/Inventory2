@@ -109,21 +109,21 @@ public class CategoryController extends BaseController {
 	//delete category
 	@RequestMapping(value="/deleteCategory.action")
 	private @ResponseBody
-	StandardJsonResponse deleteCategory(HttpServletRequest request){
+	String deleteCategory(HttpServletRequest request){
+		ObjectMapper mapper = new ObjectMapper();
 		try{
-			String catCode=GlobalCC.CheckNullValues(request.getParameter("catCode"));
-			if(catCode!=null){
-				categoryMapper.deleteByPrimaryKey(Integer.parseInt(catCode));
+			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+			Categories categories=mapper.readValue(data, Categories.class);
+			
+			if(categories.getCatCode()!=null){
+				categoryMapper.deleteByPrimaryKey(categories.getCatCode());
 				jsonResponse.setSuccess(true);
 				jsonResponse.addMessage("message", DELETED_SUCCESSFULLY);
 			}
 			jsonResponse.setData(null);
-			
-			ObjectMapper mapper = new ObjectMapper();
-	        String json = mapper.writeValueAsString(jsonResponse);
-	        System.out.println(json);
-	        
-			return jsonResponse;
+		
+
+			return jsonObject(jsonResponse);
 		}
 		catch (DataIntegrityViolationException ex) {
 			jsonResponse.setData(null);
@@ -131,7 +131,8 @@ public class CategoryController extends BaseController {
 			logger.error(ex);
 			jsonResponse.addMessage("message",
 					"The Category has Dependencies it cannot be Deleted");
-			return jsonResponse;
+
+			return jsonObject(jsonResponse);
 
 		}
 		catch(Exception e){
@@ -142,7 +143,8 @@ public class CategoryController extends BaseController {
 							"message",
 							e.getLocalizedMessage() == null ? "OOPS ! ERROR:: Occured while deleting....."
 									: e.getLocalizedMessage());
-			return jsonResponse;
+
+			return jsonObject(jsonResponse);
 		}
 			
 	}

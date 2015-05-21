@@ -50,7 +50,7 @@ Ext.define('InventoryApp.controller.Categories', {
     	var me = this;
     	// stop event so browser's normal right-click action doesn't continue
     	e.stopEvent();
-    	console.log(' item.contextMenu ='+item.contextMenu);
+    	
     	// if a menu doesn't already exist, create one
     	if( !item.contextMenu ) {
     		
@@ -167,7 +167,7 @@ Ext.define('InventoryApp.controller.Categories', {
             //check if the record is valid               
             if(obj.record.validate().isValid()){
                 //Make your Ajax request to sync data               
-                this.syncData(obj.rowIdx,'save');
+                this.syncData(obj.rowIdx,'save'); 
                 store.load();
              
             }
@@ -179,21 +179,29 @@ Ext.define('InventoryApp.controller.Categories', {
      */
     remove: function( record ) {
     	var me = this,
-    		store = record.store;
+    	grid = me.getCategoryList(),    		
+		store = grid.getStore();        		
+        var record = grid.getSelectionModel().getSelection();
+       // var rowindex=0;
+    	//console.log('remove button is here... '+record[0].get('catDescription'));
     	// show confirmation before continuing
     	Ext.Msg.confirm( 'Attention', 'Are you sure you want to delete this item? This action cannot be undone.', function( buttonId, text, opt ) {
     		if( buttonId=='yes' ) {
-    			store.remove( record );
-    			store.sync({
-    				/**
-    				 * On failure, add record back to store at correct index
-    				 * @param {Ext.data.Model[]} records
-    				 * @param {Ext.data.Operation} operation
-    				 */
-    				failure: function( records, operation ) {
-    					store.rejectChanges();
-    				}
-    			})
+    			
+    			Ext.Ajax.request({
+    	               url: 'Categories/deleteCategory.action',
+    	            params: {
+    	                    data: Ext.encode(record[0].data)
+    	            },
+    	            
+    	            scope:this,
+    	            //method to call when the request is successful
+    	            success: InventoryApp.Utilities.onSaveSuccess,
+    	            //method to call when the request is a failure
+    	            failure: InventoryApp.Utilities.onSaveFailure
+    	        });
+    			
+                 store.load();
     		}
     	})
     },
@@ -204,7 +212,7 @@ Ext.define('InventoryApp.controller.Categories', {
     		url = 'Categories/deleteCategory.action';    		
     		}
     			
-    	
+    	//console.log('rowIndex '+rowIndex);
         Ext.Ajax.request({
                url:url,
             params: {
