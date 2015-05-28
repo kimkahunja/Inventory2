@@ -34,9 +34,10 @@ public class CategoryController extends BaseController {
 	//save Category
 	@RequestMapping(value="/saveCategory.action")
 	private @ResponseBody String saveCategory(HttpServletRequest request){
-		ObjectMapper mapper = new ObjectMapper();
+		
 		
 		try{
+			ObjectMapper mapper = new ObjectMapper();
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 			Categories categories=mapper.readValue(data, Categories.class);
 			System.out.println(" data "+data);		
@@ -110,8 +111,9 @@ public class CategoryController extends BaseController {
 	@RequestMapping(value="/deleteCategory.action")
 	private @ResponseBody
 	String deleteCategory(HttpServletRequest request){
-		ObjectMapper mapper = new ObjectMapper();
+		
 		try{
+			ObjectMapper mapper = new ObjectMapper();
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 			Categories categories=mapper.readValue(data, Categories.class);
 			

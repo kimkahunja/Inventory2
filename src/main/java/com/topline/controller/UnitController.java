@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topline.model.Locations;
 import com.topline.model.Units;
 import com.topline.model.UnitsExample;
 import com.topline.utils.GlobalCC;
@@ -23,19 +24,13 @@ import com.topline.web.StandardJsonResponse;
 public class UnitController extends BaseController {
 	//save units
 			@RequestMapping(value="/saveUnit.action", method=RequestMethod.POST)
-			private @ResponseBody StandardJsonResponse saveUnit(HttpServletRequest request){
+			private @ResponseBody String saveUnit(HttpServletRequest request){
 				try{
-					String untCode=GlobalCC.CheckNullValues(request.getParameter("untCode"));
-					String untShtDesc=GlobalCC.CheckNullValues(request.getParameter("untShtDesc"));
-					String untDescription=GlobalCC.CheckNullValues(request.getParameter("untDescription"));
-					String untPrecision=GlobalCC.CheckNullValues(request.getParameter("untPrecision"));
+					ObjectMapper mapper = new ObjectMapper();
+					String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+					Units units=mapper.readValue(data, Units.class);
 					
-					Units units=new Units();
-					units.setUntCode(untCode==null?null:Integer.parseInt(untCode));
-					units.setUntShtDesc(untShtDesc);
-					units.setUntDescription(untDescription);
-					units.setUntPrecision(untPrecision==null?null:Double.parseDouble(untPrecision));
-					if (untCode==null){
+					if (units.getUntCode()==null){
 						unitMapper.insert(units);
 						jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);
 					}else{
@@ -44,23 +39,21 @@ public class UnitController extends BaseController {
 					}
 					
 					jsonResponse.setSuccess(true);	
-					ObjectMapper mapper = new ObjectMapper();
-			        String json = mapper.writeValueAsString(jsonResponse);
-			        System.out.println(json);
-			        
-					return jsonResponse;
+					
+					return jsonObject(jsonResponse);
+					
 				}catch(Exception e){
 					e.printStackTrace();
 					jsonResponse.setData(null);
 					jsonResponse.setSuccess(false);
 					jsonResponse.addMessage("message", e.getLocalizedMessage());
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 			}
 			//fetch units
 			@RequestMapping(value="/fetchUnits.action", method=RequestMethod.GET)
 			private @ResponseBody
-			StandardJsonResponse fetchUnits(HttpServletRequest request){
+			String fetchUnits(HttpServletRequest request){
 				try{
 					HashMap<String, Object> data = new HashMap<String, Object>();
 					
@@ -85,39 +78,34 @@ public class UnitController extends BaseController {
 					data.put("results", list);
 					jsonResponse.setData(data);
 					
-					ObjectMapper mapper = new ObjectMapper();
-			        String json = mapper.writeValueAsString(jsonResponse);
-			        System.out.println(json);
-			        
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}catch(Exception e){
 					
 					e.printStackTrace();
 					jsonResponse.setData(null);
 					jsonResponse.setSuccess(false);
 					jsonResponse.addMessage("message", e.getLocalizedMessage());
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 			}
 			//delete unit
 			@RequestMapping(value="/deleteUnit.action")
 			private @ResponseBody
-			StandardJsonResponse deleteUnit(HttpServletRequest request){
+			String deleteUnit(HttpServletRequest request){
 				try{
 					
-					String untCode=GlobalCC.CheckNullValues(request.getParameter("untCode"));
-					if(untCode!=null){
-						unitMapper.deleteByPrimaryKey(Integer.parseInt(untCode));
+					ObjectMapper mapper = new ObjectMapper();
+					String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+					Units units=mapper.readValue(data, Units.class);
+					
+					if(units.getUntCode()!=null){
+						unitMapper.deleteByPrimaryKey(units.getUntCode());
 						jsonResponse.setSuccess(true);
 						jsonResponse.addMessage("message", DELETED_SUCCESSFULLY);
 					}
 					jsonResponse.setData(null);
 					
-					ObjectMapper mapper = new ObjectMapper();
-			        String json = mapper.writeValueAsString(jsonResponse);
-			        System.out.println(json);
-			        
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 				catch (DataIntegrityViolationException ex) {
 					jsonResponse.setData(null);
@@ -125,7 +113,7 @@ public class UnitController extends BaseController {
 					logger.error(ex);
 					jsonResponse.addMessage("message",
 							"The Unit has Dependencies it cannot be Deleted");
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 
 				}
 				catch(Exception e){
@@ -136,7 +124,7 @@ public class UnitController extends BaseController {
 									"message",
 									e.getLocalizedMessage() == null ? "OOPS ! ERROR:: Occured while deleting....."
 											: e.getLocalizedMessage());
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 				
 			}
