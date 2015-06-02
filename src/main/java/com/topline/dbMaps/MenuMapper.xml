@@ -283,4 +283,35 @@
       className = #{classname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.MenuWrapper" >    
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="fetchMenus" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	   select    
+     menu.id, menu.`text`, menu.iconCls, menu.parent_id, menu.className, user.id as user_id
+    from menu, permissions, groups, user
+		where permissions.Group_id = groups.id
+		and menu.id = permissions.Menu_id
+		and groups.id = user.Group_id
+		and menu.parent_id is null
+    <if test="userId != null">
+          AND  user.id =  #{userId,jdbcType=INTEGER}
+      </if>	
+   </select>
+    <select id="fetchMenusC" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	   select    
+     menu.id, menu.`text`, menu.iconCls, menu.parent_id, menu.className, user.id as user_id
+    from menu, permissions, groups, user
+		where permissions.Group_id = groups.id
+		and menu.id = permissions.Menu_id
+		and groups.id = user.Group_id
+    <if test="userId != null">
+          AND  user.id =  #{userId,jdbcType=INTEGER}
+      </if>	
+      <if test="parentId != null">
+          AND  menu.parent_id =  #{parentId,jdbcType=INTEGER}
+      </if>	
+   </select>
 </mapper>

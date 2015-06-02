@@ -1,11 +1,13 @@
 package com.topline.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,18 +16,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
+
+
 import com.topline.model.Menu;
 import com.topline.model.MenuExample;
+import com.topline.model.wrappers.MenuWrapper;
 import com.topline.utils.GlobalCC;
 
 @Controller
 @RequestMapping(value = "/menu")
 public class MenuController extends BaseController{
 	//fetch Menu
-		@RequestMapping(value="/fetchMenu.action", method=RequestMethod.GET)
+		@RequestMapping(value="/fetchMenu.action", method=RequestMethod.POST)
 		private @ResponseBody
 		String fetchMenu(HttpServletRequest request){
-			
+			BigDecimal user_id=new BigDecimal("1");
+			String json=null;
 			try{
 				HashMap<String, Object> data = new HashMap<String, Object>();
 				
@@ -39,30 +47,53 @@ public class MenuController extends BaseController{
 				if (start == null) {
 					start = "0";
 				}
-				MenuExample menuExample=new MenuExample();
-				menuExample.createCriteria().
-				List<Menu>list=menuMapper.selectByExample(menuExample);
+				if(user_id !=null){
+					map.put("userId", user_id);
+				}
+				
+				List<MenuWrapper>list=menuMapper.fetchMenus(map);
 				
 				
 				if (list != null) {
 					int count = list.size();
-					data.put("count", count);
+					 //loop thru the array list to populate the JSON array
+		             for(int i=0;i<count;i++){
+		            	 MenuWrapper menu=list.get(i);
+		            	 HashMap<String, Object> dataC = new HashMap<String, Object>();
+		            	 Integer parent_id=menu.getId();
+		            	 if(parent_id!=null){
+		            		 map.put("parentId", parent_id);
+		            		 List<MenuWrapper>listC=menuMapper.fetchMenusC(map);
+		            		 if (listC != null){
+		            			 for(int j=0;j<listC.size();j++){
+		            				 MenuWrapper menuC=list.get(j); 
+		            			//	 data.
+		            			 }
+		            			 data.put("items", listC);
+		            		 }
+		            	 }
+		             }
 				}
-				data.put("data", list);
-				jsonResponse.setData(data);
-				jsonResponse.setSuccess(true);
+				data.put("items", list);
+				//jsonResponse.setData(data);
+				//jsonResponse.setSuccess(true);
+			//	System.out.println("menu object=== "+jsonObject(jsonResponse));
+				//return jsonObject(jsonResponse);
 				
-				return jsonObject(jsonResponse);
-		        
-				 
+				ObjectMapper mapper = new ObjectMapper();  
+				
+				json = mapper.writeValueAsString(data); 
+				System.out.println("menu object=== "+json);
+				return json;
 			}
 			catch(Exception e){
 				e.printStackTrace();
-				jsonResponse.setData(null);
-				jsonResponse.setSuccess(false);
-				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				//jsonResponse.setData(null);
+				//jsonResponse.setSuccess(false);
+				//jsonResponse.addMessage("message", e.getLocalizedMessage());
 				
-				return jsonObject(jsonResponse);
+				//return jsonObject(jsonResponse);
+				return json;
 			}
 				
 		}

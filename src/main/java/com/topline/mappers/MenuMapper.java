@@ -2,7 +2,11 @@ package com.topline.mappers;
 
 import com.topline.model.Menu;
 import com.topline.model.MenuExample;
+import com.topline.model.wrappers.MenuWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MenuMapper {
@@ -93,4 +97,7 @@ public interface MenuMapper {
      * @mbggenerated Mon Jun 01 16:50:34 EAT 2015
      */
     int updateByPrimaryKey(Menu record);
+    
+    List<MenuWrapper> fetchMenus(Map<String,Object> map);
+    List<MenuWrapper> fetchMenusC(Map<String,Object> map);
 }

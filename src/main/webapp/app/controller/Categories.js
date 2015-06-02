@@ -209,7 +209,8 @@ Ext.define('InventoryApp.controller.Categories', {
     },
     //Sync data with the server 
     syncData : function(rowIndex,action) { 
-    	var url='Categories/saveCategory.action';
+    	//var url='Categories/saveCategory.action';
+    	var url='menu/fetchMenu.action';
     	if(action=='delete'){
     		url = 'Categories/deleteCategory.action';    		
     		}
