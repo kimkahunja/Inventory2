@@ -40,5 +40,20 @@ Ext.define('InventoryApp.Utilities', {
                );
             }
         },
+        onLoadResponse: function(records, operation, success){          
+            if(success == true){
+                if(records.length == 0){
+                // Ext.Msg.alert('Records', 'No Records Fetched...');
+                }
+            }
+            if(success == false){
+                try{
+                     //Ext.Msg.alert('Error', operation.getError()); // way more elegant than ussing rawData etc ...
+                	Ext.Msg.alert('Error', 'Communication Error Has occurred...');
+                }catch(e){
+                        Ext.Msg.alert('Error', 'Error  in Loading Data...');
+                }
+            }
+        }
     }
 });

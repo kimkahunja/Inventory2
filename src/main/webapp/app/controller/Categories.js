@@ -94,7 +94,9 @@ Ext.define('InventoryApp.controller.Categories', {
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
-    	store.load();
+    	store.load({
+    		callback:InventoryApp.Utilities.onLoadResponse
+    	});
     },
     /**
      * Cancels the edit of a record
