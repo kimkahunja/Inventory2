@@ -59,44 +59,48 @@ public class MenuController extends BaseController{
 				List<MenuWrapper>list=menuMapper.fetchMenus(map);
 				
 				JSONArray arrayObj=new JSONArray();
-				
+				JSONObject myObj = new JSONObject();
+				JSONObject myObj2 = new JSONObject();
 				if (list != null) {
 					int count = list.size();
 					 //loop thru the array list to populate the JSON array
 		             for(int i=0;i<count;i++){
 		            	 JSONArray arrayObjC=new JSONArray();
-		            	 MenuWrapper menu=list.get(i);		            	
+		            	 MenuWrapper menu=list.get(i);	
+		            	//this creates a JSON object from bean object
+		                 JSONObject menuObj = JSONObject.fromObject(menu);
+		               //  arrayObj.add(menuObj);
 		            	 Integer parent_id=menu.getId();
 		            	 if(parent_id!=null){
 		            		 map.put("parentId", parent_id);
 		            		 List<MenuWrapper>listC=menuMapper.fetchMenusC(map);
 		            		 if (listC != null){
 		            			 for(int j=0;j<listC.size();j++){
+		            				//Create a JSON object to wrap your JSOn array and provide the root element items
+		            			     JSONObject myObjC = new JSONObject();
 		            				 MenuWrapper menuC=listC.get(j); 
-		            				 System.out.println(menuC.getClassname());
-		            				 System.out.println(menuC.getParentId());
-		            				//this creates a JSON object from bean object
-		            		            JSONObject menuObj = JSONObject.fromObject(menuC);
+		            				 myObjC.put("id", menuC.getId());
+		            				 myObjC.put("text", menuC.getText());
+		            				 myObjC.put("iconcls", menuC.getIconcls());
+		            				 myObjC.put("parentId", menuC.getParentId());
+		            				 myObjC.put("classname", menuC.getClassname());
+		            				 myObjC.put("userId", menuC.getUserId());		            				
 		            		            //add to array list
-		            		            arrayObjC.add(menuObj);
+		            		            arrayObjC.add(myObjC);
+		            		            
 		            			 }
-		            			
+		            			 myObj.put("items3", arrayObjC);
 		            		 }
-		            		 arrayObj.add(arrayObjC);
-		            		 data.put("items", arrayObjC);
+		            		
+		            		
 		            	 }
+		            	 myObj2.put("kim", menuObj);
+		            	 myObj2.put("ttest",myObj);
+		                 arrayObj.add(myObj2) ;
 		             }
 				}
-				data.put("items", data);
-				//jsonResponse.setData(data);
-				//jsonResponse.setSuccess(true);
-			//	System.out.println("menu object=== "+jsonObject(jsonResponse));
-				//return jsonObject(jsonResponse);
-				
-				ObjectMapper mapper = new ObjectMapper();  
-				
-				json = mapper.writeValueAsString(data); 
-				System.out.println("menu object=== "+json);
+				data.put("items", arrayObj);
+				System.out.println("kkkk "+data.toString());
 				return json;
 			}
 			catch(Exception e){
