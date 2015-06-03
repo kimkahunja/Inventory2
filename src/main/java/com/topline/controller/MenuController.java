@@ -7,11 +7,16 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 
 
@@ -53,28 +58,36 @@ public class MenuController extends BaseController{
 				
 				List<MenuWrapper>list=menuMapper.fetchMenus(map);
 				
+				JSONArray arrayObj=new JSONArray();
 				
 				if (list != null) {
 					int count = list.size();
 					 //loop thru the array list to populate the JSON array
 		             for(int i=0;i<count;i++){
-		            	 MenuWrapper menu=list.get(i);
-		            	 HashMap<String, Object> dataC = new HashMap<String, Object>();
+		            	 JSONArray arrayObjC=new JSONArray();
+		            	 MenuWrapper menu=list.get(i);		            	
 		            	 Integer parent_id=menu.getId();
 		            	 if(parent_id!=null){
 		            		 map.put("parentId", parent_id);
 		            		 List<MenuWrapper>listC=menuMapper.fetchMenusC(map);
 		            		 if (listC != null){
 		            			 for(int j=0;j<listC.size();j++){
-		            				 MenuWrapper menuC=list.get(j); 
-		            			//	 data.
+		            				 MenuWrapper menuC=listC.get(j); 
+		            				 System.out.println(menuC.getClassname());
+		            				 System.out.println(menuC.getParentId());
+		            				//this creates a JSON object from bean object
+		            		            JSONObject menuObj = JSONObject.fromObject(menuC);
+		            		            //add to array list
+		            		            arrayObjC.add(menuObj);
 		            			 }
-		            			 data.put("items", listC);
+		            			
 		            		 }
+		            		 arrayObj.add(arrayObjC);
+		            		 data.put("items", arrayObjC);
 		            	 }
 		             }
 				}
-				data.put("items", list);
+				data.put("items", data);
 				//jsonResponse.setData(data);
 				//jsonResponse.setSuccess(true);
 			//	System.out.println("menu object=== "+jsonObject(jsonResponse));
