@@ -60,16 +60,21 @@ public class MenuController extends BaseController{
 				
 				JSONArray arrayObj=new JSONArray();
 				JSONObject myObj = new JSONObject();
-				JSONObject myObj2 = new JSONObject();
+				
 				if (list != null) {
 					int count = list.size();
 					 //loop thru the array list to populate the JSON array
 		             for(int i=0;i<count;i++){
 		            	 JSONArray arrayObjC=new JSONArray();
 		            	 MenuWrapper menu=list.get(i);	
-		            	//this creates a JSON object from bean object
-		                 JSONObject menuObj = JSONObject.fromObject(menu);
-		               //  arrayObj.add(menuObj);
+		            
+		            	 myObj.put("id", menu.getId());
+        				 myObj.put("text", menu.getText());
+        				 myObj.put("iconcls", menu.getIconcls());
+        				 myObj.put("parentId",menu.getParentId());
+        				 myObj.put("classname", menu.getClassname());
+        				 myObj.put("userId", menu.getUserId());
+        				 myObj.put("leaf", false);
 		            	 Integer parent_id=menu.getId();
 		            	 if(parent_id!=null){
 		            		 map.put("parentId", parent_id);
@@ -77,26 +82,22 @@ public class MenuController extends BaseController{
 		            		 if (listC != null){
 		            			 for(int j=0;j<listC.size();j++){
 		            				//Create a JSON object to wrap your JSOn array and provide the root element items
-		            			     JSONObject myObjC = new JSONObject();
-		            				 MenuWrapper menuC=listC.get(j); 
-		            				 myObjC.put("id", menuC.getId());
-		            				 myObjC.put("text", menuC.getText());
-		            				 myObjC.put("iconcls", menuC.getIconcls());
-		            				 myObjC.put("parentId", menuC.getParentId());
-		            				 myObjC.put("classname", menuC.getClassname());
-		            				 myObjC.put("userId", menuC.getUserId());		            				
+		            			     
+		            				 MenuWrapper menuC=listC.get(j);
+		            				//this creates a JSON object from bean object
+		     		                 JSONObject menuObj = JSONObject.fromObject(menuC);
+		     		                  menuObj.put("leaf", true);	            				
 		            		            //add to array list
-		            		            arrayObjC.add(myObjC);
+		            		            arrayObjC.add(menuObj);
 		            		            
 		            			 }
-		            			 myObj.put("items3", arrayObjC);
+		            			 myObj.put("items", arrayObjC);
 		            		 }
 		            		
 		            		
 		            	 }
-		            	 myObj2.put("kim", menuObj);
-		            	 myObj2.put("ttest",myObj);
-		                 arrayObj.add(myObj2) ;
+		            	 arrayObj.add(myObj);
+		                 
 		             }
 				}
 				data.put("items", arrayObj);
@@ -105,11 +106,7 @@ public class MenuController extends BaseController{
 			}
 			catch(Exception e){
 				e.printStackTrace();
-				//jsonResponse.setData(null);
-				//jsonResponse.setSuccess(false);
-				//jsonResponse.addMessage("message", e.getLocalizedMessage());
 				
-				//return jsonObject(jsonResponse);
 				return json;
 			}
 				
