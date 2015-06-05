@@ -10,23 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
-
-
-
-
-
-
-
-
-import com.topline.model.Menu;
-import com.topline.model.MenuExample;
 import com.topline.model.wrappers.MenuWrapper;
 import com.topline.utils.GlobalCC;
 
@@ -34,13 +21,12 @@ import com.topline.utils.GlobalCC;
 @RequestMapping(value = "/menu")
 public class MenuController extends BaseController{
 	//fetch Menu
-		@RequestMapping(value="/fetchMenu.action", method=RequestMethod.POST)
+		@RequestMapping(value="/fetchMenu.action", method=RequestMethod.GET)
 		private @ResponseBody
 		String fetchMenu(HttpServletRequest request){
 			BigDecimal user_id=new BigDecimal("1");
 			String json=null;
-			try{
-				HashMap<String, Object> data = new HashMap<String, Object>();
+			try{				
 				
 				Map<String, Object> map = new HashMap<String, Object>();		
 				
@@ -60,7 +46,7 @@ public class MenuController extends BaseController{
 				
 				JSONArray arrayObj=new JSONArray();
 				JSONObject myObj = new JSONObject();
-				
+				JSONObject myObjR = new JSONObject();
 				if (list != null) {
 					int count = list.size();
 					 //loop thru the array list to populate the JSON array
@@ -100,9 +86,9 @@ public class MenuController extends BaseController{
 		                 
 		             }
 				}
-				data.put("items", arrayObj);
-				System.out.println("kkkk "+data.toString());
-				return json;
+				myObjR.put("items", arrayObj);
+			   System.out.println(myObjR);
+				return myObjR.toString();
 			}
 			catch(Exception e){
 				e.printStackTrace();

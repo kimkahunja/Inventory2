@@ -15,7 +15,8 @@ Ext.define('InventoryApp.Application', {
             'purchases.PurchaseDtlsList'
         ],
     controllers: [
-        'App',
+       // 'App',
+        'Menu',
         'Categories',
         'Locations',
         'Units',
@@ -35,11 +36,11 @@ Ext.define('InventoryApp.Application', {
        // 'ux/grid/column/ActionPro',       
       //  'ux/grid/AutoResizer'
     ],
-    autoCreateViewport: true,
+    //autoCreateViewport: true,
     /**
      * launch is called immediately upon availability of our app
      */
-    launch: function( args ) {
+   /* launch: function( args ) {
         // "this" = Ext.app.Application
         var me = this;
         // init Ext.util.History on app launch; if there is a hash in the url,
@@ -53,5 +54,14 @@ Ext.define('InventoryApp.Application', {
         Ext.util.History.on( 'change', function( token ){
             me.getAppController().fireEvent( 'tokenchange', token );
         });
+    }*/
+    
+    launch: function() {
+
+        Ext.tip.QuickTipManager.init();
+
+       
+     //Ext.widget('mainviewport');
+     Ext.create('InventoryApp.view.MyViewport');
     }
 });

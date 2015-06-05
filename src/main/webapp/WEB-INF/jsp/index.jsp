@@ -6,6 +6,7 @@
     <!-- <x-compile> -->
         <!-- <x-bootstrap> -->
             <link rel="stylesheet" href="bootstrap.css">
+            <link rel="stylesheet" href="resources/css/app.css">
             <link rel="stylesheet" href="resources/css/style.css"> 
             <link rel="stylesheet" type="text/css" href="resources/css/uxs.css" />
 		   <link rel="stylesheet" type="text/css" href="resources/css/overrides.css" />
