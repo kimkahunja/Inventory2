@@ -14,14 +14,17 @@ Ext.define('InventoryApp.store.location.Locations',{
     pageSize: 20,
     proxy: {
         type: 'ajax',
-        url: 'resources/location.json',//'LocationServlet',
-        extraParams: {
-            store_id: 2
+        //url: 'resources/location.json',//'LocationServlet',
+        api: {
+            create  : 'locations/saveLocation.action',
+            read    : 'locations/fetchLocations.action',
+            update  : 'locations/saveLocation.action',
+            destroy : 'locations/deleteLocation.action'
         },
         reader: {
             type: 'json',
-            totalProperty: 'count',
-            root: 'data',
+            totalProperty: 'data.count',
+            root: 'data.data',
             successProperty: 'success'
         },
      }

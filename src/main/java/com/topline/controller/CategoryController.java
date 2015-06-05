@@ -92,7 +92,7 @@ public class CategoryController extends BaseController {
 			data.put("data", list);
 			jsonResponse.setData(data);
 			jsonResponse.setSuccess(true);
-			
+			System.out.println(jsonObject(jsonResponse));
 			return jsonObject(jsonResponse);
 	        
 			 

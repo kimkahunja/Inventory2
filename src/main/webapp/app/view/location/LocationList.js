@@ -5,7 +5,7 @@ Ext.define('InventoryApp.view.location.LocationList',{
 	           'Ext.grid.plugin.RowEditing',
 	           'Ext.toolbar.Paging'
 	       ],
-	//store: Ext.create('kahunja.store.location.Locations'),	
+	
 	store: 'location.Locations',       
 	title:'Item Location',
     initComponent: function() {

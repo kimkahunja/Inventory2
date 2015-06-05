@@ -15,7 +15,7 @@ Ext.define('InventoryApp.model.menu.Item', {
             name: 'iconcls'
         },
         {
-            name: 'className'
+            name: 'classname'
         },
         {
             name: 'id'

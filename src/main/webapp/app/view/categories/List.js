@@ -5,7 +5,7 @@ Ext.define('InventoryApp.view.categories.List',{
 	           'Ext.grid.plugin.RowEditing',
 	           'Ext.toolbar.Paging'
 	       ],
-	//store: Ext.create('store.categories.categories'),	       
+	store: 'categories.Categories',	       
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{

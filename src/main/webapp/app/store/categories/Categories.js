@@ -13,7 +13,7 @@ Ext.define('InventoryApp.store.categories.Categories',{
 	remoteSort: true,
     remoteFilter: true,
     remoteGroup: true,
-	//autoLoad: true,
+    //autoLoad: true,
     pageSize: 20,
     proxy: {
         type: 'ajax',

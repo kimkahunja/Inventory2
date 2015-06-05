@@ -22,7 +22,7 @@ Ext.define('InventoryApp.controller.Categories', {
             	'grid[xtype=categories.list]': {
             		edit: this.editCategory,
             		canceledit: this.cancel,
-            		beforerender: this.loadRecords,
+            		viewready: this.loadRecords,//beforerender: this.loadRecords,
             		itemcontextmenu: this.showContextMenu
             	},
             	'grid[xtype=categories.list] button#add': {
@@ -209,8 +209,8 @@ Ext.define('InventoryApp.controller.Categories', {
     },
     //Sync data with the server 
     syncData : function(rowIndex,action) { 
-    	//var url='Categories/saveCategory.action';
-    	var url='menu/fetchMenu.action';
+    	var url='Categories/saveCategory.action';
+    	//var url='menu/fetchMenu.action';
     	if(action=='delete'){
     		url = 'Categories/deleteCategory.action';    		
     		}

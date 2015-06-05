@@ -45,7 +45,7 @@ Ext.define('InventoryApp.controller.Menu', {
                             leaf: true, 
                             iconCls: item.get('iconcls'),
                             id: item.get('id'),
-                            className: item.get('className') 
+                            classname: item.get('classname') 
                         });
                     });  
                 });
@@ -56,7 +56,7 @@ Ext.define('InventoryApp.controller.Menu', {
     },
 
     onTreepanelSelect: function(selModel, record, index, options) {
-        //console.log(record.raw.className);
+        //console.log(record.raw.classname);
 
         var mainPanel = this.getMainPanel();
 
@@ -65,11 +65,11 @@ Ext.define('InventoryApp.controller.Menu', {
             return tab.title === record.get('text'); 
         });
 
-        //console.log(record.raw.className);
+        //console.log(record.raw.classname);
 
         if (!newTab){
             newTab = mainPanel.add({
-                xtype: record.raw.className,
+                xtype: record.raw.classname,
                 closable: true,
                 iconCls: record.get('iconCls'),
                 title: record.get('text')
