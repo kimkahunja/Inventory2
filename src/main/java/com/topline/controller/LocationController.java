@@ -39,6 +39,7 @@ public class LocationController extends BaseController {
 					locationMapper.updateByPrimaryKey(locations);
 					jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 				}
+				jsonResponse.setData(null);
 				jsonResponse.setSuccess(true);
 				
 				  return jsonObject(jsonResponse);
@@ -75,12 +76,13 @@ public class LocationController extends BaseController {
 				
 				if (list != null) {
 					int count = list.size();
-					data.put("total", count);
+					data.put("count", count);
 				}
 				
-				data.put("results", list);
+				data.put("data", list);
 				jsonResponse.setData(data);
-				
+				jsonResponse.setSuccess(true);
+				System.out.println(jsonObject(jsonResponse));
 				return jsonObject(jsonResponse);		        
 				
 			}catch(Exception e){

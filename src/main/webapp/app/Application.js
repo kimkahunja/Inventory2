@@ -12,7 +12,8 @@ Ext.define('InventoryApp.Application', {
             'product.List',
             'purchases.PurchaseLanding',
             'purchases.PurchaseList',
-            'purchases.PurchaseDtlsList'
+            'purchases.PurchaseDtlsList',
+            'dragNdrop.GridToGrid'
         ],
     controllers: [
        // 'App',
@@ -22,7 +23,8 @@ Ext.define('InventoryApp.Application', {
         'Units',
         'Products',
         'Purchases',
-        'PurchasesDtls'
+        'PurchasesDtls',
+        'GridToGrid'
     ],
     requires: [
         'Ext.util.History',

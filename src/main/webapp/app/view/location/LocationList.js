@@ -50,7 +50,7 @@ Ext.define('InventoryApp.view.location.LocationList',{
                                  {
                                      xtype: 'button',
                                      itemId: 'add',
-                                     iconCls: 'icon_add',
+                                     iconCls: 'add',
                                      text: 'Add Location'
                                  }
                              ]

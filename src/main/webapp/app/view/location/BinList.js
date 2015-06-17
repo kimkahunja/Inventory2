@@ -5,7 +5,7 @@ Ext.define('InventoryApp.view.location.BinList',{
 	           'Ext.grid.plugin.RowEditing',
 	           'Ext.toolbar.Paging'
 	       ],
-	//store: Ext.create('kahunja.store.location.Bins'),	 
+	//store:'location.Bins',	 
 	title:'Location Bins',       
     initComponent: function() {
        var me = this;
@@ -49,7 +49,7 @@ Ext.define('InventoryApp.view.location.BinList',{
                                  {
                                      xtype: 'button',
                                      itemId: 'add',
-                                     iconCls: 'icon_add',
+                                     iconCls: 'add',
                                      text: 'Add Bin'
                                  }
                              ]
