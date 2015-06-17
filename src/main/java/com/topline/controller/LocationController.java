@@ -82,7 +82,7 @@ public class LocationController extends BaseController {
 				data.put("data", list);
 				jsonResponse.setData(data);
 				jsonResponse.setSuccess(true);
-				System.out.println(jsonObject(jsonResponse));
+				//System.out.println(jsonObject(jsonResponse));
 				return jsonObject(jsonResponse);		        
 				
 			}catch(Exception e){

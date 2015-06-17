@@ -24,7 +24,8 @@ Ext.define('InventoryApp.Application', {
         'Products',
         'Purchases',
         'PurchasesDtls',
-        'GridToGrid'
+        'GridToGrid',
+        'Bins'
     ],
     requires: [
         'Ext.util.History',

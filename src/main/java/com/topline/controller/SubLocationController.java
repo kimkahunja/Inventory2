@@ -1,5 +1,6 @@
 package com.topline.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class SubLocationController extends BaseController {
 			//fetch sublocations
 			@RequestMapping(value="/fetchSubLocations.action", method=RequestMethod.GET)
 			private @ResponseBody
-			StandardJsonResponse fetchCategories(HttpServletRequest request){
+			String fetchSubLocations(HttpServletRequest request){
 				try{
 					HashMap<String, Object> data = new HashMap<String, Object>();
 					
@@ -68,31 +69,38 @@ public class SubLocationController extends BaseController {
 					
 					String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 					String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+					String id=GlobalCC.CheckNullValues(request.getParameter("id"));
+					System.out.println("my id=== "+id);
 					if (limit == null) {
 						limit = "50";
 					}
 					if (start == null) {
 						start = "0";
 					}
+					if(id==null){
+						jsonResponse.setData(null);
+						jsonResponse.setSuccess(false);
+						jsonResponse.addMessage("message", "Location particulars  have not been provided...");
+						return jsonObject(jsonResponse);
+					}else{
+						map.put("id", new BigDecimal(id));
+					}
 					List<SubLocationWrapper> list=subLocationMapper.fetchSubLocations(map);
 					
 					if (list != null) {
 						int count = list.size();
-						data.put("total", count);
+						data.put("count", count);
 					}
-					data.put("results", list);
+					data.put("data", list);
 					jsonResponse.setData(data);
-					
-					ObjectMapper mapper = new ObjectMapper();
-			        String json = mapper.writeValueAsString(jsonResponse);
-			        System.out.println(json);
-					return jsonResponse;
+					jsonResponse.setSuccess(true);
+					return jsonObject(jsonResponse);
 				}catch(Exception e){
 					e.printStackTrace();
 					jsonResponse.setData(null);
 					jsonResponse.setSuccess(false);
 					jsonResponse.addMessage("message", e.getLocalizedMessage());
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 			}
 			//delete subLocation

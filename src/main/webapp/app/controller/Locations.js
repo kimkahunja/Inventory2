@@ -4,15 +4,21 @@
 Ext.define('InventoryApp.controller.Locations', {
     extend: 'InventoryApp.controller.Base',
     stores: [
-    	'location.Locations'
+    	'location.Locations',
+    	'location.Bins'
     ],
     views: [
-    	'location.LocationList'
+    	'location.LocationList',
+    	'location.BinList'
     ],
     refs: [
     	{
             ref: 'LocationList',
             selector: '[xtype=location.locationlist]'
+        },
+        {
+            ref: 'BinList',
+            selector: '[xtype=location.binlist]'
         }
     ],
     init: function() {
@@ -23,7 +29,9 @@ Ext.define('InventoryApp.controller.Locations', {
             		edit: this.editLocation,
             		canceledit: this.cancel,
             		beforerender: this.loadRecords,
-            		itemcontextmenu: this.showContextMenu
+            		itemcontextmenu: this.showContextMenu,
+            		selectionchange: this.onSelectionChange,
+            		cellclick:this.onSelectionChange,
             	},
             	'grid[xtype=location.locationlist] button#add': {
             		click: this.add
@@ -181,5 +189,21 @@ Ext.define('InventoryApp.controller.Locations', {
     	// start edit of row
     	plugin.startEdit( records[ 0 ], 0 );
     },
+    onSelectionChange: function (sm, records, options) {
+   	 var me = this,
+        grid = me.getBinList(),
+        store = grid.getStore();
+   	 console.log('am inside selection change....');
+   	if (records[0]) {
+   		Ext.Msg.alert( 'Attention', 'Am here...'+ records[0].get('locCode') ); 
+   		// clear any fliters that have been applied
+       	store.clearFilter( true );
+   		store.load({
+           	params: {
+           		id: records[0].get('locCode')
+           	}
+           });
+       }
+   },
 });    
     
