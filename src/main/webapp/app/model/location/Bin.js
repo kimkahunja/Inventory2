@@ -8,21 +8,21 @@ Ext.define('InventoryApp.model.location.Bin',{
 	fields:[
 	        {
 	        	//Id field
-	        	 name: 'lbnCode',
+	        	 name: 'slocCode',
 	             type: 'int',
 	             useNull : true
 	        },
 	        {
 	        	//Fk field
-	        	 name: 'lbnLocCode',
+	        	 name: 'slocLocCode',
 	             type: 'int',
 	        },
 	        {
-	        	 name: 'lbnShtDesc',
+	        	 name: 'slocShtDesc',
 	             type: 'string'
 	        },
 	        {
-	        	 name: 'lbnDescription',
+	        	 name: 'slocDescription',
 	             type: 'string'
 	        }
 	        ],

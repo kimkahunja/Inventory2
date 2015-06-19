@@ -143,7 +143,7 @@ Ext.define('InventoryApp.controller.Bins', {
         if(obj.record.dirty){        	
             //check if the record is valid               
             if(obj.record.validate().isValid()){
-                obj.record.set('lbnLocCode', record[0].get('locCode'));
+                obj.record.set('slocLocCode', record[0].get('locCode'));
                 //Make your Ajax request to sync data               
                 this.syncData(obj.rowIdx,'save'); 
                 store.load();
