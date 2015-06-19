@@ -135,10 +135,15 @@ Ext.define('InventoryApp.controller.Bins', {
     editBin : function(editor, obj) {
     	var me = this,
 		store = this.getBinList().getStore();
+    	
+    	grid = me.getLocationList();    		
+		//storeLoc = grid.getStore();        		
+        var record = grid.getSelectionModel().getSelection();
         //check if record is dirty 
         if(obj.record.dirty){        	
             //check if the record is valid               
             if(obj.record.validate().isValid()){
+                obj.record.set('lbnLocCode', record[0].get('locCode'));
                 //Make your Ajax request to sync data               
                 this.syncData(obj.rowIdx,'save'); 
                 store.load();
