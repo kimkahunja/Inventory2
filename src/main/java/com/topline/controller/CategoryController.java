@@ -40,7 +40,7 @@ public class CategoryController extends BaseController {
 			ObjectMapper mapper = new ObjectMapper();
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 			Categories categories=mapper.readValue(data, Categories.class);
-			System.out.println(" data "+data);		
+			//System.out.println(" data "+data);		
 			
 			if (categories.getCatCode() == null) {				
 				categoryMapper.insert(categories);

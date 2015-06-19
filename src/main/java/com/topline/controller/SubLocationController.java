@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topline.model.Categories;
 import com.topline.model.SubLocations;
 import com.topline.model.wrappers.SubLocationWrapper;
 import com.topline.utils.GlobalCC;
@@ -24,39 +25,27 @@ import com.topline.web.StandardJsonResponse;
 public class SubLocationController extends BaseController {
 	//save SubLocation
 			@RequestMapping(value="/saveSubLocation.action", method=RequestMethod.POST)
-			private @ResponseBody StandardJsonResponse saveSubLocation(HttpServletRequest request){
-				System.out.println("my id=== ");
+			private @ResponseBody String saveSubLocation(HttpServletRequest request){
+				
 				try{
-					String slocCode=GlobalCC.CheckNullValues(request.getParameter("slocCode"));
-					String slocLocCode=GlobalCC.CheckNullValues(request.getParameter("slocLocCode"));
-					String slocShtDesc=GlobalCC.CheckNullValues(request.getParameter("slocShtDesc"));
-					String slocDescription=GlobalCC.CheckNullValues(request.getParameter("slocDescription"));
-					SubLocations subLocations=new SubLocations();
-					subLocations.setSlocCode(slocCode==null?null:Integer.parseInt(slocCode));
-					subLocations.setSlocLocCode(Integer.parseInt(slocLocCode));
-					subLocations.setSlocShtDesc(slocShtDesc);
-					subLocations.setSlocDescription(slocDescription);
-					
-					if(slocCode==null){
+					ObjectMapper mapper = new ObjectMapper();
+					String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+					SubLocations subLocations=mapper.readValue(data, SubLocations.class);
+					if(subLocations.getSlocCode()==null){
 						subLocationMapper.insert(subLocations);
 						jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);
 					}else{
 						subLocationMapper.updateByPrimaryKey(subLocations);
 						jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 					}
-					jsonResponse.setSuccess(true);	
-					
-					ObjectMapper mapper = new ObjectMapper();
-			        String json = mapper.writeValueAsString(jsonResponse);
-			        System.out.println(json);
-			        
-					return jsonResponse;
+					jsonResponse.setSuccess(true);
+					return jsonObject(jsonResponse);
 				}catch(Exception e){
 					e.printStackTrace();
 					jsonResponse.setData(null);
 					jsonResponse.setSuccess(false);
 					jsonResponse.addMessage("message", e.getLocalizedMessage());
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 			}
 			//fetch sublocations
@@ -108,27 +97,28 @@ public class SubLocationController extends BaseController {
 			//delete subLocation
 			@RequestMapping(value="/deleteSubLocation.action")
 			private @ResponseBody
-			StandardJsonResponse deleteSubLocation(HttpServletRequest request){
+			String deleteSubLocation(HttpServletRequest request){
 				try{
-					String slocCode=GlobalCC.CheckNullValues(request.getParameter("slocCode"));
-					if(slocCode!=null){
-						categoryMapper.deleteByPrimaryKey(Integer.parseInt(slocCode));
+					ObjectMapper mapper = new ObjectMapper();
+					String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+					SubLocations subLocations=mapper.readValue(data, SubLocations.class);					
+					
+					if(subLocations.getSlocCode()!=null){
+						categoryMapper.deleteByPrimaryKey(subLocations.getSlocCode());
 						jsonResponse.setSuccess(true);
 						jsonResponse.addMessage("message", DELETED_SUCCESSFULLY);
 					}
-					jsonResponse.setData(null);
+					jsonResponse.setData(null);					
+
+					return jsonObject(jsonResponse);
 					
-					ObjectMapper mapper = new ObjectMapper();
-			        String json = mapper.writeValueAsString(jsonResponse);
-			        System.out.println(json);
-					return jsonResponse;
 				}catch (DataIntegrityViolationException ex) {
 					jsonResponse.setData(null);
 					jsonResponse.setSuccess(false);
 					logger.error(ex);
 					jsonResponse.addMessage("message",
 							"The SubLocation has Dependencies it cannot be Deleted");
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 
 				}
 				catch(Exception e){
@@ -139,7 +129,7 @@ public class SubLocationController extends BaseController {
 									"message",
 									e.getLocalizedMessage() == null ? "OOPS ! ERROR:: Occured while deleting....."
 											: e.getLocalizedMessage());
-					return jsonResponse;
+					return jsonObject(jsonResponse);
 				}
 			}
 }
