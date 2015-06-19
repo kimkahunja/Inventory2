@@ -5,7 +5,7 @@ Ext.define('InventoryApp.view.location.BinList',{
 	           'Ext.grid.plugin.RowEditing',
 	           'Ext.toolbar.Paging'
 	       ],
-	//store:'location.Bins',	 
+	store:'location.Bins',	 
 	title:'Location Bins',       
     initComponent: function() {
        var me = this;

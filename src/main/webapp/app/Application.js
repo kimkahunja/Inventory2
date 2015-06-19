@@ -8,6 +8,7 @@ Ext.define('InventoryApp.Application', {
             'categories.List',
             'location.Locations',
             'location.LocationList',
+            'location.BinList',
             'units.UnitList',
             'product.List',
             'purchases.PurchaseLanding',
