@@ -25,7 +25,7 @@ Ext.define('InventoryApp.controller.Bins', {
             	'grid[xtype=location.binlist]': {
             		edit: this.editBin,
             		canceledit: this.cancel,
-            		viewready: this.loadRecords,
+            		//viewready: this.loadRecords,
             		//itemcontextmenu: this.showContextMenu
             	},
             	'grid[xtype=location.binlist] button#add': {

@@ -63,7 +63,7 @@ public class SubLocationController extends BaseController {
 			@RequestMapping(value="/fetchSubLocations.action", method=RequestMethod.GET)
 			private @ResponseBody
 			String fetchSubLocations(HttpServletRequest request){
-				System.out.println("my id=== ");
+			
 				try{
 					HashMap<String, Object> data = new HashMap<String, Object>();
 					
