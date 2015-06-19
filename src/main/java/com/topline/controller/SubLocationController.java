@@ -25,6 +25,7 @@ public class SubLocationController extends BaseController {
 	//save SubLocation
 			@RequestMapping(value="/saveSubLocation.action", method=RequestMethod.POST)
 			private @ResponseBody StandardJsonResponse saveSubLocation(HttpServletRequest request){
+				System.out.println("my id=== ");
 				try{
 					String slocCode=GlobalCC.CheckNullValues(request.getParameter("slocCode"));
 					String slocLocCode=GlobalCC.CheckNullValues(request.getParameter("slocLocCode"));
@@ -62,6 +63,7 @@ public class SubLocationController extends BaseController {
 			@RequestMapping(value="/fetchSubLocations.action", method=RequestMethod.GET)
 			private @ResponseBody
 			String fetchSubLocations(HttpServletRequest request){
+				System.out.println("my id=== ");
 				try{
 					HashMap<String, Object> data = new HashMap<String, Object>();
 					

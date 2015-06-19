@@ -23,16 +23,16 @@ Ext.define('InventoryApp.controller.Bins', {
             controller: {},
             component: {
             	'grid[xtype=location.binlist]': {
-            		//edit: this.editBin,
-            		//canceledit: this.cancel,
-            		beforerender: this.loadRecords,
+            		edit: this.editBin,
+            		canceledit: this.cancel,
+            		viewready: this.loadRecords,
             		//itemcontextmenu: this.showContextMenu
             	},
             	'grid[xtype=location.binlist] button#add': {
-            		//click: this.add
+            		click:this.add
             	},
             	'grid[xtype=location.binlist] gridview': {
-            		//itemadd: this.edit
+            		itemadd: this.edit
             	}
             },
             global: {},
@@ -92,10 +92,96 @@ Ext.define('InventoryApp.controller.Bins', {
     	
     	var me = this,
     		store = grid.getStore();
-    	console.log('STORE= '+store);
+    	console.log('STORE111111= '+store);
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
     	store.load();
+    },
+    /**
+     * Begins edit of selected record
+     * @param {Ext.data.Model[]} records
+     * @param {Number} index
+     * @param {Object} node
+     * @param {Object} eOpts
+     */
+    edit: function( records, index, node, eOpts ) {
+    	var me = this,
+    		grid = me.getBinList(),
+    		plugin = grid.editingPlugin;
+    	// start edit of row
+    	plugin.startEdit( records[ 0 ], 0 );
+    },
+    /**
+     * Creates a new record and prepares it for editing
+     * @param {Ext.button.Button} button
+     * @param {Ext.EventObject} e
+     * @param {Object} eOpts
+     */
+    add: function( button, e, eOpts ) {
+    	var me = this,
+    		grid = me.getBinList(),
+    		plugin = grid.editingPlugin,
+    		store = grid.getStore();
+    	// if we're already editing, don't allow new record insert
+    	if( plugin.editing ) {
+    		// show error message
+    		Ext.Msg.alert( 'Attention', 'Please finish editing before inserting a new record' );
+    		return false;
+    	}
+    	//console.log('add functionality is here...');
+    	store.insert( 0, {} );
+    },
+    editBin : function(editor, obj) {
+    	var me = this,
+		store = this.getBinList().getStore();
+        //check if record is dirty 
+        if(obj.record.dirty){        	
+            //check if the record is valid               
+            if(obj.record.validate().isValid()){
+                //Make your Ajax request to sync data               
+                this.syncData(obj.rowIdx,'save'); 
+                store.load();
+             
+            }
+        }
+    },
+  //Sync data with the server 
+    syncData : function(rowIndex,action) { 
+    	var url='subLocations/saveSubLocation.action';
+    	//var url='menu/fetchMenu.action';
+    	if(action=='delete'){
+    		//url = 'locations/deleteLocation.action';    		
+    		}
+    			
+    	//console.log('rowIndex '+rowIndex);
+        Ext.Ajax.request({
+               url:url,
+            params: {
+                    data: Ext.encode(this.getBinList().getStore().getAt(rowIndex).data)
+            },
+            
+            scope:this,
+            //method to call when the request is successful
+            success: InventoryApp.Utilities.onSaveSuccess,
+            //method to call when the request is a failure
+            failure: InventoryApp.Utilities.onSaveFailure
+        });
+        //this.getLocationList().getStore().load();
+    },
+    /**
+     * Cancels the edit of a record
+     * @param {Ext.grid.plugin.Editing} editor
+     * @param {Object} context
+     * @param {Object} eOpts
+     * @param {}
+     * @param {}
+     * @param {}
+     */
+    cancel: function( editor, context, eOpts ) {
+    	// if the record is a phantom, remove from store and grid
+    	if( context.record.phantom ) {
+    		context.store.remove( context.record );
+    	}
     },
 });
