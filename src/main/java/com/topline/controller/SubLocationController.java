@@ -103,9 +103,9 @@ public class SubLocationController extends BaseController {
 					ObjectMapper mapper = new ObjectMapper();
 					String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 					SubLocations subLocations=mapper.readValue(data, SubLocations.class);					
-					
+					//System.out.println("my id for delete===== "+subLocations.getSlocCode());
 					if(subLocations.getSlocCode()!=null){
-						categoryMapper.deleteByPrimaryKey(subLocations.getSlocCode());
+						subLocationMapper.deleteByPrimaryKey(subLocations.getSlocCode());
 						jsonResponse.setSuccess(true);
 						jsonResponse.addMessage("message", DELETED_SUCCESSFULLY);
 					}

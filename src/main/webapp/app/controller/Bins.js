@@ -31,6 +31,9 @@ Ext.define('InventoryApp.controller.Bins', {
             	'grid[xtype=location.binlist] button#add': {
             		click:this.add
             	},
+            	'grid[xtype=location.binlist] button#delete': {
+            		click:this.remove
+            	},
             	'grid[xtype=location.binlist] gridview': {
             		itemadd: this.edit
             	}
@@ -198,4 +201,37 @@ Ext.define('InventoryApp.controller.Bins', {
     		context.store.remove( context.record );
     	}
     },
+    remove: function( button, e, eOpts ) {
+       	var me = this,
+       		grid = me.getBinList(),
+       		plugin = grid.editingPlugin,
+       		store = grid.getStore(),
+       	    record = grid.getSelectionModel().getSelection();
+       	var gridLoc=me.getLocationList(),
+       		recordLoc=gridLoc.getSelectionModel().getSelection();
+       	Ext.Msg.confirm( 'Attention', 'Are you sure you want to delete this item? This action cannot be undone.', function( buttonId, text, opt ) {
+    		if( buttonId=='yes' ) {
+    			
+    			Ext.Ajax.request({
+    	               url: 'subLocations/deleteSubLocation.action',
+    	            params: {
+    	                    data: Ext.encode(record[0].data)
+    	            },
+    	            
+    	            scope:this,
+    	            //method to call when the request is successful
+    	            success: InventoryApp.Utilities.onSaveSuccess,
+    	            //method to call when the request is a failure
+    	            failure: InventoryApp.Utilities.onSaveFailure
+    	        });
+    			//console.log('delete... '+record[0].get('locCode'));
+    			store.reload();
+    			store.load({
+                	params: { 
+                		id: recordLoc[0].get('locCode')
+                	}});
+    			
+    		}
+    	})
+       },
 });

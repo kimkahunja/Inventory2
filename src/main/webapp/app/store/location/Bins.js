@@ -23,6 +23,7 @@ Ext.define('InventoryApp.store.location.Bins',{
         },
         reader: {
             type: 'json',
+           // idProperty:'slocCode',
             totalProperty: 'data.count',
             root: 'data.data',
             successProperty: 'success'
