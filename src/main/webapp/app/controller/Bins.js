@@ -91,12 +91,17 @@ Ext.define('InventoryApp.controller.Bins', {
     loadRecords: function( grid, eOpts ) {
     	
     	var me = this,
-    		store = grid.getStore();
-    	console.log('STORE111111= '+store);
+    		store = grid.getStore(),
+    	gridLoc = me.getLocationList();		       		
+        var record = gridLoc.getSelectionModel().getSelection();
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
-    	store.load();
+    	store.load({
+        	params: { 
+        		id: this.getLocationList().getStore().getAt(0).get('locCode')
+        	}
+        });
     },
     /**
      * Begins edit of selected record
@@ -134,19 +139,23 @@ Ext.define('InventoryApp.controller.Bins', {
     },
     editBin : function(editor, obj) {
     	var me = this,
-		store = this.getBinList().getStore();
-    	
-    	grid = me.getLocationList();    		
+		store = this.getBinList().getStore(),    	
+    	grid = me.getLocationList();
 		//storeLoc = grid.getStore();        		
         var record = grid.getSelectionModel().getSelection();
+        //console.log('check whether dirty '+obj.record.dirty);
         //check if record is dirty 
-        if(obj.record.dirty){        	
+        if(obj.record.dirty){  
+        	//console.log('edit bin test11');
             //check if the record is valid               
             if(obj.record.validate().isValid()){
                 obj.record.set('slocLocCode', record[0].get('locCode'));
                 //Make your Ajax request to sync data               
                 this.syncData(obj.rowIdx,'save'); 
-                store.load();
+                store.load({
+                	params: { 
+                		id: record[0].get('locCode')
+                	}});
              
             }
         }

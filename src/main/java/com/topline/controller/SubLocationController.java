@@ -39,6 +39,7 @@ public class SubLocationController extends BaseController {
 						jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 					}
 					jsonResponse.setSuccess(true);
+					System.out.println(jsonObject(jsonResponse));
 					return jsonObject(jsonResponse);
 				}catch(Exception e){
 					e.printStackTrace();

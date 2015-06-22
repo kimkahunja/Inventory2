@@ -193,9 +193,9 @@ Ext.define('InventoryApp.controller.Locations', {
    	 var me = this,
         grid = me.getBinList(),
         store = grid.getStore();
-   	 console.log('am inside selection change....');
+   	 //console.log('am inside selection change....');
    	if (records[0]) {
-   		Ext.Msg.alert( 'Attention', 'Am here...'+ records[0].get('locCode') ); 
+   		//Ext.Msg.alert( 'Attention', 'Am here...'+ records[0].get('locCode') ); 
    		// clear any fliters that have been applied
        	store.clearFilter( true );
    		store.load({

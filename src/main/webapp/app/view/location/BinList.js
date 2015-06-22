@@ -22,7 +22,7 @@ Ext.define('InventoryApp.view.location.BinList',{
                items: [
                    {
                        text: 'Abbreviation',
-                       dataIndex: 'lbnShtDesc',
+                       dataIndex: 'slocShtDesc',
                        editor: {
                            xtype: 'textfield',
                            allowBlank: false
@@ -31,7 +31,7 @@ Ext.define('InventoryApp.view.location.BinList',{
                    },
                    {
                        text: 'Name',
-                       dataIndex: 'lbnDescription',
+                       dataIndex: 'slocDescription',
                        editor: {
                            xtype: 'textfield',
                            allowBlank: false
