@@ -31,10 +31,13 @@ Ext.define('InventoryApp.controller.Locations', {
             		beforerender: this.loadRecords,
             		itemcontextmenu: this.showContextMenu,
             		selectionchange: this.onSelectionChange,
-            		cellclick:this.onSelectionChange,
+            		cellclick:this.onCellClick,
             	},
             	'grid[xtype=location.locationlist] button#add': {
             		click: this.add
+            	},
+            	'grid[xtype=location.locationlist] button#delete': {
+            		click: this.remove
             	},
             	'grid[xtype=location.locationlist] gridview': {
             		itemadd: this.edit
@@ -204,6 +207,46 @@ Ext.define('InventoryApp.controller.Locations', {
            	}
            });
        }
+   },
+   onCellClick:function(sm, td, cellIndex, record, tr, rowIndex, e, eOpts ){
+	   var me = this,
+       grid = me.getBinList(),
+       store = grid.getStore();
+  	  //console.log('am inside cell click....'+this.getLocationList().getStore().getAt(rowIndex).get('locCode')); 
+  	
+  		// clear any fliters that have been applied
+      	store.clearFilter( true );
+  		store.load({
+          	params: {
+          		id: this.getLocationList().getStore().getAt(rowIndex).get('locCode')
+          	}
+          });     
+   },
+   remove: function( button, e, eOpts ) {
+   	var me = this,
+   		grid = me.getLocationList(),
+   		plugin = grid.editingPlugin,
+   		store = grid.getStore(),
+   	  record = grid.getSelectionModel().getSelection();
+   	Ext.Msg.confirm( 'Attention', 'Are you sure you want to delete this item? This action cannot be undone.', function( buttonId, text, opt ) {
+		if( buttonId=='yes' ) {
+			
+			Ext.Ajax.request({
+	               url: 'locations/deleteLocation.action',
+	            params: {
+	                    data: Ext.encode(record[0].data)
+	            },
+	            
+	            scope:this,
+	            //method to call when the request is successful
+	            success: InventoryApp.Utilities.onSaveSuccess,
+	            //method to call when the request is a failure
+	            failure: InventoryApp.Utilities.onSaveFailure
+	        });
+			
+             store.load();
+		}
+	})
    },
 });    
     
