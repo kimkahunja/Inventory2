@@ -72,12 +72,12 @@ public class UnitController extends BaseController {
 					
 					if (list != null) {
 						int count = list.size();
-						data.put("total", count);
+						data.put("count", count);
 					}
 					
-					data.put("results", list);
+					data.put("data", list);
 					jsonResponse.setData(data);
-					
+					jsonResponse.setSuccess(true);
 					return jsonObject(jsonResponse);
 				}catch(Exception e){
 					

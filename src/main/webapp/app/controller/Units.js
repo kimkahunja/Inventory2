@@ -20,9 +20,9 @@ Ext.define('InventoryApp.controller.Units', {
             controller: {},
             component: {
             	'grid[xtype=units.unitlist]': {
-            		//edit: this.editUnits,
+            		edit: this.editUnit,
             		canceledit: this.cancel,
-            		beforerender: this.loadRecords,
+            		viewready: this.loadRecords,
             		itemcontextmenu: this.showContextMenu
             	},
             	'grid[xtype=units.unitlist] button#add': {
@@ -145,5 +145,44 @@ Ext.define('InventoryApp.controller.Units', {
     	// start edit of row
     	plugin.startEdit( records[ 0 ], 0 );
     },
+    editUnit : function(editor, obj) {
+       	var me = this,
+   		store = this.getUnitList().getStore();    	
+       	
+           //check if record is dirty 
+           if(obj.record.dirty){  
+           	//console.log('edit bin test11');
+               //check if the record is valid               
+               if(obj.record.validate().isValid()){                  
+                   //Make your Ajax request to sync data               
+                   this.syncData(obj.rowIdx,'save'); 
+                   store.clearFilter( true );
+                   store.load();                
+               }
+           }
+       },
+     //Sync data with the server 
+       syncData : function(rowIndex,action) { 
+       	var url='units/saveUnit.action';
+       	//var url='menu/fetchMenu.action';
+       	if(action=='delete'){
+       		//url = 'locations/deleteLocation.action';    		
+       		}
+       			
+       	//console.log('rowIndex '+rowIndex);
+           Ext.Ajax.request({
+                  url:url,
+               params: {
+                       data: Ext.encode(this.getUnitList().getStore().getAt(rowIndex).data)
+               },
+               
+               scope:this,
+               //method to call when the request is successful
+               success: InventoryApp.Utilities.onSaveSuccess,
+               //method to call when the request is a failure
+               failure: InventoryApp.Utilities.onSaveFailure
+           });
+           //this.getLocationList().getStore().load();
+       },
 });    
     

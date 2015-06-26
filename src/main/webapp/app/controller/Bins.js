@@ -234,4 +234,5 @@ Ext.define('InventoryApp.controller.Bins', {
     		}
     	})
        },
+      
 });
