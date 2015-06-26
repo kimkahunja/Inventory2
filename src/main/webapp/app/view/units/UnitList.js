@@ -59,8 +59,14 @@ Ext.define('InventoryApp.view.units.UnitList',{
                        {
                            xtype: 'button',
                            itemId: 'add',
-                           iconCls: 'icon_add',
+                           iconCls: 'add',
                            text: 'Add Unit'
+                       },
+                       {
+                           xtype: 'button',
+                           itemId: 'delete',
+                           iconCls: 'delete',
+                           text: 'Delete'
                        }
                    ]
                },
