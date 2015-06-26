@@ -48,8 +48,14 @@ Ext.define('InventoryApp.view.categories.List',{
                        {
                            xtype: 'button',
                            itemId: 'add',
-                           iconCls: 'icon_add',
+                           iconCls: 'add',
                            text: 'Add Item'
+                       },
+                       {
+                           xtype: 'button',
+                           itemId: 'delete',
+                           iconCls: 'delete',
+                           text: 'Delete'
                        }
                    ]
                },

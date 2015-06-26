@@ -51,8 +51,7 @@ public class CategoryController extends BaseController {
 				jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 			}
 			jsonResponse.setSuccess(true);	
-			
-	        
+			jsonResponse.setData(null);	        
 	        return jsonObject(jsonResponse);
 		}
 		catch(Exception e){

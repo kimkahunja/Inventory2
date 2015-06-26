@@ -39,7 +39,7 @@ public class UnitController extends BaseController {
 					}
 					
 					jsonResponse.setSuccess(true);	
-					
+					jsonResponse.setData(null);
 					return jsonObject(jsonResponse);
 					
 				}catch(Exception e){
