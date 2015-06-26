@@ -18,12 +18,12 @@ Ext.define('InventoryApp.model.units.Unit',{
 	             type: 'string'
 	        },
 	        {
-	        	 name: 'untDesc',
+	        	 name: 'untDescription',
 	             type: 'string'
 	        },
 	        {	        	
-	        	 name: 'untStdPrecision',
-	             type: 'int'	            
+	        	 name: 'untPrecision',
+	             type: 'float'	            
 	        }
 	        ],
 });

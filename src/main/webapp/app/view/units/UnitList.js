@@ -5,9 +5,9 @@ Ext.define('InventoryApp.view.units.UnitList',{
 	           'Ext.grid.plugin.RowEditing',
 	           'Ext.toolbar.Paging'
 	       ],
-	//store: Ext.create('store.categories.categories'),	
+	store:'units.Units',	
    // width:'80%',	       
-	autoWidth:true,       
+	//autoWidth:true,       
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{
@@ -32,7 +32,7 @@ Ext.define('InventoryApp.view.units.UnitList',{
                    },
                    {
                        text: 'Name',
-                       dataIndex: 'untDesc',
+                       dataIndex: 'untDescription',
                        editor: {
                            xtype: 'textfield',
                            allowBlank: false
@@ -41,7 +41,7 @@ Ext.define('InventoryApp.view.units.UnitList',{
                    },
                    {
                        text: 'Standard Precision',
-                       dataIndex: 'untStdPrecision',
+                       dataIndex: 'untPrecision',
                        editor: {
                            xtype: 'textfield',
                            allowBlank: false

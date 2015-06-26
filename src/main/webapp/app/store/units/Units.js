@@ -13,16 +13,18 @@ Ext.define('InventoryApp.store.units.Units',{
 	//autoLoad: true,
     pageSize: 20,
     proxy: {
-        type: 'ajax',
-        url: 'resources/unit.json',//'UnitServlet',
-        extraParams: {
-            store_id: 4
+        type: 'ajax',       
+        api: {
+            create  : 'units/saveUnit.action',
+            read    : 'units/fetchUnits.action',
+            update  : 'units/saveUnit.action',
+            destroy : 'units/deleteUnit.action'
         },
         reader: {
-            type: 'json',
-            totalProperty: 'count',
-            root: 'data',
+            type: 'json',           
+            totalProperty: 'data.count',
+            root: 'data.data',
             successProperty: 'success'
         },
-     }
+    }
 });

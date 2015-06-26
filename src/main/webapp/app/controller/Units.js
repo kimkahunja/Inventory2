@@ -21,7 +21,7 @@ Ext.define('InventoryApp.controller.Units', {
             component: {
             	'grid[xtype=units.unitlist]': {
             		//edit: this.editUnits,
-            		//canceledit: this.cancel,
+            		canceledit: this.cancel,
             		beforerender: this.loadRecords,
             		itemcontextmenu: this.showContextMenu
             	},
@@ -29,7 +29,7 @@ Ext.define('InventoryApp.controller.Units', {
             		click: this.add
             	},
             	'grid[xtype=units.unitlist] gridview': {
-            		//itemadd: this.edit
+            		itemadd: this.edit
             	}
             },
             global: {},
@@ -86,10 +86,10 @@ Ext.define('InventoryApp.controller.Units', {
      * @param {Object}
      */
     loadRecords: function( grid, eOpts ) {
-    	console.log('lOAD RECORDS functionality is here...');
+    	//console.log('lOAD RECORDS functionality is here...');
     	var me = this,
     		store = grid.getStore();
-    	console.log('STORE= '+store);
+    	//console.log('STORE= '+store);
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
@@ -113,8 +113,37 @@ Ext.define('InventoryApp.controller.Units', {
     		Ext.Msg.alert( 'Attention', 'Please finish editing before inserting a new record' );
     		return false;
     	}
-    	console.log('add functionality is here...');
+    	
     	store.insert( 0, {} );
+    },
+    /**
+     * Cancels the edit of a record
+     * @param {Ext.grid.plugin.Editing} editor
+     * @param {Object} context
+     * @param {Object} eOpts
+     * @param {}
+     * @param {}
+     * @param {}
+     */
+    cancel: function( editor, context, eOpts ) {
+    	// if the record is a phantom, remove from store and grid
+    	if( context.record.phantom ) {
+    		context.store.remove( context.record );
+    	}
+    },
+    /**
+     * Begins edit of selected record
+     * @param {Ext.data.Model[]} records
+     * @param {Number} index
+     * @param {Object} node
+     * @param {Object} eOpts
+     */
+    edit: function( records, index, node, eOpts ) {
+    	var me = this,
+    		grid = me.getUnitList(),
+    		plugin = grid.editingPlugin;
+    	// start edit of row
+    	plugin.startEdit( records[ 0 ], 0 );
     },
 });    
     
