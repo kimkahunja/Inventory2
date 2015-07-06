@@ -23,7 +23,11 @@ Ext.define('InventoryApp.controller.Products', {
         {
             ref: 'ProductEditForm',
             selector: '[xtype=product.edit.form]'
-        }
+        },
+        {
+            ref: 'SecLocCombo',
+            selector: 'window[xtype=product.edit.window]combobox#pdtSlocCode'
+        },
         
     ],
     init: function() {
@@ -215,15 +219,15 @@ Ext.define('InventoryApp.controller.Products', {
     },
     comboChange: function( combobox, newValue, oldValue, eOpts ) {
     	if(combobox.isValid()){
-    		  console.log('combox box value change and is valid...'+newValue);
-    		  var sCombobox=Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']");
-    		  console.log('combo box=== '+Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']").isValid());
-    		  /*store=sCombobox.getStore().storeId;
-    		  store.load({
+    		  console.log('combox box value change and is valid...'+  this.getSecLocCombo.itemId);
+    		 // var sCombobox=Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']");
+    		  console.log('combo box=== '+Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']").name);
+    		  //store=sCombobox.store().storeId;
+    		  thgetSecLocCombo.store.load({
     			  params: {
     	           		id:newValue
-    	           	}*/
-    		//  });
+    	           	}
+    		  });
     		  
     	}
      

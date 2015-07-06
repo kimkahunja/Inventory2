@@ -149,6 +149,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         {
                             xtype: 'ux.form.field.remotecombobox',
                             name: 'pdtSlocCode',
+                            itemId:'pdtSlocCode',
                             fieldLabel: 'Secondary Location',
                             displayField: 'slocShtDesc',
                             valueField: 'slocCode',
