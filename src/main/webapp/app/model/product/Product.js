@@ -20,6 +20,10 @@ Ext.define('InventoryApp.model.product.Product',{
 	        {
 	        	 name: 'pdtDescription',
 	             type: 'string'
+	        }, 
+	        {	        	
+	        	 name: 'pdtUntCode',
+	             type: 'auto'	            
 	        },
 	        {	        	
 	        	 name: 'pdtLocCode',
@@ -80,22 +84,27 @@ Ext.define('InventoryApp.model.product.Product',{
 	        
 	     // decorated properties
             {
-                  name: '_pdtUnit',
+                  name: '_pdtUntCode',
                   type: 'string',
                   persist: false
             },
             {
-                name: '_pdtBinLoc',
+                name: '_pdtLocCode',
                 type: 'string',
                 persist: false
           },
           {
-              name: '_pdtVat',
+              name: '_pdtSlocCode',
+              type: 'string',
+              persist: false
+         },
+          {
+              name: '_pdtVatId',
               type: 'string',
               persist: false
           },
           {
-        	  name:"_pdtCategory",
+        	  name:"_pdtCatCode",
         	  type: 'string',
               persist: false
           }

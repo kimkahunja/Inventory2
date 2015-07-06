@@ -5,7 +5,7 @@ Ext.define('InventoryApp.view.product.List',{
 	           'Ext.grid.column.Date',
 	           'Ext.toolbar.Paging'          
 	       ],
-	//store: Ext.create('store.categories.categories'),	
+	store:'product.Products',	
    // width:'80%',	       
 	autoWidth:true,       
     initComponent: function() {
@@ -44,19 +44,11 @@ Ext.define('InventoryApp.view.product.List',{
                         text: 'Current Quantity',
                         dataIndex: 'pdtCurrentQty',
                         filter: true
-                    },
+                    },                    
                     
                     {
-                    	xtype: 'datecolumn',
-                        text: 'Expire Date',
-                        dataIndex: 'pdtExpireDate',
-                        dateFormat: 'Y-m-d',
-                        hidden: true,
-                        filter: true
-                    },
-                    {
                         text: 'Unit Measure',
-                        dataIndex: '_pdtUnit',
+                        dataIndex: '_pdtUntCode',
                         filter: 'combo'
                     },
                     {
@@ -65,13 +57,18 @@ Ext.define('InventoryApp.view.product.List',{
                     	filter: 'combo'
                     },
                     {
-                        text: 'Bin Location',
-                        dataIndex: '_pdtBinLoc',
+                        text: 'Main Location',
+                        dataIndex: '_pdtLocCode',
+                        filter: 'combo'
+                    },
+                    {
+                        text: 'Secondary Location',
+                        dataIndex: '_pdtSlocCode',
                         filter: 'combo'
                     },
                     {
                         text: 'TAX',
-                        dataIndex: '_pdtVat',
+                        dataIndex: '_pdtVatId',
                         filter: 'combo'
                     },
                     {
@@ -108,7 +105,7 @@ Ext.define('InventoryApp.view.product.List',{
                        {
                            xtype: 'button',
                            itemId: 'add',
-                           iconCls: 'icon_add',
+                           iconCls: 'add',
                            text: 'Add Product'
                        }
                    ]

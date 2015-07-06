@@ -82,7 +82,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                        {
                             xtype: 'gridpicker',
                              name: 'pdtCategory',
-                            fieldLabel: 'Category1111',
+                            fieldLabel: 'Category',
                             displayField: 'catDescription',
                             valueField: 'catCode',
                             store: {
@@ -126,7 +126,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                             xtype: 'ux.form.field.remotecombobox',
                             name: 'pdtUnit',
                             fieldLabel: 'Unit Measure',
-                            displayField: 'untDesc',
+                            displayField: 'untDescription',
                             valueField: 'untCode',
                             store: {
                                 type: 'units.units'
@@ -136,15 +136,27 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         },
                         {
                             xtype: 'ux.form.field.remotecombobox',
-                            name: 'pdtBinLoc',
-                            fieldLabel: 'Bin Location',
-                            displayField: 'lbnShtDesc',
-                            valueField: 'lbnCode',
+                            name: 'pdtLocCode',
+                            fieldLabel: 'Main Location',
+                            displayField: 'locShtDesc',
+                            valueField: 'locCode',
+                            store: {
+                                type: 'location.locations'
+                            },
+                            editable: false,
+                           // forceSelection: true
+                        },
+                        {
+                            xtype: 'ux.form.field.remotecombobox',
+                            name: 'pdtSlocCode',
+                            fieldLabel: 'Secondary Location',
+                            displayField: 'slocShtDesc',
+                            valueField: 'slocCode',
                             store: {
                                 type: 'location.bins'
                             },
                             editable: false,
-                            forceSelection: true
+                            //forceSelection: true
                         }
                     ]
                 },

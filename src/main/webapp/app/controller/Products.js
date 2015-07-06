@@ -86,7 +86,7 @@ Ext.define('InventoryApp.controller.Products', {
      */
     add: function( button, e, eOpts ) {
         var me = this,
-            record = Ext.create( 'kahunja.model.product.Product' );
+            record = Ext.create( 'InventoryApp.model.product.Product' );
         // show window
         me.showEditWindow( record );
     },

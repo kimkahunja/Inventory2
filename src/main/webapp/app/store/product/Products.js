@@ -14,14 +14,18 @@ Ext.define('InventoryApp.store.product.Products',{
     pageSize: 20,
     proxy: {
         type: 'ajax',
-        url:'ProductServlet',// 'resources/product.json',
-        extraParams: {
-            store_id: 4
+        //url: 'resources/location.json',//'LocationServlet',
+        api: {
+            create  : 'product/saveProduct.action',
+            read    : 'product/fetchProducts.action',
+            update  : 'product/saveProduct.action',
+            destroy : 'product/deleteProduct.action'
         },
         reader: {
             type: 'json',
-            totalProperty: 'count',
-            root: 'data',
+           // idProperty:'slocCode',
+            totalProperty: 'data.count',
+            root: 'data.data',
             successProperty: 'success'
         },
      }
