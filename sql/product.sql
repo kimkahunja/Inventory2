@@ -2,6 +2,7 @@ CREATE TABLE `inv_products` (
   `pdt_code` int(11) NOT NULL,
   `pdt_sht_desc` varchar(50) DEFAULT NULL,
   `pdt_description` varchar(250) NOT NULL,
+  `pdt_unt_code` int(11) NOT NULL,
   `pdt_loc_code` int(11) DEFAULT NULL,
   `pdt_sloc_code` int(11) DEFAULT NULL,
   `pdt_cat_code` int(11) DEFAULT NULL,
@@ -18,13 +19,15 @@ CREATE TABLE `inv_products` (
   `pdt_op_qty` double DEFAULT NULL,
   `pdt_delete_by` varchar(50) DEFAULT NULL,
   `pdt_delete_date` date DEFAULT NULL,
-  PRIMARY KEY (`PDT_CODE`),
+  PRIMARY KEY (`pdt_code`),
   KEY `pdt_loc_code_fk` (`pdt_loc_code`),
   KEY `pdt_sloc_code_fk` (`pdt_sloc_code`),
   KEY `pdt_cat_code_fk` (`pdt_cat_code`),
   KEY `pdt_vat_id_fk` (`pdt_vat_id`),
+  KEY `pdt_unt_code_fk` (`pdt_unt_code`),
   CONSTRAINT `pdt_cat_code_fk` FOREIGN KEY (`pdt_cat_code`) REFERENCES `inv_categories` (`cat_code`),
   CONSTRAINT `pdt_loc_code_fk` FOREIGN KEY (`pdt_loc_code`) REFERENCES `inv_locations` (`loc_code`),
   CONSTRAINT `pdt_sloc_code_fk` FOREIGN KEY (`pdt_sloc_code`) REFERENCES `inv_sub_locations` (`sloc_code`),
-  CONSTRAINT `pdt_vat_id_fk` FOREIGN KEY (`pdt_vat_id`) REFERENCES `inv_vat` (`vat_id`)
+  CONSTRAINT `pdt_vat_id_fk` FOREIGN KEY (`pdt_vat_id`) REFERENCES `inv_vat` (`VAT_ID`),
+  CONSTRAINT `pdt_unt_code_fk` FOREIGN KEY (`pdt_unt_code`) REFERENCES `inv_units` (`unt_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

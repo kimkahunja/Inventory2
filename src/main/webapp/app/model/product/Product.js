@@ -14,12 +14,25 @@ Ext.define('InventoryApp.model.product.Product',{
 	        },
 	        
 	        {
-	        	 name: 'pdtBarCode',
+	        	 name: 'pdtShtDesc',
 	             type: 'string'
 	        },
 	        {
 	        	 name: 'pdtDescription',
 	             type: 'string'
+	        },
+	        {	        	
+	        	 name: 'pdtLocCode',
+	             type: 'auto'	            
+	        },
+	        {	        	
+	        	 name: 'pdtSlocCode',
+	             type: 'auto'	            
+	        },
+	        
+	        {
+	        	name:'pdtCatCode',
+	        	type: 'auto'
 	        },
 	        {	        	
 	        	 name: 'pdtMinLevel',
@@ -37,54 +50,34 @@ Ext.define('InventoryApp.model.product.Product',{
 	        	 name: 'pdtSp',
 	             type: 'float'	            
 	        },
+	        
+	        {	        	
+	        	 name: 'pdtProfitPct',
+	             type: 'float'	            
+	        },
+	        {	        	
+	        	 name: 'pdtVatId',
+	             type: 'auto'	            
+	        },
 	        {	        	
 	        	 name: 'pdtStatus',
 	             type: 'string',
 	             useNull:true
 	        },
 	        {	        	
+	        	 name: 'pdtStrength',
+	             type: 'string'	            
+	        },
+	        
+	        {	        	
 	        	 name: 'pdtCurrentQty',
 	             type: 'float'	            
 	        },
 	        {	        	
-	        	 name: 'pdtDiscount',
+	        	 name: 'pdtAmount',
 	             type: 'float'	            
 	        },
-	        {	        	
-	        	 name: 'pdtStrength',
-	             type: 'string'	            
-	        },
-	        {	        	
-	        	 name: 'pdtExpireDate',
-	             type: 'date',	            
-	             dateWriteFormat: 'Y-m-d'
-	             
-	        },
-	        {	        	
-	        	 name: 'pdtMtradePrice',
-	             type: 'float'	            
-	        },
-	        {	        	
-	        	 name: 'pdtProfitPct',
-	             type: 'float'	            
-	        },
-	        // relational properties
-	        {	        	
-	        	 name: 'pdtUnit',
-	             type: 'auto'	            
-	        },
-	        {	        	
-	        	 name: 'pdtBinLoc',
-	             type: 'auto'	            
-	        },
-	        {	        	
-	        	 name: 'pdtVat',
-	             type: 'auto'	            
-	        },
-	        {
-	        	name:'pdtCategory',
-	        	type: 'auto'
-	        },
+	        
 	     // decorated properties
             {
                   name: '_pdtUnit',
