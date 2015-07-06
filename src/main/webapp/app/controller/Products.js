@@ -44,7 +44,10 @@ Ext.define('InventoryApp.controller.Products', {
                 },
                 'window[xtype=product.edit.window] button#cancel': {
                     click: this.close
-                } 
+                },
+                "window[xtype=product.edit.window] combobox[name='pdtLocCode']": {
+                    change: this.comboChange
+                },
             },
             global: {},
             store: {},
@@ -209,5 +212,20 @@ Ext.define('InventoryApp.controller.Products', {
            }
            );
         }
+    },
+    comboChange: function( combobox, newValue, oldValue, eOpts ) {
+    	if(combobox.isValid()){
+    		  console.log('combox box value change and is valid...'+newValue);
+    		  var sCombobox=Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']");
+    		  console.log('combo box=== '+Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']").isValid());
+    		  /*store=sCombobox.getStore().storeId;
+    		  store.load({
+    			  params: {
+    	           		id:newValue
+    	           	}*/
+    		//  });
+    		  
+    	}
+     
     },
 });
