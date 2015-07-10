@@ -144,6 +144,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                 type: 'location.locations'
                             },
                             editable: false,
+                            emptyText: 'Select Product Main Location...',
                            // forceSelection: true
                         },
                         {
@@ -153,10 +154,13 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                             fieldLabel: 'Secondary Location',
                             displayField: 'slocShtDesc',
                             valueField: 'slocCode',
+                            //queryMode:'remote',
                             store: {
                                 type: 'location.bins'
                             },
                             editable: false,
+                            emptyText: 'Select Product Secondary Location...',
+                            disabled: true,
                             //forceSelection: true
                         }
                     ]

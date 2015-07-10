@@ -26,7 +26,7 @@ Ext.define('InventoryApp.controller.Products', {
         },
         {
             ref: 'SecLocCombo',
-            selector: 'window[xtype=product.edit.window]combobox#pdtSlocCode'
+            selector: "window[xtype=product.edit.window] combobox[name='pdtSlocCode']"
         },
         
     ],
@@ -50,7 +50,11 @@ Ext.define('InventoryApp.controller.Products', {
                     click: this.close
                 },
                 "window[xtype=product.edit.window] combobox[name='pdtLocCode']": {
-                    change: this.comboChange
+                    select: this.comboChange
+                },
+                "window[xtype=product.edit.window] combobox[name='pdtSlocCode']": {
+                    //change: this.comboChange
+                	//beforerender:this.beforeRender
                 },
             },
             global: {},
@@ -217,19 +221,20 @@ Ext.define('InventoryApp.controller.Products', {
            );
         }
     },
-    comboChange: function( combobox, newValue, oldValue, eOpts ) {
-    	if(combobox.isValid()){
-    		  console.log('combox box value change and is valid...'+  this.getSecLocCombo.itemId);
-    		 // var sCombobox=Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']");
-    		  console.log('combo box=== '+Ext.ComponentQuery.query("window[xtype=product.edit.window] combobox[name='pdtSlocCode']").name);
-    		  //store=sCombobox.store().storeId;
-    		  thgetSecLocCombo.store.load({
-    			  params: {
-    	           		id:newValue
-    	           	}
-    		  });
-    		  
+    comboChange: function( combo, records, eOpts ) {
+    	if(combo.isValid()){ 
+    		var secLocCbx = this.getSecLocCombo(),
+            secLocStore = secLocCbx.getStore();  
+    		secLocCbx.clearValue();
+    		secLocStore.clearFilter();
+    		secLocStore.load({
+  			  params: {
+  	           		id: records[0].get('locCode')
+  	           	}
+  		  });
+    		secLocCbx.enable();  
     	}
      
-    },
+    }
+    
 });
