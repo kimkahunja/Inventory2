@@ -20,9 +20,11 @@ Ext.define('InventoryApp.view.product.edit.Form', {
     initComponent: function() {
         var me = this;
         Ext.applyIf(me, {
+        	width:600,
             fieldDefaults: {
                 allowBlank: false,
-                labelAlign: 'top',
+                labelAlign: 'right',
+                labelWidth: 90,
                 flex: 1,
                 margins: 5
             },
@@ -32,18 +34,37 @@ Ext.define('InventoryApp.view.product.edit.Form', {
             },
             items: [
                 {
-                    xtype: 'fieldcontainer',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            name: 'pdtBarCode',
-                            fieldLabel: 'Bar Code/Prod Code'
+                    xtype: 'fieldset',
+                    title: 'Basic Properties',
+                    defaultType: 'textfield',
+                    layout: 'anchor',
+                    defaults: {
+                        anchor: '100%'
+                    },
+                    items: [{
+                    	xtype:'fieldcontainer',
+                    	fieldLabel: 'Name',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        defaultType: 'textfield',
+                        defaults: {
+                            hideLabel: 'true'
                         },
-                        {
-                            xtype: 'textfield',
+                        items:[{                           
+                            name: 'pdtBarCode',
+                            fieldLabel: 'Bar Code/Prod Code',
+                            emptyText: 'Product Code',
+                            flex:2
+                        },
+                        {                           
                             name: 'pdtDescription',
-                            fieldLabel: 'Description'
+                            fieldLabel: 'Description',
+                            emptyText: 'Product Description',
+                            flex:4
                         }
+                        ],
+                    },
+                        
                        
                     ]
                 },
