@@ -20,7 +20,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
     initComponent: function() {
         var me = this;
         Ext.applyIf(me, {
-        	width:600,
+        	//width:600,
             fieldDefaults: {
                 allowBlank: false,
                 labelAlign: 'right',
@@ -28,10 +28,10 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                 flex: 1,
                 margins: 5
             },
-            defaults: {
+            /*defaults: {
                 layout: 'hbox',
                 margins: '0 10 0 10'                
-            },
+            },*/
             items: [
                 {
                     xtype: 'fieldset',
@@ -64,176 +64,199 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         }
                         ],
                     },
-                        
+                    {
+                        xtype: 'fieldcontainer',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        //defaultType: 'gridpicker',                        
+                        items: [						
+                           
+                           {
+                                xtype: 'gridpicker',
+                                 name: 'pdtCategory',
+                                fieldLabel: 'Category',
+                                displayField: 'catDescription',
+                                valueField: 'catCode',
+                                store: {
+                                    type: 'categories.categories'
+                                },
+                                editable: false,
+                                forceSelection: true,   
+                                emptyText:'select product category',
+                                minChars: 0,                           
+                                gridConfig: {
+                                	columns: [
+                                	          {
+                                	        	  xtype: 'rownumberer'
+                                	          },
+                                	          {
+                                					dataIndex: 'catDescription'
+                                					,flex: 1
+                                				}
+                                	          ],
+                        	      	// Filtering logic
+                        			listeners: {
+                        					single: true
+                        					,afterrender: function() {
+                        						var grid = this,
+                        							store = this.getStore(),
+                        							filters = {};
+                        						grid.query('button').forEach(function(button) {
+                        							button.on('toggle', function(button, pressed) {
+                        								filters[button.text] = pressed;
+                        								store.filter(function(record) {
+                        									return filters[record.get('catDescription').substr(0, 3)] !== false;
+                        								});
+                        								grid.doLayout(); // update grid height
+                        							});
+                        						});
+                        					}
+                        				}     	          
+                                	        
+                                }
+                            },
+                            {
+                                xtype: 'ux.form.field.remotecombobox',
+                                name: 'pdtUnit',
+                                fieldLabel: 'Unit Measure',
+                                displayField: 'untDescription',
+                                valueField: 'untCode',
+                                store: {
+                                    type: 'units.units'
+                                },
+                                editable: false,
+                                forceSelection: true,
+                                emptyText:'select unit of measure'
+                            }
+                        ]
+                    } ,
+
+                    {
+                        xtype: 'fieldcontainer',
+                        layout: 'hbox',
+                        combineErrors: true,
+                        items: [                        
+                            {
+                                xtype: 'textfield',
+                                name: 'pdtStrength',
+                                allowBlank: true,
+                                fieldLabel: 'Strength'
+                            }
+                        ]
+                    }
                        
                     ]
                 },
                 {
-                    xtype: 'fieldcontainer',
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            name: 'pdtBp',
-                            fieldLabel: 'Buying Price'
-                        },
-                        {
-                            xtype: 'textfield',
-                            name: 'pdtSp',
-                            allowBlank: true,
-                            fieldLabel: 'Selling Price'
-                        }
-                    ]
+                	xtype: 'fieldset',
+                    title: 'Price Details',
+                    defaultType: 'textfield',
+                    layout: 'anchor',
+                    defaults: {
+                        anchor: '100%'
+                    },	
+                    items:[
+							{
+							    xtype: 'fieldcontainer',
+							    layout: 'hbox',
+		                        combineErrors: true,
+							    items: [
+							        {
+							            xtype: 'textfield',
+							            name: 'pdtBp',
+							            fieldLabel: 'Buying Price'
+							        },
+							        {
+							            xtype: 'textfield',
+							            name: 'pdtSp',
+							            allowBlank: true,
+							            fieldLabel: 'Selling Price'
+							        }
+							    ]
+							}, 
+                           ]
                 },
                 {
-                    xtype: 'fieldcontainer',
-                    items: [
-							
-                       /* {
-                            xtype: 'ux.form.field.remotecombobox',
-                            name: 'pdtCategory',
-                            fieldLabel: 'Category',
-                            displayField: 'catDescription',
-                            valueField: 'catCode',                           
-                            store: {
-                                type: 'categories.categories'
-                            },
-                           // editable: false,
-                           // forceSelection: true
-                        },*/
-                       {
-                            xtype: 'gridpicker',
-                             name: 'pdtCategory',
-                            fieldLabel: 'Category',
-                            displayField: 'catDescription',
-                            valueField: 'catCode',
-                            store: {
-                                type: 'categories.categories'
-                            },
-                            editable: false,
-                            forceSelection: true,   
-                            minChars: 0,                           
-                            gridConfig: {
-                            	columns: [
-                            	          {
-                            	        	  xtype: 'rownumberer'
-                            	          },
-                            	          {
-                            					dataIndex: 'catDescription'
-                            					,flex: 1
-                            				}
-                            	          ],
-                    	      	// Filtering logic
-                    			listeners: {
-                    					single: true
-                    					,afterrender: function() {
-                    						var grid = this,
-                    							store = this.getStore(),
-                    							filters = {};
-                    						grid.query('button').forEach(function(button) {
-                    							button.on('toggle', function(button, pressed) {
-                    								filters[button.text] = pressed;
-                    								store.filter(function(record) {
-                    									return filters[record.get('catDescription').substr(0, 3)] !== false;
-                    								});
-                    								grid.doLayout(); // update grid height
-                    							});
-                    						});
-                    					}
-                    				}     	          
-                            	        
-                            }
-                        },
-                        {
-                            xtype: 'ux.form.field.remotecombobox',
-                            name: 'pdtUnit',
-                            fieldLabel: 'Unit Measure',
-                            displayField: 'untDescription',
-                            valueField: 'untCode',
-                            store: {
-                                type: 'units.units'
-                            },
-                            editable: false,
-                            forceSelection: true
-                        },
-                        {
-                            xtype: 'ux.form.field.remotecombobox',
-                            name: 'pdtLocCode',
-                            fieldLabel: 'Main Location',
-                            displayField: 'locShtDesc',
-                            valueField: 'locCode',
-                            store: {
-                                type: 'location.locations'
-                            },
-                            editable: false,
-                            emptyText: 'Select Product Main Location...',
-                           // forceSelection: true
-                        },
-                        {
-                            xtype: 'ux.form.field.remotecombobox',
-                            name: 'pdtSlocCode',
-                            itemId:'pdtSlocCode',
-                            fieldLabel: 'Secondary Location',
-                            displayField: 'slocShtDesc',
-                            valueField: 'slocCode',
-                            //queryMode:'remote',
-                            store: {
-                                type: 'location.bins'
-                            },
-                            editable: false,
-                            emptyText: 'Select Product Secondary Location...',
-                            disabled: true,
-                            //forceSelection: true
-                        }
-                    ]
-                },
-                {
-                    xtype: 'fieldcontainer',
-                    items: [
-                        
-                        {
-                            xtype: 'ux.form.field.remotecombobox',
-                            name: 'pdtVat',
-                            fieldLabel: 'Tax Category',
-                            displayField: 'vatDescription',
-                            valueField: 'vatId',
-                            store: {
-                                type: 'vat.vat'
-                            },
-                            editable: false,
-                            forceSelection: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            name: 'pdtMinLevel',
-                            allowBlank: true,
-                            fieldLabel: 'Minimum Level'
-                        },
-                        {
-                            xtype: 'textfield',
-                            name: 'pdtMaxLevel',
-                            allowBlank: true,
-                            fieldLabel: 'Maximum Level'
-                        }
-                    ]
-                },
-                {
-                    xtype: 'fieldcontainer',
-                    items: [
-                        {
-                            xtype: 'datefield',
-                            name: 'pdtExpireDate',
-                            fieldLabel: 'Expiry Date',
-                           // format: 'd/m/Y',                         
-                            allowBlank: true,
-                        },
-                        {
-                            xtype: 'textfield',
-                            name: 'pdtStrength',
-                            allowBlank: true,
-                            fieldLabel: 'Strength'
-                        }
-                    ]
-                }
+                	xtype: 'fieldset',
+                    title: 'Additional Details',
+                    defaultType: 'textfield',
+                    layout: 'anchor',
+                    defaults: {
+                        anchor: '100%'
+                    },	
+                    items:[
+							{
+							    xtype: 'fieldcontainer',
+							    layout: 'hbox',
+							    combineErrors: true,
+							    //defaultType: 'gridpicker',                        
+							    items: [
+							        {
+							            xtype: 'ux.form.field.remotecombobox',
+							            name: 'pdtLocCode',
+							            fieldLabel: 'Main Location',
+							            displayField: 'locShtDesc',
+							            valueField: 'locCode',
+							            store: {
+							                type: 'location.locations'
+							            },
+							            editable: false,
+							            emptyText: 'Select Product Main Location...',
+							           // forceSelection: true
+							        },
+							        {
+							            xtype: 'ux.form.field.remotecombobox',
+							            name: 'pdtSlocCode',
+							            itemId:'pdtSlocCode',
+							            fieldLabel: 'Secondary Location',
+							            displayField: 'slocShtDesc',
+							            valueField: 'slocCode',
+							            //queryMode:'remote',
+							            store: {
+							                type: 'location.bins'
+							            },
+							            editable: false,
+							            emptyText: 'Select Product Secondary Location...',
+							            disabled: true,
+							            //forceSelection: true
+							        }
+							    ]
+							}, 
+                           {
+                               xtype: 'fieldcontainer',
+                               layout: 'hbox',
+		                       combineErrors: true,
+                               items: [
+                                   
+                                   {
+                                       xtype: 'ux.form.field.remotecombobox',
+                                       name: 'pdtVat',
+                                       fieldLabel: 'Tax Category',
+                                       displayField: 'vatDescription',
+                                       valueField: 'vatId',
+                                       store: {
+                                           type: 'vat.vat'
+                                       },
+                                       editable: false,
+                                       forceSelection: true
+                                   },
+                                   {
+                                       xtype: 'textfield',
+                                       name: 'pdtMinLevel',
+                                       allowBlank: true,
+                                       fieldLabel: 'Minimum Level'
+                                   },
+                                   {
+                                       xtype: 'textfield',
+                                       name: 'pdtMaxLevel',
+                                       allowBlank: true,
+                                       fieldLabel: 'Maximum Level'
+                                   }
+                               ]
+                           },
+                           ]
+                }             
+               
             ]
         });
         me.callParent( arguments );
