@@ -4,13 +4,13 @@ Ext.define('InventoryApp.view.product.edit.Window', {
     requires: [
         'InventoryApp.view.product.edit.Form'
     ],
-    iconCls: 'icon_user',
+    iconCls: 'icon_product',
     width: 700,
     modal: true,
-    resizable: false,
+    resizable: true,
     draggable: true,
-   // constrainHeader: true,
-   // layout: 'fit',
+    constrainHeader: true,
+    layout: 'fit',
     initComponent: function() {
         var me = this;
         Ext.applyIf(me, {
@@ -34,13 +34,13 @@ Ext.define('InventoryApp.view.product.edit.Window', {
                             xtype: 'button',
                             itemId: 'save',
                             text: 'Save',
-                            iconCls: 'icon_save'
+                            iconCls: 'save'
                         },
                         {
                             xtype: 'button',
                             itemId: 'cancel',
                             text: 'Cancel',
-                            iconCls: 'icon_delete'
+                            iconCls: 'cancel'
                         },
                     ]
                 }

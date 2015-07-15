@@ -34,7 +34,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
             items: [
                 {
                     xtype: 'fieldset',
-                    title: 'Basic Properties',
+                    title: '<span style="font-size:13px;font-weight: bold;font-style: italic;">Basic Properties</span>',                    
                     defaultType: 'textfield',
                     layout: 'anchor',
                     defaults: {
@@ -139,7 +139,15 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                 xtype: 'textfield',
                                 name: 'pdtStrength',
                                 allowBlank: true,
-                                fieldLabel: 'Strength'
+                                fieldLabel: 'Strength',
+                                emptyText:'select product strength' 	
+                            },
+                            {
+                                xtype: 'displayfield',
+                                name: 'pdtCurrentQty',
+                                fieldLabel: 'Current Qty',
+                                value:'0',
+                                fieldStyle: 'background-color: #ddd; background-image: none;'
                             }
                         ]
                     }
@@ -148,8 +156,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                 },
                 {
                 	xtype: 'fieldset',
-                    title: 'Price Details',
-                    defaultType: 'textfield',
+                    title: '<span style="font-size:13px;font-weight: bold;font-style: italic;">Price Details</span>',                  
                     layout: 'anchor',
                     defaults: {
                         anchor: '100%'
@@ -161,15 +168,24 @@ Ext.define('InventoryApp.view.product.edit.Form', {
 		                        combineErrors: true,
 							    items: [
 							        {
-							            xtype: 'textfield',
+							            xtype: 'numberfield',
 							            name: 'pdtBp',
-							            fieldLabel: 'Buying Price'
+							            fieldLabel: 'Buying Price',
+							            minValue: 0
 							        },
 							        {
-							            xtype: 'textfield',
+							            xtype: 'numberfield',
 							            name: 'pdtSp',
 							            allowBlank: true,
-							            fieldLabel: 'Selling Price'
+							            fieldLabel: 'Selling Price',
+							            minValue: 0
+							        },
+							        {
+							            xtype: 'numberfield',
+							            name: 'pdtProfitPct',
+							            allowBlank: true,
+							            fieldLabel: 'Profit %',
+							            minValue: 0
 							        }
 							    ]
 							}, 
@@ -177,7 +193,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                 },
                 {
                 	xtype: 'fieldset',
-                    title: 'Additional Details',
+                    title: '<span style="font-size:13px;font-weight: bold;font-style: italic;">Additional Details</span>',
                     defaultType: 'textfield',
                     layout: 'anchor',
                     defaults: {
@@ -240,16 +256,18 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                        forceSelection: true
                                    },
                                    {
-                                       xtype: 'textfield',
+                                       xtype: 'numberfield',
                                        name: 'pdtMinLevel',
                                        allowBlank: true,
-                                       fieldLabel: 'Minimum Level'
+                                       fieldLabel: 'Minimum Level',
+                                       minValue: 0
                                    },
                                    {
-                                       xtype: 'textfield',
+                                       xtype: 'numberfield',
                                        name: 'pdtMaxLevel',
                                        allowBlank: true,
-                                       fieldLabel: 'Maximum Level'
+                                       fieldLabel: 'Maximum Level',
+                                       minValue: 0
                                    }
                                ]
                            },
