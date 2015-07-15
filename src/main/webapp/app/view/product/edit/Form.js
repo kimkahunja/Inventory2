@@ -19,8 +19,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
     bodyPadding: 5,
     initComponent: function() {
         var me = this;
-        Ext.applyIf(me, {
-        	//width:600,
+        Ext.applyIf(me, {        	
             fieldDefaults: {
                 allowBlank: false,
                 labelAlign: 'right',
