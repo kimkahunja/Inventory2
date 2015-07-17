@@ -160,66 +160,30 @@ Ext.define('InventoryApp.controller.Products', {
             record = form.getRecord(),
             values = form.getValues();
 		     // set values of record from form
-		        record.set( values );
-            console.log('kim ++++ '+record.get('pdtExpireDate'));
-            mode = (record.get('pdtCode') === null) ? 'insert': 'update';
+		        record.set( values );            
+          
         // set values of record from form
        
-        this.syncData(mode,values);
+        this.syncData(values);
         // mask to prevent extra submits
       //  Ext.getBody().mask( 'Saving Product...' );
         
     },
   //Sync data with the server 
-    syncData : function(mode,values) {    	
+    syncData : function(values) {    	
         Ext.Ajax.request({
-               url: 'ProductServlet',
-            params: {
-                    store_id: 1,
-                    action: mode,                    
-                    recordInfo: Ext.encode(values)
+               url: 'product/saveProduct.action',
+            params: {                   
+                    data: Ext.encode(values)
             },
             
             scope:this,
             //method to call when the request is successful
-            success: this.onSaveSuccess,
+            success: InventoryApp.Utilities.onSaveSuccess,
             //method to call when the request is a failure
-            failure: this.onSaveFailure
+            failure: InventoryApp.Utilities.onSaveFailure
         });
         this.getProductList().getStore().load();
-    },
-    onSaveFailure: function(err){
-        //Alert the user about communication error
-        Ext.MessageBox.alert('Status', 'Error occured during update');
-    },
-    onSaveSuccess: function(conn, response, options, eOpts){
-    	var result = Ext.JSON.decode(conn.responseText, true);              
-        if ( ! result)
-        {
-           
-           result =
-           {
-           }
-           ;
-           result.success = false;
-           result.msg = conn.responseText;
-        }
-        if (result.success)
-        {
-           win.close();                  
-                            
-        }
-        else
-        {
-           Ext.Msg.show(
-           {                    
-              title : 'Fail!',
-              msg : result.msg,
-              icon : Ext.Msg.ERROR,
-              buttons : Ext.Msg.OK
-           }
-           );
-        }
     },
     comboChange: function( combo, records, eOpts ) {
     	if(combo.isValid()){ 
