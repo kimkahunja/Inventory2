@@ -50,7 +50,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                             hideLabel: 'true'
                         },
                         items:[{                           
-                            name: 'pdtBarCode',
+                            name: 'pdtShtDesc',
                             fieldLabel: 'Bar Code/Prod Code',
                             emptyText: 'Product Code',
                             flex:2
@@ -72,7 +72,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                            
                            {
                                 xtype: 'gridpicker',
-                                 name: 'pdtCategory',
+                                 name: 'pdtCatCode',
                                 fieldLabel: 'Category',
                                 displayField: 'catDescription',
                                 valueField: 'catCode',
@@ -116,7 +116,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                             },
                             {
                                 xtype: 'ux.form.field.remotecombobox',
-                                name: 'pdtUnit',
+                                name: 'pdtUntCode',
                                 fieldLabel: 'Unit Measure',
                                 displayField: 'untDescription',
                                 valueField: 'untCode',
@@ -245,7 +245,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                    
                                    {
                                        xtype: 'ux.form.field.remotecombobox',
-                                       name: 'pdtVat',
+                                       name: 'pdtVatId',
                                        fieldLabel: 'Tax Category',
                                        displayField: 'vatDescription',
                                        valueField: 'vatId',

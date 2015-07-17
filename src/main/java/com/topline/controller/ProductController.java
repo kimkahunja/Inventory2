@@ -66,7 +66,7 @@ public class ProductController extends BaseController {
 			if (start == null) {
 				start = "0";
 			}
-			if(id.trim().length()!=0){
+			if(!(id==null)){
 				map.put("id", new BigDecimal(id));
 			}
 			List<ProductWrapper>list=productMapper.fetchProducts(map);

@@ -66,7 +66,8 @@ Ext.define('InventoryApp.model.product.Product',{
 	        {	        	
 	        	 name: 'pdtStatus',
 	             type: 'string',
-	             useNull:true
+	             useNull:true,
+	             defaultValue:'ACTIVE'
 	        },
 	        {	        	
 	        	 name: 'pdtStrength',
