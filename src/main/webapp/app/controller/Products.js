@@ -160,8 +160,8 @@ Ext.define('InventoryApp.controller.Products', {
             record = form.getRecord(),
             values = form.getValues();
 		     // set values of record from form
-		        record.set( values );            
-          
+		        record.set( values );          
+               
         // set values of record from form
        
         this.syncData(values);

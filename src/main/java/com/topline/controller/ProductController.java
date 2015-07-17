@@ -27,6 +27,7 @@ public class ProductController extends BaseController {
 			ObjectMapper mapper = new ObjectMapper();
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 			Products product=mapper.readValue(data, Products.class);
+			System.out.println("status== "+product.getPdtStatus());
 			if(product.getPdtCode()==null){
 				productMapper.insert(product);
 				jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);

@@ -24,7 +24,7 @@ Ext.define('InventoryApp.view.product.List',{
                         text: 'Name',
                         dataIndex: 'pdtDescription',
                         renderer: function( value, metaData, record, rowIndex, colIndex, store, view ) {
-                            return value + '- ' + record.get( 'pdtBarCode' );
+                            return value + '- ' + record.get( 'pdtShtDesc' );
                         },
                         width: 200,
                         filter: true
@@ -53,7 +53,7 @@ Ext.define('InventoryApp.view.product.List',{
                     },
                     {
                     	text:'Category',
-                    	dataIndex:'_pdtCategory',
+                    	dataIndex:'_pdtCatCode',
                     	filter: 'combo'
                     },
                     {

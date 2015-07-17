@@ -234,6 +234,25 @@ Ext.define('InventoryApp.view.product.edit.Form', {
 							            emptyText: 'Select Product Secondary Location...',
 							            disabled: true,
 							            //forceSelection: true
+							        },
+							        {
+							            xtype: 'hiddenfield',
+							            name: 'pdtStatus',
+							            value: 'ACTIVE'
+							        },
+							        {
+							            xtype: 'hiddenfield',
+							            name: 'pdtCurrentQty',
+							            value: 0
+							        },
+							        {
+							            xtype: 'hiddenfield',
+							            name: 'pdtAmount',
+							            value: 0
+							        },
+							        {
+							            xtype: 'hiddenfield',
+							            name: 'pdtCode'							            
 							        }
 							    ]
 							}, 
