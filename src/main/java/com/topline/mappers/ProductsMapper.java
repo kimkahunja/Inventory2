@@ -2,7 +2,11 @@ package com.topline.mappers;
 
 import com.topline.model.Products;
 import com.topline.model.ProductsExample;
+import com.topline.model.wrappers.ProductWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ProductsMapper {
@@ -93,4 +97,8 @@ public interface ProductsMapper {
      * @mbggenerated Mon Jul 06 15:36:49 EAT 2015
      */
     int updateByPrimaryKey(Products record);
+    
+    
+  //added methods
+    List<ProductWrapper> fetchProducts(Map<String,Object> map);
 }
