@@ -70,7 +70,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         //defaultType: 'gridpicker',                        
                         items: [						
                            
-                           {
+                           /*{
                                 xtype: 'gridpicker',
                                  name: 'pdtCatCode',
                                 fieldLabel: 'Category',
@@ -113,6 +113,20 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         				}     	          
                                 	        
                                 }
+                            },*/
+                           {
+                        	   xtype: 'ux.form.field.remotecombobox',
+                               name: 'pdtCatCode',
+                                fieldLabel: 'Category',
+                                displayField: 'catDescription',
+                                valueField: 'catCode',
+                                store: {
+                                    type: 'categories.categories'
+                                },
+                                editable: false,
+                                forceSelection: true,   
+                                emptyText:'select product category',
+                                minChars: 0, 
                             },
                             {
                                 xtype: 'ux.form.field.remotecombobox',

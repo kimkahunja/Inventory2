@@ -49,27 +49,27 @@ Ext.define('InventoryApp.view.product.List',{
                     {
                         text: 'Unit Measure',
                         dataIndex: '_pdtUntCode',
-                        filter: 'combo'
+                        //filter: 'combo'
                     },
                     {
                     	text:'Category',
                     	dataIndex:'_pdtCatCode',
-                    	filter: 'combo'
+                    	//filter: 'combo'
                     },
                     {
                         text: 'Main Location',
                         dataIndex: '_pdtLocCode',
-                        filter: 'combo'
+                       // filter: 'combo'
                     },
                     {
                         text: 'Secondary Location',
                         dataIndex: '_pdtSlocCode',
-                        filter: 'combo'
+                        //filter: 'combo'
                     },
                     {
                         text: 'TAX',
                         dataIndex: '_pdtVatId',
-                        filter: 'combo'
+                        //filter: 'combo'
                     },
                     {
                         text: 'Min Level',
