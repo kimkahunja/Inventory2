@@ -45,7 +45,7 @@ Ext.define('InventoryApp.model.purchases.Purchase',{
 	        },
 	        // decorated properties
             {
-                  name: '_purAcc',
+                  name: '_purAccCode',
                   type: 'string',
                   persist: false
             },

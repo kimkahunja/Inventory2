@@ -30,7 +30,7 @@
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 	     
-  <table tableName = "inv_products" domainObjectName = "Products"/>
-  
+  <table tableName = "inv_purchases" domainObjectName = "Purchase"/>
+  <table tableName = "inv_purchases_details" domainObjectName = "PurchaseDetail"/>
  </context>
 </generatorConfiguration>

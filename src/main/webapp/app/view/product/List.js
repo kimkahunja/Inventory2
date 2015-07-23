@@ -49,7 +49,7 @@ Ext.define('InventoryApp.view.product.List',{
                     {
                         text: 'Unit Measure',
                         dataIndex: '_pdtUntCode',
-                        //filter: 'combo'
+                        filter: 'combo'
                     },
                     {
                     	text:'Category',

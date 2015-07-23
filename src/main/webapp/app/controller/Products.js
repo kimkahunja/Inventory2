@@ -28,6 +28,10 @@ Ext.define('InventoryApp.controller.Products', {
             ref: 'SecLocCombo',
             selector: "window[xtype=product.edit.window] combobox[name='pdtSlocCode']"
         },
+        {
+            ref: 'UnitCombo',
+            selector: "window[xtype=product.edit.window] combobox[name='pdtSlocCode']"
+        },
         
     ],
     init: function() {
@@ -38,6 +42,7 @@ Ext.define('InventoryApp.controller.Products', {
                 	//edit: this.editProduct,
                     beforerender: this.loadRecords,
                     itemdblclick: this.edit,
+                    beforeclose:this.beforeClose,
                     //itemcontextmenu: this.showContextMenu
                 },
                 'grid[xtype=product.list] button#add': {
@@ -199,6 +204,10 @@ Ext.define('InventoryApp.controller.Products', {
     		secLocCbx.enable();  
     	}
      
+    },
+    beforeClose:function(panel,eOpts){
+    	var me = this,
+        grid = me.getProductList();
+    	//grid.clearFilters();
     }
-    
 });
