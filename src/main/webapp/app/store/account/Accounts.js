@@ -13,15 +13,18 @@ Ext.define('InventoryApp.store.account.Accounts',{
 	//autoLoad: true,
     pageSize: 20,
     proxy: {
-        type: 'ajax',
-        url: 'AccountServlet',//'resources/categories.json',
-        extraParams: {
-            store_id: 1
+        type: 'ajax',        
+        api: {
+            create  : 'account/saveAccount.action',
+            read    : 'account/fetchAccounts.action',
+            update  : 'account/saveAccount.action',
+            destroy : 'account/deleteAccount.action'
         },
         reader: {
             type: 'json',
-            totalProperty: 'count',
-            root: 'data',
+           // idProperty:'slocCode',
+            totalProperty: 'data.count',
+            root: 'data.data',
             successProperty: 'success'
         },
      }

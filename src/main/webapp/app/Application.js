@@ -11,10 +11,10 @@ Ext.define('InventoryApp.Application', {
             'location.BinList',
             'units.UnitList',
             'product.List',
-            'purchases.PurchaseLanding',
-            'purchases.PurchaseList',
-            'purchases.PurchaseDtlsList',
-            'dragNdrop.GridToGrid'
+            //'purchases.PurchaseLanding',
+            'purchases.PurchaseParticulars',
+            'purchases.PurchaseDtlsList',            
+            'purchases.Purchase'
         ],
     controllers: [
        // 'App',
@@ -23,9 +23,9 @@ Ext.define('InventoryApp.Application', {
         'Locations',
         'Units',
         'Products',
-        'Purchases',
-        'PurchasesDtls',
-        'GridToGrid',
+        //'Purchases',
+        //'PurchasesDtls',
+       // 'GridToGrid',
         'Bins'
     ],
     requires: [
