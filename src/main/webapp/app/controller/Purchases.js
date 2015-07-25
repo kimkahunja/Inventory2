@@ -5,17 +5,14 @@ Ext.define('InventoryApp.controller.Purchases', {
     extend: 'InventoryApp.controller.Base',
     stores: [
     	'purchases.Purchases',
-    	'purchases.PurchasesDtls'
+    	'purchases.PurchasesDtls',
+    	'account.Accounts'
     ],
     views: [
-    	'purchases.PurchaseList',
+    	//'purchases.PurchaseList',
     	'purchases.PurchaseDtlsList'
     ],
-    refs: [
-    	{
-            ref: 'PurchaseList',
-            selector: '[xtype=purchases.purchaselist]'
-        },
+    refs: [    	
         {
             ref: 'PurchaseDtlsList',
             selector: '[xtype=purchases.purchasedtlslist]'
@@ -28,10 +25,10 @@ Ext.define('InventoryApp.controller.Purchases', {
             	'grid[xtype=purchases.purchaselist]': {
             		//edit: this.editLocation,
             		//canceledit: this.cancel,
-            		beforerender: this.loadRecords,
-            		itemcontextmenu: this.showContextMenu,
-            		selectionchange: this.onSelectionChange,
-            		cellclick:this.onSelectionChange,
+            		//beforerender: this.loadRecords,
+            		//itemcontextmenu: this.showContextMenu,
+            		//selectionchange: this.onSelectionChange,
+            		//cellclick:this.onSelectionChange,
             	},
             	'grid[xtype=purchases.purchaselist] button#add': {
             		//click: this.add

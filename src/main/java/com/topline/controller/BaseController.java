@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.topline.mappers.AccountMapper;
 import com.topline.mappers.CategoriesMapper;
 import com.topline.mappers.GroupsMapper;
 import com.topline.mappers.LocationsMapper;
@@ -57,6 +58,8 @@ public class BaseController extends MultiActionController {
 	MenuMapper menuMapper;
 	@Autowired(required=true)
 	PermissionsMapper permissionsMapper;
+	@Autowired(required=true)
+	AccountMapper accountMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

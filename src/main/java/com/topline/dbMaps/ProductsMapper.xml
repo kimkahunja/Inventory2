@@ -541,4 +541,13 @@
           where inv_products.pdt_code=   #{id,jdbcType=INTEGER}
       </if>	
    </select>
+   <select id="fetchTransProduct" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+   	  select 
+	    <include refid="Base_Column_List" />
+	    from inv_products
+	     <if test="searchData != null"> 
+	    where ((pdt_description LIKE '%' + #{searchData,jdbcType=VARCHAR} + '%')
+	    		OR(pdt_sht_desc LIKE '%' + #{searchData,jdbcType=VARCHAR} + '%'))
+	    </if>
+   </select>
 </mapper>

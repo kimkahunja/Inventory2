@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topline.mappers.ProductsMapper;
 import com.topline.model.Locations;
 import com.topline.model.Products;
 import com.topline.model.wrappers.ProductWrapper;
@@ -89,4 +90,45 @@ public class ProductController extends BaseController {
 		}
 		
 	}
+	//fetch trans product
+		@RequestMapping(value="/fetchTransProduct.action", method=RequestMethod.GET)
+		private @ResponseBody
+		String fetchTransProduct(HttpServletRequest request){
+			try{
+				HashMap<String, Object> data = new HashMap<String, Object>();
+				
+				Map<String, Object> map = new HashMap<String, Object>();		
+				
+				String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+				String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+				String searchData=GlobalCC.CheckNullValues(request.getParameter("searchData"));
+				
+				if (limit == null) {
+					limit = "50";
+				}
+				if (start == null) {
+					start = "0";
+				}
+				if(!(searchData==null)){
+					map.put("searchData",searchData);
+				}
+				List<ProductsMapper>list=productMapper.fetchTransProduct(map);
+				if (list != null) {
+					int count = list.size();
+					data.put("count", count);
+				}
+				data.put("data", list);
+				jsonResponse.setData(data);
+				jsonResponse.setSuccess(true);
+				return jsonObject(jsonResponse);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+			
+		}
 }

@@ -23,7 +23,7 @@ Ext.define('InventoryApp.Application', {
         'Locations',
         'Units',
         'Products',
-        //'Purchases',
+        'Purchases',
         //'PurchasesDtls',
        // 'GridToGrid',
         'Bins'
