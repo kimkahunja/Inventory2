@@ -91,7 +91,7 @@ public class ProductController extends BaseController {
 		
 	}
 	//fetch trans product
-		@RequestMapping(value="/fetchTransProduct.action", method=RequestMethod.GET)
+		@RequestMapping(value="/fetchTransProduct.action")
 		private @ResponseBody
 		String fetchTransProduct(HttpServletRequest request){
 			try{
@@ -120,6 +120,7 @@ public class ProductController extends BaseController {
 				data.put("data", list);
 				jsonResponse.setData(data);
 				jsonResponse.setSuccess(true);
+				System.out.println(jsonObject(jsonResponse));
 				return jsonObject(jsonResponse);
 				
 			}catch(Exception e){

@@ -9,7 +9,7 @@ Ext.define('InventoryApp.controller.Purchases', {
     	'account.Accounts'
     ],
     views: [
-    	//'purchases.PurchaseList',
+    	'purchases.Purchase',
     	'purchases.PurchaseDtlsList'
     ],
     refs: [    	
@@ -35,6 +35,9 @@ Ext.define('InventoryApp.controller.Purchases', {
             	},
             	'grid[xtype=purchases.purchaselist] gridview': {
             		//itemadd: this.edit
+            	},
+            	"textfield[name='search']":{
+            		specialkey:this.specialKey
             	}
             },
             global: {},
@@ -116,6 +119,67 @@ Ext.define('InventoryApp.controller.Purchases', {
     		//var myfk=Ext.ComponentQuery.query('grid[xtype=purchases.purchasedtlslist] hiddenfield#fk_id');
     		//var win = Ext.widget('purchases.purchasedtlslist');
     		//win.down('hidden#fk_id').setValue(3);
+        }
+    },
+    specialKey: function(field, e){
+        // e.HOME, e.END, e.PAGE_UP, e.PAGE_DOWN,
+        // e.TAB, e.ESC, arrow keys: e.LEFT, e.RIGHT, e.UP, e.DOWN
+        if (e.getKey() == e.ENTER) {
+        	Ext.Ajax.request({
+                url: 'product/fetchTransProduct.action',
+             params: {                   
+            	 searchData: Ext.encode(field.getValue())
+             },
+             
+             scope:this,
+             //method to call when the request is successful
+             success: this.onSaveSuccess,
+             //method to call when the request is a failure
+             failure: InventoryApp.Utilities.onSaveFailure
+         });
+      // console.log('enteer kkkkkkkk '+field.getValue()); 	
+        }
+    },
+    onSaveSuccess: function(conn, response, options, eOpts){
+    	var result = Ext.JSON.decode(conn.responseText, true);              
+        if ( ! result)
+        {
+           
+           result =
+           {
+           }
+           ;
+           result.success = false;
+           result.messages.message = conn.responseText;
+        }
+        if (result.success)
+        {
+        	if(result.data.count==0){
+        		Ext.Msg.show(
+                        {                    
+                           title : 'No Record!',
+                           msg : 'No product Matches your search...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        	}else
+        		{
+        			
+        		}
+        	                
+                            
+        }
+        else
+        {
+           Ext.Msg.show(
+           {                    
+              title : 'Fail!',
+              msg : result.messages.message,
+              icon : Ext.Msg.ERROR,
+              buttons : Ext.Msg.OK
+           }
+           );
         }
     },
 });    
