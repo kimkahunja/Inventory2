@@ -49,8 +49,37 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 								          fieldLabel: 'Product'
 							          }	,
 							          {
-							        	xtype:'purchases.purchasedtlslist' , 
-							          }
+							        	  xtype: 'container',
+							        	  layout:'fit',
+							        	  maxHeight:300,
+							        	  items:[
+													{
+														xtype:'purchases.purchasedtlslist' , 
+													  },
+							        	         ],
+							          },
+							          
+							          {
+		                                     xtype: 'toolbar',		                                   
+		                                     items: [
+		                 						{
+		                 						    xtype:'tbspacer',
+		                 						    flex:2
+		                 						},
+		                 						{
+		                                            xtype: 'button',
+		                                            itemId: 'save',
+		                                            text: 'Save',
+		                                            iconCls: 'save'
+		                                        },
+		                                        {
+		                                            xtype: 'button',
+		                                            itemId: 'cancel',
+		                                            text: 'Cancel',
+		                                            iconCls: 'cancel'
+		                                        },
+		                                     ]
+		                                 },
 							          ],
 					        },
 					       {
@@ -88,7 +117,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
             					            fieldLabel: 'Search'					            
             					        },
                                      ]
-                                 }
+                                 },
+                                
                              ]
     	 });
          me.callParent( arguments );

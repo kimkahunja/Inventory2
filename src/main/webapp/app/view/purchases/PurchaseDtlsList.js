@@ -2,13 +2,20 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	extend:'Ext.grid.Panel',
 	alias:'widget.purchases.purchasedtlslist',
 	requires: [
-	           'Ext.grid.RowNumberer',	          
+	           'Ext.grid.RowNumberer',
+	           'Ext.grid.plugin.CellEditing',
 	       ],	
-	//store: 'purchases.PurchasesDtls',
+	store: 'purchases.PurchasesDtls',
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{
-           selType: 'rowmodel',        
+           selType: 'cellmodel',
+           plugins: [
+                     {
+                         ptype: 'cellediting',
+                         clicksToEdit: 1
+                     }
+                 ],
            columns: {
                defaults: {
             	   menuDisabled:true,
@@ -22,7 +29,14 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 						        align: 'center',
 						        minWidth: 35,
 						        maxWidth:50
-						        }),	
+						        }),							        
+                   
+						{
+	                       text: 'Description',
+	                       dataIndex: '_purdPdtCode',
+	                       menuDisabled:true,
+	                       //sortable:false
+		                   }, 	
                    
                    {
                        text: 'Unit Price',
@@ -53,6 +67,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
                    },
                    
                ]
+               
            },
            features: [{
                ftype: 'summary'

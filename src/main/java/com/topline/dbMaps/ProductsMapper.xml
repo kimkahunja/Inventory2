@@ -548,9 +548,11 @@
 		    pdt_status, pdt_strength, 1 as pdt_current_qty, pdt_amount, pdt_op_qty, pdt_delete_by, 
 		    pdt_delete_date
 	    from inv_products
-	     <if test="searchData != null"> 
-	    where ((pdt_description LIKE '%' || #{searchData,jdbcType=VARCHAR} || '%')
+	    <!-- <if test="searchData != null"> 
+	      where ((pdt_description LIKE '%' || #{searchData,jdbcType=VARCHAR} || '%')
 	    		OR(pdt_sht_desc LIKE '%' || #{searchData,jdbcType=VARCHAR} || '%'))
-	    </if>
+	    		
+	      where pdt_sht_desc LIKE #{searchData,jdbcType=VARCHAR} 		
+	    </if>-->
    </select>
 </mapper>

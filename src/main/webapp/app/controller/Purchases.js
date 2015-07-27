@@ -165,7 +165,20 @@ Ext.define('InventoryApp.controller.Purchases', {
                         );
         	}else
         		{
-        			
+        		 var me = this,
+                 grid = me.getPurchaseDtlsList(),
+                 store = grid.getStore();
+                // model=store.getProxy().getModel();
+        		 //model.set('purdPdtCode',1);
+        		// console.log('ffffffffffkim '+result.data.data[0].pdtCode); 
+                 var model = {}, 
+                 mydata=result.data.data[0];
+                 model["purdPdtCode"] = mydata.pdtCode;
+                 model["purdQty"]=1;
+                 model["purdPrice"]=mydata.pdtBp;
+                 model["_purdPdtCode"]=mydata.pdtDescription;
+                 store.add(model);
+                 grid.getSelectionModel().select(store.data.length-1);
         		}
         	                
                             

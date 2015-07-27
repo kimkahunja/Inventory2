@@ -95,6 +95,10 @@ public class ProductController extends BaseController {
 		private @ResponseBody
 		String fetchTransProduct(HttpServletRequest request){
 			try{
+				//initialize 
+				//jsonResponse.setData(null);
+				//jsonResponse.setSuccess(false);
+				//jsonResponse.addMessage("message", null);
 				HashMap<String, Object> data = new HashMap<String, Object>();
 				
 				Map<String, Object> map = new HashMap<String, Object>();		
@@ -109,7 +113,9 @@ public class ProductController extends BaseController {
 				if (start == null) {
 					start = "0";
 				}
+				
 				if(!(searchData==null)){
+					System.out.println("MY DATA=="+searchData);
 					map.put("searchData",searchData);
 				}
 				List<ProductsMapper>list=productMapper.fetchTransProduct(map);
