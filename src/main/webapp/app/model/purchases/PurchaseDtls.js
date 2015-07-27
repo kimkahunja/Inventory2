@@ -6,64 +6,72 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
 	extend:'InventoryApp.model.Base',
 	idProperty: 'purdId',
 	fields:[
-	        {
-	        	//Id field
-	        	 name: 'purdId',
-	             type: 'int',
-	             useNull : true
-	        },	        
-	        {
-	        	//fk field
-	        	 name: 'purdPurchase',
-	             type: 'int'
-	        },
-	        
-	        { 
-	        	//fk field
-	        	 name: 'purdProduct',
-	             type: 'int'
-	        },
-	        {
-	        	 name: 'purdQty',
-	             type: 'float'
-	        },
-	        {
-	        	 name: 'purdPrice',
-	             type: 'float'
-	        },
-	        {
-	        	 name: 'purdTamount',
-	             type: 'float'
-	        },
-	        {
-	        	 name: 'purdDiscount',
-	             type: 'float'
-	        },
-	        {
-	        	 name: 'purdBonus',
-	             type: 'float'
-	        },
-	        {
-	        	 name: 'purdStatus',
-	             type: 'string'
-	        },
-	        {
-	        	 name: 'purdMtradePrice',
-	             type: 'float'
-	        },
-	        {
-	        	 name: 'purdExpiryDt',
-	             type: 'date',
-	             dateFormat:'d/m/Y'
-	        },	       
-	        // decorated properties
+	       {
+	       	//Id field
+	       	name: 'purdId',
+	            type: 'int',
+	            useNull : true
+	       },	       
+	       {
+	       	//fk field
+	       	name: 'purdPurId',
+	            type: 'int'
+	       },
+	       
+	       { 
+	       	//fk field
+	       	name: 'purdPdtCode',
+	            type: 'int'
+	       },
+	       {
+	       	name: 'purdQty',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdPrice',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdTamount',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdDiscount',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdBonus',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdStatus',
+	            type: 'string'
+	       },
+	       {
+	       	name: 'purdPreviousQty',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdRemarks',
+	            type: 'string'
+	       },
+	       {
+	       	name: 'purdMtradePrice',
+	            type: 'float'
+	       },
+	       {
+	       	name: 'purdExpiryDt',
+	            type: 'date',
+	            dateFormat:'d/m/Y'
+	       },	      
+	       // decorated properties
             {
-                  name: '_purdPurchase',
+                  name: '_purdPurId',
                   type: 'string',
                   persist: false
             },
             {
-                name: '_purdProduct',
+                name: '_purdPdtCode',
                 type: 'string',
                 persist: false
           },
@@ -79,7 +87,7 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
                   return value;
               }
           },
-	        ],
+	       ],
         set: function (fieldName, value) {
             this.callParent(arguments);
             if (fieldName === 'purdPrice' || fieldName === 'purdQty') {  
