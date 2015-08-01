@@ -68,13 +68,13 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 		                 						},
 		                 						{
 		                                            xtype: 'button',
-		                                            itemId: 'save',
+		                                            itemId: 'purchaseSave',
 		                                            text: 'Save',
 		                                            iconCls: 'save'
 		                                        },
 		                                        {
 		                                            xtype: 'button',
-		                                            itemId: 'cancel',
+		                                            itemId: 'purchaseCancel',
 		                                            text: 'Cancel',
 		                                            iconCls: 'cancel'
 		                                        },

@@ -38,6 +38,9 @@ Ext.define('InventoryApp.controller.Purchases', {
             	},
             	"textfield[name='search']":{
             		specialkey:this.specialKey
+            	},
+            	'button#purchaseSave':{
+            		click:this.savePurchases
             	}
             },
             global: {},
@@ -178,6 +181,8 @@ Ext.define('InventoryApp.controller.Purchases', {
                  model["purdPrice"]=mydata.pdtBp;
                  model["_purdPdtCode"]=mydata.pdtDescription;
                  store.add(model);
+                // store.sync();
+                // console.log('ffffffffffkim '+store.getCount());
                  grid.getSelectionModel().select(store.data.length-1);
         		}
         	                
@@ -195,5 +200,30 @@ Ext.define('InventoryApp.controller.Purchases', {
            );
         }
     },
+    savePurchases: function( button, e, eOpts ) {
+    	 var me = this,
+         grid = me.getPurchaseDtlsList(),
+         store = grid.getStore();
+        // record = grid.getSelectionModel().getSelection();
+    	//console.log('save button clicked....'+store.getCount()); 
+    	if(store.getCount()==0){
+    		Ext.Msg.show(
+                    {                    
+                       title : 'No Record!',
+                       msg : 'No items to Save...',
+                       icon : Ext.Msg.INFO,
+                       buttons : Ext.Msg.OK
+                    }
+                    );
+    	}else{
+    		var purInvono=Ext.ComponentQuery.query("textfield[name='purInvono']")[0].getValue(),
+    		purRefNo=Ext.ComponentQuery.query("textfield[name='purRefNo']")[0].getValue(),
+    		purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
+    		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue();
+    		//console.log('purInvono '+purDate+' account=== '+purAccCode);
+    		
+    	}
+    	
+    }
 });    
     

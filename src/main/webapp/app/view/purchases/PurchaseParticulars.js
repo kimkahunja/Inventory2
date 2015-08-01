@@ -7,6 +7,9 @@ Ext.define('InventoryApp.view.purchases.PurchaseParticulars',{
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{
+    	   fieldDefaults: {
+    		   allowBlank: false,
+    	   },
     	   items:[					
 					{
 						xtype: 'container',
@@ -16,7 +19,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseParticulars',{
 					          {
                                 xtype: 'ux.form.field.remotecombobox',
                                 name: 'purAccCode',
-                                fieldLabel: 'Unit Measure',
+                                fieldLabel: 'Supplier',
                                 displayField: 'accName',
                                 valueField: 'accCode',
                                 store: {
@@ -34,14 +37,15 @@ Ext.define('InventoryApp.view.purchases.PurchaseParticulars',{
 					          {
 					        	xtype:'textfield',
 					        	name:'purRefNo',					        	
-					        	fieldLabel: 'Ref No.'
+					        	fieldLabel: 'Ref No.',
+					        	allowBlank: true,
 						       },
 						       {
 		                            xtype: 'datefield',
 		                            name: 'purDate',
 		                            fieldLabel: 'Purchase Date',
-		                           // format: 'd/m/Y',                         
-		                            allowBlank: false,
+		                            format: 'd/m/Y',                         
+		                            
 		                        }
 					          ],
 					},
