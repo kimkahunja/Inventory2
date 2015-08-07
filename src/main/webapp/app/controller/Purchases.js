@@ -180,6 +180,7 @@ Ext.define('InventoryApp.controller.Purchases', {
                  model["purdQty"]=1;
                  model["purdPrice"]=mydata.pdtBp;
                  model["_purdPdtCode"]=mydata.pdtDescription;
+               
                  store.add(model);
                 // store.sync();
                 // console.log('ffffffffffkim '+store.getCount());
@@ -215,13 +216,40 @@ Ext.define('InventoryApp.controller.Purchases', {
                        buttons : Ext.Msg.OK
                     }
                     );
+    		return;
     	}else{
     		var purInvono=Ext.ComponentQuery.query("textfield[name='purInvono']")[0].getValue(),
     		purRefNo=Ext.ComponentQuery.query("textfield[name='purRefNo']")[0].getValue(),
-    		purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
+    		//purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
+    		purDate=Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),
     		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue();
     		//console.log('purInvono '+purDate+' account=== '+purAccCode);
-    		
+    		 var model = {};
+    		 model["purInvono"]=purInvono;
+    		 model["purRefno"]=purRefNo;
+    		 model["purDate"]=purDate;
+    		 model["purAccCode"]=purAccCode;
+    		 //-----------------------------------------
+    		 var details = new Array();
+             var records = store.getRange();
+             for (var i = 0; i < records.length; i++) {
+            	 details.push(records[i].data);
+             };
+             
+    		Ext.Ajax.request({
+                url: 'purchase/savePurchase.action',
+             params: {                   
+                     data: Ext.encode(model),
+                     dataDetail:Ext.encode(details)
+             },
+             
+             scope:this,
+             //method to call when the request is successful
+             success: InventoryApp.Utilities.onSaveSuccess,
+             //method to call when the request is a failure
+             failure: InventoryApp.Utilities.onSaveFailure
+         });
+    	
     	}
     	
     }

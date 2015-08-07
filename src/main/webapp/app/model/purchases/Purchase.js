@@ -40,7 +40,7 @@ Ext.define('InventoryApp.model.purchases.Purchase',{
 	             type: 'string'
 	        },
 	        {
-	        	 name: 'purRefNo',
+	        	 name: 'purRefno',
 	             type: 'string'
 	        },
 	        // decorated properties

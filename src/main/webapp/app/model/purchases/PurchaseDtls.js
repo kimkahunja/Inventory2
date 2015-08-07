@@ -65,14 +65,16 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
 	            dateFormat:'d/m/Y'
 	       },	      
 	       // decorated properties
-            {
+           /* {
                   name: '_purdPurId',
                   type: 'string',
+                  useNull : true,
                   persist: false
-            },
+            },*/
             {
                 name: '_purdPdtCode',
                 type: 'string',
+                useNull : true,
                 persist: false
           },
           //calculated properties
