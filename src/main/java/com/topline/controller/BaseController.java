@@ -20,6 +20,7 @@ import com.topline.mappers.PermissionsMapper;
 import com.topline.mappers.ProductsMapper;
 import com.topline.mappers.PurchaseDetailMapper;
 import com.topline.mappers.PurchaseMapper;
+import com.topline.mappers.StoredProcMapper;
 import com.topline.mappers.StudentMapper;
 import com.topline.mappers.SubLocationsMapper;
 import com.topline.mappers.UnitsMapper;
@@ -65,6 +66,8 @@ public class BaseController extends MultiActionController {
 	PurchaseMapper purchaseMapper;
 	@Autowired(required=true)
 	PurchaseDetailMapper purchaseDetailMapper;
+	@Autowired(required=true)
+	StoredProcMapper storedProcMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topline.mappers.StoredProcMapper" >
+   
+   <update id="updatePurchases" parameterType="java.util.HashMap"  statementType="CALLABLE">
+   {#{v_id, mode=OUT,jdbcType=INTEGER}= call update_purchases(
+   #{v_fipinv_id, mode=IN,jdbcType=NUMERIC},
+   #{v_fipo_id ,mode=IN,jdbcType=NUMERIC},
+   #{v_ref_no,mode=IN,jdbcType=VARCHAR},
+   #{v_inv_date,mode=IN,jdbcType=DATE},
+   #{v_fsla_code,mode=IN,jdbcType=NUMERIC},
+   #{v_user_code,mode=IN,jdbcType=NUMERIC} 
+
+
+   ) } 
+ </update> 
+</mapper>
