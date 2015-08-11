@@ -92,11 +92,37 @@
 		  <version>2.2.3</version>
 		  <classifier>jdk15</classifier>
 		</dependency>	
-		 <dependency>
+	<dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-web</artifactId>
         <version>4.0.2.RELEASE</version>
-    </dependency>			
+    </dependency>	
+    <dependency>
+    	<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-core</artifactId>
+		<version>4.0.2.RELEASE</version>
+    </dependency>	
+    <dependency>
+    	<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<version>4.0.2.RELEASE</version>
+    </dependency>	
+    <dependency>
+    	<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-taglibs</artifactId>
+		<version>4.0.2.RELEASE</version>
+    </dependency>
+  <dependency>
+	<groupId>org.jasypt</groupId>
+	<artifactId>jasypt</artifactId>
+	<version>1.9.2</version>
+  </dependency>
+   <dependency>
+	<groupId>org.jasypt</groupId>
+	<artifactId>jasypt-springsecurity3</artifactId>
+	<version>1.9.2</version>
+  </dependency>
+    
  </dependencies>
   <build>
     <finalName>StudentAppExample</finalName>

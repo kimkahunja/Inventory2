@@ -3,7 +3,10 @@ package com.topline.mappers;
 import com.topline.model.User;
 import com.topline.model.UserExample;
 import com.topline.model.UserKey;
+import com.topline.model.wrappers.SpringSecurityUser;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -94,4 +97,5 @@ public interface UserMapper {
      * @mbggenerated Mon Jun 01 16:50:34 EAT 2015
      */
     int updateByPrimaryKey(User record);
+    SpringSecurityUser selectSpringSecurityUser(String usrUsername);
 }

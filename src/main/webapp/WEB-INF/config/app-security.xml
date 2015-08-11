@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+
+	<global-method-security pre-post-annotations="enabled"
+		>
+		<!--
+			AspectJ pointcut expression that locates our "post" method and
+			applies security that way <protect-pointcut expression="execution(*
+			bigbank.*Service.post*(..))" access="ROLE_TELLER"/>
+		-->
+	</global-method-security>
+   
+	<http  use-expressions="true">	
+		<intercept-url pattern="/login.action" access="permitAll"  />
+		<intercept-url pattern="/ext/*" access="permitAll" />		
+	    <intercept-url pattern="/ext/**" access="permitAll"/>
+		<intercept-url pattern="/**" access="isAuthenticated()"  />
+		
+		
+		
+		
+		<form-login authentication-success-handler-ref="JsonAwareAuthenticationSuccessHandlerBean"
+			authentication-failure-handler-ref="JsonAwareAuthenticationFailureHandlerBean"
+			login-page='/login.action' login-processing-url="/j_spring_security_check"
+			authentication-failure-url="/login.action?state=login-error" />
+			
+		<logout success-handler-ref="jsonAwareLogoutSuccessHandlerBean" logout-url="/logout.action" invalidate-session="true" />
+		
+		<anonymous/>
+		<!--  
+		<remember-me services-alias="rememberMeServicesBean"
+			services-ref="rememberMeServices" />
+	-->
+		<!-- Limit the number of sessions a user can have -->
+		<session-management>
+			<concurrency-control max-sessions="2" expired-url="/login?state=timeout"/>
+		</session-management>
+		
+		<port-mappings>
+			<port-mapping http="8080" https="8443" />
+		</port-mappings>
+
+	</http>
+
+	<!--
+		Defines which remember me implementation to use - in this case using a
+		database table to log 'remembered' tokens
+	
+	<beans:bean id="rememberMeServices"
+		class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+		<beans:property name="tokenRepository" ref="jdbcTokenRepositoryBean" />
+		<beans:property name="userDetailsService" ref="customUserDetailsService" />
+		<beans:property name="key" value="com.alliedtechnique.commerce.storefront" />
+		<beans:property name="tokenValiditySeconds" value="120960000" />
+	</beans:bean>
+-->
+	<!--
+		Uses a database table to maintain a set of persistent login data
+	
+	<beans:bean id="jdbcTokenRepositoryBean"
+		class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+		<beans:property name="createTableOnStartup" value="false" />
+		<beans:property name="dataSource" ref="ormDataSource" />
+	</beans:bean>
+
+	<beans:bean id="rememberMeAuthenticationProvider"
+		class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+		<beans:property name="key" value="com.alliedtechnique.commerce.storefront" />
+	</beans:bean>
+
+	<beans:bean id="anonymousAuthFilter"
+		class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter">
+		<beans:property name="key" value="anonymoususer" />
+		<beans:property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS" />
+	</beans:bean>
+
+	<beans:bean id="anonymousAuthenticationProvider"
+		class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+		<beans:property name="key" value="anonymoususer" />
+	</beans:bean>
+-->
+	<!--
+		For encryping strings e.g. passwords
+	-->
+	  
+	<beans:bean id="jasyptStringDigesterBean" class="org.jasypt.digest.StandardStringDigester">
+		<beans:property name="algorithm" value="SHA-1" />
+		<beans:property name="iterations" value="1000" />
+		<beans:property name="saltGenerator">
+			<beans:bean id="randomSaltGenerator" class="org.jasypt.salt.RandomSaltGenerator" />
+		</beans:property>
+		<beans:property name="saltSizeBytes" value="16" />
+	</beans:bean>
+
+	<beans:bean id="passwordEncoderBean" class="org.jasypt.spring.security3.PasswordEncoder">
+		<beans:property name="stringDigester">
+			<beans:ref bean="jasyptStringDigesterBean" />
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="customUserDetailsService" />
+		<beans:property name="passwordEncoder">
+			<beans:ref bean="passwordEncoderBean" />
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="customUserDetailsService"
+		class="com.topline.utils.UserDetailServ">
+		
+	</beans:bean>
+	
+	<beans:bean id="authenticationTrustResolverBean"
+		class="org.springframework.security.authentication.AuthenticationTrustResolverImpl">
+	</beans:bean>
+	
+	<beans:bean id="JsonAwareAuthenticationSuccessHandlerBean"
+		class="com.topline.utils.JsonAwareAuthenticationSuccessHandler">
+	</beans:bean>
+
+	<beans:bean id="JsonAwareAuthenticationFailureHandlerBean"
+		class="com.topline.utils.JsonAwareAuthenticationFailureHandler">
+	</beans:bean>
+
+	<beans:bean id="jsonAwareLogoutSuccessHandlerBean"
+		class="com.topline.utils.JsonAwareLogoutSuccessHandler">
+	</beans:bean>
+
+	<beans:bean id="authenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="authenticationSuccessHandler"
+			ref="JsonAwareAuthenticationSuccessHandlerBean" />
+		<beans:property name="authenticationFailureHandler"
+			ref="JsonAwareAuthenticationFailureHandlerBean" />
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check" />
+	</beans:bean>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider user-service-ref="customUserDetailsService">
+			<password-encoder ref="passwordEncoderBean" />
+		</authentication-provider>
+	
+		
+	</authentication-manager>
+
+	<!--
+			<authentication-provider ref="rememberMeAuthenticationProvider">	
+		These next 3 beans are not currently in use. As web services will
+		never present a jsessionid on future requests, disable session
+		creation. For other connections, allow session creation
+	-->
+
+	<!--
+		<beans:bean id="filterChainProxy"
+		class="org.springframework.web.filter.DelegatingFilterProxy">
+		<filter-chain-map path-type="ant"> <filter-chain
+		pattern="/webServices/**"
+		filters="securityContextPersistenceFilterWithASCFalse,
+		basicAuthenticationFilter, exceptionTranslationFilter,
+		filterSecurityInterceptor" /> <filter-chain pattern="/**" filters="
+		securityContextPersistenceFilterWithASCTrue, formLoginFilter,
+		exceptionTranslationFilter, filterSecurityInterceptor" />
+		</filter-chain-map> </beans:bean> <beans:bean
+		id="securityContextPersistenceFilterWithASCFalse"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+		<beans:property name="forceEagerSessionCreation" value="false" />
+		</beans:bean> <beans:bean
+		id="securityContextPersistenceFilterWithASCTrue"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+		<beans:property name="forceEagerSessionCreation" value="true" />
+		</beans:bean>
+	-->
+
+</beans:beans>
