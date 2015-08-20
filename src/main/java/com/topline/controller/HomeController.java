@@ -22,6 +22,6 @@ public class HomeController extends BaseController {
 		String path = request.getSession().getServletContext()
 				.getInitParameter("jsBasePath");		
 		myModel.put("path", path);
-        return new ModelAndView("index","user",myModel);
+        return new ModelAndView("login","user",myModel);
     }
 }
