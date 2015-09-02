@@ -29,15 +29,34 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 					{
 						
 					    xtype: 'container',
-					    layout: 'hbox',                        
-					    items: [
-					            
+					    layout: 'hbox',					    
+					    items: [			          
+								{
+									xtype: 'panel',								   
+								    flex:1,
+								    collapsible: true,
+								    collapseDirection:'left',
+								    //collapsed:true,
+								    title:'Unauthorized Purchases',
+								    layout:'fit',
+								    items:[
+								          {
+								        	  xtype:'purchases.purchaselist',
+								        	  	  
+								    	  }
+								
+								          ],
+									
+								},	  
+					         
 					        {
 					        	xtype: 'container',
 							    //layout: 'vbox',  
 							    frame:true,
 							    border:1,
-							    flex:1,
+							    flex:1, 
+							    //collapsible: true,
+							    
 							    style: {
 							        borderColor: '#E6E6E6',
 							        borderStyle: 'solid'
@@ -95,7 +114,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 
 							          ],
 					        	
-					       }
+					       },
 					    ]
 					},
 					

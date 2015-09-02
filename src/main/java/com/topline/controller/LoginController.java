@@ -32,6 +32,6 @@ public class LoginController {
 		Map<String, Object> myModel = new HashMap<String, Object>();
 		myModel.put("now", now);
 		myModel.put("path", path);
-        return new ModelAndView("login", myModel);
+        return new ModelAndView("login_test", myModel);
     }
 }

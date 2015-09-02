@@ -93,4 +93,6 @@ public interface PurchaseMapper {
      * @mbggenerated Thu Jul 23 15:43:34 EAT 2015
      */
     int updateByPrimaryKey(Purchase record);
+    
+    int save(Purchase record);
 }

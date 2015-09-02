@@ -14,6 +14,7 @@ public class UserDetailServ implements UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException {
+		System.out.println("LoadUserBy name ");
 		if (userName.isEmpty()) {
 			throw new UsernameNotFoundException("Unable to locate a user with empty username: ");
 		}

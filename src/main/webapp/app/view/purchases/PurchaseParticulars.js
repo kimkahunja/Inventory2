@@ -44,7 +44,18 @@ Ext.define('InventoryApp.view.purchases.PurchaseParticulars',{
 		                            xtype: 'datefield',
 		                            name: 'purDate',
 		                            fieldLabel: 'Purchase Date',
-		                            format: 'd/m/Y',                         
+		                            format: 'd/m/Y', 
+		                            renderer: function(value){ 
+		                            	console.log('value=== '+value);
+		                            	if(value==null){
+		                            		var dt = new Date(value);
+		                            		return dt;
+		                            	}else{
+		                            		return value;
+		                            	}
+		                            	
+		                            	
+		                            }
 		                            
 		                        }
 					          ],

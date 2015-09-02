@@ -14,7 +14,8 @@ Ext.define('InventoryApp.Application', {
             //'purchases.PurchaseLanding',
             'purchases.PurchaseParticulars',
             'purchases.PurchaseDtlsList',            
-            'purchases.Purchase'
+            'purchases.Purchase',
+            'purchases.PurchaseList'
         ],
     controllers: [
        // 'App',

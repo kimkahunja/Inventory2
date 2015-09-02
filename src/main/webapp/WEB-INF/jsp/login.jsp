@@ -96,6 +96,10 @@ Ext.onReady(function()
 				    	  login.getForm().reset();	      }
 				    }],
 				  items: [{
+					  hidden: true,
+					  contentEl: "hidden-csrf"
+					  },
+				          {
 			            xtype:'label',
 			            text: "Username:",                   
 			            style: 'font-weight:bold;',                    
@@ -109,7 +113,7 @@ Ext.onReady(function()
 			        	   style: 'font-size: 20px',
 			        	   autoHeight: true ,
 						   id: 'j_username',
-						   value:'GATHERU1'
+						   value:'kimkahunja'
 			        	},
 			        	{
 			                xtype:'label',
@@ -182,7 +186,7 @@ Ext.onReady(function()
 			                method:'POST',
 			                success:function(){
 			              
-			                        window.location = './';
+			                        window.location = 'index.action';
 			                                   
 			            },
 
@@ -191,10 +195,10 @@ Ext.onReady(function()
 			            		 switch (action.failureType) {
 			            		 case Ext.form.Action.CLIENT_INVALID: Ext.Msg.alert('Failure','Form fields may not be submitted with invalid         values');break;
 			            		case Ext.form.Action.CONNECT_FAILURE:
-			            		Ext.Msg.alert('Failure','Please check the connections');
+			            		Ext.Msg.alert('Failure1','Please check the connections');
 			            		break;
 			            		case Ext.form.Action.SERVER_INVALID:
-			            		Ext.Msg.alert('Failure',action.result.errors.mainError);}
+			            		Ext.Msg.alert('Failure2',action.result.errors.mainError);}
 			            		 }
 			               
 			                login.getForm().reset();
@@ -229,6 +233,9 @@ Ext.onReady(function()
 				    	  login.getForm().reset();	      }
 				    }],
 				  items: [{
+					  hidden: true,
+					  contentEl: "hidden-csrf"
+					  },{
 			            xtype:'label',
 			            text: "Username:",                   
 			            style: 'font-weight:bold;',                    
@@ -315,7 +322,7 @@ Ext.onReady(function()
 			                method:'POST',
 			                success:function(){
 			              
-			                        window.location = './';
+			                        window.location = 'index.action';
 			                                   
 			            },
 
@@ -385,6 +392,9 @@ Ext.onReady(function()
 <body>
 
 	<div id="login_info"></div>
+	<div id="hidden-csrf" class="x-hidden">
+	{% csrf_token %}
+	</div>
 </body>
    
 

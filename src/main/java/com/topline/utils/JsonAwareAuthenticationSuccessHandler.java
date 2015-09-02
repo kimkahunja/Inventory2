@@ -35,7 +35,7 @@ public class JsonAwareAuthenticationSuccessHandler extends SavedRequestAwareAuth
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
-
+System.out.println("KIMKAHUNJA TESTING");
 		// If not a JSON request, use the parent handler
 		if (request.getParameter("requestTransportType") == null || !request.getParameter("requestTransportType").equals("json")) {
 			super.onAuthenticationSuccess(request, response, authentication);

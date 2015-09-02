@@ -330,4 +330,16 @@
       pur_posted_by = #{purPostedBy,jdbcType=VARCHAR}
     where pur_id = #{purId,jdbcType=INTEGER}
   </update>
+  <insert id="save" parameterType="com.topline.model.Purchase" useGeneratedKeys="true" keyProperty="purId"  keyColumn="pur_id" >
+    
+    insert into inv_purchases (pur_invono, pur_refNo, 
+      pur_date, pur_acc_code, pur_user, 
+      pur_status, pur_posted_by)
+    values ( #{purInvono,jdbcType=VARCHAR}, #{purRefno,jdbcType=VARCHAR}, 
+      #{purDate,jdbcType=DATE}, #{purAccCode,jdbcType=INTEGER}, #{purUser,jdbcType=VARCHAR}, 
+      #{purStatus,jdbcType=VARCHAR}, #{purPostedBy,jdbcType=VARCHAR})
+      <selectKey keyProperty="purId" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert>
 </mapper>

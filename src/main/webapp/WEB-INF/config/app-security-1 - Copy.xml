@@ -9,8 +9,7 @@
 	<http auto-config="true">		
 		<intercept-url pattern="/" access="permitAll"/>       
         <intercept-url pattern="/login.action" access="permitAll"/>
-       <!--  <intercept-url pattern="/index.action" access="hasRole('ROLE_USER')"/> -->
-        <intercept-url pattern="/index.action" access="permitAll"/>
+        <intercept-url pattern="/index.action" access="hasRole('ROLE_USER')"/>
 		<form-login 
 		    login-page="/login.action" 
 		    default-target-url="/index.action" 

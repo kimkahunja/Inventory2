@@ -12,16 +12,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.topline.model.wrappers.SpringSecurityUser;
+
 @Controller
 public class HomeController extends BaseController {
 	@RequestMapping("/index.action")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String now = (new java.util.Date()).toString();
-    	Map<String, Object> myModel = new HashMap<String, Object>();    
+		String now = (new java.util.Date()).toString();
+    	Map<String, Object> myModel = new HashMap<String, Object>();
+      //SpringSecurityUser user=getCurrentUser();
+      //myModel.put("loggeduser", user);
+    	System.out.println("am here kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 		String path = request.getSession().getServletContext()
 				.getInitParameter("jsBasePath");		
 		myModel.put("path", path);
-        return new ModelAndView("login","user",myModel);
+        return new ModelAndView("index","user",myModel);
     }
 }

@@ -16,6 +16,10 @@ Ext.define('InventoryApp.controller.Purchases', {
         {
             ref: 'PurchaseDtlsList',
             selector: '[xtype=purchases.purchasedtlslist]'
+        },
+        {
+            ref: 'PurchaseList',
+            selector: '[xtype=purchases.purchaselist]'
         }
     ],
     init: function() {
@@ -223,7 +227,40 @@ Ext.define('InventoryApp.controller.Purchases', {
     		//purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
     		purDate=Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),
     		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue();
-    		//console.log('purInvono '+purDate+' account=== '+purAccCode);
+    		//console.log('purInvono '+purInvono);
+    		if (purInvono.trim().length==0){
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Invoice Number is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+    		}else if(purDate==null) {
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Purchase Date is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+    		}else if(purAccCode==null){
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Supplier is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+    		}
+    			
+    		
     		 var model = {};
     		 model["purInvono"]=purInvono;
     		 model["purRefno"]=purRefNo;
@@ -249,7 +286,7 @@ Ext.define('InventoryApp.controller.Purchases', {
              //method to call when the request is a failure
              failure: InventoryApp.Utilities.onSaveFailure
          });
-    	
+    		this.getPurchaseList().getStore().load();
     	}
     	
     }
