@@ -16,15 +16,17 @@ Ext.define('InventoryApp.store.purchases.PurchasesDtls',{
 	//autoLoad: true,
     pageSize: 20,
     proxy: {
-        type: 'ajax',
-        url: 'PurchaseDtlServlet',//'resources/purchases.json',
-        extraParams: {
-            store_id: 4
+        type: 'ajax',      
+        api: {
+            create  : 'purchase/savePurchase.action',
+            read    : 'purchase/fetchPurchaseDtls.action',
+            update  : 'purchase/savePurchase.action',
+            //destroy : 'locations/deleteLocation.action'
         },
         reader: {
             type: 'json',
-            totalProperty: 'count',
-            root: 'data',
+            totalProperty: 'data.count',
+            root: 'data.data',
             successProperty: 'success'
         },
      }

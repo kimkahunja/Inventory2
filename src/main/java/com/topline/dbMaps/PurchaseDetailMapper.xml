@@ -410,4 +410,16 @@
       purd_expiry_dt = #{purdExpiryDt,jdbcType=DATE}
     where purd_id = #{purdId,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.PurchaseDetailWrapper" >    
+    <result column="pdt_description" property="_purdPdtCode" jdbcType="VARCHAR" />  
+  </resultMap>
+   <select id="fetchPurchaseDetails" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	   SELECT purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
+		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,pdt_description
+		FROM inv_purchases_details, inv_products
+		WHERE purd_pdt_code=pdt_code
+        <if test="purId != null">
+          AND  purd_pur_id =  #{purId,jdbcType=INTEGER}
+      </if>	
+   </select>
 </mapper>

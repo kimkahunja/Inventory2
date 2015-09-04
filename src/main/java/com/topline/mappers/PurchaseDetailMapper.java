@@ -2,7 +2,10 @@ package com.topline.mappers;
 
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
+import com.topline.model.wrappers.PurchaseDetailWrapper;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PurchaseDetailMapper {
@@ -93,4 +96,6 @@ public interface PurchaseDetailMapper {
      * @mbggenerated Thu Jul 23 15:43:34 EAT 2015
      */
     int updateByPrimaryKey(PurchaseDetail record);
+  //add methods
+    List<PurchaseDetailWrapper> fetchPurchaseDetails(Map<String,Object> map);
 }

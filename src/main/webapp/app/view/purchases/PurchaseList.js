@@ -29,6 +29,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseList',{
 	                   {
 	                       text: 'Date',
 	                       dataIndex: 'purDate',
+	                       renderer: Ext.util.Format.dateRenderer('d/m/Y')
 	                   },
 	                   {
 	                       text: 'Account',

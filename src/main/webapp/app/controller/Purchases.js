@@ -20,6 +20,10 @@ Ext.define('InventoryApp.controller.Purchases', {
         {
             ref: 'PurchaseList',
             selector: '[xtype=purchases.purchaselist]'
+        },
+        {
+            ref: 'PurchaseForm',
+            selector: '[xtype=purchases.purchaseparticulars]'
         }
     ],
     init: function() {
@@ -29,10 +33,12 @@ Ext.define('InventoryApp.controller.Purchases', {
             	'grid[xtype=purchases.purchaselist]': {
             		//edit: this.editLocation,
             		//canceledit: this.cancel,
-            		//beforerender: this.loadRecords,
+            		beforerender: this.loadRecords,
             		//itemcontextmenu: this.showContextMenu,
-            		//selectionchange: this.onSelectionChange,
-            		//cellclick:this.onSelectionChange,
+            		selectionchange: this.gridSelectionChange,
+            		viewready: this.onViewReady,
+            		//celldblclick:this.onCellClick,
+            		//itemdblclick: this.edit,
             	},
             	'grid[xtype=purchases.purchaselist] button#add': {
             		//click: this.add
@@ -289,6 +295,44 @@ Ext.define('InventoryApp.controller.Purchases', {
     		this.getPurchaseList().getStore().load();
     	}
     	
-    }
+    },
+    onCellClick: function ( sm, td, cellIndex, record, tr, rowIndex, e, eOpts ) {
+      	 var me = this,
+           grid = me.getPurchaseDtlsList(),
+           store = grid.getStore();
+      	 //console.log('am inside selection change....');      	
+      		//Ext.Msg.alert( 'Attention', 'Am here...'+ records[0].get('locCode') ); 
+      		// clear any fliters that have been applied
+          	store.clearFilter( true );
+      		store.load({
+              	params: {
+              		id: this.getPurchaseList().getStore().getAt(rowIndex).get('purId')
+              	}
+              });
+         
+      },
+      edit: function( view, record, item, index, e, eOpts ) {
+          var me = this;
+          console.log('side edit...');
+          var myform =Ext.ComponentQuery.query('form[xtype="purchases.purchaseparticulars"]');
+          myform.getForm().loadRecord(record);
+      },
+      onViewReady: function(grid) {
+          grid.getSelectionModel().select(0);
+      },
+      gridSelectionChange: function(model, records) {
+    	  var me = this,
+    	  grid = me.getPurchaseDtlsList(),
+          store = grid.getStore();
+          if (records[0]) {
+               this.getPurchaseForm().getForm().loadRecord(records[0]);
+               store.clearFilter( true );
+         		store.load({
+                 	params: {
+                 		id: records[0].get('purId')
+                 	}
+                 });
+          }
+      },
 });    
     

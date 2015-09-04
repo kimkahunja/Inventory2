@@ -10,7 +10,7 @@
     <id column="pur_id" property="purId" jdbcType="INTEGER" />
     <result column="pur_invono" property="purInvono" jdbcType="VARCHAR" />
     <result column="pur_refNo" property="purRefno" jdbcType="VARCHAR" />
-    <result column="pur_date" property="purDate" jdbcType="DATE" />
+    <result column="pur_date" property="purDate"  jdbcType="DATE" />
     <result column="pur_acc_code" property="purAccCode" jdbcType="INTEGER" />
     <result column="pur_user" property="purUser" jdbcType="VARCHAR" />
     <result column="pur_status" property="purStatus" jdbcType="VARCHAR" />
@@ -342,4 +342,15 @@
             SELECT LAST_INSERT_ID();
         </selectKey>
   </insert>
+   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.PurchaseWrapper" >    
+    <result column="acc_name" property="_purAccCode" jdbcType="VARCHAR" />  
+  </resultMap>
+   <select id="fetchPurchases" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	   SELECT pur_id, pur_invono, pur_refNo, pur_date, pur_acc_code, pur_user, pur_status, pur_posted_by,acc_name  
+	   FROM inv_purchases, inv_accounts
+	   WHERE pur_acc_code=acc_code
+        <if test="purStatus != null">
+          AND  pur_status =  #{purStatus,jdbcType=VARCHAR}
+      </if>	
+   </select>
 </mapper>

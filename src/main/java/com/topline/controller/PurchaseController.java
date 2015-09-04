@@ -1,6 +1,9 @@
 package com.topline.controller;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +26,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
+
+
+
+
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
 import com.topline.model.PurchaseExample;
+import com.topline.model.wrappers.PurchaseDetailWrapper;
+import com.topline.model.wrappers.PurchaseWrapper;
 import com.topline.utils.GlobalCC;
 
 @Controller
@@ -99,14 +110,17 @@ public class PurchaseController extends BaseController {
 				if (start == null) {
 					start = "0";
 				}
-				PurchaseExample example=new PurchaseExample();
+				/*PurchaseExample example=new PurchaseExample();
 				PurchaseExample.Criteria criteria=example.createCriteria();
 				criteria.andPurStatusEqualTo("PENDING");
-				List<Purchase>list=purchaseMapper.selectByExample(example);
+				List<Purchase>list=purchaseMapper.selectByExample(example);*/
+				map.put("purStatus", "PENDING");
+				List<PurchaseWrapper>list=purchaseMapper.fetchPurchases(map);
 				if (list != null) {
 					int count = list.size();
 					data.put("count", count);
 				}
+			
 				data.put("data", list);
 				jsonResponse.setData(data);
 				jsonResponse.setSuccess(true);
@@ -121,4 +135,51 @@ public class PurchaseController extends BaseController {
 				return jsonObject(jsonResponse);
 			}
 		}
+		//fetch Purchases details
+				@RequestMapping(value="/fetchPurchaseDtls.action", method=RequestMethod.GET)
+				private @ResponseBody
+				String fetchPurchaseDtls(HttpServletRequest request){
+					try{
+						HashMap<String, Object> data = new HashMap<String, Object>();
+						
+						Map<String, Object> map = new HashMap<String, Object>();		
+						
+						String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+						String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+						String id=GlobalCC.CheckNullValues(request.getParameter("id"));
+						if (limit == null) {
+							limit = "50";
+						}
+						if (start == null) {
+							start = "0";
+						}
+						if(id==null){
+							jsonResponse.setData(null);
+							jsonResponse.setSuccess(false);
+							jsonResponse.addMessage("message", "Purchase particulars  have not been provided...");
+							return jsonObject(jsonResponse);
+						}else{
+							map.put("purId", new BigDecimal(id));
+						}
+					
+						List<PurchaseDetailWrapper>list=purchaseDetailMapper.fetchPurchaseDetails(map);
+						if (list != null) {
+							int count = list.size();
+							data.put("count", count);
+						}
+					
+						data.put("data", list);
+						jsonResponse.setData(data);
+						jsonResponse.setSuccess(true);
+						System.out.println(jsonObject(jsonResponse));
+						return jsonObject(jsonResponse);
+					}
+					catch(Exception e){
+						e.printStackTrace();
+						jsonResponse.setData(null);
+						jsonResponse.setSuccess(false);
+						jsonResponse.addMessage("message", e.getLocalizedMessage());
+						return jsonObject(jsonResponse);
+					}
+				}
 }

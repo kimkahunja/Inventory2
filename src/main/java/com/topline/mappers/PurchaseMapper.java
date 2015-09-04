@@ -2,7 +2,12 @@ package com.topline.mappers;
 
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseExample;
+import com.topline.model.wrappers.PurchaseWrapper;
+import com.topline.model.wrappers.SubLocationWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PurchaseMapper {
@@ -93,6 +98,7 @@ public interface PurchaseMapper {
      * @mbggenerated Thu Jul 23 15:43:34 EAT 2015
      */
     int updateByPrimaryKey(Purchase record);
-    
-    int save(Purchase record);
+  //add methods
+    int save(Purchase record);  
+    List<PurchaseWrapper> fetchPurchases(Map<String,Object> map);
 }
