@@ -101,4 +101,6 @@ public interface PurchaseMapper {
   //add methods
     int save(Purchase record);  
     List<PurchaseWrapper> fetchPurchases(Map<String,Object> map);
+    Object postPurchase(Map<String,Object> map);
+    
 }

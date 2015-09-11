@@ -182,4 +182,40 @@ public class PurchaseController extends BaseController {
 						return jsonObject(jsonResponse);
 					}
 				}
+	@RequestMapping(value="/postPurchase.action")
+	private @ResponseBody String postPurchase(HttpServletRequest request){
+		try{
+			Map<String, Object> map = new HashMap<String, Object>();	
+			ObjectMapper mapper = new ObjectMapper();
+			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+			Purchase purchase=mapper.readValue(data, Purchase.class);	
+			if(purchase.getPurId()==null){
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", "Purchase particulars  have not been provided...");
+				return jsonObject(jsonResponse);
+			}else{
+				map.put("v_pur_id",purchase.getPurId());
+				purchaseMapper.postPurchase(map);
+			}
+			Object v_count=map.get("v_count");
+		    if(v_count=="1") {
+		    	jsonResponse.setSuccess(true);	
+				jsonResponse.setData(null);
+				jsonResponse.addMessage("message", "Purchase Transaction successfully Posted...");
+		    }else{
+		    	jsonResponse.setSuccess(false);	
+				jsonResponse.setData(null);
+				jsonResponse.addMessage("message", "Purchase Transaction not Posted...");
+		    }
+		    return jsonObject(jsonResponse);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			jsonResponse.setData(null);
+			jsonResponse.setSuccess(false);
+			jsonResponse.addMessage("message", e.getLocalizedMessage());
+			return jsonObject(jsonResponse);
+		}
+	}
 }

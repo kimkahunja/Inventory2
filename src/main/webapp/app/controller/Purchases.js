@@ -34,7 +34,7 @@ Ext.define('InventoryApp.controller.Purchases', {
             		//edit: this.editLocation,
             		//canceledit: this.cancel,
             		beforerender: this.loadRecords,
-            		//itemcontextmenu: this.showContextMenu,
+            		itemcontextmenu: this.showContextMenu,
             		selectionchange: this.gridSelectionChange,
             		viewready: this.onViewReady,
             		//celldblclick:this.onCellClick,
@@ -78,21 +78,13 @@ Ext.define('InventoryApp.controller.Purchases', {
     		     //height: 58,
     		    // width: 140,
     		     items: [
-    		             	{
-    					text: 'Edit Item',
-    					iconCls: 'icon_edit',
-    					handler: function( item, e ) {
-    						var grid = me.getPurchaseList(),
-    							plugin = grid.editingPlugin;
-    						// start row edit
-    						plugin.startEdit( record, 0 );
-    					}
-    				},
+    		             	
                     {
-                        text: 'Delete Item',
-                        iconCls: 'icon_delete',
+                        text: 'Post this Purchase',
+                        iconCls: 'accept',
                         handler: function( item, e ) {
-                            me.remove( record );
+                            me.postPurchase( record );
+                        	//console.log('inside the post area....');
                         }
                     }
     		             ]
@@ -333,6 +325,34 @@ Ext.define('InventoryApp.controller.Purchases', {
                  	}
                  });
           }
+      },
+      postPurchase: function( record ) {
+      	var me = this,
+      	grid = me.getPurchaseList(),    		
+  		store = grid.getStore();        		
+          var record = grid.getSelectionModel().getSelection();
+         // var rowindex=0;
+      	console.log('Posting purchase record... '+record[0].get('purInvono'));
+      	// show confirmation before continuing
+      	Ext.Msg.confirm( 'Attention', 'Are you sure you want to Post this transaction? This action cannot be undone.', function( buttonId, text, opt ) {
+      		if( buttonId=='yes' ) {
+      			
+      			Ext.Ajax.request({
+      	               url: 'purchase/postPurchase.action',
+      	            params: {
+      	                    data: Ext.encode(record[0].data)
+      	            },
+      	            
+      	            scope:this,
+      	            //method to call when the request is successful
+      	            success: InventoryApp.Utilities.onSaveSuccess,
+      	            //method to call when the request is a failure
+      	            failure: InventoryApp.Utilities.onSaveFailure
+      	        });
+      			
+                   store.load();
+      		}
+      	})
       },
 });    
     

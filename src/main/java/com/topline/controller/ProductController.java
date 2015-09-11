@@ -106,7 +106,7 @@ public class ProductController extends BaseController {
 				String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 				String start = GlobalCC.CheckNullValues(request.getParameter("start"));
 				String searchData=GlobalCC.CheckNullValues(request.getParameter("searchData"));
-				
+			
 				if (limit == null) {
 					limit = "50";
 				}
@@ -116,7 +116,7 @@ public class ProductController extends BaseController {
 				
 				if(!(searchData==null)){
 					System.out.println("MY DATA=="+searchData);
-					map.put("searchData",searchData);
+					map.put("searchData",searchData.toString().trim());
 				}
 				List<ProductsMapper>list=productMapper.fetchTransProduct(map);
 				if (list != null) {
