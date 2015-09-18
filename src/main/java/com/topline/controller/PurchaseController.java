@@ -199,7 +199,8 @@ public class PurchaseController extends BaseController {
 				purchaseMapper.postPurchase(map);
 			}
 			Object v_count=map.get("v_count");
-		    if(v_count=="1") {
+			System.out.println("count===== "+v_count);
+		    if(v_count.toString()=="1") {
 		    	jsonResponse.setSuccess(true);	
 				jsonResponse.setData(null);
 				jsonResponse.addMessage("message", "Purchase Transaction successfully Posted...");

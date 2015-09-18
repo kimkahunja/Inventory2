@@ -353,4 +353,7 @@
           AND  pur_status =  #{purStatus,jdbcType=VARCHAR}
       </if>	
    </select>
+    <select id="postPurchase" parameterType="java.util.HashMap" statementType="CALLABLE">    
+	{ CALL post_purchases(#{v_pur_id, mode=IN, jdbcType=INTEGER},#{v_count, mode=OUT, jdbcType=INTEGER})}
+</select>  
 </mapper>
