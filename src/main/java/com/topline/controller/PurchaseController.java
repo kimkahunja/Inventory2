@@ -11,10 +11,22 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
+
+
+
+
 
 
 
@@ -183,7 +195,12 @@ public class PurchaseController extends BaseController {
 					}
 				}
 	@RequestMapping(value="/postPurchase.action")
+	@Transactional
 	private @ResponseBody String postPurchase(HttpServletRequest request){
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		TransactionStatus status = txnManager.getTransaction(def);
 		try{
 			Map<String, Object> map = new HashMap<String, Object>();	
 			ObjectMapper mapper = new ObjectMapper();
@@ -200,23 +217,29 @@ public class PurchaseController extends BaseController {
 			}
 			Object v_count=map.get("v_count");
 			System.out.println("count===== "+v_count);
-		    if(v_count.toString()=="1") {
+		    if(v_count.toString().equalsIgnoreCase("1")) {
+		    	txnManager.commit(status);
 		    	jsonResponse.setSuccess(true);	
 				jsonResponse.setData(null);
 				jsonResponse.addMessage("message", "Purchase Transaction successfully Posted...");
 		    }else{
+		    	txnManager.rollback(status);
 		    	jsonResponse.setSuccess(false);	
 				jsonResponse.setData(null);
 				jsonResponse.addMessage("message", "Purchase Transaction not Posted...");
 		    }
+		    
 		    return jsonObject(jsonResponse);
 		}
+		
 		catch(Exception e){
+			txnManager.rollback(status);			
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);
 			jsonResponse.addMessage("message", e.getLocalizedMessage());
 			return jsonObject(jsonResponse);
 		}
+		
 	}
 }

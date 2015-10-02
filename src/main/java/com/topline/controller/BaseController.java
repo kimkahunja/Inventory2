@@ -9,6 +9,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.topline.mappers.AccountMapper;
@@ -68,6 +69,8 @@ public class BaseController extends MultiActionController {
 	PurchaseDetailMapper purchaseDetailMapper;
 	@Autowired(required=true)
 	StoredProcMapper storedProcMapper;
+	@Autowired(required=true)
+	DataSourceTransactionManager txnManager ;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

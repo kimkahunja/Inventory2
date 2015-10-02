@@ -345,14 +345,29 @@ Ext.define('InventoryApp.controller.Purchases', {
       	            
       	            scope:this,
       	            //method to call when the request is successful
-      	            success: InventoryApp.Utilities.onSaveSuccess,
+      	            //success: InventoryApp.Utilities.onSaveSuccess,
+      	            success:function(response) {
+      	            	store.load({
+                     	   callback: function(records, operation, success) {
+                     	        if (success == true) {
+                     	            console.log('Loading is successful....');
+                     	            //store.sync();
+                     	            grid.getView().refresh();
+                     	           grid.getSelectionModel().select(0);
+                     	        } else {
+                     	        	 console.log('Loading is not successful....');
+                     	        }
+                     	    }
+                        });
+      	            },
       	            //method to call when the request is a failure
       	            failure: InventoryApp.Utilities.onSaveFailure
       	        });
       			
-                   store.load();
+                   
       		}
       	})
+        
       },
 });    
     
