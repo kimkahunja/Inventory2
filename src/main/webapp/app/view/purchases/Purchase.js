@@ -62,11 +62,29 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							        borderStyle: 'solid'
 							    },
 							    items:[
-							          {
-							        	  xtype: 'textfield',
-								          name: 'search',							            
-								          fieldLabel: 'Product'
-							          }	,
+							           {
+							        	   xtype: 'container',
+										   layout: 'hbox',	
+										   items:[
+												{
+												    xtype: 'button',
+												    text : 'New Purchase',
+												    itemId:'newPurchase'	
+												},
+												/*{
+		                 						    xtype:'tbspacer',
+		                 						    flex:1
+		                 						},*/
+												{
+													  xtype: 'textfield',
+												    name: 'search',							            
+												    fieldLabel: 'Product'
+												},							          
+												
+										         ],
+							           },
+							          
+							          
 							          {
 							        	  xtype: 'container',
 							        	  layout:'fit',

@@ -51,6 +51,9 @@ Ext.define('InventoryApp.controller.Purchases', {
             	},
             	'button#purchaseSave':{
             		click:this.savePurchases
+            	},
+            	'button#newPurchase':{
+            		click:this.newPurchases
             	}
             },
             global: {},
@@ -346,19 +349,20 @@ Ext.define('InventoryApp.controller.Purchases', {
       	            scope:this,
       	            //method to call when the request is successful
       	            //success: InventoryApp.Utilities.onSaveSuccess,
-      	            success:function(response) {
+      	            success:function(conn, response, options, eOpts){
       	            	store.load({
-                     	   callback: function(records, operation, success) {
-                     	        if (success == true) {
-                     	            console.log('Loading is successful....');
-                     	            //store.sync();
-                     	            grid.getView().refresh();
-                     	           grid.getSelectionModel().select(0);
-                     	        } else {
-                     	        	 console.log('Loading is not successful....');
-                     	        }
-                     	    }
-                        });
+      	             	   callback: function(records, operation, success) {
+      	             	        if (success == true) {
+      	             	            console.log('Loading is successful....');
+      	             	            //store.sync();
+      	             	            grid.getView().refresh();
+      	             	           grid.getSelectionModel().select(0);
+      	             	        } else {
+      	             	        	 console.log('Loading is not successful....');
+      	             	        }
+      	             	    }
+      	                });
+      	            	//this.onSaveSuccess;
       	            },
       	            //method to call when the request is a failure
       	            failure: InventoryApp.Utilities.onSaveFailure
@@ -369,5 +373,16 @@ Ext.define('InventoryApp.controller.Purchases', {
       	})
         
       },
+      
+      newPurchases: function( button, e, eOpts ){
+    	  var me = this,
+        	grid = me.getPurchaseDtlsList(),    		
+    		store = grid.getStore();
+	    	  store.clearData();
+	    	  store.removeAll();
+    	   grid.getView().refresh();
+    	   this.getPurchaseForm().getForm().reset();
+           
+      }
 });    
     
