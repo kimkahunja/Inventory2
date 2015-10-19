@@ -557,7 +557,7 @@
 	    </if>
    </select> --> 
    
- <select id="fetchTransProduct" resultMap="BaseResultMap" statementType="CALLABLE">    
+ <select id="fetchTransProduct" resultMap="BaseResultMapWrapper" statementType="CALLABLE">    
 	{ CALL get_product(#{searchData, mode=IN, jdbcType=VARCHAR})}
 </select> 
 	

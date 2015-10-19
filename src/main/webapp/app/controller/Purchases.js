@@ -46,8 +46,11 @@ Ext.define('InventoryApp.controller.Purchases', {
             	'grid[xtype=purchases.purchaselist] gridview': {
             		//itemadd: this.edit
             	},
-            	"textfield[name='search']":{
+            	/*"textfield[name='search']":{
             		specialkey:this.specialKey
+            	},*/
+            	"combobox[name='search']":{
+            		select:this.onComboSelect
             	},
             	'button#purchaseSave':{
             		click:this.savePurchases
@@ -383,6 +386,26 @@ Ext.define('InventoryApp.controller.Purchases', {
     	   grid.getView().refresh();
     	   this.getPurchaseForm().getForm().reset();
            
+      },
+      onComboSelect:function( combo, records, eOpts ){
+    	  console.log('selected....' +records[0].get('pdtShtDesc'));
+    	  if (records[0]) {
+    		  var me = this,
+              grid = me.getPurchaseDtlsList(),
+              store = grid.getStore();
+           
+              var model = {};              
+              model["purdPdtCode"] = records[0].get('pdtCode');
+              model["purdQty"]=1;
+              model["purdPrice"]=records[0].get('pdtBp');
+              model["_purdPdtCode"]=records[0].get('pdtDescription');
+            
+              store.add(model);
+             // store.sync();
+             // console.log('ffffffffffkim '+store.getCount());
+              grid.getSelectionModel().select(store.data.length-1);  
+    	  }
+    	  combo.focus(true);
       }
 });    
     

@@ -61,7 +61,7 @@ public class ProductController extends BaseController {
 			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
 			String id=GlobalCC.CheckNullValues(request.getParameter("id"));
-			
+			String searchData=GlobalCC.CheckNullValues(request.getParameter("query"));
 			if (limit == null) {
 				limit = "50";
 			}
@@ -71,12 +71,23 @@ public class ProductController extends BaseController {
 			if(!(id==null)){
 				map.put("id", new BigDecimal(id));
 			}
-			List<ProductWrapper>list=productMapper.fetchProducts(map);
-			if (list != null) {
-				int count = list.size();
-				data.put("count", count);
-			}
-			data.put("data", list);
+			if(!(searchData==null)){				
+				map.put("searchData",searchData.toString().trim());
+				List<ProductsMapper>list=productMapper.fetchTransProduct(map);
+				if (list != null) {
+					int count = list.size();
+					data.put("count", count);
+				}
+				data.put("data", list);
+			}else{
+				List<ProductWrapper>list=productMapper.fetchProducts(map);
+				if (list != null) {
+					int count = list.size();
+					data.put("count", count);
+				}
+				data.put("data", list);
+			}		
+			
 			jsonResponse.setData(data);
 			jsonResponse.setSuccess(true);
 			return jsonObject(jsonResponse);

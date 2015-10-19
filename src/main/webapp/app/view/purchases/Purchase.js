@@ -4,6 +4,14 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
     bodyPadding: 5,
     initComponent: function() {
     	  var me = this;
+    	  var states = Ext.create('Ext.data.Store', {
+              fields: ['abbr', 'name'],
+              data : [
+              {"abbr":"AL", "name":"Alabama"},
+              {"abbr":"AK", "name":"Alaska"},
+              {"abbr":"AZ", "name":"Arizona"}
+              ]
+              });
     	 Ext.applyIf(me,{
     		 fieldDefaults: {
                  labelAlign: 'right',
@@ -71,20 +79,40 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 												    text : 'New Purchase',
 												    itemId:'newPurchase'	
 												},
+												
 												/*{
-		                 						    xtype:'tbspacer',
-		                 						    flex:1
-		                 						},*/
-												{
-													  xtype: 'textfield',
+													xtype: 'textfield',
 												    name: 'search',							            
 												    fieldLabel: 'Product'
-												},							          
-												
+												},*/							          
+												{
+			                                     	   xtype: 'ux.form.field.remotecombobox',
+			                                            name: 'search',
+			                                             fieldLabel: 'Product',
+			                                             displayField: 'pdtDescription',
+			                                             valueField: 'pdtCode',
+			                                             store: {
+			                                                 type: 'product.products'
+			                                             },
+			                                             editable: true,
+			                                             forceSelection: false,   
+			                                             emptyText:'select product',
+			                                             minChars: 0, 
+			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">',
+			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',
+			      							                                             '<div style="font-size: xx-small; color: grey;">Measure : {_pdtUntCode}</div>',
+			      							                                             '<div style="font-size: xx-small; color: grey;">Category : {_pdtCatCode}</div>',
+			      							                                             '<div style="font-size: xx-small; color: grey;">Location : {_pdtLocCode}-{_pdtSlocCode}</div>',
+			      							                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
+			      							                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
+			      							                                             '</div>',
+			      							                                             '</tpl>']),
+			                                         },
 										         ],
 							           },
 							          
-							          
+							           
 							          {
 							        	  xtype: 'container',
 							        	  layout:'fit',
@@ -147,7 +175,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
                  						{
                  						    xtype:'tbspacer',
                  						    flex:2
-                 						},
+                 						},                 						
+                 						
                  						 {
             					            xtype: 'textfield',
             					            name: 'topSearch',
