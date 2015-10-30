@@ -3,6 +3,7 @@ package com.topline.mappers;
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface InvoiceMapper {
@@ -93,4 +94,6 @@ public interface InvoiceMapper {
      * @mbggenerated Tue Oct 27 17:10:02 EAT 2015
      */
     int updateByPrimaryKey(Invoice record);
+  //add methods
+    int save(Invoice record);
 }

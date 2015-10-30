@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.topline.mappers.AccountMapper;
 import com.topline.mappers.CategoriesMapper;
 import com.topline.mappers.GroupsMapper;
+import com.topline.mappers.InvoiceDtlsMapper;
+import com.topline.mappers.InvoiceMapper;
 import com.topline.mappers.LocationsMapper;
 import com.topline.mappers.MenuMapper;
 import com.topline.mappers.PermissionsMapper;
@@ -69,6 +71,10 @@ public class BaseController extends MultiActionController {
 	PurchaseDetailMapper purchaseDetailMapper;
 	@Autowired(required=true)
 	StoredProcMapper storedProcMapper;
+	@Autowired(required=true)
+	InvoiceMapper invoiceMapper;
+	@Autowired(required=true)
+	InvoiceDtlsMapper invoiceDtlsMapper;
 	@Autowired(required=true)
 	DataSourceTransactionManager txnManager ;
 	public String jsonObject(StandardJsonResponse jsonResponse){
