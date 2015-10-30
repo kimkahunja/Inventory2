@@ -1,6 +1,6 @@
-Ext.define('InventoryApp.view.purchases.Purchase',{
+Ext.define('InventoryApp.view.invoice.Invoice',{
 	extend: 'Ext.form.Panel',
-    alias: 'widget.purchases.purchase',
+    alias: 'widget.invoice.invoice',
     bodyPadding: 5,
     initComponent: function() {
     	  var me = this;    	  
@@ -12,20 +12,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
                  margins: 5
              },
     		 items:[
-					{
-					    xtype: 'fieldcontainer',
-					    layout: 'hbox',                        
-					    items: [
-					        {
-					            xtype: 'displayfield',
-					            name: 'topSearch',
-					            fieldLabel: 'Search',
-					            hideLabel: 'true',
-					            
-					        },
-					     
-					    ]
-					},
+					
 					{
 						
 					    xtype: 'container',
@@ -37,11 +24,11 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 								    collapsible: true,
 								    collapseDirection:'left',
 								    //collapsed:true,
-								    title:'Unauthorized Purchases',
+								    title:'Pending Transactions',
 								    layout:'fit',
 								    items:[
 								          {
-								        	  xtype:'purchases.purchaselist',
+								        	  xtype:'invoice.invoicelist',
 								        	  	  
 								    	  }
 								
@@ -68,15 +55,10 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 										   items:[
 												{
 												    xtype: 'button',
-												    text : 'New Purchase',
-												    itemId:'newPurchase'	
-												},
-												
-												/*{
-													xtype: 'textfield',
-												    name: 'search',							            
-												    fieldLabel: 'Product'
-												},*/							          
+												    text : 'New Transaction',
+												    itemId:'newInvoice'	
+												},									
+																			          
 												{
 			                                     	   xtype: 'ux.form.field.remotecombobox',
 			                                            name: 'search',
@@ -111,7 +93,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							        	  maxHeight:300,
 							        	  items:[
 													{
-														xtype:'purchases.purchasedtlslist' , 
+														xtype:'invoice.invoicedtlslist' , 
 													  },
 							        	         ],
 							          },
@@ -125,13 +107,13 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 		                 						},
 		                 						{
 		                                            xtype: 'button',
-		                                            itemId: 'purchaseSave',
+		                                            itemId: 'invoiceSave',
 		                                            text: 'Save',
 		                                            iconCls: 'save'
 		                                        },
 		                                        {
 		                                            xtype: 'button',
-		                                            itemId: 'purchaseCancel',
+		                                            itemId: 'invoiceCancel',
 		                                            text: 'Cancel',
 		                                            iconCls: 'cancel'
 		                                        },
@@ -147,7 +129,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							    flex:1,
 							    items:[
 							          {
-							        	  xtype:'purchases.purchaseparticulars'
+							        	  xtype:'invoice.invoiceparticulars'
 							    	  }
 
 							          ],

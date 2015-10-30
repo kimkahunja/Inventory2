@@ -15,7 +15,11 @@ Ext.define('InventoryApp.Application', {
             'purchases.PurchaseParticulars',
             'purchases.PurchaseDtlsList',            
             'purchases.Purchase',
-            'purchases.PurchaseList'
+            'purchases.PurchaseList',
+            'invoice.InvoiceParticulars',
+            'invoice.InvoiceDtlsList',            
+            'invoice.Invoice',
+            'invoice.InvoiceList'
         ],
     controllers: [
        // 'App',
@@ -27,7 +31,8 @@ Ext.define('InventoryApp.Application', {
         'Purchases',
         //'PurchasesDtls',
        // 'GridToGrid',
-        'Bins'
+        'Bins',
+        'Invoices',
     ],
     requires: [
         'Ext.util.History',
