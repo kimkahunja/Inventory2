@@ -19,7 +19,11 @@ Ext.define('InventoryApp.Application', {
             'invoice.InvoiceParticulars',
             'invoice.InvoiceDtlsList',            
             'invoice.Invoice',
-            'invoice.InvoiceList'
+            'invoice.InvoiceList',
+            'InventoryApp.view.reports.purchases.Purchase',
+            'InventoryApp.view.reports.purchases.PurchaseList',
+            'InventoryApp.view.reports.purchases.PurchaseDtlsList',
+            'InventoryApp.view.reports.purchases.PurchaseParameters'
         ],
     controllers: [
        // 'App',
@@ -34,6 +38,9 @@ Ext.define('InventoryApp.Application', {
         'Bins',
         'Invoices',
     ],
+    stores: [
+         	'standard.Status',         	
+         ],
     requires: [
         'Ext.util.History',
         'overrides.grid.RowEditor',
