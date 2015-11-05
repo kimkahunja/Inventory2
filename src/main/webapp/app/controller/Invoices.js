@@ -49,11 +49,11 @@ Ext.define('InventoryApp.controller.Invoices', {
             	/*"textfield[name='search']":{
             		specialkey:this.specialKey
             	},*/
-            	"combobox[name='search']":{
+            	"combobox[name='searchInv']":{
             		select:this.onComboSelect
             	},
             	'button#invoiceSave':{
-            		click:this.savePurchases
+            		click:this.saveInvoices
             	},
             	'button#newinvoice':{
             		click:this.newPurchases
@@ -209,7 +209,7 @@ Ext.define('InventoryApp.controller.Invoices', {
            );
         }
     },
-    savePurchases: function( button, e, eOpts ) {
+    saveInvoices: function( button, e, eOpts ) {
     	 var me = this,
          grid = me.getInvoiceDtlsList(),
          store = grid.getStore();
@@ -226,37 +226,24 @@ Ext.define('InventoryApp.controller.Invoices', {
                     );
     		return;
     	}else{
-    		var purInvono=Ext.ComponentQuery.query("textfield[name='purInvono']")[0].getValue(),
-    		purRefNo=Ext.ComponentQuery.query("textfield[name='purRefNo']")[0].getValue(),
-    		//purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
-    		purDate=Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),
-    		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue();
-    		//console.log('purInvono '+purInvono);
-    		if (purInvono.trim().length==0){
+    		var invRefNo=Ext.ComponentQuery.query("textfield[name='invRefno']")[0].getValue(),    		
+    		invDate=Ext.ComponentQuery.query("datefield[name='invDate']")[0].getValue(),
+    		invAccCode=Ext.ComponentQuery.query("combo[name='invAccCode']")[0].getValue();
+    		if(invDate==null) {
     			Ext.Msg.show(
                         {                    
                            title : 'Validation',
-                           msg : 'Invoice Number is required...',
+                           msg : 'Transaction Date is required...',
                            icon : Ext.Msg.INFO,
                            buttons : Ext.Msg.OK
                         }
                         );
         		return;
-    		}else if(purDate==null) {
+    		}else if(invAccCode==null){
     			Ext.Msg.show(
                         {                    
                            title : 'Validation',
-                           msg : 'Purchase Date is required...',
-                           icon : Ext.Msg.INFO,
-                           buttons : Ext.Msg.OK
-                        }
-                        );
-        		return;
-    		}else if(purAccCode==null){
-    			Ext.Msg.show(
-                        {                    
-                           title : 'Validation',
-                           msg : 'Supplier is required...',
+                           msg : 'Customer is required...',
                            icon : Ext.Msg.INFO,
                            buttons : Ext.Msg.OK
                         }
@@ -265,11 +252,10 @@ Ext.define('InventoryApp.controller.Invoices', {
     		}
     			
     		
-    		 var model = {};
-    		 model["purInvono"]=purInvono;
-    		 model["purRefno"]=purRefNo;
-    		 model["purDate"]=purDate;
-    		 model["purAccCode"]=purAccCode;
+    		 var model = {};    		
+    		 model["invRefno"]=invRefNo;
+    		 model["invDate"]=invDate;
+    		 model["invAccCode"]=invAccCode;
     		 //-----------------------------------------
     		 var details = new Array();
              var records = store.getRange();
@@ -278,7 +264,7 @@ Ext.define('InventoryApp.controller.Invoices', {
              };
              
     		Ext.Ajax.request({
-                url: 'purchase/savePurchase.action',
+                url: 'invoice/saveInvoice.action',
              params: {                   
                      data: Ext.encode(model),
                      dataDetail:Ext.encode(details)
@@ -323,11 +309,11 @@ Ext.define('InventoryApp.controller.Invoices', {
     	  grid = me.getInvoiceDtlsList(),
           store = grid.getStore();
           if (records[0]) {
-               this.getPurchaseForm().getForm().loadRecord(records[0]);
+               this.getInvoiceForm().getForm().loadRecord(records[0]);
                store.clearFilter( true );
          		store.load({
                  	params: {
-                 		id: records[0].get('purId')
+                 		id: records[0].get('invId')
                  	}
                  });
           }
@@ -384,7 +370,7 @@ Ext.define('InventoryApp.controller.Invoices', {
 	    	  store.clearData();
 	    	  store.removeAll();
     	   grid.getView().refresh();
-    	   this.getPurchaseForm().getForm().reset();
+    	   this.getInvoiceForm().getForm().reset();
            
       },
       onComboSelect:function( combo, records, eOpts ){
@@ -395,9 +381,9 @@ Ext.define('InventoryApp.controller.Invoices', {
               store = grid.getStore();
            
               var model = {};              
-              model["purdPdtCode"] = records[0].get('pdtCode');
-              model["purdQty"]=1;
-              model["purdPrice"]=records[0].get('pdtBp');
+              model["invdPdtCode"] = records[0].get('pdtCode');
+              model["invdQty"]=1;
+              model["invdPrice"]=records[0].get('pdtBp');
               model["_purdPdtCode"]=records[0].get('pdtDescription');
             
               store.add(model);

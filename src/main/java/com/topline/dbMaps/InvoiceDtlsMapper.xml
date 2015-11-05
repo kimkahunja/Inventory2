@@ -363,4 +363,16 @@
       invd_bp = #{invdBp,jdbcType=DECIMAL}
     where invd_id = #{invdId,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.InvoiceDtlsWrapper" >    
+    <result column="pdt_description" property="_purdPdtCode" jdbcType="VARCHAR" />  
+  </resultMap> 
+   <select id="fetchInvoiceDtls" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+   		SELECT invd_id, invd_inv_id, invd_pdt_code, invd_qty, invd_price, invd_tamount, invd_discount, 
+   		 invd_bonus, invd_status, invd_bp,pdt_description
+    	FROM inv_invoice_dtls,inv_products
+    	WHERE invd_pdt_code=pdt_code
+    	 <if test="invId != null">
+         	 AND  invd_inv_id =  #{invId,jdbcType=INTEGER}
+     	 </if>
+   </select>
 </mapper>

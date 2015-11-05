@@ -2,7 +2,12 @@ package com.topline.mappers;
 
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
+import com.topline.model.wrappers.InvoiceDtlsWrapper;
+import com.topline.model.wrappers.PurchaseDetailWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface InvoiceDtlsMapper {
@@ -93,4 +98,6 @@ public interface InvoiceDtlsMapper {
      * @mbggenerated Tue Oct 27 17:10:02 EAT 2015
      */
     int updateByPrimaryKey(InvoiceDtls record);
+  //add methods
+    List<InvoiceDtlsWrapper> fetchInvoiceDtls(Map<String,Object> map);
 }

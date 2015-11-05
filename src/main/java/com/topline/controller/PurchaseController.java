@@ -89,9 +89,14 @@ public class PurchaseController extends BaseController {
 			}catch(Exception ex){
 				purchaseMapper.deleteByPrimaryKey(purchase.getPurId());
 				//check this functionality here...
+				ex.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", ex.getLocalizedMessage());
+				return jsonObject(jsonResponse);
 			}
 			
-			
+			jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 			jsonResponse.setSuccess(true);	
 			jsonResponse.setData(null);	        
 	        return jsonObject(jsonResponse);

@@ -348,4 +348,30 @@
       inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL}
     where inv_id = #{invId,jdbcType=INTEGER}
   </update>
+   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.InvoiceWrapper" >    
+    <result column="acc_name" property="_purAccCode" jdbcType="VARCHAR" />  
+  </resultMap>
+   <select id="fetchInvoices" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	  	SELECT inv_id, inv_invono, inv_refNo, inv_date, inv_acc_code, inv_user, inv_status, inv_posted_by, 
+	    inv_receipt_amt,acc_name
+	    FROM inv_invoices,inv_accounts
+	    WHERE inv_acc_code=acc_code
+	    <if test="invStatus != null">
+          AND  inv_status =  #{invStatus,jdbcType=VARCHAR}
+      </if> 
+     </select>
+ <insert id="save" parameterType="com.topline.model.Invoice" useGeneratedKeys="true" keyProperty="invId"  keyColumn="inv_id" >
+    
+    insert into inv_invoices (inv_id, inv_invono, inv_refNo, 
+      inv_date, inv_acc_code, inv_user, 
+      inv_status, inv_posted_by, inv_receipt_amt
+      )
+    values (#{invId,jdbcType=INTEGER}, #{invInvono,jdbcType=VARCHAR}, #{invRefno,jdbcType=VARCHAR}, 
+      #{invDate,jdbcType=DATE}, #{invAccCode,jdbcType=INTEGER}, #{invUser,jdbcType=VARCHAR}, 
+      #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL}
+      )
+      <selectKey keyProperty="invId" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert>    
 </mapper>

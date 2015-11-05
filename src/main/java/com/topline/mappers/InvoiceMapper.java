@@ -2,7 +2,10 @@ package com.topline.mappers;
 
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceExample;
+import com.topline.model.wrappers.InvoiceWrapper;
+
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -96,4 +99,5 @@ public interface InvoiceMapper {
     int updateByPrimaryKey(Invoice record);
   //add methods
     int save(Invoice record);
+    List<InvoiceWrapper> fetchInvoices(Map<String,Object> map);
 }

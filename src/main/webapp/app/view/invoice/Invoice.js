@@ -61,7 +61,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 																			          
 												{
 			                                     	   xtype: 'ux.form.field.remotecombobox',
-			                                            name: 'search',
+			                                            name: 'searchInv',
 			                                             fieldLabel: 'Product',
 			                                             displayField: 'pdtDescription',
 			                                             valueField: 'pdtCode',
