@@ -71,17 +71,29 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
                                    defaultAlign:'right',
                                    ui: 'footer',
                                    items: [
-               						{
-               						    xtype:'tbspacer',
-               						    flex:2
-               						},                 						
-               						
-               						 {
-          					            xtype: 'button',
-          					            name: 'topSearch',
-          					            text:'Print Report'
-          					        },
-                                   ]
+                                           {
+											    xtype:'tbspacer',
+											    flex:2
+											},
+                                           {
+                                        	   xtype: 'button',
+		          					           itemid: 'searchPurchases',
+		          					           text:'Search' ,
+		          					           iconCls: 'filter',
+                                           },
+		               						{
+		               						    xtype:'tbspacer',
+		               						    flex:1
+		               						},                 						
+		               						
+		               						 {
+		          					            xtype: 'button',
+		          					            itemid: 'printPurchaseReport',
+		          					            text:'Print Report',
+		          					            iconCls: 'icon_report',
+		          					          
+		          					        },
+		                                   ]
                                },
                               
                            ]     

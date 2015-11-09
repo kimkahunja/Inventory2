@@ -37,6 +37,7 @@ Ext.define('InventoryApp.Application', {
        // 'GridToGrid',
         'Bins',
         'Invoices',
+        'reports.PurchaseRPT'
     ],
     stores: [
          	'standard.Status',         	
