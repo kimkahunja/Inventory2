@@ -2,7 +2,11 @@ package com.topline.mappers;
 
 import com.topline.model.Account;
 import com.topline.model.AccountExample;
+import com.topline.model.wrappers.PurchaseWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface AccountMapper {
@@ -93,4 +97,5 @@ public interface AccountMapper {
      * @mbggenerated Fri Jul 24 21:41:34 EAT 2015
      */
     int updateByPrimaryKey(Account record);
+    List<Account> fetchAccounts(Map<String,Object> map);
 }

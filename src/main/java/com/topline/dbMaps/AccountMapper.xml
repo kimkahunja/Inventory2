@@ -348,4 +348,17 @@
       acc_mobile_no = #{accMobileNo,jdbcType=VARCHAR}
     where acc_code = #{accCode,jdbcType=INTEGER}
   </update>
+  <select id="fetchAccounts" parameterType="java.util.HashMap" resultMap="BaseResultMap" >
+	  
+	   SELECT acc_code, acc_name, acc_type, acc_address, acc_location, acc_email, acc_fax, acc_tel_no, 
+   		 acc_mobile_no,2 as myLevel
+   		 FROM inv_accounts
+        <if test="type != null">
+          WHERE  acc_type =  #{type,jdbcType=VARCHAR}
+      </if>	
+      UNION
+       SELECT NULL,"All",#{type,jdbcType=VARCHAR},NULL,NULL,NULL,NULL,NULL,NULL,1 as myLevel
+       FROM DUAL
+        ORDER BY 1 
+   </select>
 </mapper>

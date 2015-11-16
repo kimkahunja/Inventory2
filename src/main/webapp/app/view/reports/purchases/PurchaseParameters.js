@@ -9,7 +9,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
        var me = this;
        Ext.applyIf(me,{
     	   fieldDefaults: {
-    		   allowBlank: false,
+    		   allowBlank: true,
     	   },
     	   items:[					
 					{
@@ -24,7 +24,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
                                 displayField: 'accName',
                                 valueField: 'accCode',
                                 store: {
-                                    type: 'account.accounts'
+                                    type: 'account.accountsrpt'
                                 },
                                 editable: false,
                                 forceSelection: false,

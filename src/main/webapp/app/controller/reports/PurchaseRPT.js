@@ -3,7 +3,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     stores: [
     	'purchases.Purchases',
     	'purchases.PurchasesDtls',
-    	'account.Accounts'
+    	'account.AccountsRpt'
     ],
     views: [
     	'reports.purchases.Purchase',
