@@ -54,6 +54,10 @@ Ext.define('InventoryApp.Utilities', {
                         Ext.Msg.alert('Error', 'Error  in Loading Data...');
                 }
             }
-        }
+        },
+        convertDate: function(date){
+            return Ext.Date.format(date, 'd/m/Y');
+        },
+        accountType:'C',
     }
 });

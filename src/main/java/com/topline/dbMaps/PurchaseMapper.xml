@@ -352,6 +352,12 @@
         <if test="purStatus != null">
           AND  pur_status =  #{purStatus,jdbcType=VARCHAR}
       </if>	
+      <if test="accCode !=null">
+      	   AND  pur_acc_code =  #{accCode,jdbcType=INTEGER}
+      </if>
+      <if test="dateFrom !=null"  >
+      	AND  pur_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
    </select>
     <select id="postPurchase" parameterType="java.util.HashMap" statementType="CALLABLE">    
 	{ CALL post_purchases(#{v_pur_id, mode=IN, jdbcType=INTEGER},#{v_count, mode=OUT, jdbcType=INTEGER})}

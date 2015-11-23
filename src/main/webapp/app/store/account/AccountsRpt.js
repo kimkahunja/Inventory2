@@ -21,7 +21,7 @@ Ext.define('InventoryApp.store.account.AccountsRpt',{
             destroy : 'account/deleteAccount.action'
         },
         extraParams: {
-            type: 'C'
+            type: InventoryApp.Utilities.accountType
         },
         reader: {
             type: 'json',

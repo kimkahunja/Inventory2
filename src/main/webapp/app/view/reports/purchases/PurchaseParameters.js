@@ -19,10 +19,10 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
 					    items:[
 					          {
                                 xtype: 'ux.form.field.remotecombobox',
-                                name: 'purAccCode',
+                                name: 'purAccCodeRpt',
                                 fieldLabel: 'Supplier',
                                 displayField: 'accName',
-                                valueField: 'accCode',
+                                valueField: 'accCode',                                
                                 store: {
                                     type: 'account.accountsrpt'
                                 },
@@ -77,7 +77,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
 											},
                                            {
                                         	   xtype: 'button',
-		          					           itemid: 'searchPurchases',
+                                        	   itemId: 'searchPurchases',
 		          					           text:'Search' ,
 		          					           iconCls: 'filter',
                                            },
@@ -88,7 +88,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
 		               						
 		               						 {
 		          					            xtype: 'button',
-		          					            itemid: 'printPurchaseReport',
+		          					           itemId: 'printPurchaseReport',
 		          					            text:'Print Report',
 		          					            iconCls: 'icon_report',
 		          					          

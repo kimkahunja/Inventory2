@@ -32,8 +32,11 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                	'grid[xtype=reports.purchases.purchasedtlslist]': {               		
                		beforerender: this.clearDtls,              		
                	},
-               	'button#purchaseSave':{
-               		//click:this.savePurchases
+               	"combobox[name='purAccCodeRpt']":{
+            		//beforequery:this.beforeComboQuery,
+            	},
+               	'button#searchPurchases':{
+               		click:this.searchPurchases
                	},               	
                },
                global: {},
@@ -71,4 +74,36 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                   });
            }
        },  
+       searchPurchases:function( button, e, eOpts ){    	   
+    	   var accCode=Ext.ComponentQuery.query("combo[name='purAccCodeRpt']")[0].getValue(),
+    	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
+    	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),
+    	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamTo']")[0].getValue());
+    	   console.log('AccCode=='+accCode+' status== '+status+' dateFrom== '+dateFrom+' dateTo == '+dateTo);
+    	   
+    	  /* Ext.Ajax.request({
+               url: 'purchase/fetchPurchases.action',
+            params: {                   
+            	accCode: accCode, 
+            	status:status,
+            	dateFrom:dateFrom,
+            	dateTo:dateTo,
+            	root:'N'
+            },
+            
+            scope:this,
+            //method to call when the request is successful
+            //success: InventoryApp.Utilities.onSaveSuccess,
+            //method to call when the request is a failure
+           // failure: InventoryApp.Utilities.onSaveFailure
+        }); */
+    	   this.getPurchaseList().getStore().load({params: {                   
+											           	accCode: accCode, 
+											        	status:status,
+											        	dateFrom:dateFrom,
+											        	dateTo:dateTo,
+											        	root:'N'
+											        }    	   
+    	   });
+       } 
 });
