@@ -98,4 +98,5 @@ public interface AccountMapper {
      */
     int updateByPrimaryKey(Account record);
     List<Account> fetchAccounts(Map<String,Object> map);
+    List<Account> fetchAccountsM(Map<String,Object> map);
 }

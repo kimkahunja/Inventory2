@@ -28,9 +28,8 @@ public class LocationController extends BaseController {
 			try{
 				ObjectMapper mapper = new ObjectMapper();
 				String data=GlobalCC.CheckNullValues(request.getParameter("data"));
-				Locations locations=mapper.readValue(data, Locations.class);
-				
-				
+				Locations locations=mapper.readValue(data, Locations.class);			
+			
 				if (locations.getLocCode()==null){
 					locationMapper.insert(locations);
 					jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);

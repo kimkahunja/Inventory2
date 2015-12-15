@@ -55,9 +55,15 @@ Ext.define('InventoryApp.controller.Invoices', {
             	'button#invoiceSave':{
             		click:this.saveInvoices
             	},
-            	'button#newinvoice':{
-            		click:this.newPurchases
-            	}
+            	'button#newInvoice':{
+            		click:this.newInvoice
+            	},'button#invoiceRemove':{
+            		click:this.removeInvoice
+            	},
+            	"combobox[name='invAccCode']":{
+            		beforequery:this.beforeQuery
+            		
+            	},
             },
             global: {},
             store: {},
@@ -363,7 +369,8 @@ Ext.define('InventoryApp.controller.Invoices', {
         
       },
       
-      newPurchases: function( button, e, eOpts ){
+      newInvoice: function( button, e, eOpts ){
+    	  console.log("New Invoice.....");
     	  var me = this,
         	grid = me.getInvoiceDtlsList(),    		
     		store = grid.getStore();
@@ -391,7 +398,27 @@ Ext.define('InventoryApp.controller.Invoices', {
              // console.log('ffffffffffkim '+store.getCount());
               grid.getSelectionModel().select(store.data.length-1);  
     	  }
+    	  combo.clearValue();
     	  combo.focus(true);
+    	  
+      },
+      removeInvoice: function( button, e, eOpts ){
+    	  console.log("Remove Invoice.....");
+    	  var me = this,
+        	grid = me.getInvoiceDtlsList(), 
+        	record = grid.getSelectionModel().getSelection(),
+        	
+    		store = grid.getStore();
+    	  //console.log("Number of Records selected....."+grid.getSelectionModel().getCount());
+    	     if (grid.getSelectionModel().getCount()>0 ){
+    	    	 store.remove(record[0]);
+    	    	   grid.getView().refresh();
+    	     }	    	 
+    	   this.getInvoiceForm().getForm().reset();
+           
+      },
+      beforeQuery:function( queryPlan, eOpts ){
+    	  console.log("Before Query.....");
       }
 });    
     

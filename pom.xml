@@ -122,6 +122,11 @@
 	<artifactId>jasypt-springsecurity3</artifactId>
 	<version>1.9.2</version>
   </dependency>
+  <dependency>
+	<groupId>net.sf.jasperreports</groupId>
+	<artifactId>jasperreports</artifactId>
+	<version>6.2.0</version>
+  </dependency>
   <!-- Log4j -->
 	<!-- <dependency>
 		<groupId>log4j</groupId>

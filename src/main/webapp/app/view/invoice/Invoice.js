@@ -23,7 +23,10 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 								    flex:1,
 								    collapsible: true,
 								    collapseDirection:'left',
-								    //collapsed:true,
+								    collapsed:true,
+								    //collapseFirst: false,
+								    //collapseMode: "header",
+								    animCollapse : false,
 								    title:'Pending Transactions',
 								    layout:'fit',
 								    items:[
@@ -65,6 +68,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			                                             fieldLabel: 'Product',
 			                                             displayField: 'pdtDescription',
 			                                             valueField: 'pdtCode',
+			                                             multiSelect: true,
 			                                             store: {
 			                                                 type: 'product.products'
 			                                             },
@@ -105,6 +109,12 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 		                 						    xtype:'tbspacer',
 		                 						    flex:2
 		                 						},
+		                 						{
+		                                            xtype: 'button',
+		                                            itemId: 'invoiceRemove',
+		                                            text: 'Remove',
+		                                            iconCls: 'delete'
+		                                        },
 		                 						{
 		                                            xtype: 'button',
 		                                            itemId: 'invoiceSave',

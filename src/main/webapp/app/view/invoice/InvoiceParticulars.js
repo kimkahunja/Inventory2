@@ -25,6 +25,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
                                 store: {
                                     type: 'account.accounts'
                                 },
+                                value: Ext.getStore( 'account.accounts' ).getAt(0).get('accCode'),
                                 editable: false,
                                 forceSelection: false,
                                 emptyText:'select a customer'

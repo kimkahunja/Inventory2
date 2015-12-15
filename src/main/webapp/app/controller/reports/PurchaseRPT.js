@@ -36,8 +36,11 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
             		//beforequery:this.beforeComboQuery,
             	},
                	'button#searchPurchases':{
-               		click:this.searchPurchases
-               	},               	
+               		click:this.searchPurchases 
+               	}, 
+               	'button#printPurchaseReport':{
+               		click:this.printPurchases 
+               	}, 
                },
                global: {},
                store: {},
@@ -105,5 +108,16 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
 											        	root:'N'
 											        }    	   
     	   });
-       } 
+       },
+       printPurchases:function( button, e, eOpts ){
+    	   Ext.Ajax.request({
+               url: 'reports/purchasesRpt.action',            
+            scope:this,
+            //method to call when the request is successful
+            //success: InventoryApp.Utilities.onSaveSuccess,
+            //method to call when the request is a failure
+            failure: InventoryApp.Utilities.onSaveFailure
+        });
+       }
+       
 });

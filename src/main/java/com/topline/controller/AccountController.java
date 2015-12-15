@@ -29,14 +29,17 @@ public class AccountController extends BaseController {
 			
 			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+			String type=GlobalCC.CheckNullValues(request.getParameter("type"));
 			if (limit == null) {
 				limit = "50";
 			}
 			if (start == null) {
 				start = "0";
 			}
-			AccountExample accountExample= new AccountExample();
-			List<Account>list=accountMapper.selectByExample(accountExample);
+			map.put("type", type==null?"D":type);
+			List<Account>list=accountMapper.fetchAccountsM(map);
+			//AccountExample accountExample= new AccountExample();
+			//List<Account>list=accountMapper.selectByExample(accountExample);
 			if (list != null) {
 				int count = list.size();
 				data.put("count", count);
