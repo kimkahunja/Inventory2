@@ -437,8 +437,36 @@ Ext.define('InventoryApp.controller.Invoices', {
                  		 var me = this,
                  		  field=me.getInvoiceNoField(),
                  		  mydata=result.data.data[0],
-                 		  invoiceNumber=mydata.invoiceNumber;
-                 		  field.setValue(mydata.invoiceNumber);
+                 		  invoiceNumber=mydata.invoiceNumber,                 		
+                       	  grid = me.getInvoiceList(),    		
+                   		  store = grid.getStore();
+                 		 // store =Ext.data.StoreManager.lookup("Invoices");
+                 		  //field.setValue(mydata.invoiceNumber);
+                 		 
+                 		var combo = this.getAcctCombo(),
+                        storeCombo = combo.getStore();                  	  
+                 		combo.clearValue();
+                 		storeCombo.clearFilter();
+                 		storeCombo.load({
+	                			  params: {
+	              	           		type:'D'
+	              	           	}
+	              		  });
+                 		
+                 		 var model = {}, 
+                 		 currentDate = new Date();
+                 		 //accCode=storeCombo.getAt('0').get('accCode'),
+                 		// accName=storeCombo.getAt('0').get('accName');
+                 		 console.log('mydata.invoiceNumber '+mydata);
+                         model["invId"] =null;
+                         model["invInvono"]=mydata;
+                         model["invDate"]=currentDate;
+                        // model["invAccCode"]=accCode;
+                         model["invRefno"]='444444444';
+                         
+                         store.add(model);
+                         var records = store.getRange();
+                         this.getInvoiceForm().getForm().loadRecord(records[0]);
                  		}
                  	                
                                      
