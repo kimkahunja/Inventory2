@@ -163,5 +163,43 @@ public class InvoiceController extends BaseController {
 					jsonResponse.addMessage("message", e.getLocalizedMessage());
 					return jsonObject(jsonResponse);
 				}
-			}			
+			}
+			//fetchInvoiceNumber 
+			@RequestMapping(value="/fetchInvoiceNumber.action", method=RequestMethod.POST)
+			private @ResponseBody
+			String getInvoiceNumber(HttpServletRequest request){
+				try{
+					HashMap<String, Object> data = new HashMap<String, Object>();
+					
+					Map<String, Object> map = new HashMap<String, Object>();		
+					
+					String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+					String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+					String location=GlobalCC.CheckNullValues(request.getParameter("location"));
+					if (limit == null) {
+						limit = "50";
+					}
+					if (start == null) {
+						start = "0";
+					}
+					map.put("location", location);
+					String invoiceNumber=invoiceMapper.fetchInvoiceNumber(map);
+					if (invoiceNumber != null) {
+						int count = Integer.parseInt("1");
+						data.put("count", count);
+					}
+					data.put("data", invoiceNumber);
+					jsonResponse.setData(data);
+					jsonResponse.setSuccess(true);
+					System.out.println(jsonObject(jsonResponse));
+					return jsonObject(jsonResponse);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					jsonResponse.setData(null);
+					jsonResponse.setSuccess(false);
+					jsonResponse.addMessage("message", e.getLocalizedMessage());
+					return jsonObject(jsonResponse);
+				}
+			}
 }

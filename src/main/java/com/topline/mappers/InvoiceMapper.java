@@ -100,4 +100,5 @@ public interface InvoiceMapper {
   //add methods
     int save(Invoice record);
     List<InvoiceWrapper> fetchInvoices(Map<String,Object> map);
+    String fetchInvoiceNumber(Map<String,Object> map);
 }

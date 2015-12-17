@@ -24,7 +24,15 @@ Ext.define('InventoryApp.controller.Invoices', {
         {
             ref: 'InvoiceForm',
             selector: '[xtype=invoice.invoiceparticulars]'
-        }
+        },
+        {
+            ref: 'AcctCombo',
+            selector: "combobox[name='invAccCode']"
+        },
+        {
+            ref: 'InvoiceNoField',
+            selector: "displayfield[name='invInvono']"
+        },
     ],
     init: function() {
         this.listen({
@@ -61,7 +69,7 @@ Ext.define('InventoryApp.controller.Invoices', {
             		click:this.removeInvoice
             	},
             	"combobox[name='invAccCode']":{
-            		beforequery:this.beforeQuery
+            		 boxready:this.boxReady
             		
             	},
             },
@@ -234,7 +242,8 @@ Ext.define('InventoryApp.controller.Invoices', {
     	}else{
     		var invRefNo=Ext.ComponentQuery.query("textfield[name='invRefno']")[0].getValue(),    		
     		invDate=Ext.ComponentQuery.query("datefield[name='invDate']")[0].getValue(),
-    		invAccCode=Ext.ComponentQuery.query("combo[name='invAccCode']")[0].getValue();
+    		invAccCode=Ext.ComponentQuery.query("combo[name='invAccCode']")[0].getValue(),
+    		invInvono=Ext.ComponentQuery.query("displayfield[name='invInvono']")[0].getValue();
     		if(invDate==null) {
     			Ext.Msg.show(
                         {                    
@@ -255,6 +264,16 @@ Ext.define('InventoryApp.controller.Invoices', {
                         }
                         );
         		return;
+    		}else if(invInvono.trim().length==0){
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Invoice Number not set...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
     		}
     			
     		
@@ -262,6 +281,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     		 model["invRefno"]=invRefNo;
     		 model["invDate"]=invDate;
     		 model["invAccCode"]=invAccCode;
+    		 model["invInvono"]=invInvono;
     		 //-----------------------------------------
     		 var details = new Array();
              var records = store.getRange();
@@ -316,6 +336,7 @@ Ext.define('InventoryApp.controller.Invoices', {
           store = grid.getStore();
           if (records[0]) {
                this.getInvoiceForm().getForm().loadRecord(records[0]);
+               console.log('inv no=== '+records[0].get('invInvono'));
                store.clearFilter( true );
          		store.load({
                  	params: {
@@ -378,6 +399,65 @@ Ext.define('InventoryApp.controller.Invoices', {
 	    	  store.removeAll();
     	   grid.getView().refresh();
     	   this.getInvoiceForm().getForm().reset();
+    	   
+    	   // get the next invoice number
+    	   Ext.Ajax.request({
+               url: 'invoice/fetchInvoiceNumber.action',
+            params: {                   
+           	 location:'1'
+            },
+            
+            scope:this,
+            //method to call when the request is successful
+            success:function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+                 	if(result.data.count==0){
+                 		Ext.Msg.show(
+                                 {                    
+                                    title : 'No Record!',
+                                    msg : 'Next Invoice Number cannot be retrieved...',
+                                    icon : Ext.Msg.INFO,
+                                    buttons : Ext.Msg.OK
+                                 }
+                                 );
+                 	}else
+                 		{
+                 		 var me = this,
+                 		  field=me.getInvoiceNoField(),
+                 		  mydata=result.data.data[0],
+                 		  invoiceNumber=mydata.invoiceNumber;
+                 		  field.setValue(mydata.invoiceNumber);
+                 		}
+                 	                
+                                     
+                 }
+            	 else
+                 {
+                    Ext.Msg.show(
+                    {                    
+                       title : 'Fail!',
+                       msg : result.messages.message,
+                       icon : Ext.Msg.ERROR,
+                       buttons : Ext.Msg.OK
+                    }
+                    );
+                 }
+            },
+            //method to call when the request is a failure
+            failure: InventoryApp.Utilities.onSaveFailure
+        });
            
       },
       onComboSelect:function( combo, records, eOpts ){
@@ -417,8 +497,25 @@ Ext.define('InventoryApp.controller.Invoices', {
     	   this.getInvoiceForm().getForm().reset();
            
       },
-      beforeQuery:function( queryPlan, eOpts ){
-    	  console.log("Before Query.....");
-      }
-});    
+      boxReady:function( combo, width, height, eOpts ){
+    	  //console.log('combo.getStore().getAt(0).get(combo.valueField) '+combo.getStore().getAt(0).get(combo.valueField));
+    	  //combo.setValue(combo.getStore().getAt(0).get(combo.valueField),true);
+    	  // fire the select event ( Event in extjs )
+    	 // combo.fireEvent('select',combo);
+    	  
+    	  var combo = this.getAcctCombo(),
+          store = combo.getStore();
+    	  
+    	  combo.clearValue();
+    	  store.clearFilter();
+    	  store.load({
+  			  params: {
+	           		type:'D'
+	           	}
+		  });
+    	  store.on('load',function(store) {
+    		  combo.setValue(store.getAt('0').get('accCode'));
+          });
+},
+});
     

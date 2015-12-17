@@ -16,25 +16,39 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
 					    layout: 'vbox',			    
 					   
 					    items:[
+								
 					          {
                                 xtype: 'ux.form.field.remotecombobox',
                                 name: 'invAccCode',
+                                itemId:'invAccCode',
                                 fieldLabel: 'Customer',
                                 displayField: 'accName',
                                 valueField: 'accCode',
                                 store: {
                                     type: 'account.accounts'
                                 },
-                                value: Ext.getStore( 'account.accounts' ).getAt(0).get('accCode'),
+                              //  value: Ext.getStore( 'account.accounts' ).getAt(0).get('accCode'),
                                 editable: false,
                                 forceSelection: false,
-                                emptyText:'select a customer'
+                                emptyText:'select a customer',
+                                
+
                             },
-					         /* {
-					        	xtype:'textfield',
-					        	name:'purInvono',					        	
-					        	fieldLabel: 'Invoice No.'
-					          },*/
+					          {
+					        	xtype:'displayfield',
+					        	name:'invInvono',					        	
+					        	fieldLabel: 'Invoice No.',					        	
+					        	renderer: function(value){
+					        		console.log('value11=== '+value);
+					        		if(value.trim().length==0){
+					        			console.log('value22=== '+value);
+					        			return value;
+					        		}else{
+					        			console.log('value33=== '+value);
+					        			return value;
+					        		}
+					        	 }
+					          },
 					          {
 					        	xtype:'textfield',
 					        	name:'invRefno',					        	

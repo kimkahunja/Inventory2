@@ -373,5 +373,11 @@
       <selectKey keyProperty="invId" resultType="integer" order="AFTER">
             SELECT LAST_INSERT_ID();
         </selectKey>
-  </insert>    
+  </insert> 
+   <resultMap id="InvoiceNumberSeqWrapper" type="com.topline.model.wrappers.InvoiceNumberSeq" >    
+   		 <result column="vnum_cur_num" property="invoiceNumber" jdbcType="VARCHAR" />  
+  </resultMap> 
+  <select id="fetchInvoiceNumber" parameterType="java.util.HashMap" resultType="String" >
+       SELECT getInvoiceNumber(#{location,mode=IN,jdbcType=INTEGER})
+ </select>     
 </mapper>
