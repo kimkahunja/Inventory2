@@ -59,5 +59,10 @@ Ext.define('InventoryApp.Utilities', {
             return Ext.Date.format(date, 'd/m/Y');
         },
         accountType:'C',
+        inv_id:null,
+        locationId:null,
+        locationDescription:null,
+        userName:null,
+        lastLogin:null
     }
 });

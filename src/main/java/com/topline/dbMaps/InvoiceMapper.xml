@@ -359,6 +359,9 @@
 	    <if test="invStatus != null">
           AND  inv_status =  #{invStatus,jdbcType=VARCHAR}
       </if> 
+      <if test="id !=null">
+      	 AND inv_id= #{id,jdbcType=INTEGER}
+      </if>
      </select>
  <insert id="save" parameterType="com.topline.model.Invoice" useGeneratedKeys="true" keyProperty="invId"  keyColumn="inv_id" >
     
@@ -379,5 +382,9 @@
   </resultMap> 
   <select id="fetchInvoiceNumber" parameterType="java.util.HashMap" resultType="String" >
        SELECT getInvoiceNumber(#{location,mode=IN,jdbcType=INTEGER})
- </select>     
+ </select> 
+ <update id="updateNextInvoiceNumber" parameterType="java.util.HashMap">
+ 	UPDATE inv_invoice_numbers SET vnum_cur_num=vnum_cur_num+1, vnum_last_update=SYSDATE()
+	WHERE vnum_loc_code=#{location,jdbcType=INTEGER} 
+ </update>    
 </mapper>

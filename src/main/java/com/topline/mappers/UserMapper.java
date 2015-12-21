@@ -4,8 +4,11 @@ import com.topline.model.User;
 import com.topline.model.UserExample;
 import com.topline.model.UserKey;
 import com.topline.model.wrappers.SpringSecurityUser;
+import com.topline.model.wrappers.UserWrapper;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -98,4 +101,6 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
     SpringSecurityUser selectSpringSecurityUser(String usrUsername);
+    BigDecimal countUsers(Map<String,Object> map);
+    List<UserWrapper> fetchUserDetails(Map<String,Object> map);
 }

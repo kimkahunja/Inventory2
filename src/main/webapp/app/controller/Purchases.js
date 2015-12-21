@@ -353,18 +353,50 @@ Ext.define('InventoryApp.controller.Purchases', {
       	            //method to call when the request is successful
       	            //success: InventoryApp.Utilities.onSaveSuccess,
       	            success:function(conn, response, options, eOpts){
-      	            	store.load({
-      	             	   callback: function(records, operation, success) {
-      	             	        if (success == true) {
-      	             	            console.log('Loading is successful....');
-      	             	            //store.sync();
-      	             	            grid.getView().refresh();
-      	             	           grid.getSelectionModel().select(0);
-      	             	        } else {
-      	             	        	 console.log('Loading is not successful....');
-      	             	        }
-      	             	    }
-      	                });
+      	            	var result = Ext.JSON.decode(conn.responseText, true); 
+      	            	if ( ! result)
+      	                {
+      	                   
+      	                   result =
+      	                   {
+      	                   }
+      	                   ;
+      	                   result.success = false;
+      	                   result.messages.message = conn.responseText;
+      	                }
+      	            	if (result.success){
+      	            		store.load({
+           	             	   callback: function(records, operation, success) {
+           	             	        if (success == true) {
+           	             	            console.log('Loading is successful....');
+           	             	            //store.sync();
+           	             	            grid.getView().refresh();
+           	             	           grid.getSelectionModel().select(0);
+           	             	        } else {
+           	             	         Ext.Msg.show(
+           	                               {                    
+           	                                  title : 'Fail!',
+           	                                  msg : result.messages.message,
+           	                                  icon : Ext.Msg.ERROR,
+           	                                  buttons : Ext.Msg.OK
+           	                               }
+           	                               );
+           	             	        }
+           	             	    }
+           	                });
+      	            	}
+      	            	else
+      	                 {
+      	                    Ext.Msg.show(
+      	                    {                    
+      	                       title : 'Fail!',
+      	                       msg : result.messages.message,
+      	                       icon : Ext.Msg.ERROR,
+      	                       buttons : Ext.Msg.OK
+      	                    }
+      	                    );
+      	                 }
+      	            	
       	            	//this.onSaveSuccess;
       	            },
       	            //method to call when the request is a failure

@@ -14,7 +14,33 @@ Ext.define('InventoryApp.view.Header', {
         {
             xtype: 'tbfill'
         },
-        
+        {
+        	xtype:'displayfield',
+        	name:'userName',	
+        	labelAlign: 'right',
+        	fieldLabel: 'User Name:',
+        	value:InventoryApp.Utilities.userName
+        },
+        {
+            xtype: 'tbseparator'
+        },
+        {
+        	xtype:'displayfield',
+        	name:'locationDescription',	
+        	labelAlign: 'right',
+        	fieldLabel: 'Location:',
+        	value:InventoryApp.Utilities.locationDescription
+        },
+        {
+            xtype: 'tbseparator'
+        },
+        {
+        	xtype:'displayfield',
+        	name:'lastLogin',	
+        	labelAlign: 'right',
+        	fieldLabel: 'Last Login:',
+        	value:InventoryApp.Utilities.lastLogin
+        },
         {
             xtype: 'tbseparator'
         },

@@ -27,6 +27,8 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 								    //collapseFirst: false,
 								    //collapseMode: "header",
 								    animCollapse : false,
+								    height:300,
+								    maxHeight:300,
 								    title:'Pending Transactions',
 								    layout:'fit',
 								    items:[

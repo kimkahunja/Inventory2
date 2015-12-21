@@ -38,14 +38,21 @@ public class InvoiceController extends BaseController {
 	@RequestMapping(value="/saveInvoice.action")
 	private @ResponseBody String saveInvoice(HttpServletRequest request){
 		try{
+			HashMap<String, Object> dataM = new HashMap<String, Object>();			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
 			ObjectMapper mapper = new ObjectMapper();
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 			String dataDetail=GlobalCC.CheckNullValues(request.getParameter("dataDetail"));
+			String location = GlobalCC.CheckNullValues(request.getParameter("location"));
 			Invoice invoice=mapper.readValue(data, Invoice.class);
 			List<InvoiceDtls> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtls[].class));
 			invoice.setInvStatus("PENDING");
+			map.put("location", location);
+			System.out.println("invoice.getInvId()==== "+invoice.getInvId());
 			if(invoice.getInvId()==null){
 				invoiceMapper.save(invoice);
+				invoiceMapper.updateNextInvoiceNumber(map);
 			}else{
 				invoiceMapper.updateByPrimaryKey(invoice);
 			}
@@ -68,8 +75,9 @@ public class InvoiceController extends BaseController {
 				return jsonObject(jsonResponse);
 			}
 			jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+			dataM.put("data", invoice.getInvId());
 			jsonResponse.setSuccess(true);	
-			jsonResponse.setData(null);	        
+			jsonResponse.setData(dataM);	        
 	        return jsonObject(jsonResponse);
 		}
 		catch(Exception e){
@@ -91,6 +99,7 @@ public class InvoiceController extends BaseController {
 					
 					String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 					String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+					String id=GlobalCC.CheckNullValues(request.getParameter("id"));
 					if (limit == null) {
 						limit = "50";
 					}
@@ -98,6 +107,8 @@ public class InvoiceController extends BaseController {
 						start = "0";
 					}
 					map.put("invStatus", "PENDING");
+					map.put("id", id==null?null:new BigDecimal(id));
+					System.out.println("id=== "+id);
 					List<InvoiceWrapper>list=invoiceMapper.fetchInvoices(map);
 					if (list != null) {
 						int count = list.size();

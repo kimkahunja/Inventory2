@@ -23,7 +23,8 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.reports.purchases.Purchase',
             'InventoryApp.view.reports.purchases.PurchaseList',
             'InventoryApp.view.reports.purchases.PurchaseDtlsList',
-            'InventoryApp.view.reports.purchases.PurchaseParameters'
+            'InventoryApp.view.reports.purchases.PurchaseParameters',
+            'security.Users'
         ],
     controllers: [
        // 'App',
@@ -37,7 +38,8 @@ Ext.define('InventoryApp.Application', {
        // 'GridToGrid',
         'Bins',
         'Invoices',
-        'reports.PurchaseRPT'
+        'reports.PurchaseRPT',
+        'Login'
     ],
     stores: [
          	'standard.Status',         	
@@ -74,12 +76,69 @@ Ext.define('InventoryApp.Application', {
         });
     }*/
     
-    launch: function() {
+    /*launch: function() {
 
         Ext.tip.QuickTipManager.init();
 
        
      //Ext.widget('mainviewport');
-     Ext.create('InventoryApp.view.MyViewport');
+    // Ext.create('InventoryApp.view.MyViewport');
+    }*/
+    splashscreen: {},
+
+
+    //autoCreateViewport: true,
+
+    init: function() {
+
+        // Start the mask on the body and get a reference to the mask
+         splashscreen = Ext.getBody().mask('Loading application', 'splashscreen');
+
+        // Add a new class to this mask as we want it to look different from the default.
+         splashscreen.addCls('splashscreen');
+
+        // Insert a new div before the loading icon where we can place our logo.
+        Ext.DomHelper.insertFirst(Ext.query('.x-mask-msg')[0], {
+            cls: 'x-splash-icon'
+        });
+
+        //console.log('init');
+    },
+
+    launch: function() {
+
+        Ext.tip.QuickTipManager.init();
+        InventoryApp.Utilities.locationId=null;
+        InventoryApp.Utilities.locationDescription=null;
+        InventoryApp.Utilities.userName=null;
+        InventoryApp.Utilities.lastLogin=null;
+        
+        var task = new Ext.util.DelayedTask(function() {
+
+            //Fade out the body mask
+            splashscreen.fadeOut({
+                duration: 1000,
+                remove:true
+            });
+
+            //Fade out the icon and message
+            splashscreen.next().fadeOut({
+                duration: 1000,
+                remove:true,
+                listeners: {
+                    afteranimate: function(el, startTime, eOpts ){
+                        Ext.widget('login');
+                    }
+                }
+            });
+
+           // Ext.widget('mainviewport');
+           //Ext.widget('login');
+
+            //console.log('launch');
+       });
+
+       task.delay(2000);
+
     }
 });

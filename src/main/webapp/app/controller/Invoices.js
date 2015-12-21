@@ -72,6 +72,9 @@ Ext.define('InventoryApp.controller.Invoices', {
             		 boxready:this.boxReady
             		
             	},
+            	'panel[xtype=invoice.invoice]':{
+            		 boxready:this.boxReadyInvoice
+            	}
             },
             global: {},
             store: {},
@@ -227,7 +230,9 @@ Ext.define('InventoryApp.controller.Invoices', {
     	 var me = this,
          grid = me.getInvoiceDtlsList(),
          store = grid.getStore();
-        // record = grid.getSelectionModel().getSelection();
+    	 store2 =Ext.StoreMgr.lookup('invoice.Invoices');
+    	 var record = store2.getRange();
+         //record = grid.getSelectionModel().getSelection();
     	//console.log('save button clicked....'+store.getCount()); 
     	if(store.getCount()==0){
     		Ext.Msg.show(
@@ -243,7 +248,8 @@ Ext.define('InventoryApp.controller.Invoices', {
     		var invRefNo=Ext.ComponentQuery.query("textfield[name='invRefno']")[0].getValue(),    		
     		invDate=Ext.ComponentQuery.query("datefield[name='invDate']")[0].getValue(),
     		invAccCode=Ext.ComponentQuery.query("combo[name='invAccCode']")[0].getValue(),
-    		invInvono=Ext.ComponentQuery.query("displayfield[name='invInvono']")[0].getValue();
+    		invInvono=Ext.ComponentQuery.query("displayfield[name='invInvono']")[0].getValue(),
+    		mydata=null;
     		if(invDate==null) {
     			Ext.Msg.show(
                         {                    
@@ -277,7 +283,10 @@ Ext.define('InventoryApp.controller.Invoices', {
     		}
     			
     		
-    		 var model = {};    		
+    		console.log('pur id check...>>> '+ record[0].get('invId'));
+    		console.log('mydata check...>>> '+ mydata);
+    		 var model = {};   
+    		 model["invId"]=InventoryApp.Utilities.inv_id;
     		 model["invRefno"]=invRefNo;
     		 model["invDate"]=invDate;
     		 model["invAccCode"]=invAccCode;
@@ -293,16 +302,60 @@ Ext.define('InventoryApp.controller.Invoices', {
                 url: 'invoice/saveInvoice.action',
              params: {                   
                      data: Ext.encode(model),
-                     dataDetail:Ext.encode(details)
+                     dataDetail:Ext.encode(details),
+                     location:"1"
              },
              
              scope:this,
              //method to call when the request is successful
-             success: InventoryApp.Utilities.onSaveSuccess,
+             success:function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+            		  mydata=result.data.data;
+            		  InventoryApp.Utilities.inv_id=mydata;
+            		  ///console.log('mydata=== '+result.data.data);
+            		  this.getInvoiceList().getStore().load({
+              			params: {
+                        		id: mydata
+                        	}
+              		}); 
+            		 Ext.Msg.show(
+                             {                    
+                                title : 'Success!',
+                                msg : result.messages.message,
+                                icon : Ext.Msg.INFO,
+                                buttons : Ext.Msg.OK
+                             }
+                             );          
+                                     
+                 }
+            	 else
+                 {
+                    Ext.Msg.show(
+                    {                    
+                       title : 'Fail!',
+                       msg : result.messages.message,
+                       icon : Ext.Msg.ERROR,
+                       buttons : Ext.Msg.OK
+                    }
+                    );
+                 }
+            },
              //method to call when the request is a failure
              failure: InventoryApp.Utilities.onSaveFailure
          });
-    		this.getInvoiceList().getStore().load();
+    		
     	}
     	
     },
@@ -328,7 +381,13 @@ Ext.define('InventoryApp.controller.Invoices', {
           myform.getForm().loadRecord(record);
       },
       onViewReady: function(grid) {
+    	  console.log('onViewReady');
+    	  var store = grid.getStore();
+    	     
+    	  store.load();
           grid.getSelectionModel().select(0);
+          var record = grid.getSelectionModel().getSelection();
+          InventoryApp.Utilities.inv_id= record[0].get('invId');
       },
       gridSelectionChange: function(model, records) {
     	  var me = this,
@@ -337,6 +396,7 @@ Ext.define('InventoryApp.controller.Invoices', {
           if (records[0]) {
                this.getInvoiceForm().getForm().loadRecord(records[0]);
                console.log('inv no=== '+records[0].get('invInvono'));
+               InventoryApp.Utilities.inv_id= records[0].get('invId');
                store.clearFilter( true );
          		store.load({
                  	params: {
@@ -392,6 +452,7 @@ Ext.define('InventoryApp.controller.Invoices', {
       
       newInvoice: function( button, e, eOpts ){
     	  console.log("New Invoice.....");
+    	  InventoryApp.Utilities.inv_id=null;
     	  var me = this,
         	grid = me.getInvoiceDtlsList(),    		
     		store = grid.getStore();
@@ -432,15 +493,17 @@ Ext.define('InventoryApp.controller.Invoices', {
                                     buttons : Ext.Msg.OK
                                  }
                                  );
+                 		return;
                  	}else
                  		{
                  		 var me = this,
                  		  field=me.getInvoiceNoField(),
-                 		  mydata=result.data.data[0],
+                 		  mydata=result.data.data,
                  		  invoiceNumber=mydata.invoiceNumber,                 		
-                       	  grid = me.getInvoiceList(),    		
-                   		  store = grid.getStore();
-                 		 // store =Ext.data.StoreManager.lookup("Invoices");
+                       	 // grid = me.getInvoiceList(),    		
+                   		 // store = grid.getStore();
+                 		  store =Ext.StoreMgr.lookup('invoice.Invoices');
+                 		
                  		  //field.setValue(mydata.invoiceNumber);
                  		 
                  		var combo = this.getAcctCombo(),
@@ -462,10 +525,13 @@ Ext.define('InventoryApp.controller.Invoices', {
                          model["invInvono"]=mydata;
                          model["invDate"]=currentDate;
                         // model["invAccCode"]=accCode;
-                         model["invRefno"]='444444444';
+                         model["invRefno"]=null;
+                         store.removeAll(true);
+                         store.clearFilter();
                          
                          store.add(model);
-                         var records = store.getRange();
+                         this.getInvoiceForm().getForm().reset();
+                         var records = store.getRange();                         
                          this.getInvoiceForm().getForm().loadRecord(records[0]);
                  		}
                  	                
@@ -544,6 +610,11 @@ Ext.define('InventoryApp.controller.Invoices', {
     	  store.on('load',function(store) {
     		  combo.setValue(store.getAt('0').get('accCode'));
           });
-},
+      },
+		boxReadyInvoice:function( combo, width, height, eOpts ){
+			console.log('boxReadyInvoice');
+			this.newInvoice(null, null, eOpts);
+		}
+
 });
     

@@ -2,7 +2,8 @@ Ext.define('InventoryApp.controller.Menu', {
     extend: 'Ext.app.Controller',
 
     requires: [
-        
+               'InventoryApp.model.menu.Root',
+               'InventoryApp.model.menu.Item'
     ], 
 
     models: [
