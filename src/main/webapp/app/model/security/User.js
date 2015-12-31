@@ -1,14 +1,14 @@
 Ext.define('InventoryApp.model.security.User', {
-    extend: 'InventoryApp.data.Model',
+    extend: 'Ext.data.Model',
 
     idProperty: 'id',
 
     fields: [
         { name: 'id' },
         { name: 'name' },
-        { name: 'userName' },
+        { name: 'username' },
         { name: 'email' },
         { name: 'picture' },
-        { name: 'Group_id' }
+        { name: 'groupId' }
     ]
 });

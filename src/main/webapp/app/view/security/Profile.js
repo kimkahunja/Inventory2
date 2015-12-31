@@ -41,7 +41,7 @@ Ext.define('InventoryApp.view.security.Profile', {
                         },
                         {
                             fieldLabel: 'Username',
-                            name: 'userName'
+                            name: 'username'
                         },
                         {
                             fieldLabel: 'Name',
@@ -56,7 +56,7 @@ Ext.define('InventoryApp.view.security.Profile', {
                         {
                             xtype: 'combobox',
                             fieldLabel: 'Group',
-                            name: 'Group_id',
+                            name: 'groupId',
                             displayField: 'name',
                             valueField: 'id',
                             queryMode: 'local',

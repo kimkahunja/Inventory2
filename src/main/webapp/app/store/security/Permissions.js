@@ -5,6 +5,6 @@ Ext.define('InventoryApp.store.security.Permissions', {
 
     proxy: {
         type: 'ajax',
-        url: 'php/security/permissions.php'
+        url: 'user/fetchPermissions.action'
     }
 });

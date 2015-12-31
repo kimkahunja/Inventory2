@@ -314,4 +314,18 @@
           AND  menu.parent_id =  #{parentId,jdbcType=INTEGER}
       </if>	
    </select>
+   <select id="fetchParentMenus" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+   	    select    
+	     menu.id, menu.`text`, menu.iconCls, menu.parent_id, menu.className, Group_id as user_id
+	    from menu left outer join permissions on id=Menu_id
+	    where menu.parent_id is null
+   </select>
+   <select id="fetchChildMenus" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+   	    select    
+	     menu.id, menu.`text`, menu.iconCls, menu.parent_id, menu.className, Group_id as user_id
+	    from menu left outer join permissions on id=Menu_id
+	     <if test="parentId != null">
+          where  menu.parent_id =  #{parentId,jdbcType=INTEGER}
+      </if>	
+   </select>
 </mapper>

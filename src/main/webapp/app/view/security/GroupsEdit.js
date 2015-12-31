@@ -4,8 +4,8 @@ Ext.define('InventoryApp.view.security.GroupsEdit', {
 
     requires: [
         'InventoryApp.util.Util',
-        'InventoryApp.view.security.GroupPermissions',
-        'InventoryApp.view.security.UsersList'
+       'InventoryApp.view.security.GroupPermissions',
+       // 'InventoryApp.view.security.UsersList'
     ],
 
     layout: {

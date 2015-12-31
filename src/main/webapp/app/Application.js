@@ -2,7 +2,27 @@ Ext.define('InventoryApp.Application', {
     name: 'InventoryApp',
 
     extend: 'Ext.app.Application',
-
+    requires: [
+               'Ext.util.History',
+               'overrides.grid.RowEditor',
+               'Ext.util.Point',
+               'Ext.ux.form.field.ClearButton',
+               'Ext.ux.grid.FilterBar',
+               'InventoryApp.Utilities',
+               'InventoryApp.util.Util',
+               'InventoryApp.model.menu.Root',
+               'InventoryApp.model.menu.Item',
+              // 'InventoryApp.store.security.Permissions'
+              // 'kahunja.domain.Proxy',
+              // 'ux/form/field/OperatorButton',
+              // 'ux/grid/column/ActionPro',       
+             //  'ux/grid/AutoResizer'
+           ],
+    stores: [
+          	'standard.Status',  
+          	'security.Permissions'
+          ],
+     
     views: [
             'Viewport',
             'categories.List',
@@ -24,7 +44,9 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.reports.purchases.PurchaseList',
             'InventoryApp.view.reports.purchases.PurchaseDtlsList',
             'InventoryApp.view.reports.purchases.PurchaseParameters',
-            'security.Users'
+            'security.Users',
+            'InventoryApp.view.security.Groups',
+            'InventoryApp.view.security.GroupPermissions'
         ],
     controllers: [
        // 'App',
@@ -39,23 +61,11 @@ Ext.define('InventoryApp.Application', {
         'Bins',
         'Invoices',
         'reports.PurchaseRPT',
-        'Login'
+        'Login',
+        'InventoryApp.controller.security.Groups',
+        'security.Users',
     ],
-    stores: [
-         	'standard.Status',         	
-         ],
-    requires: [
-        'Ext.util.History',
-        'overrides.grid.RowEditor',
-        'Ext.util.Point',
-        'Ext.ux.form.field.ClearButton',
-        'Ext.ux.grid.FilterBar',
-        'InventoryApp.Utilities'
-       // 'kahunja.domain.Proxy',
-       // 'ux/form/field/OperatorButton',
-       // 'ux/grid/column/ActionPro',       
-      //  'ux/grid/AutoResizer'
-    ],
+    
     //autoCreateViewport: true,
     /**
      * launch is called immediately upon availability of our app

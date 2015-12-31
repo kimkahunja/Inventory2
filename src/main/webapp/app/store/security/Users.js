@@ -9,11 +9,11 @@ Ext.define('InventoryApp.store.security.Users', {
 
     proxy: {
         type: 'ajax',
-        url: 'php/security/users.php',
+        url: 'user/fetchUsers.action',
         
         reader: {
             type: 'json',
-            root: 'data'
+            root: 'data.data'
         }
     }
 });

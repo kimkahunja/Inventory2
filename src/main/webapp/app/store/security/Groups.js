@@ -1,6 +1,6 @@
 Ext.define('InventoryApp.store.security.Groups', {
     extend: 'Ext.data.Store',
-
+    alias: 'store.security.groups',
     requires: [
         'InventoryApp.model.security.Group'
     ],
@@ -13,11 +13,11 @@ Ext.define('InventoryApp.store.security.Groups', {
 
     proxy: {
         type: 'ajax',
-        url: 'php/security/group.php',
+        url: 'user/fetchGroups.action',
         
         reader: {
             type: 'json',
-            root: 'data'
+            root: 'data.data'
         }
     }
 });

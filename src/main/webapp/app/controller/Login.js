@@ -6,7 +6,9 @@ Ext.define('InventoryApp.controller.Login', {
         'InventoryApp.util.Alert',
         'InventoryApp.view.MyViewport',
         'InventoryApp.util.Util',
-        'InventoryApp.util.SessionMonitor'
+        'InventoryApp.util.SessionMonitor',
+        'InventoryApp.model.menu.Root',
+        'InventoryApp.model.menu.Item'
     ],
 
     views: [
@@ -82,7 +84,7 @@ Ext.define('InventoryApp.controller.Login', {
                     if (result.success) {
                     	var mydata=result.data.data[0];	
                         //InventoryApp.util.Alert.msg('Success!', 'User Authenticated.');
-                    	InventoryApp.util.SessionMonitor.start();
+                    	//InventoryApp.util.SessionMonitor.start();
                         InventoryApp.Utilities.locationId=mydata.location;
                         InventoryApp.Utilities.locationDescription=mydata._location;
                         InventoryApp.Utilities.userName=mydata.username;

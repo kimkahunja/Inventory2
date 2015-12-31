@@ -4,7 +4,10 @@ Ext.define('InventoryApp.controller.security.Groups', {
     requires: [
         'InventoryApp.util.Util'
     ],
-
+    stores: [
+             'security.Groups',            
+             'security.Permissions'
+         ],
     views: [
         'security.Groups',
         'security.GroupsList',
@@ -12,9 +15,7 @@ Ext.define('InventoryApp.controller.security.Groups', {
         'security.GroupPermissions'
     ],
 
-    stores: [
-        'security.Groups'
-    ],
+   
 
     refs: [
         {
@@ -102,7 +103,7 @@ Ext.define('InventoryApp.controller.security.Groups', {
     onTreeLoad: function (component, node, records, successful, options) {
 
         node.cascadeBy(function(n){
-            n.set('text', translations[n.get('text')]);
+            n.set('text', [n.get('text')]);
         });
     },
 
@@ -194,11 +195,11 @@ Ext.define('InventoryApp.controller.security.Groups', {
 
         this.getGroupPermissions().getStore().load();
 
-        form.down('userslist').getStore().removeAll();
+       // form.down('userslist').getStore().removeAll();
 
-        form.disable();
+        //form.disable();
 
-        form.getForm().reset();
+       // form.getForm().reset();
     },
 
     onButtonClickCancel: function(button, e, options) {
@@ -215,7 +216,7 @@ Ext.define('InventoryApp.controller.security.Groups', {
         Ext.Array.each(records, function(rec){
             names.push(rec.get('id'));
         });
-
+       console.log('names.length=== '+names.length);
         if (formPanel.getForm().isValid()){
         	if (names.length == 0){
 	        	Ext.Msg.show({

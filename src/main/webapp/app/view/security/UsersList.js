@@ -8,7 +8,7 @@ Ext.define('InventoryApp.view.security.UsersList', {
     columns: [
         {
             width: 150,
-            dataIndex: 'userName',
+            dataIndex: 'username',
             text: 'Username'
         },
         {
@@ -24,7 +24,7 @@ Ext.define('InventoryApp.view.security.UsersList', {
         },
         {
             width: 150,
-            dataIndex: 'Group_id',
+            dataIndex: 'groupId',
             text: 'Group',
             renderer: function(value, metaData, record ){
                 var groupsStore = Ext.getStore('groups');

@@ -2,7 +2,7 @@ Ext.define('InventoryApp.view.security.GroupPermissions', {
     extend: 'Ext.tree.Panel',
     alias: 'widget.grouppermissions',
 
-    requires: ['InventoryApp.store.security.Permissions'],
+    //requires: ['InventoryApp.store.security.Permissions'],
 
     title: 'Group Permissions',
     rootVisible: false,
@@ -12,6 +12,6 @@ Ext.define('InventoryApp.view.security.GroupPermissions', {
 	    markDirty: false
 	},
 
-    store: Ext.create('InventoryApp.store.security.Permissions')
+    store: 'security.Permissions'//Ext.create('InventoryApp.store.security.Permissions')
 
 });

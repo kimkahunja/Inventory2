@@ -100,4 +100,6 @@ public interface MenuMapper {
     
     List<MenuWrapper> fetchMenus(Map<String,Object> map);
     List<MenuWrapper> fetchMenusC(Map<String,Object> map);
+    List<MenuWrapper> fetchParentMenus(Map<String,Object> map); 
+    List<MenuWrapper> fetchChildMenus(Map<String,Object> map);
 }
