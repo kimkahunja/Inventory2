@@ -232,11 +232,11 @@ Ext.define('InventoryApp.controller.security.Groups', {
                 Ext.get(formPanel.getEl()).mask("Saving... Please wait...", 'loading');
 
 	        	Ext.Ajax.request({
-	                url: 'php/security/saveGroup.php',
+	                url: 'user/saveGroup.action',
 	                params: {
 	                    id: values.id,
 	                    name: values.name,
-	                    permissions: names.toString()
+	                    permissions:names.toString()
 	                },
 	                success: function(conn, response, options, eOpts) {
 	                    

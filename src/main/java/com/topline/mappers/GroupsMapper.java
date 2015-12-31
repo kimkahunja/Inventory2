@@ -2,7 +2,10 @@ package com.topline.mappers;
 
 import com.topline.model.Groups;
 import com.topline.model.GroupsExample;
+import com.topline.model.Purchase;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface GroupsMapper {
@@ -93,4 +96,6 @@ public interface GroupsMapper {
      * @mbggenerated Mon Jun 01 16:50:34 EAT 2015
      */
     int updateByPrimaryKey(Groups record);
+    
+    int save(Groups record);  
 }

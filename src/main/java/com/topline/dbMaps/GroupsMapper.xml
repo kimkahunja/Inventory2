@@ -236,4 +236,12 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <insert id="save" parameterType="com.topline.model.Groups" useGeneratedKeys="true" keyProperty="id"  keyColumn="id" >
+    
+    insert into groups (id, name)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+      <selectKey keyProperty="id" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert>
 </mapper>

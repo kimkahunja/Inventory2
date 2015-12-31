@@ -1,6 +1,7 @@
 package com.topline.controller;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.topline.mappers.UserMapper;
 import com.topline.model.Groups;
 import com.topline.model.GroupsExample;
+import com.topline.model.PermissionsExample;
+import com.topline.model.PermissionsKey;
+import com.topline.model.PurchaseDetail;
 import com.topline.model.User;
 import com.topline.model.UserExample;
 import com.topline.model.wrappers.MenuWrapper;
@@ -86,7 +91,7 @@ public class UserController extends BaseController {
 			try{
 				Map<String, Object> map = new HashMap<String, Object>();
 				String group = GlobalCC.CheckNullValues(request.getParameter("group"));
-				 //map.put("group",new BigDecimal(group));
+				 map.put("groupId",group==null?null:new BigDecimal(group));
 				List<MenuWrapper>list=menuMapper.fetchParentMenus(map);
 				
 				JSONArray arrayObj=new JSONArray();
@@ -149,5 +154,61 @@ public class UserController extends BaseController {
 				
 				return null;
 			}
+		}
+		@RequestMapping(value="/saveGroup.action")
+		private @ResponseBody String saveGroup(HttpServletRequest request){
+			try{
+				ObjectMapper mapper = new ObjectMapper();
+				String id=GlobalCC.CheckNullValues(request.getParameter("id"));
+				String name=GlobalCC.CheckNullValues(request.getParameter("name"));
+				System.out.println(" id=== "+id);
+				System.out.println(" name=== "+name);
+				String permissions = GlobalCC.CheckNullValues(request.getParameter("permissions"));
+				System.out.println(" permissions == "+permissions);
+				String[] myObjects = permissions.split(",");
+				System.out.println(" length=== "+myObjects.length);
+				Groups group=new Groups();
+				
+				if(id==null||id.equalsIgnoreCase("0")){
+					group.setId(null);
+					group.setName(name);
+					groupsMapper.save(group);
+				}else{
+					group.setId(Integer.parseInt(id));
+					group.setName(name);
+					groupsMapper.updateByPrimaryKey(group);
+				}
+				try{
+					PermissionsExample example=new PermissionsExample();
+					PermissionsExample.Criteria creteria=example.createCriteria();
+					creteria.andGroupIdEqualTo(group.getId());
+					permissionsMapper.deleteByExample(example);
+					PermissionsKey permission=new PermissionsKey();
+					for (String s: myObjects) {           
+						permission.setGroupId(group.getId());
+						permission.setMenuId(Integer.parseInt(s));
+					    permissionsMapper.insertSelective(permission);
+					    
+					}
+				}catch(Exception ex){
+					ex.printStackTrace();
+					jsonResponse.setData(null);
+					jsonResponse.setSuccess(false);
+					jsonResponse.addMessage("message", ex.getLocalizedMessage());
+					return jsonObject(jsonResponse);
+				}
+				jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+				jsonResponse.setSuccess(true);	
+				jsonResponse.setData(null);	        
+		        return jsonObject(jsonResponse);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+			
 		}
 }
