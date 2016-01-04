@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
@@ -59,14 +60,17 @@ public class PurchaseController extends BaseController {
 	private @ResponseBody String savePurchase(HttpServletRequest request){
 		try{
 			ObjectMapper mapper = new ObjectMapper();
+			HashMap<String, Object> dataM = new HashMap<String, Object>();	
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
 			String dataDetail=GlobalCC.CheckNullValues(request.getParameter("dataDetail"));
+			String location=GlobalCC.CheckNullValues(request.getParameter("location"));
 			Purchase purchase=mapper.readValue(data, Purchase.class);			
 			List<PurchaseDetail> purchaseDetail = Arrays.asList(mapper.readValue(dataDetail, PurchaseDetail[].class));
 			System.out.println("Supplier=== "+purchase.getPurAccCode());
 			System.out.println("Invoice Number=== "+purchase.getPurInvono());
 			System.out.println("Start of details......");
 			purchase.setPurStatus("PENDING");
+			purchase.setPurLocCode(location==null?null:Integer.parseInt(location));
 			if(purchase.getPurId()==null){
 				purchaseMapper.save(purchase);
 				System.out.println("last record inserted== "+purchase.getPurId());
@@ -97,8 +101,9 @@ public class PurchaseController extends BaseController {
 			}
 			
 			jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+			dataM.put("data", purchase.getPurId());
 			jsonResponse.setSuccess(true);	
-			jsonResponse.setData(null);	        
+			jsonResponse.setData(dataM);	        
 	        return jsonObject(jsonResponse);
 		}
 		catch(Exception e){
@@ -210,6 +215,7 @@ public class PurchaseController extends BaseController {
 			Map<String, Object> map = new HashMap<String, Object>();	
 			ObjectMapper mapper = new ObjectMapper();
 			String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+			String userName=GlobalCC.CheckNullValues(request.getParameter("userName"));
 			Purchase purchase=mapper.readValue(data, Purchase.class);	
 			if(purchase.getPurId()==null){
 				jsonResponse.setData(null);
@@ -218,6 +224,7 @@ public class PurchaseController extends BaseController {
 				return jsonObject(jsonResponse);
 			}else{
 				map.put("v_pur_id",purchase.getPurId());
+				map.put("postedBy", userName);
 				purchaseMapper.postPurchase(map);
 			}
 			Object v_count=map.get("v_count");
@@ -263,6 +270,7 @@ public class PurchaseController extends BaseController {
 					String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
 					String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
 					String root=GlobalCC.CheckNullValues(request.getParameter("root"));
+					String purId=GlobalCC.CheckNullValues(request.getParameter("id"));
 					if (limit == null) {
 						limit = "50";
 					}
@@ -274,7 +282,9 @@ public class PurchaseController extends BaseController {
 					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
 					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
 					map.put("dateTo", dateFrom==null?null:GlobalCC.parseSQLDate(dateTo));
+					map.put("purId",purId==null?null:new BigDecimal(purId));
 					List<PurchaseWrapper>list=purchaseMapper.fetchPurchases(map);
+					
 					if (list != null) {
 						int count = list.size();
 						data.put("count", count);

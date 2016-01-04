@@ -46,7 +46,9 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.reports.purchases.PurchaseParameters',
             'security.Users',
             'InventoryApp.view.security.Groups',
-            'InventoryApp.view.security.GroupPermissions'
+            'InventoryApp.view.security.GroupPermissions',
+            'InventoryApp.view.reports.products.ProductParameters',
+            'InventoryApp.view.reports.products.List'
         ],
     controllers: [
        // 'App',
@@ -64,6 +66,7 @@ Ext.define('InventoryApp.Application', {
         'Login',
         'InventoryApp.controller.security.Groups',
         'security.Users',
+        'reports.ProductRPT'
     ],
     
     //autoCreateViewport: true,

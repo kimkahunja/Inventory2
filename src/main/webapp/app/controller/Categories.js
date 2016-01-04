@@ -3,6 +3,9 @@
  */
 Ext.define('InventoryApp.controller.Categories', {
     extend: 'InventoryApp.controller.Base',
+    requires: [
+               'InventoryApp.util.Util'
+           ],
     stores: [
     	'categories.Categories'
     ],
@@ -173,7 +176,7 @@ Ext.define('InventoryApp.controller.Categories', {
             if(obj.record.validate().isValid()){
                 //Make your Ajax request to sync data               
                 this.syncData(obj.rowIdx,'save'); 
-                store.load();
+                //store.load();
              
             }
         }
@@ -227,7 +230,45 @@ Ext.define('InventoryApp.controller.Categories', {
             
             scope:this,
             //method to call when the request is successful
-            success: InventoryApp.Utilities.onSaveSuccess,
+            success: function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+            		 this.getCategoryList().getStore().load();
+            		/* Ext.Msg.show(
+                             {                    
+                                title : 'Success!',
+                                msg : result.messages.message,
+                                icon : Ext.Msg.INFO,
+                                buttons : Ext.Msg.OK
+                             }
+                             );  */        
+                                     
+                 }
+            	 else
+                 {
+            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+                   /* Ext.Msg.show(
+                    {                    
+                       title : 'Fail!',
+                       msg : result.messages.message,
+                       icon : Ext.Msg.ERROR,
+                       buttons : Ext.Msg.OK
+                    }
+                    );*/
+                 }
+            },
             //method to call when the request is a failure
             failure: InventoryApp.Utilities.onSaveFailure
         });
@@ -250,13 +291,34 @@ Ext.define('InventoryApp.controller.Categories', {
    	            
    	            scope:this,
    	            //method to call when the request is successful
-   	            success: InventoryApp.Utilities.onSaveSuccess,
+   	            success: function(conn, response, options, eOpts){
+   	            	var result = Ext.JSON.decode(conn.responseText, true);    
+   	            	if ( ! result)
+   	                {
+   	                   
+   	                   result =
+   	                   {
+   	                   }
+   	                   ;
+   	                   result.success = false;
+   	                   result.messages.message = conn.responseText;
+   	                }
+   	            	 if (result.success)
+   	                 {
+   	            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+   	            		store.load();  	            		       
+   	                                     
+   	                 }
+   	            	 else
+   	                 {
+   	            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+   	                   
+   	                 }
+   	            },
    	            //method to call when the request is a failure
    	            failure: InventoryApp.Utilities.onSaveFailure
    	        });
-   			//console.log('delete... '+record[0].get('locCode'));
-   			store.reload();
-   			store.load();
+   			
    			
    		}
    	})

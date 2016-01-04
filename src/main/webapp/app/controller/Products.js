@@ -4,7 +4,8 @@
 Ext.define('InventoryApp.controller.Products', {
     extend: 'InventoryApp.controller.Base',
     stores: [
-        'product.Products'
+        'product.Products',
+        'product.Stocks'
     ],
     views: [
         'product.List',
@@ -169,13 +170,13 @@ Ext.define('InventoryApp.controller.Products', {
                
         // set values of record from form
        
-        this.syncData(values);
+        this.syncData(values,win);
         // mask to prevent extra submits
       //  Ext.getBody().mask( 'Saving Product...' );
         
     },
   //Sync data with the server 
-    syncData : function(values) {    	
+    syncData : function(values,win) {    	
         Ext.Ajax.request({
                url: 'product/saveProduct.action',
             params: {                   
@@ -184,11 +185,33 @@ Ext.define('InventoryApp.controller.Products', {
             
             scope:this,
             //method to call when the request is successful
-            success: InventoryApp.Utilities.onSaveSuccess,
+            success: function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+            		 this.getProductList().getStore().load();            		      
+                     win.close();            
+                 }
+            	 else
+                 {
+            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);                   
+                 }
+            },
             //method to call when the request is a failure
             failure: InventoryApp.Utilities.onSaveFailure
         });
-        this.getProductList().getStore().load();
+        //this.getProductList().getStore().load();
     },
     comboChange: function( combo, records, eOpts ) {
     	if(combo.isValid()){ 

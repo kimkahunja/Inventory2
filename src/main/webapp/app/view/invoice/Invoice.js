@@ -3,7 +3,11 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
     alias: 'widget.invoice.invoice',
     bodyPadding: 5,
     initComponent: function() {
-    	  var me = this;    	  
+    	  var me = this;  
+    	  var store = Ext.create('InventoryApp.store.product.Stocks', {
+    		    storeId: 'InvoiceStocks'
+    		});
+    		store.proxy.extraParams = { location: InventoryApp.Utilities.locationId };
     	 Ext.applyIf(me,{
     		 fieldDefaults: {
                  labelAlign: 'right',
@@ -71,19 +75,21 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			                                             displayField: 'pdtDescription',
 			                                             valueField: 'pdtCode',
 			                                             multiSelect: true,
-			                                             store: {
-			                                                 type: 'product.products'
-			                                             },
+			                                             /*store: {
+			                                                 type: 'product.stocks'
+			                                             },*/
+			                                             store:Ext.data.StoreManager.lookup('InvoiceStocks'),
 			                                             editable: true,
 			                                             forceSelection: false,   
 			                                             emptyText:'select product',
 			                                             minChars: 0, 
+			                                             //triggerAction: "all", 
 			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
 			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">',
-			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Measure : {_pdtUntCode}</div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Category : {_pdtCatCode}</div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Location : {_pdtLocCode}-{_pdtSlocCode}</div>',
+			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',			      							                                            
+			      							                                             '<div style="font-size: xx-small; color: grey;">Qty : {pdtCurrentQty}</div>',
+			      							                                             '<div style="font-size: xx-small; color: grey;">Date : {purchaseDate}</div>',
+			      							                                             '<div style="font-size: xx-small; color: grey;">Reference : {prodReference}</div>',
 			      							                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
 			      							                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
 			      							                                             '</div>',
@@ -125,9 +131,9 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 		                                        },
 		                                        {
 		                                            xtype: 'button',
-		                                            itemId: 'invoiceCancel',
-		                                            text: 'Cancel',
-		                                            iconCls: 'cancel'
+		                                            itemId: 'invoiceFinish',
+		                                            text: 'Finish',
+		                                            iconCls: 'accept'
 		                                        },
 		                                     ]
 		                                 },

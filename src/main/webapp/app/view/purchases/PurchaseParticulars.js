@@ -23,7 +23,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseParticulars',{
                                 displayField: 'accName',
                                 valueField: 'accCode',
                                 store: {
-                                    type: 'account.accounts'
+                                    type: 'account.accountssupplier'
                                 },
                                 editable: false,
                                 forceSelection: false,

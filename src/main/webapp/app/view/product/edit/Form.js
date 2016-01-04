@@ -240,7 +240,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
 							            fieldLabel: 'Secondary Location',
 							            displayField: 'slocShtDesc',
 							            valueField: 'slocCode',
-							            //queryMode:'remote',
+							            allowBlank: true,
 							            store: {
 							                type: 'location.bins'
 							            },

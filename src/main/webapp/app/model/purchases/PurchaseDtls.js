@@ -63,7 +63,11 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
 	       	name: 'purdExpiryDt',
 	            type: 'date',
 	            dateFormat:'d/m/Y'
-	       },	      
+	       },	
+	       {
+	    	  name:'purdSerialNo',
+	    	  type: 'string'
+	       },
 	       // decorated properties
            /* {
                   name: '_purdPurId',

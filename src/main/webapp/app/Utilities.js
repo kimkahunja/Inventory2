@@ -63,6 +63,7 @@ Ext.define('InventoryApp.Utilities', {
         locationId:null,
         locationDescription:null,
         userName:null,
-        lastLogin:null
+        lastLogin:null,
+        pur_id:null
     }
 });

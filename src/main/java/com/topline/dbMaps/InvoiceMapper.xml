@@ -16,6 +16,7 @@
     <result column="inv_status" property="invStatus" jdbcType="VARCHAR" />
     <result column="inv_posted_by" property="invPostedBy" jdbcType="VARCHAR" />
     <result column="inv_receipt_amt" property="invReceiptAmt" jdbcType="DECIMAL" />
+     <result column="inv_loc_code" property="invLocCode" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -92,7 +93,7 @@
       This element was generated on Tue Oct 27 17:10:02 EAT 2015.
     -->
     inv_id, inv_invono, inv_refNo, inv_date, inv_acc_code, inv_user, inv_status, inv_posted_by, 
-    inv_receipt_amt
+    inv_receipt_amt,inv_loc_code
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.topline.model.InvoiceExample" >
     <!--
@@ -152,11 +153,12 @@
     -->
     insert into inv_invoices (inv_id, inv_invono, inv_refNo, 
       inv_date, inv_acc_code, inv_user, 
-      inv_status, inv_posted_by, inv_receipt_amt
+      inv_status, inv_posted_by, inv_receipt_amt,inv_loc_code
       )
     values (#{invId,jdbcType=INTEGER}, #{invInvono,jdbcType=VARCHAR}, #{invRefno,jdbcType=VARCHAR}, 
       #{invDate,jdbcType=DATE}, #{invAccCode,jdbcType=INTEGER}, #{invUser,jdbcType=VARCHAR}, 
-      #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL}
+      #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL},
+      #{invLocCode,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.topline.model.Invoice" >
@@ -194,6 +196,9 @@
       <if test="invReceiptAmt != null" >
         inv_receipt_amt,
       </if>
+      <if test="invLocCode != null" >
+        inv_loc_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="invId != null" >
@@ -222,6 +227,9 @@
       </if>
       <if test="invReceiptAmt != null" >
         #{invReceiptAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="invLocCode != null" >
+        #{invLocCode,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -271,6 +279,9 @@
       <if test="record.invReceiptAmt != null" >
         inv_receipt_amt = #{record.invReceiptAmt,jdbcType=DECIMAL},
       </if>
+       <if test="record.invLocCode != null" >
+        inv_loc_code = #{record.invLocCode,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -291,7 +302,8 @@
       inv_user = #{record.invUser,jdbcType=VARCHAR},
       inv_status = #{record.invStatus,jdbcType=VARCHAR},
       inv_posted_by = #{record.invPostedBy,jdbcType=VARCHAR},
-      inv_receipt_amt = #{record.invReceiptAmt,jdbcType=DECIMAL}
+      inv_receipt_amt = #{record.invReceiptAmt,jdbcType=DECIMAL},
+      inv_loc_code= #{record.invLocCode,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -328,6 +340,9 @@
       <if test="invReceiptAmt != null" >
         inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL},
       </if>
+      <if test="invLocCode != null" >
+        inv_loc_code = #{invLocCode,jdbcType=INTEGER},
+      </if>
     </set>
     where inv_id = #{invId,jdbcType=INTEGER}
   </update>
@@ -345,7 +360,8 @@
       inv_user = #{invUser,jdbcType=VARCHAR},
       inv_status = #{invStatus,jdbcType=VARCHAR},
       inv_posted_by = #{invPostedBy,jdbcType=VARCHAR},
-      inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL}
+      inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL},
+      inv_loc_code = #{invLocCode,jdbcType=INTEGER}
     where inv_id = #{invId,jdbcType=INTEGER}
   </update>
    <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.InvoiceWrapper" >    
@@ -353,7 +369,7 @@
   </resultMap>
    <select id="fetchInvoices" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	  	SELECT inv_id, inv_invono, inv_refNo, inv_date, inv_acc_code, inv_user, inv_status, inv_posted_by, 
-	    inv_receipt_amt,acc_name
+	    inv_receipt_amt,inv_loc_code,acc_name
 	    FROM inv_invoices,inv_accounts
 	    WHERE inv_acc_code=acc_code
 	    <if test="invStatus != null">
@@ -367,11 +383,12 @@
     
     insert into inv_invoices (inv_id, inv_invono, inv_refNo, 
       inv_date, inv_acc_code, inv_user, 
-      inv_status, inv_posted_by, inv_receipt_amt
+      inv_status, inv_posted_by, inv_receipt_amt,inv_loc_code
       )
     values (#{invId,jdbcType=INTEGER}, #{invInvono,jdbcType=VARCHAR}, #{invRefno,jdbcType=VARCHAR}, 
       #{invDate,jdbcType=DATE}, #{invAccCode,jdbcType=INTEGER}, #{invUser,jdbcType=VARCHAR}, 
-      #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL}
+      #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL},
+      #{invLocCode,jdbcType=INTEGER}
       )
       <selectKey keyProperty="invId" resultType="integer" order="AFTER">
             SELECT LAST_INSERT_ID();
@@ -386,5 +403,8 @@
  <update id="updateNextInvoiceNumber" parameterType="java.util.HashMap">
  	UPDATE inv_invoice_numbers SET vnum_cur_num=vnum_cur_num+1, vnum_last_update=SYSDATE()
 	WHERE vnum_loc_code=#{location,jdbcType=INTEGER} 
- </update>    
+ </update> 
+  <select id="postInvoice" parameterType="java.util.HashMap" statementType="CALLABLE" resultType="hashmap">    
+	{ CALL post_invoice(#{v_inv_id, mode=IN, jdbcType=INTEGER},#{postedBy, mode=IN, jdbcType=VARCHAR},#{v_count, mode=OUT, jdbcType=INTEGER})}
+</select>    
 </mapper>

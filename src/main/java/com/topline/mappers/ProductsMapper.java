@@ -102,5 +102,5 @@ public interface ProductsMapper {
   //added methods
     List<ProductWrapper> fetchProducts(Map<String,Object> map);
     List<ProductsMapper> fetchTransProduct(Map<String,Object> map);
-    
+    List<ProductWrapper> fetchStocks(Map<String,Object> map);
 }

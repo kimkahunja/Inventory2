@@ -149,4 +149,55 @@ public class ProductController extends BaseController {
 			}
 			
 		}
+		//fetchStocks
+				@RequestMapping(value="/fetchStocks.action")
+				private @ResponseBody
+				String fetchStocks(HttpServletRequest request){
+					try{
+						//initialize 
+						//jsonResponse.setData(null);
+						//jsonResponse.setSuccess(false);
+						//jsonResponse.addMessage("message", null);
+						HashMap<String, Object> data = new HashMap<String, Object>();
+						
+						Map<String, Object> map = new HashMap<String, Object>();		
+						
+						String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+						String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+						String searchData=GlobalCC.CheckNullValues(request.getParameter("query"));
+					    String location=GlobalCC.CheckNullValues(request.getParameter("location"));
+						if (limit == null) {
+							limit = "50";
+						}
+						if (start == null) {
+							start = "0";
+						}						
+						
+						System.out.println("MY DATA=="+searchData);
+						map.put("searchData",searchData);
+						
+						map.put("location",location==null?null:new BigDecimal(location));
+						List<ProductWrapper>list=productMapper.fetchStocks(map);
+						
+						//ProductWrapper mylist=list.get(1);
+						//System.out.println("stockkkkkkkkkkkkk===== "+mylist.getStkId());
+						if (list != null) {
+							int count = list.size();
+							data.put("count", count);
+						}
+						data.put("data", list);
+						jsonResponse.setData(data);
+						jsonResponse.setSuccess(true);
+						System.out.println(jsonObject(jsonResponse));
+						return jsonObject(jsonResponse);
+						
+					}catch(Exception e){
+						e.printStackTrace();
+						jsonResponse.setData(null);
+						jsonResponse.setSuccess(false);
+						jsonResponse.addMessage("message", e.getLocalizedMessage());
+						return jsonObject(jsonResponse);
+					}
+					
+				}
 }

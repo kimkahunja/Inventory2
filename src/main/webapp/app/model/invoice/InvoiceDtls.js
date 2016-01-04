@@ -51,6 +51,11 @@ Ext.define('InventoryApp.model.invoice.InvoiceDtls',{
 	       	name: 'invdBp',
 	            type: 'float'
 	       },
+	       {
+	       	//fk field
+	       	name: 'invdStkId',
+	            type: 'int'
+	       },
 	       	      
 	       // decorated properties
            

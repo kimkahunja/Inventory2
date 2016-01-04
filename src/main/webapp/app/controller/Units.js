@@ -158,9 +158,7 @@ Ext.define('InventoryApp.controller.Units', {
                //check if the record is valid               
                if(obj.record.validate().isValid()){                  
                    //Make your Ajax request to sync data               
-                   this.syncData(obj.rowIdx,'save'); 
-                   store.clearFilter( true );
-                   store.load();                
+                   this.syncData(obj.rowIdx,'save');                                    
                }
            }
        },
@@ -181,7 +179,29 @@ Ext.define('InventoryApp.controller.Units', {
                
                scope:this,
                //method to call when the request is successful
-               success: InventoryApp.Utilities.onSaveSuccess,
+               success:function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+            		 this.getUnitList().getStore().load();            		      
+                                     
+                 }
+            	 else
+                 {
+            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);                   
+                 }
+            },
                //method to call when the request is a failure
                failure: InventoryApp.Utilities.onSaveFailure
            });
@@ -204,13 +224,33 @@ Ext.define('InventoryApp.controller.Units', {
        	            
        	            scope:this,
        	            //method to call when the request is successful
-       	            success: InventoryApp.Utilities.onSaveSuccess,
+       	            success:  function(conn, response, options, eOpts){
+    	            	var result = Ext.JSON.decode(conn.responseText, true);    
+    	            	if ( ! result)
+    	                {
+    	                   
+    	                   result =
+    	                   {
+    	                   }
+    	                   ;
+    	                   result.success = false;
+    	                   result.messages.message = conn.responseText;
+    	                }
+    	            	 if (result.success)
+    	                 {
+    	            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+    	            		 store.load();            		      
+    	                                     
+    	                 }
+    	            	 else
+    	                 {
+    	            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);                   
+    	                 }
+    	            },
        	            //method to call when the request is a failure
        	            failure: InventoryApp.Utilities.onSaveFailure
        	        });
-       			//console.log('delete... '+record[0].get('locCode'));
-       			store.reload();
-       			store.load();
+       			
        			
        		}
        	})

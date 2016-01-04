@@ -2,6 +2,7 @@ package com.topline.controller;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +30,7 @@ import com.topline.mappers.SubLocationsMapper;
 import com.topline.mappers.UnitsMapper;
 import com.topline.mappers.UserMapper;
 import com.topline.mappers.VatMapper;
+import com.topline.model.wrappers.ProductWrapper;
 import com.topline.model.wrappers.SubLocationWrapper;
 import com.topline.web.StandardJsonResponse;
 
@@ -76,10 +78,12 @@ public class BaseController extends MultiActionController {
 	@Autowired(required=true)
 	InvoiceDtlsMapper invoiceDtlsMapper;
 	@Autowired(required=true)
-	DataSourceTransactionManager txnManager ;
+	DataSourceTransactionManager txnManager ;	
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();
+		SimpleDateFormat ft = new SimpleDateFormat("dd/MM/YYYY");		
+		mapper.setDateFormat(ft);
         try {
 			json = mapper.writeValueAsString(jsonResponse);
 		} catch (JsonGenerationException e) {

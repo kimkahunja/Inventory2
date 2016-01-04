@@ -526,7 +526,11 @@
     <result column="unt_sht_desc" property="_pdtUntCode" jdbcType="VARCHAR" />
     <result column="loc_sht_desc" property="_pdtLocCode" jdbcType="VARCHAR" />
     <result column="sloc_sht_desc" property="_pdtSlocCode" jdbcType="VARCHAR" />
-    <result column="cat_sht_desc" property="_pdtCatCode" jdbcType="VARCHAR" />
+    <result column="cat_sht_desc" property="_pdtCatCode" jdbcType="VARCHAR" />   
+    <result column="purchase_date" property="purchaseDate" jdbcType="DATE" />
+    <result column="stockId" property="stkId" jdbcType="VARCHAR" /> 
+    <result column="prod_reference" property="prodReference" jdbcType="VARCHAR" /> 
+    
   </resultMap>
    <select id="fetchProducts" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	   select pdt_code, pdt_sht_desc, pdt_description, pdt_unt_code, pdt_loc_code, pdt_sloc_code, 
@@ -560,7 +564,8 @@
  <select id="fetchTransProduct" resultMap="BaseResultMapWrapper" statementType="CALLABLE">    
 	{ CALL get_product(#{searchData, mode=IN, jdbcType=VARCHAR})}
 </select> 
-	
- 
+<select id="fetchStocks" resultMap="BaseResultMapWrapper" statementType="CALLABLE">    
+	{ CALL get_stocks(#{searchData, mode=IN, jdbcType=VARCHAR},#{location, mode=IN, jdbcType=INTEGER})}
+</select>
    
 </mapper>

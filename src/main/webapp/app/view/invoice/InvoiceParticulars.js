@@ -24,9 +24,10 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
                                 fieldLabel: 'Customer',
                                 displayField: 'accName',
                                 valueField: 'accCode',
-                                store: {
+                                /*store: {
                                     type: 'account.accounts'
-                                },
+                                },*/
+                                store:Ext.create('InventoryApp.store.account.Accounts'),
                               //  value: Ext.getStore( 'account.accounts' ).getAt(0).get('accCode'),
                                 editable: false,
                                 forceSelection: false,

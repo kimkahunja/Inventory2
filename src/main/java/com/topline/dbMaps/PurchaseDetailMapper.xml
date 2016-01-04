@@ -20,6 +20,7 @@
     <result column="purd_remarks" property="purdRemarks" jdbcType="VARCHAR" />
     <result column="purd_mtrade_price" property="purdMtradePrice" jdbcType="DECIMAL" />
     <result column="purd_expiry_dt" property="purdExpiryDt" jdbcType="DATE" />
+    <result column="purd_serialNo" property="purdSerialNo" jdbcType="VARCHAR"  />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -96,7 +97,7 @@
       This element was generated on Thu Jul 23 15:43:34 EAT 2015.
     -->
     purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
-    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt
+    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,purd_serialNo
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.topline.model.PurchaseDetailExample" >
     <!--
@@ -158,12 +159,12 @@
       purd_qty, purd_price, purd_tamount, 
       purd_discount, purd_bonus, purd_status, 
       purd_previous_qty, purd_remarks, purd_mtrade_price, 
-      purd_expiry_dt)
+      purd_expiry_dt,purd_serialNo)
     values (#{purdId,jdbcType=INTEGER}, #{purdPurId,jdbcType=INTEGER}, #{purdPdtCode,jdbcType=INTEGER}, 
       #{purdQty,jdbcType=DOUBLE}, #{purdPrice,jdbcType=DECIMAL}, #{purdTamount,jdbcType=DECIMAL}, 
       #{purdDiscount,jdbcType=DOUBLE}, #{purdBonus,jdbcType=DOUBLE}, #{purdStatus,jdbcType=VARCHAR}, 
       #{purdPreviousQty,jdbcType=DOUBLE}, #{purdRemarks,jdbcType=VARCHAR}, #{purdMtradePrice,jdbcType=DECIMAL}, 
-      #{purdExpiryDt,jdbcType=DATE})
+      #{purdExpiryDt,jdbcType=DATE},#{purdSerialNo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.topline.model.PurchaseDetail" >
     <!--
@@ -212,6 +213,9 @@
       <if test="purdExpiryDt != null" >
         purd_expiry_dt,
       </if>
+      <if test="purdSerialNo != null" >
+        purd_serialNo,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="purdId != null" >
@@ -252,6 +256,9 @@
       </if>
       <if test="purdExpiryDt != null" >
         #{purdExpiryDt,jdbcType=DATE},
+      </if>
+      <if test="purdSerialNo != null" >
+        #{purdSerialNo,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -313,6 +320,9 @@
       <if test="record.purdExpiryDt != null" >
         purd_expiry_dt = #{record.purdExpiryDt,jdbcType=DATE},
       </if>
+      <if test="record.purdSerialNo != null" >
+        purd_serialNo = #{record.purdSerialNo,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -337,7 +347,8 @@
       purd_previous_qty = #{record.purdPreviousQty,jdbcType=DOUBLE},
       purd_remarks = #{record.purdRemarks,jdbcType=VARCHAR},
       purd_mtrade_price = #{record.purdMtradePrice,jdbcType=DECIMAL},
-      purd_expiry_dt = #{record.purdExpiryDt,jdbcType=DATE}
+      purd_expiry_dt = #{record.purdExpiryDt,jdbcType=DATE},
+      purd_serialNo = #{purdSerialNo,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -386,6 +397,9 @@
       <if test="purdExpiryDt != null" >
         purd_expiry_dt = #{purdExpiryDt,jdbcType=DATE},
       </if>
+      <if test="purdSerialNo != null" >
+        purd_serialNo = #{purdSerialNo,jdbcType=VARCHAR},
+      </if>
     </set>
     where purd_id = #{purdId,jdbcType=INTEGER}
   </update>
@@ -407,7 +421,8 @@
       purd_previous_qty = #{purdPreviousQty,jdbcType=DOUBLE},
       purd_remarks = #{purdRemarks,jdbcType=VARCHAR},
       purd_mtrade_price = #{purdMtradePrice,jdbcType=DECIMAL},
-      purd_expiry_dt = #{purdExpiryDt,jdbcType=DATE}
+      purd_expiry_dt = #{purdExpiryDt,jdbcType=DATE},
+      purd_serialNo= #{purdSerialNo,jdbcType=VARCHAR}
     where purd_id = #{purdId,jdbcType=INTEGER}
   </update>
   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.PurchaseDetailWrapper" >    
@@ -415,7 +430,7 @@
   </resultMap>
    <select id="fetchPurchaseDetails" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	   SELECT purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
-		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,pdt_description
+		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,purd_serialNo,pdt_description
 		FROM inv_purchases_details, inv_products
 		WHERE purd_pdt_code=pdt_code
         <if test="purId != null">

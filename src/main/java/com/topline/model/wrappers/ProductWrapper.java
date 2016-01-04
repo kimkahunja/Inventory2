@@ -1,5 +1,7 @@
 package com.topline.model.wrappers;
 
+import java.util.Date;
+
 import com.topline.model.Products;
 
 public class ProductWrapper extends Products {
@@ -7,7 +9,29 @@ public class ProductWrapper extends Products {
 	private String _pdtLocCode;
 	private String _pdtSlocCode;
 	private String _pdtVatId;
-	private String _pdtCatCode;
+	private String _pdtCatCode; 
+	private Date purchaseDate;
+	private String stkId; 
+	private String prodReference;
+	
+	public String getProdReference() {
+		return prodReference;
+	}
+	public void setProdReference(String prodReference) {
+		this.prodReference = prodReference;
+	}
+	public String getStkId() {
+		return stkId;
+	}
+	public void setStkId(String stkId) {
+		this.stkId = stkId;
+	}
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+	public void setPurchaseDate(Date purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}	
 	public String get_pdtUntCode() {
 		return _pdtUntCode;
 	}

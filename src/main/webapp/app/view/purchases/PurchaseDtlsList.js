@@ -36,7 +36,15 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	                       dataIndex: '_purdPdtCode',
 	                       menuDisabled:true,
 	                       //sortable:false
-		                   }, 	
+		                   }, 
+		                   {
+		                	 text:'Product Reference',
+		                	 dataIndex: 'purdSerialNo',
+		                	 editor: {
+		                           xtype: 'textfield',
+		                      },
+		                      allowBlank: true,
+		                   },
                    
                    {
                        text: 'Unit Price',

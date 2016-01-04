@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-01-04T16:22:56 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Products" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b5f33f23-aa33-4d88-9bca-e860752a9bda">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mysqlConn"/>
+	<queryString>
+		<![CDATA[SELECT pdt_code,
+	pdt_sht_desc,
+	pdt_description,
+	inv_products.pdt_unt_code,
+	inv_products.pdt_loc_code,
+	inv_products.pdt_sloc_code,
+	inv_products.pdt_cat_code,
+	pdt_min_level,
+	pdt_max_level,
+	getBP( stk_souce_id,stk_source_type) AS pdt_bp,
+	pdt_sp,
+	pdt_profit_pct,
+	pdt_vat_id,
+	pdt_status,
+	pdt_strength,
+	stk_qty AS pdt_current_qty,
+	pdt_amount,
+	pdt_op_qty,
+	pdt_delete_by,
+	pdt_delete_date,
+	cat_sht_desc,
+	loc_sht_desc,
+	sloc_sht_desc,
+	unt_sht_desc,
+	stk_id AS stockId,
+	getPurchaseDate(stk_souce_id,stk_source_type) AS purchase_date,
+	getProductReference( stk_souce_id,stk_source_type) AS prod_reference
+FROM inv_products
+	left join inv_categories ON 
+	 inv_categories.cat_code = inv_products.pdt_cat_code 
+	left join inv_locations ON 
+	 inv_locations.loc_code = inv_products.pdt_loc_code 
+	left join inv_sub_locations ON 
+	 inv_sub_locations.sloc_code = inv_products.pdt_sloc_code 
+	left join inv_units ON 
+	 inv_units.unt_code = inv_products.pdt_unt_code 
+	inner join inv_stocks ON 
+	stk_pdt_code=pdt_code
+ORDER BY pdt_description DESC,
+	purchase_date DESC]]>
+	</queryString>
+	<field name="pdt_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_unt_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_loc_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_sloc_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_cat_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_min_level" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_max_level" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_bp" class="java.math.BigDecimal"/>
+	<field name="pdt_sp" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_profit_pct" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_vat_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_strength" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_current_qty" class="java.lang.Double"/>
+	<field name="pdt_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_op_qty" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_delete_by" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_delete_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cat_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loc_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sloc_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unt_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stockId" class="java.lang.Integer"/>
+	<field name="purchase_date" class="java.sql.Date"/>
+	<field name="prod_reference" class="java.lang.String"/>
+	<group name="G_MainProduct">
+		<groupExpression><![CDATA[$F{pdt_code}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="1" width="80" height="19" uuid="bda40279-b093-4b52-84e7-da6e5966dd0d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="2" width="80" height="19" uuid="717a723f-f00b-4af8-abc5-98961d9d9803"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="2" width="80" height="19" uuid="ee03c49f-1e24-4f4d-a1e3-d8b96d00cf37"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="1" width="58" height="19" uuid="53d4f262-c55c-47ec-bb76-b84617e2d6a4"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="2" width="100" height="19" uuid="2ba542eb-400f-4506-bfa3-b99093c08aec"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Purchase Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="2" width="49" height="19" uuid="f65ddbae-98fc-4c42-ac96-8681299649db"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="2" width="100" height="18" uuid="2002100d-770f-4d15-85d5-789713108c46"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reference]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="22" width="680" height="1" forecolor="#4D1825" backcolor="#F0120E" uuid="eff35461-c206-493e-81a7-9521b26b0d83">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20" uuid="658c640c-3767-47bb-a229-9e6a7aa09e4c"/>
+				<textFieldExpression><![CDATA[$F{pdt_sht_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="0" width="178" height="20" uuid="68a61440-501c-41eb-b72d-b2f025762a3a"/>
+				<textFieldExpression><![CDATA[$F{pdt_description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="360" y="0" width="80" height="20" uuid="2245bcc1-1b1c-4a53-941c-ab9045ad8d1f"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pdt_bp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="0" width="58" height="20" uuid="84fa1ad5-75ed-4629-a7a4-f97d8726615c"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pdt_current_qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="100" height="20" uuid="b7012244-168c-41f1-b6f4-fba94f5d7520"/>
+				<textFieldExpression><![CDATA[$F{cat_sht_desc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="500" y="0" width="90" height="20" uuid="06780ba1-d824-47ee-b2e5-77958ea599d1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purchase_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="607" y="0" width="100" height="20" uuid="528c00fe-0034-4dde-bb81-1afcfee85037"/>
+				<textFieldExpression><![CDATA[$F{prod_reference}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

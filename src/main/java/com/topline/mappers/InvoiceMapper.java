@@ -102,4 +102,5 @@ public interface InvoiceMapper {
     List<InvoiceWrapper> fetchInvoices(Map<String,Object> map);
     String fetchInvoiceNumber(Map<String,Object> map);
     int updateNextInvoiceNumber(Map<String,Object> map);
+    Object postInvoice(Map<String,Object> map);
 }

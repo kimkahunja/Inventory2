@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,9 +27,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
+import com.topline.model.Purchase;
 import com.topline.model.wrappers.InvoiceDtlsWrapper;
 import com.topline.model.wrappers.InvoiceWrapper;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
@@ -48,8 +55,9 @@ public class InvoiceController extends BaseController {
 			Invoice invoice=mapper.readValue(data, Invoice.class);
 			List<InvoiceDtls> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtls[].class));
 			invoice.setInvStatus("PENDING");
+			invoice.setInvLocCode(location==null?null:Integer.parseInt(location));
 			map.put("location", location);
-			System.out.println("invoice.getInvId()==== "+invoice.getInvId());
+			System.out.println("location==== "+location);
 			if(invoice.getInvId()==null){
 				invoiceMapper.save(invoice);
 				invoiceMapper.updateNextInvoiceNumber(map);
@@ -213,4 +221,89 @@ public class InvoiceController extends BaseController {
 					return jsonObject(jsonResponse);
 				}
 			}
+			@RequestMapping(value="/postInvoice.action")
+			@Transactional
+			private @ResponseBody String postInvoice(HttpServletRequest request){
+				DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+				def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+				TransactionStatus status = txnManager.getTransaction(def);
+				try{
+					Map<String, Object> map = new HashMap<String, Object>();	
+					ObjectMapper mapper = new ObjectMapper();
+					String data=GlobalCC.CheckNullValues(request.getParameter("data"));					
+					String userName=GlobalCC.CheckNullValues(request.getParameter("userName"));
+					String dataDetail=GlobalCC.CheckNullValues(request.getParameter("dataDetail"));
+					String location = GlobalCC.CheckNullValues(request.getParameter("location"));
+					Invoice invoice=mapper.readValue(data, Invoice.class);
+					
+					List<InvoiceDtls> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtls[].class));
+					invoice.setInvStatus("PENDING");
+					map.put("location", location);
+					
+					if(invoice.getInvId()==null){
+						invoiceMapper.save(invoice);
+						invoiceMapper.updateNextInvoiceNumber(map);
+					}else{
+						invoiceMapper.updateByPrimaryKey(invoice);
+					}
+					
+					try{
+						InvoiceDtlsExample example=new InvoiceDtlsExample();
+						InvoiceDtlsExample .Criteria creteria=example.createCriteria();
+						creteria.andInvdInvIdEqualTo(invoice.getInvId());
+						invoiceDtlsMapper.deleteByExample(example);
+						for(int i=0;i<invoiceDtls.size();i++){
+							invoiceDtls.get(i).setInvdInvId(invoice.getInvId());
+							invoiceDtlsMapper.insert(invoiceDtls.get(i));
+						}
+					}catch(Exception ex){
+						invoiceMapper.deleteByPrimaryKey(invoice.getInvId());
+						ex.printStackTrace();
+						jsonResponse.setData(null);
+						jsonResponse.setSuccess(false);
+						jsonResponse.addMessage("message", ex.getLocalizedMessage());
+						return jsonObject(jsonResponse);
+					}
+					
+					//post the invoice
+					
+					if(invoice.getInvId()==null){
+						txnManager.rollback(status);
+						jsonResponse.setData(null);
+						jsonResponse.setSuccess(false);
+						jsonResponse.addMessage("message", "Invoice particulars  have not been provided...");
+						return jsonObject(jsonResponse);
+					}else{
+						map.put("v_inv_id",invoice.getInvId());
+						map.put("postedBy", userName);
+						invoiceMapper.postInvoice(map);
+					}
+					Object v_count=map.get("v_count");
+					System.out.println("count===== "+v_count);
+				    if(v_count.toString().equalsIgnoreCase("1")) {
+				    	txnManager.commit(status);
+				    	jsonResponse.setSuccess(true);	
+						jsonResponse.setData(null);
+						jsonResponse.addMessage("message", "Invoice Transaction successfully Posted...");
+				    }else{
+				    	txnManager.rollback(status);
+				    	jsonResponse.setSuccess(false);	
+						jsonResponse.setData(null);
+						jsonResponse.addMessage("message", "Invoice Transaction not Posted...");
+				    }
+				    
+				    return jsonObject(jsonResponse);
+				}
+				
+				catch(Exception e){
+					txnManager.rollback(status);			
+					e.printStackTrace();
+					jsonResponse.setData(null);
+					jsonResponse.setSuccess(false);
+					jsonResponse.addMessage("message", e.getLocalizedMessage());
+					return jsonObject(jsonResponse);
+				}
+				
+			}			
 }

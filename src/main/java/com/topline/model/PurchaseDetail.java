@@ -118,7 +118,16 @@ public class PurchaseDetail {
      */
     private String _purdPdtCode;
     private BigDecimal total;
-    public Integer getPurdId() {
+    private String purdSerialNo;
+    public String getPurdSerialNo() {
+		return purdSerialNo;
+	}
+
+	public void setPurdSerialNo(String purdSerialNo) {
+		this.purdSerialNo = purdSerialNo;
+	}
+
+	public Integer getPurdId() {
         return purdId;
     }
 

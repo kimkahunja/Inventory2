@@ -37,6 +37,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 								    collapsible: true,
 								    collapseDirection:'left',
 								    //collapsed:true,
+								    height:300,
+								    maxHeight:300,
 								    title:'Unauthorized Purchases',
 								    layout:'fit',
 								    items:[

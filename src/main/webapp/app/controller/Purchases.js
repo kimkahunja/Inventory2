@@ -6,7 +6,7 @@ Ext.define('InventoryApp.controller.Purchases', {
     stores: [
     	'purchases.Purchases',
     	'purchases.PurchasesDtls',
-    	'account.Accounts'
+    	'account.AccountsSupplier'
     ],
     views: [
     	'purchases.Purchase',
@@ -24,7 +24,11 @@ Ext.define('InventoryApp.controller.Purchases', {
         {
             ref: 'PurchaseForm',
             selector: '[xtype=purchases.purchaseparticulars]'
-        }
+        },
+        {
+            ref: 'AcctCombo',
+            selector: "combobox[name='purAccCode']"
+        },
     ],
     init: function() {
         this.listen({
@@ -230,7 +234,8 @@ Ext.define('InventoryApp.controller.Purchases', {
     		purRefNo=Ext.ComponentQuery.query("textfield[name='purRefNo']")[0].getValue(),
     		//purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
     		purDate=Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),
-    		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue();
+    		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue(),
+    		mydata=null;
     		//console.log('purInvono '+purInvono);
     		if (purInvono.trim().length==0){
     			Ext.Msg.show(
@@ -266,10 +271,13 @@ Ext.define('InventoryApp.controller.Purchases', {
     			
     		
     		 var model = {};
+    		 model["purId"]=InventoryApp.Utilities.pur_id;
     		 model["purInvono"]=purInvono;
     		 model["purRefno"]=purRefNo;
     		 model["purDate"]=purDate;
     		 model["purAccCode"]=purAccCode;
+    		 model["purUser"]=InventoryApp.Utilities.userName;
+    		
     		 //-----------------------------------------
     		 var details = new Array();
              var records = store.getRange();
@@ -281,16 +289,60 @@ Ext.define('InventoryApp.controller.Purchases', {
                 url: 'purchase/savePurchase.action',
              params: {                   
                      data: Ext.encode(model),
-                     dataDetail:Ext.encode(details)
+                     dataDetail:Ext.encode(details),
+                     location:InventoryApp.Utilities.locationId
              },
              
              scope:this,
              //method to call when the request is successful
-             success: InventoryApp.Utilities.onSaveSuccess,
+             success: function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+            		  mydata=result.data.data;
+            		  InventoryApp.Utilities.pur_id=mydata;
+            		  ///console.log('mydata=== '+result.data.data);
+            		  this.getPurchaseList().getStore().load({
+              			params: {
+                        		id: mydata
+                        	}
+              		}); 
+            		 Ext.Msg.show(
+                             {                    
+                                title : 'Success!',
+                                msg : result.messages.message,
+                                icon : Ext.Msg.INFO,
+                                buttons : Ext.Msg.OK
+                             }
+                             );          
+                                     
+                 }
+            	 else
+                 {
+                    Ext.Msg.show(
+                    {                    
+                       title : 'Fail!',
+                       msg : result.messages.message,
+                       icon : Ext.Msg.ERROR,
+                       buttons : Ext.Msg.OK
+                    }
+                    );
+                 }
+            },
              //method to call when the request is a failure
              failure: InventoryApp.Utilities.onSaveFailure
          });
-    		this.getPurchaseList().getStore().load();
+    		//this.getPurchaseList().getStore().load();
     	}
     	
     },
@@ -316,7 +368,15 @@ Ext.define('InventoryApp.controller.Purchases', {
           myform.getForm().loadRecord(record);
       },
       onViewReady: function(grid) {
+    	//  var store = grid.getStore();
+ 	     
+    	 // store.load();
           grid.getSelectionModel().select(0);
+          var record = grid.getSelectionModel().getSelection();
+          if (record[0]) {
+        	  InventoryApp.Utilities.pur_id= record[0].get('purId');
+          }
+         
       },
       gridSelectionChange: function(model, records) {
     	  var me = this,
@@ -324,6 +384,7 @@ Ext.define('InventoryApp.controller.Purchases', {
           store = grid.getStore();
           if (records[0]) {
                this.getPurchaseForm().getForm().loadRecord(records[0]);
+               InventoryApp.Utilities.pur_id= records[0].get('purId');
                store.clearFilter( true );
          		store.load({
                  	params: {
@@ -346,7 +407,8 @@ Ext.define('InventoryApp.controller.Purchases', {
       			Ext.Ajax.request({
       	               url: 'purchase/postPurchase.action',
       	            params: {
-      	                    data: Ext.encode(record[0].data)
+      	                    data: Ext.encode(record[0].data),
+      	                  userName:InventoryApp.Utilities.userName
       	            },
       	            
       	            scope:this,
@@ -417,7 +479,20 @@ Ext.define('InventoryApp.controller.Purchases', {
 	    	  store.removeAll();
     	   grid.getView().refresh();
     	   this.getPurchaseForm().getForm().reset();
-           
+    	   //set the supplier combo with the default value
+    	   var combo = this.getAcctCombo(),
+           storeAccounts = combo.getStore();
+     	  
+     	  combo.clearValue();
+     	 storeAccounts.clearFilter();
+     	storeAccounts.load({
+   			  params: {
+ 	           		type:'C'
+ 	           	}
+ 		  });
+     	storeAccounts.on('load',function(storeAccounts) {
+     	  combo.setValue(storeAccounts.getAt('0').get('accCode'));
+           });
       },
       onComboSelect:function( combo, records, eOpts ){
     	  console.log('selected....' +records[0].get('pdtShtDesc'));

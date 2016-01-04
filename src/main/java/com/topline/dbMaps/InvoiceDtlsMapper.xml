@@ -17,6 +17,7 @@
     <result column="invd_bonus" property="invdBonus" jdbcType="DOUBLE" />
     <result column="invd_status" property="invdStatus" jdbcType="VARCHAR" />
     <result column="invd_bp" property="invdBp" jdbcType="DECIMAL" />
+    <result column="invd_stk_id" property="invdStkId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -93,7 +94,7 @@
       This element was generated on Tue Oct 27 17:10:02 EAT 2015.
     -->
     invd_id, invd_inv_id, invd_pdt_code, invd_qty, invd_price, invd_tamount, invd_discount, 
-    invd_bonus, invd_status, invd_bp
+    invd_bonus, invd_status, invd_bp,invd_stk_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.topline.model.InvoiceDtlsExample" >
     <!--
@@ -154,11 +155,11 @@
     insert into inv_invoice_dtls (invd_id, invd_inv_id, invd_pdt_code, 
       invd_qty, invd_price, invd_tamount, 
       invd_discount, invd_bonus, invd_status, 
-      invd_bp)
+      invd_bp,invd_stk_id)
     values (#{invdId,jdbcType=INTEGER}, #{invdInvId,jdbcType=INTEGER}, #{invdPdtCode,jdbcType=INTEGER}, 
       #{invdQty,jdbcType=DOUBLE}, #{invdPrice,jdbcType=DECIMAL}, #{invdTamount,jdbcType=DECIMAL}, 
       #{invdDiscount,jdbcType=DOUBLE}, #{invdBonus,jdbcType=DOUBLE}, #{invdStatus,jdbcType=VARCHAR}, 
-      #{invdBp,jdbcType=DECIMAL})
+      #{invdBp,jdbcType=DECIMAL}, #{invdStkId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.topline.model.InvoiceDtls" >
     <!--
@@ -198,6 +199,9 @@
       <if test="invdBp != null" >
         invd_bp,
       </if>
+       <if test="invdStkId != null" >
+        invd_stk_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="invdId != null" >
@@ -229,6 +233,9 @@
       </if>
       <if test="invdBp != null" >
         #{invdBp,jdbcType=DECIMAL},
+      </if>
+      <if test="invdStkId != null" >
+        #{invdStkId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -368,7 +375,7 @@
   </resultMap> 
    <select id="fetchInvoiceDtls" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
    		SELECT invd_id, invd_inv_id, invd_pdt_code, invd_qty, invd_price, invd_tamount, invd_discount, 
-   		 invd_bonus, invd_status, invd_bp,pdt_description
+   		 invd_bonus, invd_status, invd_bp,invd_stk_id,pdt_description
     	FROM inv_invoice_dtls,inv_products
     	WHERE invd_pdt_code=pdt_code
     	 <if test="invId != null">
