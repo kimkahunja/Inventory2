@@ -12,8 +12,8 @@ Ext.define('InventoryApp.store.product.StockRPT',{
 	//remoteSort: true,
     //remoteFilter: true,
     //remoteGroup: true,
-    groupField: 'pdtCode',
-    groupDir: 'ASC',
+    //groupField: 'pdtCode',
+   // groupDir: 'ASC',
 	//autoLoad: true,
    // pageSize: 20,
     proxy: {

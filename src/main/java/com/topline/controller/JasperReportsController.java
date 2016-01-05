@@ -80,6 +80,44 @@ public class JasperReportsController extends BaseController{
 		}
 		return;
 	}
+	@RequestMapping("/productRpt.action")
+	private void productRpt(HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		ModelAndView mv = null;
+		try{
+			parameters.clear();
+			Map<String, Object> model = new HashMap<String, Object>();
+			String reportType = null;
+			 String reportName= request.getParameter("reportName");
+			if (reportType == null) {
+				reportType = "pdf";
+			}
+			conn=ormDataSource.getConnection(); 
+			String filePath = null;
+			filePath = getServletContext().getRealPath(
+					"/reports/Products.jasper");
+			setFileReport(new File(filePath));
+			fileReport = getFileReport();
+			reportName = "Products";
+			
+			System.out.println("reportType --> " + reportType);
+			bytes = generateReportData();
+			ServletOutputStream servletOutputStream = response
+					.getOutputStream();
+			response.setHeader("Content-disposition", "attachment; filename="
+					+ "Products.pdf");
+			response.setContentLength(bytes.length);
+			servletOutputStream.write(bytes, 0, bytes.length);
+			servletOutputStream.flush();
+			servletOutputStream.close();
+			ormDataSource.getConnection().close();
+			model.put("reportType", reportType);
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception Occured  profileHandler-> ");
+		}
+		return;
+	}
 	private byte[] generateReportData() throws JRException, SQLException {
 
 		return JasperRunManager.runReportToPdf(fileReport.getPath(),

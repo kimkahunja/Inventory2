@@ -96,12 +96,12 @@ Ext.define('InventoryApp.view.reports.products.List',{
                     
                ]
            },
-           features: [{
+          /* features: [{
                ftype: 'grouping',
                // You can customize the group's header.
                groupHeaderTpl: '{name} ({children.length})',
                enableNoGroups:false
-           }],
+           }],*/
            dockedItems: [
               /* {
                    xtype: 'toolbar',

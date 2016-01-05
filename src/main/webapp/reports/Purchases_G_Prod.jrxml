@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-01-04T19:28:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Purchases_G_Prod" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ec51457d-2239-4cae-a4d3-ae1e90615a43">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mysqlConn"/>
+	<queryString>
+		<![CDATA[select pdt_code,pdt_sht_desc,pdt_description,acc_code,acc_name,pur_invono,pur_date,
+purd_qty,purd_price,purd_serialNo
+FROM inv_products, inv_purchases, inv_purchases_details, inv_accounts
+WHERE pur_id=purd_pur_id
+AND purd_pdt_code=pdt_code
+AND pur_acc_code=acc_code]]>
+	</queryString>
+	<field name="pdt_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="acc_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="acc_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pur_invono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pur_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purd_qty" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purd_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purd_serialNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="pdt_code"/>
+	<group name="G_Product" keepTogether="true">
+		<groupExpression><![CDATA[$F{pdt_code}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement x="80" y="0" width="100" height="30" uuid="bf3c0b7e-067b-4a27-bce2-3e1953881dc0"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pdt_sht_desc}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="180" y="-1" width="10" height="31" uuid="babc95e9-a523-44f9-8f14-85842a018a55"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[/]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="190" y="0" width="290" height="30" uuid="84c6f9e4-addc-49c7-ab65-a0fc563a452d"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pdt_description}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="14"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="100" height="20" uuid="530406b5-a9cf-4072-80a5-e50375e5a783"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="100" height="20" uuid="f2536335-ee0a-4822-a61e-b0592482f7bd"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="1" width="100" height="19" uuid="40bd5ea6-5e29-4c54-81d1-fd0526ba7f8a"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="501" y="1" width="88" height="19" uuid="402f749e-76ff-40e1-aa18-6f991eccb52e"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reference]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="610" y="0" width="60" height="20" uuid="31b33bf2-8fda-4496-8f77-fa444a8f2969"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="680" y="1" width="80" height="25" uuid="f7932f1c-e93b-4ea6-91f0-3b949ca59a79"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[price]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="200" height="20" uuid="08f1cd35-345d-43be-914a-77cb806ea2cb"/>
+				<textFieldExpression><![CDATA[$F{acc_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="0" width="100" height="20" uuid="3ee905a2-bee5-4d18-a2ee-db507bddf7de"/>
+				<textFieldExpression><![CDATA[$F{pur_invono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="-5" width="120" height="25" uuid="9d85ee59-9f81-4f19-87f6-a31731f8d521"/>
+				<textFieldExpression><![CDATA[$F{pur_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="110" height="20" uuid="9cd23749-dd88-4a32-97ff-ce06c5055b9a"/>
+				<textFieldExpression><![CDATA[$F{purd_serialNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="610" y="0" width="70" height="20" uuid="26a4e6c8-7594-4563-b0de-03d7222fbaa2"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{purd_qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="680" y="0" width="80" height="20" uuid="b3b9bdf4-6caf-43ce-8e4e-3d01568e4dc0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{purd_price}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

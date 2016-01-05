@@ -25,7 +25,9 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
                 	//edit: this.editProduct,
                     beforerender: this.loadRecords,               
                 },
-                
+                'button#printProduct':{
+               		click:this.printProduct 
+               	},
             },
             global: {},
             store: {},
@@ -47,5 +49,14 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
         	   params:{location: InventoryApp.Utilities.locationId}
         }); 
     },
- 
+    printProduct:function( button, e, eOpts ){
+ 	   Ext.Ajax.request({
+            url: 'reports/productRpt.action',            
+         scope:this,
+         //method to call when the request is successful
+         //success: InventoryApp.Utilities.onSaveSuccess,
+         //method to call when the request is a failure
+         failure: InventoryApp.Utilities.onSaveFailure
+     });
+    }
 });

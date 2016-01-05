@@ -34,6 +34,23 @@ Ext.define('InventoryApp.view.reports.products.ProductParameters',{
                               ], 
              		}
                     ],
+                    
+                    dockedItems: [
+                                  {
+                                      xtype: 'toolbar',
+                                      dock: 'top',
+                                      ui: 'footer',
+                                      items: [
+                                          {
+                                              xtype: 'button',
+                                              itemId: 'printProduct',
+                                              iconCls: 'icon_report',
+                                              text: 'Print Report'
+                                          }
+                                      ]
+                                  },
+                                  
+                              ]
     		                   
     	 });
          me.callParent( arguments );
