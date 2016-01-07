@@ -11,12 +11,54 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
     	   fieldDefaults: {
     		   allowBlank: true,
     	   },
-    	   items:[					
+    	   items:[	{
+    		   		 	xtype:'container',
+    		   		 	width:600,    		   		 	
+    		   		    layout: {
+    		                align: 'stretch',
+    		                type: 'vbox'
+    		            },
+    		            defaults: { 
+    		                labelWidth: 200,
+    		                margin: '5 5 5 5 '
+    		             },    		            
+    		   		 	items:[
+								{
+								    xtype: 'radiogroup',
+								    fieldLabel: 'Choose the Purchase Report to execute',
+								    //arrange Radio Buttons into 2 columns
+								    columns: 2,
+								    itemId: 'rgPurchaseReport',
+								    items: [
+								        {
+								            xtype: 'radiofield',
+								            boxLabel: 'Grouping per Invoice',
+								            name: 'purchaseRpt',
+								            checked: true,
+								            inputValue: 'G_PUR'
+								        },
+								        {
+								            xtype: 'radiofield',
+								            boxLabel: 'Grouping per Product',
+								            name: 'purchaseRpt',
+								            inputValue: 'G_PROD'
+								        },
+								        {
+								            xtype: 'radiofield',
+								            boxLabel: 'Grouping per Supplier',
+								            name: 'purchaseRpt',
+								            inputValue: 'G_SUP'
+								        },
+								        
+								    ]
+								},
+    		   		 	       ]
+    	   			},				
 					{
 						xtype: 'container',
 					    layout: 'hbox',			    
 					   
-					    items:[
+					    items:[					           
 					          {
                                 xtype: 'ux.form.field.remotecombobox',
                                 name: 'purAccCodeRpt',

@@ -304,4 +304,56 @@ public class PurchaseController extends BaseController {
 					return jsonObject(jsonResponse);
 				}
 			}
+			//fetchRptPurchases
+			@RequestMapping(value="/fetchRptPurchases.action", method=RequestMethod.GET)
+			private @ResponseBody
+			String fetchRptPurchases(HttpServletRequest request){
+				try{
+					HashMap<String, Object> data = new HashMap<String, Object>();
+					
+					Map<String, Object> map = new HashMap<String, Object>();		
+					
+					String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+					String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+					String accCode=GlobalCC.CheckNullValues(request.getParameter("accCode"));
+					String status=GlobalCC.CheckNullValues(request.getParameter("status"));
+					String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
+					String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
+					String root=GlobalCC.CheckNullValues(request.getParameter("root"));
+					String purId=GlobalCC.CheckNullValues(request.getParameter("id"));
+					String product=GlobalCC.CheckNullValues(request.getParameter("product"));
+					if (limit == null) {
+						limit = "50";
+					}
+					if (start == null) {
+						start = "0";
+					}
+					
+					map.put("purStatus", root==null? "PENDING":status);
+					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
+					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
+					map.put("dateTo", dateFrom==null?null:GlobalCC.parseSQLDate(dateTo));
+					map.put("purId",purId==null?null:new BigDecimal(purId));
+					map.put("product",product==null?null:new BigDecimal(product));
+					List<PurchaseDetailWrapper>list=purchaseDetailMapper.fetchRptPurchases(map);
+					
+					if (list != null) {
+						int count = list.size();
+						data.put("count", count);
+					}
+				
+					data.put("data", list);
+					jsonResponse.setData(data);
+					jsonResponse.setSuccess(true);
+					System.out.println(jsonObject(jsonResponse));
+					return jsonObject(jsonResponse);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					jsonResponse.setData(null);
+					jsonResponse.setSuccess(false);
+					jsonResponse.addMessage("message", e.getLocalizedMessage());
+					return jsonObject(jsonResponse);
+				}
+			}
 }

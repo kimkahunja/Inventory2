@@ -426,7 +426,11 @@
     where purd_id = #{purdId,jdbcType=INTEGER}
   </update>
   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.PurchaseDetailWrapper" >    
-    <result column="pdt_description" property="_purdPdtCode" jdbcType="VARCHAR" />  
+    <result column="pdt_description" property="_purdPdtCode" jdbcType="VARCHAR" /> 
+    <result column="pur_invono" property="purInvono" jdbcType="VARCHAR" /> 
+    <result column="pur_date" property="purDate" jdbcType="DATE" /> 
+    <result column="pur_acc_code" property="purAccCode" jdbcType="INTEGER" /> 
+    <result column="acc_name" property="_purAccCode" jdbcType="VARCHAR" />    
   </resultMap>
    <select id="fetchPurchaseDetails" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	   SELECT purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
@@ -436,5 +440,29 @@
         <if test="purId != null">
           AND  purd_pur_id =  #{purId,jdbcType=INTEGER}
       </if>	
+   </select>
+   <select id="fetchRptPurchases" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	   SELECT purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
+		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,purd_serialNo,pdt_description,
+        pur_invono,pur_date,pur_acc_code,acc_name
+		FROM inv_purchases_details, inv_products,inv_purchases,inv_accounts
+		WHERE purd_pdt_code=pdt_code
+        AND pur_id=purd_pur_id
+        AND acc_code=pur_acc_code
+        <if test="purId != null">
+          AND  purd_pur_id =  #{purId,jdbcType=INTEGER}
+      </if>	
+      <if test="accCode != null">
+          AND  pur_acc_code =  #{accCode,jdbcType=INTEGER}
+      </if>
+      <if test="product != null">
+          AND  pdt_code =  #{product,jdbcType=INTEGER}
+      </if>
+      <if test="purStatus != null">
+          AND  pur_status =  #{purStatus,jdbcType=VARCHAR}
+      </if>	
+       <if test="dateFrom !=null"  >
+      	AND  pur_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
    </select>
 </mapper>

@@ -98,4 +98,6 @@ public interface PurchaseDetailMapper {
     int updateByPrimaryKey(PurchaseDetail record);
   //add methods
     List<PurchaseDetailWrapper> fetchPurchaseDetails(Map<String,Object> map);
+    List<PurchaseDetailWrapper> fetchRptPurchases(Map<String,Object> map);
+
 }

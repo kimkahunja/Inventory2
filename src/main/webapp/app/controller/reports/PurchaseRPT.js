@@ -7,7 +7,8 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     ],
     views: [
     	'reports.purchases.Purchase',
-    	'reports.purchases.PurchaseDtlsList'
+    	'reports.purchases.PurchaseDtlsList',
+    	'reports.purchases.PurchaseParameters'
     ],
     refs: [    	
            {
@@ -41,6 +42,12 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                	'button#printPurchaseReport':{
                		click:this.printPurchases 
                	}, 
+               	'container[xtype=reports.purchases.purchaseparameters]':{
+               		afterrender : this.onContainerRendered
+               	},
+               	"radiogroup[itemId='rgPurchaseReport']":{
+               		change:this.onRgChange
+               	}
                },
                global: {},
                store: {},
@@ -79,9 +86,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
        },  
        searchPurchases:function( button, e, eOpts ){   
     	   
-    	   Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0].add([
-    	                                                    { xtype: 'reports.purchases.purchasegpur'  },    	                                                    
-    	                                                   ]);
+    	   
     	   var accCode=Ext.ComponentQuery.query("combo[name='purAccCodeRpt']")[0].getValue(),
     	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
     	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),
@@ -122,6 +127,21 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
             //method to call when the request is a failure
             failure: InventoryApp.Utilities.onSaveFailure
         });
-       }
-       
+       },
+       onContainerRendered : function() {
+    	   // console.log('The container was rendered');
+    	   var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0];
+    	   var selection = reportGrp.getGroupValue();
+    	  // console.log('The container was rendered=== '+selection);
+    	   if (selection=='G_PUR'){
+    		   Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0].add([
+    		               	                                                    { xtype: 'reports.purchases.purchasegpur'  },    	                                                    
+    		               	                                                   ]);
+    	   }
+    	  },
+     onRgChange:function( field, newValue, oldValue, eOpts ){
+    	 var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0];
+  	   var selection = reportGrp.getGroupValue();
+  	   console.log('The container was rendered=== '+selection);
+     }
 });
