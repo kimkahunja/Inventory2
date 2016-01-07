@@ -82,6 +82,10 @@ Ext.define('InventoryApp.model.product.Product',{
 	        	 name: 'pdtAmount',
 	             type: 'float'	            
 	        },
+	        {	        	
+	        	 name: 'pdtMergeQty',
+	             type: 'string'	            
+	        },
 	        
 	     // decorated properties
             {

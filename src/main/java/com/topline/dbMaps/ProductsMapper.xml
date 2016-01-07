@@ -27,6 +27,7 @@
     <result column="pdt_op_qty" jdbcType="DOUBLE" property="pdtOpQty" />
     <result column="pdt_delete_by" jdbcType="VARCHAR" property="pdtDeleteBy" />
     <result column="pdt_delete_date" jdbcType="DATE" property="pdtDeleteDate" />
+    <result column="pdt_merge_qty" jdbcType="VARCHAR" property="pdtMergeQty" />    
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -105,7 +106,7 @@
     pdt_code, pdt_sht_desc, pdt_description, pdt_unt_code, pdt_loc_code, pdt_sloc_code, 
     pdt_cat_code, pdt_min_level, pdt_max_level, pdt_bp, pdt_sp, pdt_profit_pct, pdt_vat_id, 
     pdt_status, pdt_strength, pdt_current_qty, pdt_amount, pdt_op_qty, pdt_delete_by, 
-    pdt_delete_date
+    pdt_delete_date,pdt_merge_qty
   </sql>
   <select id="selectByExample" parameterType="com.topline.model.ProductsExample" resultMap="BaseResultMap">
     <!--
@@ -169,14 +170,14 @@
       pdt_bp, pdt_sp, pdt_profit_pct, 
       pdt_vat_id, pdt_status, pdt_strength, 
       pdt_current_qty, pdt_amount, pdt_op_qty, 
-      pdt_delete_by, pdt_delete_date)
+      pdt_delete_by, pdt_delete_date,pdt_merge_qty)
     values (#{pdtCode,jdbcType=INTEGER}, #{pdtShtDesc,jdbcType=VARCHAR}, #{pdtDescription,jdbcType=VARCHAR}, 
       #{pdtUntCode,jdbcType=INTEGER}, #{pdtLocCode,jdbcType=INTEGER}, #{pdtSlocCode,jdbcType=INTEGER}, 
       #{pdtCatCode,jdbcType=INTEGER}, #{pdtMinLevel,jdbcType=DOUBLE}, #{pdtMaxLevel,jdbcType=DOUBLE}, 
       #{pdtBp,jdbcType=DECIMAL}, #{pdtSp,jdbcType=DECIMAL}, #{pdtProfitPct,jdbcType=DOUBLE}, 
       #{pdtVatId,jdbcType=VARCHAR}, #{pdtStatus,jdbcType=VARCHAR}, #{pdtStrength,jdbcType=VARCHAR}, 
       #{pdtCurrentQty,jdbcType=DOUBLE}, #{pdtAmount,jdbcType=DECIMAL}, #{pdtOpQty,jdbcType=DOUBLE}, 
-      #{pdtDeleteBy,jdbcType=VARCHAR}, #{pdtDeleteDate,jdbcType=DATE})
+      #{pdtDeleteBy,jdbcType=VARCHAR}, #{pdtDeleteDate,jdbcType=DATE},#{pdtMergeQty,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.topline.model.Products">
     <!--
@@ -246,6 +247,9 @@
       <if test="pdtDeleteDate != null">
         pdt_delete_date,
       </if>
+       <if test="pdtMergeQty != null">
+        pdt_merge_qty,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pdtCode != null">
@@ -307,6 +311,9 @@
       </if>
       <if test="pdtDeleteDate != null">
         #{pdtDeleteDate,jdbcType=DATE},
+      </if>
+      <if test="pdtMergeQty != null">
+        #{pdtMergeQty,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -393,6 +400,9 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+    <if test="record.pdtMergeQty != null">
+        pdt_merge_qty = #{record.pdtMergeQty,jdbcType=VARCHAR},
+      </if>
   </update>
   <update id="updateByExample" parameterType="map">
     <!--
@@ -420,7 +430,8 @@
       pdt_amount = #{record.pdtAmount,jdbcType=DECIMAL},
       pdt_op_qty = #{record.pdtOpQty,jdbcType=DOUBLE},
       pdt_delete_by = #{record.pdtDeleteBy,jdbcType=VARCHAR},
-      pdt_delete_date = #{record.pdtDeleteDate,jdbcType=DATE}
+      pdt_delete_date = #{record.pdtDeleteDate,jdbcType=DATE},
+      pdt_merge_qty = #{record.pdtMergeQty,jdbcType=VARCHAR},
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -490,6 +501,9 @@
       <if test="pdtDeleteDate != null">
         pdt_delete_date = #{pdtDeleteDate,jdbcType=DATE},
       </if>
+       <if test="pdtMergeQty != null">
+        pdt_merge_qty = #{pdtMergeQty,jdbcType=VARCHAR},
+      </if>
     </set>
     where pdt_code = #{pdtCode,jdbcType=INTEGER}
   </update>
@@ -518,7 +532,8 @@
       pdt_amount = #{pdtAmount,jdbcType=DECIMAL},
       pdt_op_qty = #{pdtOpQty,jdbcType=DOUBLE},
       pdt_delete_by = #{pdtDeleteBy,jdbcType=VARCHAR},
-      pdt_delete_date = #{pdtDeleteDate,jdbcType=DATE}
+      pdt_delete_date = #{pdtDeleteDate,jdbcType=DATE},
+      pdt_merge_qty = #{pdtMergeQty,jdbcType=VARCHAR},
     where pdt_code = #{pdtCode,jdbcType=INTEGER}
   </update>
   
@@ -536,7 +551,7 @@
 	   select pdt_code, pdt_sht_desc, pdt_description, pdt_unt_code, pdt_loc_code, pdt_sloc_code, 
 		    pdt_cat_code, pdt_min_level, pdt_max_level, pdt_bp, pdt_sp, pdt_profit_pct, pdt_vat_id, 
 		    pdt_status, pdt_strength, pdt_current_qty, pdt_amount, pdt_op_qty, pdt_delete_by, 
-		    pdt_delete_date,cat_sht_desc,loc_sht_desc,sloc_sht_desc,unt_sht_desc
+		    pdt_delete_date,pdt_merge_qty,cat_sht_desc,loc_sht_desc,sloc_sht_desc,unt_sht_desc
 		from inv_products left join inv_categories on inv_categories.cat_code = inv_products.pdt_cat_code
 		left join inv_locations on inv_locations.loc_code = inv_products.pdt_loc_code
 		left join inv_sub_locations on inv_sub_locations.sloc_code = inv_products.pdt_sloc_code

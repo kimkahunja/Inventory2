@@ -156,13 +156,29 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                 fieldLabel: 'Strength',
                                 emptyText:'select product strength' 	
                             },
-                            {
+                            /*{
                                 xtype: 'displayfield',
                                 name: 'pdtCurrentQty',
                                 fieldLabel: 'Current Qty',
                                 value:'0',
                                 fieldStyle: 'background-color: #ddd; background-image: none;'
-                            }
+                            }*/
+                            {
+                                xtype: 'combobox',
+                                name: 'pdtMergeQty',
+                                fieldLabel: 'Merge Qty?',
+                                displayField: 'description',
+                                valueField: 'id',
+                                queryMode: 'local',
+                                value:'N',
+                                store:{
+                                    type: 'standard.yesno',
+                                    autoLoad: true, 	
+                                },
+                                editable: false,
+                                forceSelection: false,
+                                emptyText:'select a to merge qty or Not'
+                            },	
                         ]
                     }
                        

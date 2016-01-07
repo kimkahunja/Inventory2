@@ -96,6 +96,10 @@ Ext.define('InventoryApp.model.product.Stock',{
 	        	 name: 'prodReference',
 	             type: 'string'	            
 	        },
+	        {	        	
+	        	 name: 'pdtMergeQty',
+	             type: 'string'	            
+	        },
 	     // decorated properties
             {
                   name: '_pdtUntCode',

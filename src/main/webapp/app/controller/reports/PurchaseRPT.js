@@ -77,7 +77,11 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                   });
            }
        },  
-       searchPurchases:function( button, e, eOpts ){    	   
+       searchPurchases:function( button, e, eOpts ){   
+    	   
+    	   Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0].add([
+    	                                                    { xtype: 'reports.purchases.purchasegpur'  },    	                                                    
+    	                                                   ]);
     	   var accCode=Ext.ComponentQuery.query("combo[name='purAccCodeRpt']")[0].getValue(),
     	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
     	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),

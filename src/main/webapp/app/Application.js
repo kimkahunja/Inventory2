@@ -1,3 +1,10 @@
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        //Ext: '.',
+        'Ext.ux': 'ux'       
+    }
+});
 Ext.define('InventoryApp.Application', {
     name: 'InventoryApp',
 
@@ -8,6 +15,22 @@ Ext.define('InventoryApp.Application', {
                'Ext.util.Point',
                'Ext.ux.form.field.ClearButton',
                'Ext.ux.grid.FilterBar',
+               'Ext.grid.column.Number',
+               'Ext.grid.feature.Summary',
+               'Ext.menu.Menu',
+               'Ext.form.Panel',
+               'Ext.layout.container.Accordion',
+               'Ext.form.Label',
+               'Ext.data.proxy.Ajax',
+               'Ext.form.FieldSet',
+               'Ext.form.field.Hidden',
+               'Ext.form.field.ComboBox',
+               'Ext.form.field.File',
+               'Ext.grid.plugin.CellEditing',
+               'Ext.ux.grid.FiltersFeature',
+               'Ext.grid.column.Date',
+               'Ext.grid.column.Action',
+               'Ext.toolbar.Spacer',
                'InventoryApp.Utilities',
                'InventoryApp.util.Util',
                'InventoryApp.model.menu.Root',
@@ -19,7 +42,8 @@ Ext.define('InventoryApp.Application', {
              //  'ux/grid/AutoResizer'
            ],
     stores: [
-          	'standard.Status',  
+          	'standard.Status', 
+          	'standard.YesNo', 
           	'security.Permissions'
           ],
      
@@ -48,7 +72,9 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.security.Groups',
             'InventoryApp.view.security.GroupPermissions',
             'InventoryApp.view.reports.products.ProductParameters',
-            'InventoryApp.view.reports.products.List'
+            'InventoryApp.view.reports.products.List',
+            'InventoryApp.view.reports.ReportsMainView',
+            'InventoryApp.view.reports.purchases.Purchase_GPur'
         ],
     controllers: [
        // 'App',

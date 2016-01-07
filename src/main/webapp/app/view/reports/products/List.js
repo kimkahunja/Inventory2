@@ -103,19 +103,7 @@ Ext.define('InventoryApp.view.reports.products.List',{
                enableNoGroups:false
            }],*/
            dockedItems: [
-              /* {
-                   xtype: 'toolbar',
-                   dock: 'top',
-                   ui: 'footer',
-                   items: [
-                       {
-                           xtype: 'button',
-                           itemId: 'add',
-                           iconCls: 'add',
-                           text: 'Add Product'
-                       }
-                   ]
-               },*/
+
                {
                    xtype: 'pagingtoolbar',
                    ui: 'footer',
