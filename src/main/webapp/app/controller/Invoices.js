@@ -125,10 +125,10 @@ Ext.define('InventoryApp.controller.Invoices', {
      * @param {Object}
      */
     loadRecords: function( grid, eOpts ) {
-    	console.log('lOAD RECORDS functionality is here...');
+    	//console.log('lOAD RECORDS functionality is here...');
     	var me = this,
     		store = grid.getStore();
-    	console.log('STORE= '+store);
+    	//console.log('STORE= '+store);
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
@@ -380,12 +380,12 @@ Ext.define('InventoryApp.controller.Invoices', {
       },
       edit: function( view, record, item, index, e, eOpts ) {
           var me = this;
-          console.log('side edit...');
+          //console.log('side edit...');
           var myform =Ext.ComponentQuery.query('form[xtype="invoice.invoiceparticulars"]');
           myform.getForm().loadRecord(record);
       },
       onViewReady: function(grid) {
-    	  console.log('onViewReady');
+    	 // console.log('onViewReady');
     	  var store = grid.getStore();
     	     
     	  store.load();
@@ -399,7 +399,7 @@ Ext.define('InventoryApp.controller.Invoices', {
           store = grid.getStore();
           if (records[0]) {
                this.getInvoiceForm().getForm().loadRecord(records[0]);
-               console.log('inv no=== '+records[0].get('invInvono'));
+               //console.log('inv no=== '+records[0].get('invInvono'));
                InventoryApp.Utilities.inv_id= records[0].get('invId');
                store.clearFilter( true );
          		store.load({
@@ -445,7 +445,7 @@ Ext.define('InventoryApp.controller.Invoices', {
       	            		store.load({
            	             	   callback: function(records, operation, success) {
            	             	        if (success == true) {
-           	             	            console.log('Loading is successful....');
+           	             	            //console.log('Loading is successful....');
            	             	            //store.sync();
            	             	            grid.getView().refresh();
            	             	           grid.getSelectionModel().select(0);
@@ -471,7 +471,7 @@ Ext.define('InventoryApp.controller.Invoices', {
       },
       
       newInvoice: function( button, e, eOpts ){
-    	  console.log("New Invoice.....");
+    	  //console.log("New Invoice.....");
     	  InventoryApp.Utilities.inv_id=null;
     	  var me = this,
         	grid = me.getInvoiceDtlsList(),    		
@@ -540,7 +540,7 @@ Ext.define('InventoryApp.controller.Invoices', {
                  		 var model = {}, 
                  		 currentDate = new Date();
                  		 
-                 		 console.log('mydata.invoiceNumber '+mydata);
+                 		// console.log('mydata.invoiceNumber '+mydata);
                          model["invId"] =null;
                          model["invInvono"]=mydata;
                          model["invDate"]=currentDate;
@@ -575,7 +575,7 @@ Ext.define('InventoryApp.controller.Invoices', {
            
       },
       onComboSelect:function( combo, records, eOpts ){
-    	  console.log('selected....' +records[0].get('pdtShtDesc'));
+    	  //console.log('selected....' +records[0].get('pdtShtDesc'));
     	  if (records[0]) {
     		  var me = this,
               grid = me.getInvoiceDtlsList(),
@@ -597,7 +597,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     	  
       },
       removeInvoice: function( button, e, eOpts ){
-    	  console.log("Remove Invoice.....");
+    	  //console.log("Remove Invoice.....");
     	  var me = this,
         	grid = me.getInvoiceDtlsList(), 
         	record = grid.getSelectionModel().getSelection(),
@@ -635,7 +635,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     	 
       },
 		boxReadyInvoice:function( combo, width, height, eOpts ){
-			console.log('boxReadyInvoice');
+			//console.log('boxReadyInvoice');
 			this.newInvoice(null, null, eOpts);
 		}
 

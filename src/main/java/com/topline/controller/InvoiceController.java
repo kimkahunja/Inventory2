@@ -239,6 +239,7 @@ public class InvoiceController extends BaseController {
 					
 					List<InvoiceDtls> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtls[].class));
 					invoice.setInvStatus("PENDING");
+					invoice.setInvLocCode(location==null?null:Integer.parseInt(location));
 					map.put("location", location);
 					
 					if(invoice.getInvId()==null){

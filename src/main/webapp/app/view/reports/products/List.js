@@ -11,39 +11,39 @@ Ext.define('InventoryApp.view.reports.products.List',{
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{
-    	   /*plugins: [{
+    	   plugins: [{
 	        	ptype: 'filterbar',
 	        	renderHidden: false,
 	        	showShowHideButton: true,
 	        	showClearAllButton: true
-			}],*/
+			}],
            columns: {
                defaults: {},
                items: [
                     {
                         text: 'Name',
                         dataIndex: 'pdtDescription',
-                       /* renderer: function( value, metaData, record, rowIndex, colIndex, store, view ) {
+                        renderer: function( value, metaData, record, rowIndex, colIndex, store, view ) {
                             return value + '- ' + record.get( 'pdtShtDesc' );
-                        },*/
+                        },
                         width: 200,
-                    //    filter: true
+                        filter: true
                     },                   
                     {
                         text: 'BP',
                         dataIndex: 'pdtBp',
-                      //  filter: true
+                        filter: true
                     },
                     {
                         text: 'SP',
                         dataIndex: 'pdtSp',
-                      //  filter: true
+                        filter: true
                     },
                     
                     {
                         text: 'Current Quantity',
                         dataIndex: 'pdtCurrentQty',
-                      //  filter: true
+                        filter: true
                     },                    
                     
                     {

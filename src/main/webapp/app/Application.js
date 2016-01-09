@@ -74,7 +74,9 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.reports.products.ProductParameters',
             'InventoryApp.view.reports.products.List',
             'InventoryApp.view.reports.ReportsMainView',
-            'InventoryApp.view.reports.purchases.Purchase_GPur'
+            'InventoryApp.view.reports.purchases.Purchase_GPur',
+            'reports.purchases.Purchase_GSup',
+            'reports.purchases.Purchase_GProd'
         ],
     controllers: [
        // 'App',

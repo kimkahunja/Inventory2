@@ -3,12 +3,15 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     stores: [
     	'purchases.Purchases',
     	'purchases.PurchasesDtls',
-    	'account.AccountsRpt'
+    	'account.AccountsRpt',
+    	'purchases.PurchaseRPTs'
     ],
     views: [
     	'reports.purchases.Purchase',
     	'reports.purchases.PurchaseDtlsList',
-    	'reports.purchases.PurchaseParameters'
+    	'reports.purchases.PurchaseParameters',
+    	'reports.purchases.Purchase_GSup',
+    	'reports.purchases.Purchase_GProd'
     ],
     refs: [    	
            {
@@ -19,7 +22,14 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                ref: 'PurchaseList',
                selector: '[xtype=reports.purchases.purchaselist]'
            },
-        
+           {
+        	   ref: 'PurchasegsupList',
+               selector: '[xtype=reports.purchases.purchasegsup]' 
+           },
+         {
+        	   ref: 'PurchasegprodList',
+               selector: '[xtype=reports.purchases.purchasegprod]'     
+         }
        ],
        init: function() {
            this.listen({
@@ -90,33 +100,66 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     	   var accCode=Ext.ComponentQuery.query("combo[name='purAccCodeRpt']")[0].getValue(),
     	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
     	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),
-    	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamTo']")[0].getValue());
-    	   console.log('AccCode=='+accCode+' status== '+status+' dateFrom== '+dateFrom+' dateTo == '+dateTo);
+    	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamTo']")[0].getValue()),
+    	   product=Ext.ComponentQuery.query("combo[name='purdPdtCodeRpt']")[0].getValue();
+    	   //console.log('AccCode=='+accCode+' status== '+status+' dateFrom== '+dateFrom+' dateTo == '+dateTo);
+    	   var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0],
+     	    selection = reportGrp.getGroupValue();     	    
+       	 
+   	  	 if (selection=='G_PUR'){
+		   	  	this.getPurchaseList().getStore().load({params: {                   
+		           	accCode: accCode, 
+		        	status:status,
+		        	dateFrom:dateFrom,
+		        	dateTo:dateTo,
+		        	root:'N'
+		   	  		}    	   
+		   	  	});
+   		   }else if(selection=='G_SUP'){
+   			   if(accCode==null){
+   				Ext.Msg.show(
+                        {                    
+                           title : 'Supplier Validation',
+                           msg : 'Supplier is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+   			   }
+   			this.getPurchasegsupList().getStore().load({params: {                   
+	           	accCode: accCode, 
+	        	status:status,
+	        	dateFrom:dateFrom,
+	        	dateTo:dateTo,
+	        	root:'N'
+	   	  		}    	   
+	   	  	});
+   			
+   		   }else if(selection=='G_PROD'){
+   			if(product==null){
+   				Ext.Msg.show(
+                        {                    
+                           title : 'Product Validation',
+                           msg : 'Product is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+   			   } 
+   			this.getPurchasegprodList().getStore().load({params: {                   
+	           	accCode: accCode, 
+	        	status:status,
+	        	dateFrom:dateFrom,
+	        	dateTo:dateTo,
+	        	root:'N',
+	        	product:product
+	   	  		}    	   
+	   	  	});
+   		   }
     	   
-    	  /* Ext.Ajax.request({
-               url: 'purchase/fetchPurchases.action',
-            params: {                   
-            	accCode: accCode, 
-            	status:status,
-            	dateFrom:dateFrom,
-            	dateTo:dateTo,
-            	root:'N'
-            },
-            
-            scope:this,
-            //method to call when the request is successful
-            //success: InventoryApp.Utilities.onSaveSuccess,
-            //method to call when the request is a failure
-           // failure: InventoryApp.Utilities.onSaveFailure
-        }); */
-    	   this.getPurchaseList().getStore().load({params: {                   
-											           	accCode: accCode, 
-											        	status:status,
-											        	dateFrom:dateFrom,
-											        	dateTo:dateTo,
-											        	root:'N'
-											        }    	   
-    	   });
+    	   
        },
        printPurchases:function( button, e, eOpts ){
     	   Ext.Ajax.request({
@@ -140,8 +183,32 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     	   }
     	  },
      onRgChange:function( field, newValue, oldValue, eOpts ){
-    	 var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0];
-  	   var selection = reportGrp.getGroupValue();
-  	   console.log('The container was rendered=== '+selection);
+    	 var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0],
+  	     selection = reportGrp.getGroupValue(),
+  	     container=Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0],
+  	     supplierCombo=Ext.ComponentQuery.query("combobox[name='purAccCodeRpt']")[0],
+  	     productCombo=Ext.ComponentQuery.query("combobox[name='purdPdtCodeRpt']")[0];
+    	 container.removeAll();
+	  	 if (selection=='G_PUR'){
+	  		 if(supplierCombo.isVisible){
+	  			supplierCombo.hide();
+	  		 }
+	  		if(productCombo.isVisible){
+	  			productCombo.hide();
+	  		 }
+	  		container.add([{ xtype: 'reports.purchases.purchasegpur'  }]);
+		   }else if(selection=='G_SUP'){
+			  /* if(!supplierCombo.isVisible){
+		  			supplierCombo.show();
+		  		 }*/ 
+			   productCombo.hide();
+			   supplierCombo.show();
+			   container.add([ { xtype: 'reports.purchases.purchasegsup'  }]);
+		   }else if(selection=='G_PROD'){
+			   supplierCombo.hide();
+			   productCombo.show();
+			   container.add([ { xtype: 'reports.purchases.purchasegprod'  }]); 
+		   }
+	  	 
      }
 });

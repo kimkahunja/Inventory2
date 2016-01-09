@@ -70,8 +70,36 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
                                 },
                                 editable: false,
                                 forceSelection: false,
-                                emptyText:'select a supplier'
+                                emptyText:'select a supplier',
+                                hidden:true,
+                                minWidth:250,
                             },
+                            {
+                          	     xtype: 'ux.form.field.remotecombobox',
+                                 name: 'purdPdtCodeRpt',
+                                  fieldLabel: 'Product',
+                                  displayField: 'pdtDescription',
+                                  valueField: 'pdtCode',
+                                  store: {
+                                      type: 'product.products'
+                                  },
+                                  editable: true,
+                                  forceSelection: false,   
+                                  emptyText:'select product',
+                                  minChars: 0, 
+                                  hidden:true,
+                                  minWidth:350,
+                                  tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+						                                             '<div style="margin: 4px;" class="x-boundlist-item">',
+						                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',
+						                                             '<div style="font-size: xx-small; color: grey;">Measure : {_pdtUntCode}</div>',
+						                                             '<div style="font-size: xx-small; color: grey;">Category : {_pdtCatCode}</div>',
+						                                             '<div style="font-size: xx-small; color: grey;">Location : {_pdtLocCode}-{_pdtSlocCode}</div>',
+						                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
+						                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
+						                                             '</div>',
+						                                             '</tpl>']),
+                              },
                             {
                                 xtype: 'combobox',
                                 name: 'purParamStatus',
@@ -86,7 +114,8 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
                                 },
                                 editable: false,
                                 forceSelection: false,
-                                emptyText:'select a Status'
+                                emptyText:'select a Status',
+                                minWidth:100,
                             },					          
 					          
 						       {
@@ -94,12 +123,14 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
 		                            name: 'purParamFrom',
 		                            fieldLabel: 'Date From',
 		                            format: 'd/m/Y', 
+		                            minWidth:150,
 		                        },
 		                        {
 		                            xtype: 'datefield',
 		                            name: 'purParamTo',
 		                            fieldLabel: 'Date To',
-		                            format: 'd/m/Y', 
+		                            format: 'd/m/Y',
+		                            minWidth:150,
 		                        },
 		                        
 					          ],

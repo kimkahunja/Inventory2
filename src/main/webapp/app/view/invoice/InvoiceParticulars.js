@@ -40,12 +40,12 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
 					        	name:'invInvono',					        	
 					        	fieldLabel: 'Invoice No.',					        	
 					        	renderer: function(value){
-					        		console.log('value11=== '+value);
+					        		//console.log('value11=== '+value);
 					        		if(value.trim().length==0){
-					        			console.log('value22=== '+value);
+					        			//console.log('value22=== '+value);
 					        			return value;
 					        		}else{
-					        			console.log('value33=== '+value);
+					        			//console.log('value33=== '+value);
 					        			return value;
 					        		}
 					        	 }

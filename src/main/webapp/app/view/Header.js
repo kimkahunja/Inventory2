@@ -9,7 +9,7 @@ Ext.define('InventoryApp.view.Header', {
     items: [
         {
             xtype: 'label',
-            html: '<div id="titleHeader"><b>Store Manager</b></div>'
+            html: '<div id="titleHeader"><b>Store Premier</b></div>'
         },
         {
             xtype: 'tbfill'
