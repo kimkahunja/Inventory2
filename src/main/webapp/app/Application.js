@@ -31,6 +31,7 @@ Ext.define('InventoryApp.Application', {
                'Ext.grid.column.Date',
                'Ext.grid.column.Action',
                'Ext.toolbar.Spacer',
+               'Ext.form.RadioGroup',
                'InventoryApp.Utilities',
                'InventoryApp.util.Util',
                'InventoryApp.model.menu.Root',
@@ -76,7 +77,15 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.reports.ReportsMainView',
             'InventoryApp.view.reports.purchases.Purchase_GPur',
             'reports.purchases.Purchase_GSup',
-            'reports.purchases.Purchase_GProd'
+            'reports.purchases.Purchase_GProd',
+            'reports.invoice.Invoice',
+            'reports.invoice.InvoiceParameters',
+            'reports.invoice.Invoice_GInv',
+            'reports.invoice.InvoiceList',
+            'reports.invoice.InvoiceDtlsList',
+            'reports.invoice.Invoice_GSup',
+            'reports.invoice.Invoice_GProd',
+            'reports.purchases.PurchaseMainView'
         ],
     controllers: [
        // 'App',
@@ -94,7 +103,8 @@ Ext.define('InventoryApp.Application', {
         'Login',
         'InventoryApp.controller.security.Groups',
         'security.Users',
-        'reports.ProductRPT'
+        'reports.ProductRPT',
+        'reports.InvoiceRPT'
     ],
     
     //autoCreateViewport: true,

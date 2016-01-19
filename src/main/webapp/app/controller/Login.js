@@ -89,8 +89,8 @@ Ext.define('InventoryApp.controller.Login', {
                         InventoryApp.Utilities.locationDescription=mydata._location;
                         InventoryApp.Utilities.userName=mydata.username;
                         InventoryApp.Utilities.lastLogin=new Date();
-                        console.log('mydata.username===== '+mydata.username);
-                        console.log('InventoryApp.Utilities.userName===== '+InventoryApp.Utilities.userName);
+                       // console.log('mydata.username===== '+mydata.username);
+                        //console.log('InventoryApp.Utilities.userName===== '+InventoryApp.Utilities.userName);
                         login.close();
                         Ext.create('InventoryApp.view.MyViewport');
                         	
@@ -163,7 +163,7 @@ Ext.define('InventoryApp.controller.Login', {
         });
     },
     boxReady:function( form, width, height, eOpts ){ 
-		console.log('boxReady === '+InventoryApp.Utilities.userName);
+		//console.log('boxReady === '+InventoryApp.Utilities.userName);
 		Ext.ComponentQuery.query("displayfield[name='userName']")[0].setValue(InventoryApp.Utilities.userName);
 		Ext.ComponentQuery.query("displayfield[name='locationDescription']")[0].setValue(InventoryApp.Utilities.locationDescription);
 		Ext.ComponentQuery.query("displayfield[name='lastLogin']")[0].setValue(InventoryApp.Utilities.lastLogin);

@@ -177,7 +177,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     	   var selection = reportGrp.getGroupValue();
     	  // console.log('The container was rendered=== '+selection);
     	   if (selection=='G_PUR'){
-    		   Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0].add([
+    		   Ext.ComponentQuery.query('[xtype=reports.purchases.purchasemainview]')[0].add([
     		               	                                                    { xtype: 'reports.purchases.purchasegpur'  },    	                                                    
     		               	                                                   ]);
     	   }
@@ -185,7 +185,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
      onRgChange:function( field, newValue, oldValue, eOpts ){
     	 var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0],
   	     selection = reportGrp.getGroupValue(),
-  	     container=Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0],
+  	     container=Ext.ComponentQuery.query('[xtype=reports.purchases.purchasemainview]')[0],
   	     supplierCombo=Ext.ComponentQuery.query("combobox[name='purAccCodeRpt']")[0],
   	     productCombo=Ext.ComponentQuery.query("combobox[name='purdPdtCodeRpt']")[0];
     	 container.removeAll();

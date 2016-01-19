@@ -372,6 +372,10 @@
   </update>
   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.InvoiceDtlsWrapper" >    
     <result column="pdt_description" property="_purdPdtCode" jdbcType="VARCHAR" />  
+    <result column="inv_invono" property="invInvono" jdbcType="VARCHAR" />   
+    <result column="inv_date" property="invDate" jdbcType="DATE" />
+    <result column="inv_acc_code" property="invAccCode" jdbcType="INTEGER" />
+    <result column="acc_name" property="_purAccCode" jdbcType="VARCHAR" /> 
   </resultMap> 
    <select id="fetchInvoiceDtls" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
    		SELECT invd_id, invd_inv_id, invd_pdt_code, invd_qty, invd_price, invd_tamount, invd_discount, 
@@ -382,4 +386,28 @@
          	 AND  invd_inv_id =  #{invId,jdbcType=INTEGER}
      	 </if>
    </select>
+   <select id="fetchRptInvoices" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	SELECT invd_id, invd_inv_id, invd_pdt_code, invd_qty, invd_price, invd_tamount,
+		invd_discount,invd_bonus,invd_status,invd_bp,invd_stk_id,pdt_description,
+		inv_invono,inv_date,inv_acc_code,acc_name
+		FROM inv_invoice_dtls, inv_products,inv_invoices,inv_accounts
+		WHERE invd_pdt_code=pdt_code
+		 AND inv_id=invd_inv_id
+		 AND acc_code=inv_acc_code
+		 <if test="invId != null">
+          AND  invd_inv_id =  #{invId,jdbcType=INTEGER}
+      </if>	
+      <if test="accCode != null">
+          AND  inv_acc_code =  #{accCode,jdbcType=INTEGER}
+      </if>
+      <if test="product != null">
+          AND  pdt_code =  #{product,jdbcType=INTEGER}
+      </if>
+      <if test="invStatus != null">
+          AND  inv_status =  #{invStatus,jdbcType=VARCHAR}
+      </if>	
+       <if test="dateFrom !=null"  >
+      	AND  inv_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
+ </select>
 </mapper>

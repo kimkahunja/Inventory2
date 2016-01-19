@@ -100,4 +100,5 @@ public interface InvoiceDtlsMapper {
     int updateByPrimaryKey(InvoiceDtls record);
   //add methods
     List<InvoiceDtlsWrapper> fetchInvoiceDtls(Map<String,Object> map);
+    List<InvoiceDtlsWrapper> fetchRptInvoices(Map<String,Object> map);
 }

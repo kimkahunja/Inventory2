@@ -32,7 +32,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
 								    items: [
 								        {
 								            xtype: 'radiofield',
-								            boxLabel: 'Grouping per Invoice',
+								            boxLabel: 'Grouping per Purchase',
 								            name: 'purchaseRpt',
 								            checked: true,
 								            inputValue: 'G_PUR'
@@ -66,7 +66,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseParameters',{
                                 displayField: 'accName',
                                 valueField: 'accCode',                                
                                 store: {
-                                    type: 'account.accountsrpt'
+                                    type: 'account.accountssupplier'
                                 },
                                 editable: false,
                                 forceSelection: false,

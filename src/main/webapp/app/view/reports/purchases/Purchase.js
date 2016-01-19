@@ -30,7 +30,7 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase',{
 								
 							},
            					{
-								 xtype:'reports.reportsmainview'
+								 xtype:'reports.purchases.purchasemainview'
            					}
            					
                               ], 

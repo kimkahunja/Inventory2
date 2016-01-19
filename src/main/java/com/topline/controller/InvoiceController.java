@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
@@ -108,15 +110,24 @@ public class InvoiceController extends BaseController {
 					String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 					String start = GlobalCC.CheckNullValues(request.getParameter("start"));
 					String id=GlobalCC.CheckNullValues(request.getParameter("id"));
+					String accCode=GlobalCC.CheckNullValues(request.getParameter("accCode"));
+					String status=GlobalCC.CheckNullValues(request.getParameter("status"));
+					String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
+					String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
+					String root=GlobalCC.CheckNullValues(request.getParameter("root"));
 					if (limit == null) {
 						limit = "50";
 					}
 					if (start == null) {
 						start = "0";
 					}
-					map.put("invStatus", "PENDING");
+					map.put("invStatus", root==null? "PENDING":status);
 					map.put("id", id==null?null:new BigDecimal(id));
-					System.out.println("id=== "+id);
+					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
+					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
+					map.put("dateTo", dateFrom==null?null:GlobalCC.parseSQLDate(dateTo));
+					//System.out.println("id=== "+id);
+					
 					List<InvoiceWrapper>list=invoiceMapper.fetchInvoices(map);
 					if (list != null) {
 						int count = list.size();
@@ -306,5 +317,57 @@ public class InvoiceController extends BaseController {
 					return jsonObject(jsonResponse);
 				}
 				
+			}	
+			//fetchRptInvoices
+			@RequestMapping(value="/fetchRptInvoices.action", method=RequestMethod.GET)
+			private @ResponseBody
+			String fetchRptInvoices(HttpServletRequest request){
+				try{
+					HashMap<String, Object> data = new HashMap<String, Object>();
+					
+					Map<String, Object> map = new HashMap<String, Object>();		
+					
+					String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+					String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+					String accCode=GlobalCC.CheckNullValues(request.getParameter("accCode"));
+					String status=GlobalCC.CheckNullValues(request.getParameter("status"));
+					String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
+					String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
+					String root=GlobalCC.CheckNullValues(request.getParameter("root"));
+					String invId=GlobalCC.CheckNullValues(request.getParameter("id"));
+					String product=GlobalCC.CheckNullValues(request.getParameter("product"));
+					if (limit == null) {
+						limit = "50";
+					}
+					if (start == null) {
+						start = "0";
+					}
+					
+					map.put("invStatus", root==null? "PENDING":status);
+					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
+					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
+					map.put("dateTo", dateFrom==null?null:GlobalCC.parseSQLDate(dateTo));
+					map.put("invId",invId==null?null:new BigDecimal(invId));
+					map.put("product",product==null?null:new BigDecimal(product));
+					List<InvoiceDtlsWrapper>list=invoiceDtlsMapper.fetchRptInvoices(map);
+					
+					if (list != null) {
+						int count = list.size();
+						data.put("count", count);
+					}
+				
+					data.put("data", list);
+					jsonResponse.setData(data);
+					jsonResponse.setSuccess(true);
+					System.out.println(jsonObject(jsonResponse));
+					return jsonObject(jsonResponse);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					jsonResponse.setData(null);
+					jsonResponse.setSuccess(false);
+					jsonResponse.addMessage("message", e.getLocalizedMessage());
+					return jsonObject(jsonResponse);
+				}
 			}			
 }
