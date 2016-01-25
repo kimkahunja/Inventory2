@@ -1,0 +1,8 @@
+{
+    "count":1,
+    "data":[         
+        {"id":"CASH","description":"CASH","memoRequired":"N"},
+        {"id":"CHEQUE","description":"CHEQUE","memoRequired":"Y"},
+        {"id":"MPESA","description":"MPESA","memoRequired":"Y"}
+		]
+}
