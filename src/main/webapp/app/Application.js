@@ -45,7 +45,8 @@ Ext.define('InventoryApp.Application', {
     stores: [
           	'standard.Status', 
           	'standard.YesNo', 
-          	'security.Permissions'
+          	'security.Permissions',
+          	'standard.PaymentMode'
           ],
      
     views: [
@@ -85,7 +86,10 @@ Ext.define('InventoryApp.Application', {
             'reports.invoice.InvoiceDtlsList',
             'reports.invoice.Invoice_GSup',
             'reports.invoice.Invoice_GProd',
-            'reports.purchases.PurchaseMainView'
+            'reports.purchases.PurchaseMainView',
+            'InventoryApp.view.payment.Payment',
+           // 'InventoryApp.view.payment.PaymentLanding',
+            'InventoryApp.view.payment.PaymentDtl'
         ],
     controllers: [
        // 'App',
@@ -104,7 +108,8 @@ Ext.define('InventoryApp.Application', {
         'InventoryApp.controller.security.Groups',
         'security.Users',
         'reports.ProductRPT',
-        'reports.InvoiceRPT'
+        'reports.InvoiceRPT',
+        'Payments'
     ],
     
     //autoCreateViewport: true,

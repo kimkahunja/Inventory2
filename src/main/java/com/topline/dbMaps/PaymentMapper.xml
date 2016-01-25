@@ -348,4 +348,17 @@
       pymt_captured_on = #{pymtCapturedOn,jdbcType=TIMESTAMP}
     where pymt_id = #{pymtId,jdbcType=INTEGER}
   </update>
+  <insert id="save" parameterType="com.topline.model.Payment" useGeneratedKeys="true" keyProperty="pymtId"  keyColumn="pymt_id" >
+    insert into inv_payments (pymt_id, pymt_acc_code, pymt_date, 
+      pymt_amount, pymt_paymode, pymt_paymemo, 
+      pymt_remarks, pymt_captured_by, pymt_captured_on
+      )
+    values (#{pymtId,jdbcType=INTEGER}, #{pymtAccCode,jdbcType=INTEGER}, #{pymtDate,jdbcType=DATE}, 
+      #{pymtAmount,jdbcType=DECIMAL}, #{pymtPaymode,jdbcType=VARCHAR}, #{pymtPaymemo,jdbcType=VARCHAR}, 
+      #{pymtRemarks,jdbcType=VARCHAR}, #{pymtCapturedBy,jdbcType=VARCHAR}, #{pymtCapturedOn,jdbcType=TIMESTAMP}
+      )
+      <selectKey keyProperty="pymtId" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert> 
 </mapper>

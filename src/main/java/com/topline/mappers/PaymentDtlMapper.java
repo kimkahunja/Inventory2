@@ -2,7 +2,11 @@ package com.topline.mappers;
 
 import com.topline.model.PaymentDtl;
 import com.topline.model.PaymentDtlExample;
+import com.topline.model.wrappers.PaymentDtlWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PaymentDtlMapper {
@@ -93,4 +97,5 @@ public interface PaymentDtlMapper {
      * @mbggenerated Tue Jan 19 15:43:47 EAT 2016
      */
     int updateByPrimaryKey(PaymentDtl record);
+    List<PaymentDtlWrapper> fetchPaymentDtls(Map<String,Object> map);
 }

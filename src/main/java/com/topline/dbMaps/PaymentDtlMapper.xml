@@ -283,4 +283,22 @@
       pymtd_updated_on = #{pymtdUpdatedOn,jdbcType=TIMESTAMP}
     where pymtd_id = #{pymtdId,jdbcType=INTEGER}
   </update>
+   <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.PaymentDtlWrapper" > 
+     <result column="pur_invono" property="_purInvono" jdbcType="VARCHAR" />   
+    <result column="pur_date" property="_purDate" jdbcType="DATE" /> 
+    <result column="amount" property="_amount" jdbcType="DECIMAL" /> 
+    <result column="balance" property="_balance" jdbcType="DECIMAL" />  
+  </resultMap>
+  <select id="fetchPaymentDtls" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >	      
+		SELECT pur_id as pymtd_pur_id ,pur_invono,pur_date,amount,(amount-amountPaid) AS balance
+		FROM(
+		SELECT  pur_id,pur_acc_code,pur_invono,pur_date,SUM(purd_qty*purd_price) AS amount,SUM(getAmountPaid(pur_id)) AS amountPaid
+		FROM inv_purchases, inv_purchases_details
+		WHERE pur_id=purd_pur_id
+		<if test="accCode !=null">
+      	   AND  pur_acc_code =  #{accCode,jdbcType=INTEGER}
+        </if>
+		GROUP BY pur_invono,pur_date,pur_acc_code
+		)a	
+     </select>
 </mapper>

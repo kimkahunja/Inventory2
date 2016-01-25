@@ -2,7 +2,9 @@ package com.topline.mappers;
 
 import com.topline.model.Payment;
 import com.topline.model.PaymentExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface PaymentMapper {
@@ -93,4 +95,5 @@ public interface PaymentMapper {
      * @mbggenerated Tue Jan 19 15:43:47 EAT 2016
      */
     int updateByPrimaryKey(Payment record);
+    int save(Payment record);
 }

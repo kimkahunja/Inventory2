@@ -20,6 +20,8 @@ import com.topline.mappers.InvoiceDtlsMapper;
 import com.topline.mappers.InvoiceMapper;
 import com.topline.mappers.LocationsMapper;
 import com.topline.mappers.MenuMapper;
+import com.topline.mappers.PaymentDtlMapper;
+import com.topline.mappers.PaymentMapper;
 import com.topline.mappers.PermissionsMapper;
 import com.topline.mappers.ProductsMapper;
 import com.topline.mappers.PurchaseDetailMapper;
@@ -78,7 +80,11 @@ public class BaseController extends MultiActionController {
 	@Autowired(required=true)
 	InvoiceDtlsMapper invoiceDtlsMapper;
 	@Autowired(required=true)
-	DataSourceTransactionManager txnManager ;	
+	DataSourceTransactionManager txnManager ;
+	@Autowired(required=true)
+	PaymentMapper paymentMapper;
+	@Autowired(required=true)
+	PaymentDtlMapper paymentDtlMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

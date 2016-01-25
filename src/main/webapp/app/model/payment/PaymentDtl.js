@@ -47,6 +47,25 @@ Ext.define('InventoryApp.model.payment.PaymentDtl',{
             name: '_balance',
             type: 'float',
             persist: false
-         },
+         },         
+        /*//calculated properties
+          {
+              name: 'total',
+              type: 'number',
+              convert: function(value, record) {
+                  if(!value) {
+                      value = record.get('pymtdAmount');
+                  }
+                  
+                  return value;
+              }
+          },*/
 	        ],
+	      /* set: function (fieldName, value) {
+	            this.callParent(arguments);
+	            if (fieldName === 'pymtdAmount') {  
+	                var total = this.get('pymtdAmount');
+	                this.set('total');
+	            }
+	        } */     
 });
