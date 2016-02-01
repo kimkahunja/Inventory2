@@ -1,10 +1,11 @@
-Ext.Loader.setConfig({
+/*Ext.Loader.setConfig({
     enabled: true,
     paths: {
         //Ext: '.',
-        'Ext.ux': 'ux'       
+        'Ext.ux': 'ux'
     }
-});
+});*/
+//Ext.Loader.setPath('overrides.grid', '../grid/');
 Ext.define('InventoryApp.Application', {
     name: 'InventoryApp',
 

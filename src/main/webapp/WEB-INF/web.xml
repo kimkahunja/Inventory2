@@ -21,6 +21,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 
   <display-name>Archetype Created Web Application</display-name>
   <welcome-file-list>
-		<welcome-file>redirect.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index-prod.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

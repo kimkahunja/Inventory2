@@ -16,10 +16,13 @@ Ext.Loader.addClassPathMappings({
   "Ext.EventObjectImpl": "ext/src/EventObject.js",
   "Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext.Supports": "ext/src/Support.js",
+  "Ext.cmd": "../../../../../../../C:/Users/kimkahunja/bin/Sencha/Cmd/6.0.2.14/plugins/src",
   "Ext.core.DomHelper": "ext/src/dom/Helper.js",
   "Ext.core.DomQuery": "ext/src/dom/Query.js",
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
-  "InventoryApp": "app"
+  "Ext.ux.Rixo": "app/ux/Rixo",
+  "InventoryApp": "app",
+  "overrides.grid.RowEditor": "overrides/grid/RowEditor.js"
 });
 
 Ext.ClassManager.addNameAlternateMappings({
@@ -424,7 +427,6 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "Ext.grid.RowEditor": [],
   "Ext.grid.RowEditorButtons": [],
-  "Ext.grid.Scroller": [],
   "Ext.grid.View": [],
   "Ext.grid.ViewDropZone": [],
   "Ext.grid.column.Action": [
@@ -776,6 +778,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.ux.LiveSearchGridPanel": [],
   "Ext.ux.PreviewPlugin": [],
   "Ext.ux.ProgressBarPager": [],
+  "Ext.ux.Rixo.form.field.GridPicker": [],
+  "Ext.ux.Rixo.form.field.GridPicker-4-2-0": [],
+  "Ext.ux.Rixo.form.field.GridPickerKeyNav": [],
   "Ext.ux.RowExpander": [],
   "Ext.ux.SlidingPager": [],
   "Ext.ux.Spotlight": [],
@@ -807,6 +812,9 @@ Ext.ClassManager.addNameAlternateMappings({
     "Ext.ux.Multiselect"
   ],
   "Ext.ux.form.SearchField": [],
+  "Ext.ux.form.field.ClearButton": [],
+  "Ext.ux.form.field.OperatorButton": [],
+  "Ext.ux.grid.FilterBar": [],
   "Ext.ux.grid.FiltersFeature": [],
   "Ext.ux.grid.TransformGrid": [],
   "Ext.ux.grid.filter.BooleanFilter": [],
@@ -841,9 +849,147 @@ Ext.ClassManager.addNameAlternateMappings({
     "Ext.Window"
   ],
   "InventoryApp.Application": [],
+  "InventoryApp.Utilities": [],
+  "InventoryApp.controller.App": [],
+  "InventoryApp.controller.Base": [],
+  "InventoryApp.controller.Bins": [],
+  "InventoryApp.controller.Categories": [],
+  "InventoryApp.controller.GridToGrid": [],
+  "InventoryApp.controller.Invoices": [],
+  "InventoryApp.controller.Locations": [],
+  "InventoryApp.controller.Login": [],
   "InventoryApp.controller.Main": [],
+  "InventoryApp.controller.Menu": [],
+  "InventoryApp.controller.Payments": [],
+  "InventoryApp.controller.Products": [],
+  "InventoryApp.controller.Purchases": [],
+  "InventoryApp.controller.PurchasesDtls": [],
+  "InventoryApp.controller.Units": [],
+  "InventoryApp.controller.reports.InvoiceRPT": [],
+  "InventoryApp.controller.reports.ProductRPT": [],
+  "InventoryApp.controller.reports.PurchaseRPT": [],
+  "InventoryApp.controller.security.Groups": [],
+  "InventoryApp.controller.security.Users": [],
+  "InventoryApp.domain.Proxy": [],
+  "InventoryApp.model.Base": [],
+  "InventoryApp.model.account.Account": [],
+  "InventoryApp.model.categories.Category": [],
+  "InventoryApp.model.dragNdrop.DragNDrop": [],
+  "InventoryApp.model.invoice.Invoice": [],
+  "InventoryApp.model.invoice.InvoiceDtls": [],
+  "InventoryApp.model.invoice.InvoiceNumber": [],
+  "InventoryApp.model.invoice.InvoiceRPT": [],
+  "InventoryApp.model.location.Bin": [],
+  "InventoryApp.model.location.Location": [],
+  "InventoryApp.model.menu.Item": [],
+  "InventoryApp.model.menu.Root": [],
+  "InventoryApp.model.payment.Payment": [],
+  "InventoryApp.model.payment.PaymentDtl": [],
+  "InventoryApp.model.product.Product": [],
+  "InventoryApp.model.product.Stock": [],
+  "InventoryApp.model.purchases.Purchase": [],
+  "InventoryApp.model.purchases.PurchaseDtls": [],
+  "InventoryApp.model.purchases.PurchaseRPT": [],
+  "InventoryApp.model.security.Group": [],
+  "InventoryApp.model.security.User": [],
+  "InventoryApp.model.units.Unit": [],
+  "InventoryApp.model.vat.Vat": [],
+  "InventoryApp.proxy.Rest": [],
+  "InventoryApp.store.Base": [],
+  "InventoryApp.store.Menu": [],
+  "InventoryApp.store.account.Accounts": [],
+  "InventoryApp.store.account.AccountsRpt": [],
+  "InventoryApp.store.account.AccountsSupplier": [],
+  "InventoryApp.store.categories.Categories": [],
+  "InventoryApp.store.invoice.InvoiceDtls": [],
+  "InventoryApp.store.invoice.InvoiceNumbers": [],
+  "InventoryApp.store.invoice.InvoiceRPTs": [],
+  "InventoryApp.store.invoice.Invoices": [],
+  "InventoryApp.store.location.Bins": [],
+  "InventoryApp.store.location.Locations": [],
+  "InventoryApp.store.payment.PaymentDtls1": [],
+  "InventoryApp.store.payment.Payments": [],
+  "InventoryApp.store.product.Products": [],
+  "InventoryApp.store.product.StockRPT": [],
+  "InventoryApp.store.product.Stocks": [],
+  "InventoryApp.store.purchases.PurchaseRPTs": [],
+  "InventoryApp.store.purchases.Purchases": [],
+  "InventoryApp.store.purchases.PurchasesDtls": [],
+  "InventoryApp.store.security.Groups": [],
+  "InventoryApp.store.security.Permissions": [],
+  "InventoryApp.store.security.Users": [],
+  "InventoryApp.store.standard.PaymentMode": [],
+  "InventoryApp.store.standard.Status": [],
+  "InventoryApp.store.standard.YesNo": [],
+  "InventoryApp.store.units.Units": [],
+  "InventoryApp.store.vat.Vat": [],
+  "InventoryApp.util.Alert": [],
+  "InventoryApp.util.MD5": [],
+  "InventoryApp.util.SessionMonitor": [],
+  "InventoryApp.util.Util": [],
+  "InventoryApp.ux.form.field.RemoteComboBox": [],
+  "InventoryApp.view.Header": [],
+  "InventoryApp.view.Login": [],
   "InventoryApp.view.Main": [],
-  "InventoryApp.view.Viewport": []
+  "InventoryApp.view.MainPanel": [],
+  "InventoryApp.view.MyViewport": [],
+  "InventoryApp.view.Viewport": [],
+  "InventoryApp.view.authentication.CapsLockTooltip": [],
+  "InventoryApp.view.categories.List": [],
+  "InventoryApp.view.dragNdrop.GridToGrid": [],
+  "InventoryApp.view.invoice.Invoice": [],
+  "InventoryApp.view.invoice.InvoiceDtlsList": [],
+  "InventoryApp.view.invoice.InvoiceList": [],
+  "InventoryApp.view.invoice.InvoiceParticulars": [],
+  "InventoryApp.view.layout.Center": [],
+  "InventoryApp.view.layout.Landing": [],
+  "InventoryApp.view.layout.Menu": [],
+  "InventoryApp.view.layout.West": [],
+  "InventoryApp.view.location.BinList": [],
+  "InventoryApp.view.location.LocationList": [],
+  "InventoryApp.view.location.Locations": [],
+  "InventoryApp.view.login.Login": [],
+  "InventoryApp.view.login.WinLogin": [],
+  "InventoryApp.view.menu.Accordion": [],
+  "InventoryApp.view.menu.Item": [],
+  "InventoryApp.view.payment.Payment": [],
+  "InventoryApp.view.payment.PaymentDtl": [],
+  "InventoryApp.view.payment.PaymentLanding": [],
+  "InventoryApp.view.product.List": [],
+  "InventoryApp.view.product.edit.Form": [],
+  "InventoryApp.view.product.edit.Window": [],
+  "InventoryApp.view.purchases.Purchase": [],
+  "InventoryApp.view.purchases.PurchaseDtlsList": [],
+  "InventoryApp.view.purchases.PurchaseLanding": [],
+  "InventoryApp.view.purchases.PurchaseList": [],
+  "InventoryApp.view.purchases.PurchaseParticulars": [],
+  "InventoryApp.view.reports.ReportsMainView": [],
+  "InventoryApp.view.reports.invoice.Invoice": [],
+  "InventoryApp.view.reports.invoice.InvoiceDtlsList": [],
+  "InventoryApp.view.reports.invoice.InvoiceList": [],
+  "InventoryApp.view.reports.invoice.InvoiceParameters": [],
+  "InventoryApp.view.reports.invoice.Invoice_GInv": [],
+  "InventoryApp.view.reports.invoice.Invoice_GProd": [],
+  "InventoryApp.view.reports.invoice.Invoice_GSup": [],
+  "InventoryApp.view.reports.products.List": [],
+  "InventoryApp.view.reports.products.ProductParameters": [],
+  "InventoryApp.view.reports.purchases.Purchase": [],
+  "InventoryApp.view.reports.purchases.PurchaseDtlsList": [],
+  "InventoryApp.view.reports.purchases.PurchaseList": [],
+  "InventoryApp.view.reports.purchases.PurchaseMainView": [],
+  "InventoryApp.view.reports.purchases.PurchaseParameters": [],
+  "InventoryApp.view.reports.purchases.Purchase_GProd": [],
+  "InventoryApp.view.reports.purchases.Purchase_GPur": [],
+  "InventoryApp.view.reports.purchases.Purchase_GSup": [],
+  "InventoryApp.view.security.GroupPermissions": [],
+  "InventoryApp.view.security.Groups": [],
+  "InventoryApp.view.security.GroupsEdit": [],
+  "InventoryApp.view.security.GroupsList": [],
+  "InventoryApp.view.security.Profile": [],
+  "InventoryApp.view.security.Users": [],
+  "InventoryApp.view.security.UsersList": [],
+  "InventoryApp.view.units.UnitList": [],
+  "overrides.grid.RowEditor": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -1282,7 +1428,6 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.grid.RowEditorButtons": [
     "widget.roweditorbuttons"
   ],
-  "Ext.grid.Scroller": [],
   "Ext.grid.View": [
     "widget.gridview"
   ],
@@ -1728,6 +1873,11 @@ Ext.ClassManager.addNameAliasMappings({
     "plugin.preview"
   ],
   "Ext.ux.ProgressBarPager": [],
+  "Ext.ux.Rixo.form.field.GridPicker": [
+    "widget.gridpicker"
+  ],
+  "Ext.ux.Rixo.form.field.GridPicker-4-2-0": [],
+  "Ext.ux.Rixo.form.field.GridPickerKeyNav": [],
   "Ext.ux.RowExpander": [],
   "Ext.ux.SlidingPager": [],
   "Ext.ux.Spotlight": [],
@@ -1776,6 +1926,15 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.ux.form.SearchField": [
     "widget.searchfield"
+  ],
+  "Ext.ux.form.field.ClearButton": [
+    "plugin.clearbutton"
+  ],
+  "Ext.ux.form.field.OperatorButton": [
+    "plugin.operatorbutton"
+  ],
+  "Ext.ux.grid.FilterBar": [
+    "plugin.filterbar"
   ],
   "Ext.ux.grid.FiltersFeature": [
     "feature.filters"
@@ -1833,11 +1992,319 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.window"
   ],
   "InventoryApp.Application": [],
+  "InventoryApp.Utilities": [],
+  "InventoryApp.controller.App": [],
+  "InventoryApp.controller.Base": [],
+  "InventoryApp.controller.Bins": [],
+  "InventoryApp.controller.Categories": [],
+  "InventoryApp.controller.GridToGrid": [],
+  "InventoryApp.controller.Invoices": [],
+  "InventoryApp.controller.Locations": [],
+  "InventoryApp.controller.Login": [],
   "InventoryApp.controller.Main": [],
+  "InventoryApp.controller.Menu": [],
+  "InventoryApp.controller.Payments": [],
+  "InventoryApp.controller.Products": [],
+  "InventoryApp.controller.Purchases": [],
+  "InventoryApp.controller.PurchasesDtls": [],
+  "InventoryApp.controller.Units": [],
+  "InventoryApp.controller.reports.InvoiceRPT": [],
+  "InventoryApp.controller.reports.ProductRPT": [],
+  "InventoryApp.controller.reports.PurchaseRPT": [],
+  "InventoryApp.controller.security.Groups": [],
+  "InventoryApp.controller.security.Users": [],
+  "InventoryApp.domain.Proxy": [],
+  "InventoryApp.model.Base": [],
+  "InventoryApp.model.account.Account": [],
+  "InventoryApp.model.categories.Category": [],
+  "InventoryApp.model.dragNdrop.DragNDrop": [],
+  "InventoryApp.model.invoice.Invoice": [],
+  "InventoryApp.model.invoice.InvoiceDtls": [],
+  "InventoryApp.model.invoice.InvoiceNumber": [],
+  "InventoryApp.model.invoice.InvoiceRPT": [],
+  "InventoryApp.model.location.Bin": [],
+  "InventoryApp.model.location.Location": [],
+  "InventoryApp.model.menu.Item": [],
+  "InventoryApp.model.menu.Root": [],
+  "InventoryApp.model.payment.Payment": [],
+  "InventoryApp.model.payment.PaymentDtl": [],
+  "InventoryApp.model.product.Product": [],
+  "InventoryApp.model.product.Stock": [],
+  "InventoryApp.model.purchases.Purchase": [],
+  "InventoryApp.model.purchases.PurchaseDtls": [],
+  "InventoryApp.model.purchases.PurchaseRPT": [],
+  "InventoryApp.model.security.Group": [],
+  "InventoryApp.model.security.User": [],
+  "InventoryApp.model.units.Unit": [],
+  "InventoryApp.model.vat.Vat": [],
+  "InventoryApp.proxy.Rest": [
+    "proxy.baserest"
+  ],
+  "InventoryApp.store.Base": [],
+  "InventoryApp.store.Menu": [],
+  "InventoryApp.store.account.Accounts": [
+    "store.account.accounts"
+  ],
+  "InventoryApp.store.account.AccountsRpt": [
+    "store.account.accountsrpt"
+  ],
+  "InventoryApp.store.account.AccountsSupplier": [
+    "store.account.accountssupplier"
+  ],
+  "InventoryApp.store.categories.Categories": [
+    "store.categories.categories"
+  ],
+  "InventoryApp.store.invoice.InvoiceDtls": [
+    "store.invoice.invoicedtls"
+  ],
+  "InventoryApp.store.invoice.InvoiceNumbers": [
+    "store.invoice.invoicenumbers"
+  ],
+  "InventoryApp.store.invoice.InvoiceRPTs": [
+    "store.invoice.invoicerpts"
+  ],
+  "InventoryApp.store.invoice.Invoices": [
+    "store.invoice.invoices"
+  ],
+  "InventoryApp.store.location.Bins": [
+    "store.location.bins"
+  ],
+  "InventoryApp.store.location.Locations": [
+    "store.location.locations"
+  ],
+  "InventoryApp.store.payment.PaymentDtls1": [
+    "store.payment.paymentdtls"
+  ],
+  "InventoryApp.store.payment.Payments": [
+    "store.payment.payments"
+  ],
+  "InventoryApp.store.product.Products": [
+    "store.product.products"
+  ],
+  "InventoryApp.store.product.StockRPT": [
+    "store.product.stockrpt"
+  ],
+  "InventoryApp.store.product.Stocks": [
+    "store.product.stocks"
+  ],
+  "InventoryApp.store.purchases.PurchaseRPTs": [
+    "store.purchases.purchaserpts"
+  ],
+  "InventoryApp.store.purchases.Purchases": [
+    "store.purchases.purchases"
+  ],
+  "InventoryApp.store.purchases.PurchasesDtls": [
+    "store.purchases.purchasesdtls"
+  ],
+  "InventoryApp.store.security.Groups": [
+    "store.security.groups"
+  ],
+  "InventoryApp.store.security.Permissions": [],
+  "InventoryApp.store.security.Users": [],
+  "InventoryApp.store.standard.PaymentMode": [
+    "store.standard.paymentmode"
+  ],
+  "InventoryApp.store.standard.Status": [
+    "store.standard.status"
+  ],
+  "InventoryApp.store.standard.YesNo": [
+    "store.standard.yesno"
+  ],
+  "InventoryApp.store.units.Units": [
+    "store.units.units"
+  ],
+  "InventoryApp.store.vat.Vat": [
+    "store.vat.vat"
+  ],
+  "InventoryApp.util.Alert": [],
+  "InventoryApp.util.MD5": [],
+  "InventoryApp.util.SessionMonitor": [],
+  "InventoryApp.util.Util": [],
+  "InventoryApp.ux.form.field.RemoteComboBox": [
+    "widget.ux.form.field.remotecombobox"
+  ],
+  "InventoryApp.view.Header": [
+    "widget.appheader"
+  ],
+  "InventoryApp.view.Login": [
+    "widget.login"
+  ],
   "InventoryApp.view.Main": [
     "widget.app-main"
   ],
-  "InventoryApp.view.Viewport": []
+  "InventoryApp.view.MainPanel": [
+    "widget.mainpanel"
+  ],
+  "InventoryApp.view.MyViewport": [
+    "widget.mainviewport"
+  ],
+  "InventoryApp.view.Viewport": [],
+  "InventoryApp.view.authentication.CapsLockTooltip": [
+    "widget.capslocktooltip"
+  ],
+  "InventoryApp.view.categories.List": [
+    "widget.categories.list"
+  ],
+  "InventoryApp.view.dragNdrop.GridToGrid": [
+    "widget.dragNdrop.dd-grid-to-grid"
+  ],
+  "InventoryApp.view.invoice.Invoice": [
+    "widget.invoice.invoice"
+  ],
+  "InventoryApp.view.invoice.InvoiceDtlsList": [
+    "widget.invoice.invoicedtlslist"
+  ],
+  "InventoryApp.view.invoice.InvoiceList": [
+    "widget.invoice.invoicelist"
+  ],
+  "InventoryApp.view.invoice.InvoiceParticulars": [
+    "widget.invoice.invoiceparticulars"
+  ],
+  "InventoryApp.view.layout.Center": [
+    "widget.layout.center"
+  ],
+  "InventoryApp.view.layout.Landing": [
+    "widget.layout.landing"
+  ],
+  "InventoryApp.view.layout.Menu": [
+    "widget.layout.menu"
+  ],
+  "InventoryApp.view.layout.West": [
+    "widget.layout.west"
+  ],
+  "InventoryApp.view.location.BinList": [
+    "widget.location.binlist"
+  ],
+  "InventoryApp.view.location.LocationList": [
+    "widget.location.locationlist"
+  ],
+  "InventoryApp.view.location.Locations": [
+    "widget.location.locations"
+  ],
+  "InventoryApp.view.login.Login": [
+    "widget.login.login"
+  ],
+  "InventoryApp.view.login.WinLogin": [
+    "widget.login.winlogin"
+  ],
+  "InventoryApp.view.menu.Accordion": [
+    "widget.mainmenu"
+  ],
+  "InventoryApp.view.menu.Item": [
+    "widget.mainmenuitem"
+  ],
+  "InventoryApp.view.payment.Payment": [
+    "widget.payment.payment"
+  ],
+  "InventoryApp.view.payment.PaymentDtl": [
+    "widget.payment.paymentdtl"
+  ],
+  "InventoryApp.view.payment.PaymentLanding": [
+    "widget.payment.paymentlanding"
+  ],
+  "InventoryApp.view.product.List": [
+    "widget.product.list"
+  ],
+  "InventoryApp.view.product.edit.Form": [
+    "widget.product.edit.form"
+  ],
+  "InventoryApp.view.product.edit.Window": [
+    "widget.product.edit.window"
+  ],
+  "InventoryApp.view.purchases.Purchase": [
+    "widget.purchases.purchase"
+  ],
+  "InventoryApp.view.purchases.PurchaseDtlsList": [
+    "widget.purchases.purchasedtlslist"
+  ],
+  "InventoryApp.view.purchases.PurchaseLanding": [
+    "widget.purchases.purchaselanding"
+  ],
+  "InventoryApp.view.purchases.PurchaseList": [
+    "widget.purchases.purchaselist"
+  ],
+  "InventoryApp.view.purchases.PurchaseParticulars": [
+    "widget.purchases.purchaseparticulars"
+  ],
+  "InventoryApp.view.reports.ReportsMainView": [
+    "widget.reports.reportsmainview"
+  ],
+  "InventoryApp.view.reports.invoice.Invoice": [
+    "widget.reports.invoice.invoice"
+  ],
+  "InventoryApp.view.reports.invoice.InvoiceDtlsList": [
+    "widget.reports.invoice.invoicedtlslist"
+  ],
+  "InventoryApp.view.reports.invoice.InvoiceList": [
+    "widget.reports.invoice.invoicelist"
+  ],
+  "InventoryApp.view.reports.invoice.InvoiceParameters": [
+    "widget.reports.invoice.invoiceparameters"
+  ],
+  "InventoryApp.view.reports.invoice.Invoice_GInv": [
+    "widget.reports.invoice.invoiceginv"
+  ],
+  "InventoryApp.view.reports.invoice.Invoice_GProd": [
+    "widget.reports.invoice.invoicegprod"
+  ],
+  "InventoryApp.view.reports.invoice.Invoice_GSup": [
+    "widget.reports.invoice.invoicegsup"
+  ],
+  "InventoryApp.view.reports.products.List": [
+    "widget.reports.products.list"
+  ],
+  "InventoryApp.view.reports.products.ProductParameters": [
+    "widget.reports.products.productparameters"
+  ],
+  "InventoryApp.view.reports.purchases.Purchase": [
+    "widget.reports.purchases.purchase"
+  ],
+  "InventoryApp.view.reports.purchases.PurchaseDtlsList": [
+    "widget.reports.purchases.purchasedtlslist"
+  ],
+  "InventoryApp.view.reports.purchases.PurchaseList": [
+    "widget.reports.purchases.purchaselist"
+  ],
+  "InventoryApp.view.reports.purchases.PurchaseMainView": [
+    "widget.reports.purchases.purchasemainview"
+  ],
+  "InventoryApp.view.reports.purchases.PurchaseParameters": [
+    "widget.reports.purchases.purchaseparameters"
+  ],
+  "InventoryApp.view.reports.purchases.Purchase_GProd": [
+    "widget.reports.purchases.purchasegprod"
+  ],
+  "InventoryApp.view.reports.purchases.Purchase_GPur": [
+    "widget.reports.purchases.purchasegpur"
+  ],
+  "InventoryApp.view.reports.purchases.Purchase_GSup": [
+    "widget.reports.purchases.purchasegsup"
+  ],
+  "InventoryApp.view.security.GroupPermissions": [
+    "widget.grouppermissions"
+  ],
+  "InventoryApp.view.security.Groups": [
+    "widget.groups"
+  ],
+  "InventoryApp.view.security.GroupsEdit": [
+    "widget.groupsedit"
+  ],
+  "InventoryApp.view.security.GroupsList": [
+    "widget.groupslist"
+  ],
+  "InventoryApp.view.security.Profile": [
+    "widget.profile"
+  ],
+  "InventoryApp.view.security.Users": [
+    "widget.users"
+  ],
+  "InventoryApp.view.security.UsersList": [
+    "widget.userslist"
+  ],
+  "InventoryApp.view.units.UnitList": [
+    "widget.units.unitlist"
+  ],
+  "overrides.grid.RowEditor": []
 });
 
 Ext.setVersion("ext-theme-base", "4.2.1");
@@ -1851,192 +2318,3 @@ Ext.setVersion("ext-theme-neutral", "4.2.1");
  */
 
 
-/**
- * Sencha Blink - Development
- * @author Jacky Nguyen <jacky@sencha.com>
- */
-(function() {
-    var head = document.head || document.getElementsByTagName('head')[0];
-
-    function write(content) {
-        document.write(content);
-    }
-
-    function addMeta(name, content) {
-        var meta = document.createElement('meta');
-
-        meta.setAttribute('name', name);
-        meta.setAttribute('content', content);
-        head.appendChild(meta);
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'bootstrap.json', false);
-    xhr.send(null);
-
-    var options = eval("(" + xhr.responseText + ")"),
-        scripts = options.js || [],
-        styleSheets = options.css || [],
-        i, ln, path, platform, theme, exclude;
-
-    if(options.platform && options.platforms && options.platforms[options.platform] && options.platforms[options.platform].js) {
-        scripts = options.platforms[options.platform].js.concat(scripts);
-    }
-
-    if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-        var msViewportStyle = document.createElement("style");
-        msViewportStyle.appendChild(
-            document.createTextNode(
-                "@media screen and (orientation: portrait) {" +
-                    "@-ms-viewport {width: 320px !important;}" +
-                "}" +
-                "@media screen and (orientation: landscape) {" +
-                    "@-ms-viewport {width: 560px !important;}" +
-                "}"
-            )
-        );
-        document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
-    }
-
-    addMeta('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no');
-    addMeta('apple-mobile-web-app-capable', 'yes');
-    addMeta('apple-touch-fullscreen', 'yes');
-
-    if (!window.Ext) {
-        window.Ext = {};
-    }
-    Ext.microloaded = true;
-
-    var filterPlatform = window.Ext.filterPlatform = function(platform) {
-        var profileMatch = false,
-            ua = navigator.userAgent,
-            j, jln;
-
-        platform = [].concat(platform);
-
-        function isPhone(ua) {
-            var isMobile = /Mobile(\/|\s)/.test(ua);
-
-            // Either:
-            // - iOS but not iPad
-            // - Android 2
-            // - Android with "Mobile" in the UA
-
-            return /(iPhone|iPod)/.test(ua) ||
-                      (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
-                      (/(BlackBerry|BB)/.test(ua) && isMobile) ||
-                      /(Windows Phone)/.test(ua);
-        }
-
-        function isTablet(ua) {
-            return !isPhone(ua) && (/iPad/.test(ua) || /Android|Silk/.test(ua) || /(RIM Tablet OS)/.test(ua) ||
-                (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
-        }
-
-        // Check if the ?platform parameter is set in the URL
-        var paramsString = window.location.search.substr(1),
-            paramsArray = paramsString.split("&"),
-            params = {},
-            testPlatform, i;
-
-        for (i = 0; i < paramsArray.length; i++) {
-            var tmpArray = paramsArray[i].split("=");
-            params[tmpArray[0]] = tmpArray[1];
-        }
-
-        testPlatform = params.platform;
-        if (testPlatform) {
-            return platform.indexOf(testPlatform) != -1;
-        }
-
-        for (j = 0, jln = platform.length; j < jln; j++) {
-            switch (platform[j]) {
-                case 'phone':
-                    profileMatch = isPhone(ua);
-                    break;
-                case 'tablet':
-                    profileMatch = isTablet(ua);
-                    break;
-                case 'desktop':
-                    profileMatch = !isPhone(ua) && !isTablet(ua);
-                    break;
-                case 'ios':
-                    profileMatch = /(iPad|iPhone|iPod)/.test(ua);
-                    break;
-                case 'android':
-                    profileMatch = /(Android|Silk)/.test(ua);
-                    break;
-                case 'blackberry':
-                    profileMatch = /(BlackBerry|BB)/.test(ua);
-                    break;
-                case 'safari':
-                    profileMatch = /Safari/.test(ua) && !(/(BlackBerry|BB)/.test(ua));
-                    break;
-                case 'chrome':
-                    profileMatch = /Chrome/.test(ua);
-                    break;
-                case 'ie10':
-                    profileMatch = /MSIE 10/.test(ua);
-                    break;
-                case 'windows':
-                    profileMatch = /MSIE 10/.test(ua) || /Trident/.test(ua);
-                    break;
-                case 'tizen':
-                    profileMatch = /Tizen/.test(ua);
-                    break;
-                case 'firefox':
-                    profileMatch = /Firefox/.test(ua);
-            }
-            if (profileMatch) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-
-    for (i = 0,ln = styleSheets.length; i < ln; i++) {
-        path = styleSheets[i];
-
-        if (typeof path != 'string') {
-            platform = path.platform;
-            exclude = path.exclude;
-            theme = path.theme;
-            path = path.path;
-        }
-
-        if (platform) {
-            if (!filterPlatform(platform) || filterPlatform(exclude)) {
-                continue;
-            }
-
-            if(!Ext.theme) {
-                Ext.theme = {};
-            }
-            if(!Ext.theme.name) {
-                Ext.theme.name = theme || 'Default';
-            }
-        }
-
-        write('<link rel="stylesheet" href="'+path+'">');
-    }
-
-    for (i = 0,ln = scripts.length; i < ln; i++) {
-        path = scripts[i];
-
-        if (typeof path != 'string') {
-            platform = path.platform;
-            exclude = path.exclude;
-            path = path.path;
-        }
-
-        if (platform) {
-            if (!filterPlatform(platform) || filterPlatform(exclude)) {
-                continue;
-            }
-        }
-
-        write('<script src="'+path+'"></'+'script>');
-    }
-
-})();

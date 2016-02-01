@@ -1,0 +1,1 @@
+D:\kahunja\apps\Inventory2\src\main\webapp>sencha -sdk ext compile -classpath=app page -yui -in index.jsp -out index-prod.jsp
