@@ -376,12 +376,18 @@
     <result column="inv_date" property="invDate" jdbcType="DATE" />
     <result column="inv_acc_code" property="invAccCode" jdbcType="INTEGER" />
     <result column="acc_name" property="_purAccCode" jdbcType="VARCHAR" /> 
+    <result column="postable" property="_postable" jdbcType="VARCHAR" />
   </resultMap> 
    <select id="fetchInvoiceDtls" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
    		SELECT invd_id, invd_inv_id, invd_pdt_code, invd_qty, invd_price, invd_tamount, invd_discount, 
-   		 invd_bonus, invd_status, invd_bp,invd_stk_id,pdt_description
-    	FROM inv_invoice_dtls,inv_products
+   		 invd_bonus, invd_status, invd_bp,invd_stk_id,pdt_description,
+       CASE WHEN stk_qty>=invd_qty 
+        THEN "Y" 
+        ELSE "N" 
+      END AS postable      
+    	FROM inv_invoice_dtls,inv_products, inv_stocks
     	WHERE invd_pdt_code=pdt_code
+      AND invd_stk_id=stk_id
     	 <if test="invId != null">
          	 AND  invd_inv_id =  #{invId,jdbcType=INTEGER}
      	 </if>

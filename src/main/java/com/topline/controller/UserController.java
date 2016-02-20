@@ -211,4 +211,28 @@ public class UserController extends BaseController {
 			}
 			
 		}
+		@RequestMapping(value="/updatePassword.action")
+		private @ResponseBody String updatePassword(HttpServletRequest request){
+			try{
+				Map<String, Object> map = new HashMap<String, Object>();
+				String userName=GlobalCC.CheckNullValues(request.getParameter("userName"));
+				String password=GlobalCC.CheckNullValues(request.getParameter("password"));
+				String oldPassword=GlobalCC.CheckNullValues(request.getParameter("oldPassword"));
+				map.put("password", password);
+				map.put("username", userName);
+				map.put("oldpassword", oldPassword);
+				userMapper.updatePassword(map);
+				jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+				jsonResponse.setSuccess(true);	
+				jsonResponse.setData(null);	        
+		        return jsonObject(jsonResponse);
+			}catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+			
+		}
 }

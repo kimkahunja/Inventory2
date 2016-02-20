@@ -2712,6 +2712,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.model.purchases.PurchaseRPT": [],
   "InventoryApp.model.security.Group": [],
   "InventoryApp.model.security.User": [],
+  "InventoryApp.model.transfer.Transfer": [],
+  "InventoryApp.model.transfer.TransferDtl": [],
   "InventoryApp.model.units.Unit": [],
   "InventoryApp.model.vat.Vat": [],
   "InventoryApp.proxy.Rest": [],
@@ -2740,7 +2742,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.store.security.Users": [],
   "InventoryApp.store.standard.PaymentMode": [],
   "InventoryApp.store.standard.Status": [],
+  "InventoryApp.store.standard.TransferTypes": [],
   "InventoryApp.store.standard.YesNo": [],
+  "InventoryApp.store.transfer.TransferDtls": [],
+  "InventoryApp.store.transfer.Transfers": [],
   "InventoryApp.store.units.Units": [],
   "InventoryApp.store.vat.Vat": [],
   "InventoryApp.util.Alert": [],
@@ -3855,6 +3860,8 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.model.purchases.PurchaseRPT": [],
   "InventoryApp.model.security.Group": [],
   "InventoryApp.model.security.User": [],
+  "InventoryApp.model.transfer.Transfer": [],
+  "InventoryApp.model.transfer.TransferDtl": [],
   "InventoryApp.model.units.Unit": [],
   "InventoryApp.model.vat.Vat": [],
   "InventoryApp.proxy.Rest": [
@@ -3927,8 +3934,17 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.store.standard.Status": [
     "store.standard.status"
   ],
+  "InventoryApp.store.standard.TransferTypes": [
+    "store.standard.transfertypes"
+  ],
   "InventoryApp.store.standard.YesNo": [
     "store.standard.yesno"
+  ],
+  "InventoryApp.store.transfer.TransferDtls": [
+    "store.transfer.transferdtls"
+  ],
+  "InventoryApp.store.transfer.Transfers": [
+    "store.transfer.transfers"
   ],
   "InventoryApp.store.units.Units": [
     "store.units.units"

@@ -10,6 +10,7 @@ public class InvoiceDtlsWrapper extends InvoiceDtls {
 	private Date invDate;
 	private Integer invAccCode;
 	private String _purAccCode;
+	 private String _postable;
 	public String get_purdPdtCode() {
 		return _purdPdtCode;
 	}
@@ -48,6 +49,14 @@ public class InvoiceDtlsWrapper extends InvoiceDtls {
 
 	public void set_purAccCode(String _purAccCode) {
 		this._purAccCode = _purAccCode;
+	}
+
+	public String get_postable() {
+		return _postable;
+	}
+
+	public void set_postable(String _postable) {
+		this._postable = _postable;
 	}
 	
 }

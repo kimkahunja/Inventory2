@@ -56,6 +56,10 @@ Ext.define('InventoryApp.model.invoice.InvoiceDtls',{
 	       	name: 'invdStkId',
 	            type: 'int'
 	       },
+	       {
+	    	 name:'_postable',
+	    	 type: 'string'
+	       },
 	       	      
 	       // decorated properties
            

@@ -52,8 +52,9 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
                        xtype:'numbercolumn',
                        editor: {
                            xtype: 'numberfield',
+                           selectOnFocus: true
                       },
-                      allowBlank: false,                      
+                      allowBlank: false,                       
                        menuDisabled:true,                     
                        
                    },
@@ -62,8 +63,9 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
                        dataIndex: 'purdQty',                    
                        field: {
                            xtype: 'numberfield',
+                           selectOnFocus: true
                       },
-                       xtype:'numbercolumn',
+                       xtype:'numbercolumn',                      
                        menuDisabled:true,
                        //sortable:false
                    }, 

@@ -56,7 +56,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							    //layout: 'vbox',  
 							    frame:true,
 							    border:1,
-							    flex:1, 
+							    flex:2, 
 							    //collapsible: true,
 							    
 							    style: {
@@ -89,10 +89,10 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 			                                                 type: 'product.products'
 			                                             },
 			                                             editable: true,
-			                                             forceSelection: false,   
+			                                             forceSelection: true,   
 			                                             emptyText:'select product',
 			                                             minChars: 0, 
-			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+			                                             /*tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
 			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">',
 			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',
 			      							                                             '<div style="font-size: xx-small; color: grey;">Measure : {_pdtUntCode}</div>',
@@ -101,7 +101,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 			      							                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
 			      							                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
 			      							                                             '</div>',
-			      							                                             '</tpl>']),
+			      							                                             '</tpl>']),*/
 			                                         },
 										         ],
 							           },
@@ -110,7 +110,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							          {
 							        	  xtype: 'container',
 							        	  layout:'fit',
-							        	  maxHeight:300,
+							        	  maxHeight:300,							        	  
+							        	  //width:500,
 							        	  items:[
 													{
 														xtype:'purchases.purchasedtlslist' , 
@@ -125,6 +126,12 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 		                 						    xtype:'tbspacer',
 		                 						    flex:2
 		                 						},
+		                 						{
+		                                            xtype: 'button',
+		                                            itemId: 'purchaseRemove',
+		                                            text: 'Remove',
+		                                            iconCls: 'delete'
+		                                        },
 		                 						{
 		                                            xtype: 'button',
 		                                            itemId: 'purchaseSave',

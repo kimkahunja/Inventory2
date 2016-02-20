@@ -248,7 +248,7 @@ public class InvoiceController extends BaseController {
 					String location = GlobalCC.CheckNullValues(request.getParameter("location"));
 					Invoice invoice=mapper.readValue(data, Invoice.class);
 					
-					List<InvoiceDtls> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtls[].class));
+					List<InvoiceDtlsWrapper> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtlsWrapper[].class));
 					invoice.setInvStatus("PENDING");
 					invoice.setInvLocCode(location==null?null:Integer.parseInt(location));
 					map.put("location", location);
@@ -277,6 +277,7 @@ public class InvoiceController extends BaseController {
 						jsonResponse.addMessage("message", ex.getLocalizedMessage());
 						return jsonObject(jsonResponse);
 					}
+					//validate whether the stock remaining is enough to cater for the current sale
 					
 					//post the invoice
 					

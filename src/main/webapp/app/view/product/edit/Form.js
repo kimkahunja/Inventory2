@@ -298,6 +298,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                        fieldLabel: 'Tax Category',
                                        displayField: 'vatDescription',
                                        valueField: 'vatId',
+                                       value:'A',
                                        store: {
                                            type: 'vat.vat'
                                        },

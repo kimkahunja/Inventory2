@@ -156,7 +156,7 @@
           <argument>${basedir}/src/main/webapp/ext</argument>                                
           <argument>compile</argument>
           <argument>-classpath</argument>
-          <argument>${basedir}/src/main/webapp/app</argument>
+          <argument>${basedir}/src/main/webapp/app,${basedir}/src/main/webapp/overrides</argument>
           <argument>page</argument>
           <argument>-yui</argument>
           <argument>-in</argument>

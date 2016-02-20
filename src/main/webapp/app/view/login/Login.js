@@ -19,7 +19,7 @@ Ext.define('InventoryApp.view.login.Login', {
     	        	   style: 'font-size: 20px',
     	        	   autoHeight: true ,
     				   id: 'j_username',
-    				   value:'kimkahunja'
+    				   //value:'kimkahunja'
     	        	},
     	        	{
     	                xtype:'label',
@@ -37,7 +37,7 @@ Ext.define('InventoryApp.view.login.Login', {
     	            	   style: 'font-size: 20px',
     	            	   autoHeight: true ,
     						id: 'j_password',
-    						value:'1234567'
+    						//value:'1234567'
     	            	},{
     	            xtype: 'checkbox',
     	            fieldLabel: '',

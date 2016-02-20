@@ -44,6 +44,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
                        xtype:'numbercolumn',
                        editor: {
                            xtype: 'numberfield',
+                           selectOnFocus: true
                       },
                       allowBlank: false,                      
                        menuDisabled:true,                     
@@ -54,6 +55,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
                        dataIndex: 'invdQty',                    
                        field: {
                            xtype: 'numberfield',
+                           selectOnFocus: true
                       },
                        xtype:'numbercolumn',
                        menuDisabled:true,
@@ -64,6 +66,17 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
                        summaryType: 'sum',
                        dataIndex: 'total',
                        text: 'Total'
+                   },
+                   {
+                	   text: 'Postable',
+                	   dataIndex: '_postable',
+                	  // hidden:true,
+                	   renderer: function (val, metadata, record) {
+                           if (record.get('_postable') == 'N') {
+                               metadata.style = 'background-color: #FFFFCC !important;cursor: pointer;'
+                           }
+                           return val;
+                       }
                    },
                    
                ]

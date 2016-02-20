@@ -1,0 +1,7 @@
+{
+    "count":1,
+    "data":[        
+        {"id":"INWARD","description":"Transfer Inwards"},
+        {"id":"OUTWARD","description":"Transfer Outwards"}
+		]
+}

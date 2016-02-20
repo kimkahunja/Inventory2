@@ -502,7 +502,7 @@
         pdt_delete_date = #{pdtDeleteDate,jdbcType=DATE},
       </if>
        <if test="pdtMergeQty != null">
-        pdt_merge_qty = #{pdtMergeQty,jdbcType=VARCHAR},
+        pdt_merge_qty = #{pdtMergeQty,jdbcType=VARCHAR}
       </if>
     </set>
     where pdt_code = #{pdtCode,jdbcType=INTEGER}
@@ -533,7 +533,7 @@
       pdt_op_qty = #{pdtOpQty,jdbcType=DOUBLE},
       pdt_delete_by = #{pdtDeleteBy,jdbcType=VARCHAR},
       pdt_delete_date = #{pdtDeleteDate,jdbcType=DATE},
-      pdt_merge_qty = #{pdtMergeQty,jdbcType=VARCHAR},
+      pdt_merge_qty = #{pdtMergeQty,jdbcType=VARCHAR}
     where pdt_code = #{pdtCode,jdbcType=INTEGER}
   </update>
   

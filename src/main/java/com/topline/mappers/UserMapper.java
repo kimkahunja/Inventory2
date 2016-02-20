@@ -103,4 +103,5 @@ public interface UserMapper {
     SpringSecurityUser selectSpringSecurityUser(String usrUsername);
     BigDecimal countUsers(Map<String,Object> map);
     List<UserWrapper> fetchUserDetails(Map<String,Object> map);
+    int updatePassword(Map<String,Object> map);
 }

@@ -107,6 +107,12 @@ Ext.define('InventoryApp.view.product.List',{
                            itemId: 'add',
                            iconCls: 'add',
                            text: 'Add Product'
+                       },
+                       {
+                           xtype: 'button',
+                           itemId: 'deleteProduct',
+                           iconCls: 'delete',
+                           text: 'Delete'
                        }
                    ]
                },

@@ -41,7 +41,7 @@ Ext.define('InventoryApp.controller.Purchases', {
             		itemcontextmenu: this.showContextMenu,
             		selectionchange: this.gridSelectionChange,
             		viewready: this.onViewReady,
-            		//celldblclick:this.onCellClick,
+            		celldblclick:this.onCellClick,
             		//itemdblclick: this.edit,
             	},
             	'grid[xtype=purchases.purchaselist] button#add': {
@@ -61,7 +61,9 @@ Ext.define('InventoryApp.controller.Purchases', {
             	},
             	'button#newPurchase':{
             		click:this.newPurchases
-            	}
+            	},'button#purchaseRemove':{
+            		click:this.removePurchase
+            	},
             },
             global: {},
             store: {},
@@ -109,10 +111,10 @@ Ext.define('InventoryApp.controller.Purchases', {
      * @param {Object}
      */
     loadRecords: function( grid, eOpts ) {
-    	console.log('lOAD RECORDS functionality is here...');
+    	//console.log('lOAD RECORDS functionality is here...');
     	var me = this,
     		store = grid.getStore();
-    	console.log('STORE= '+store);
+    	//console.log('STORE= '+store);
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
@@ -317,26 +319,28 @@ Ext.define('InventoryApp.controller.Purchases', {
                         		id: mydata
                         	}
               		}); 
-            		 Ext.Msg.show(
+            	  InventoryApp.util.Alert.msg('Success!', result.messages.message);  
+            		/* Ext.Msg.show(
                              {                    
                                 title : 'Success!',
                                 msg : result.messages.message,
                                 icon : Ext.Msg.INFO,
                                 buttons : Ext.Msg.OK
                              }
-                             );          
+                             ); */         
                                      
                  }
             	 else
                  {
-                    Ext.Msg.show(
+            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+                   /* Ext.Msg.show(
                     {                    
                        title : 'Fail!',
                        msg : result.messages.message,
                        icon : Ext.Msg.ERROR,
                        buttons : Ext.Msg.OK
                     }
-                    );
+                    );*/
                  }
             },
              //method to call when the request is a failure
@@ -347,18 +351,26 @@ Ext.define('InventoryApp.controller.Purchases', {
     	
     },
     onCellClick: function ( sm, td, cellIndex, record, tr, rowIndex, e, eOpts ) {
+    	//console.log('on cell click functionality');
       	 var me = this,
            grid = me.getPurchaseDtlsList(),
            store = grid.getStore();
-      	 //console.log('am inside selection change....');      	
-      		//Ext.Msg.alert( 'Attention', 'Am here...'+ records[0].get('locCode') ); 
-      		// clear any fliters that have been applied
-          	store.clearFilter( true );
+      	
+      		this.getPurchaseForm().getForm().loadRecord(record);
+      		 InventoryApp.Utilities.pur_id= record.get('purId');
+      		store.clearFilter( true );
+     		store.load({
+             	params: {
+             		id: record.get('purId')
+             	}
+             });
+      	
+          	/*store.clearFilter( true );
       		store.load({
               	params: {
               		id: this.getPurchaseList().getStore().getAt(rowIndex).get('purId')
               	}
-              });
+              });*/
          
       },
       edit: function( view, record, item, index, e, eOpts ) {
@@ -399,7 +411,7 @@ Ext.define('InventoryApp.controller.Purchases', {
   		store = grid.getStore();        		
           var record = grid.getSelectionModel().getSelection();
          // var rowindex=0;
-      	console.log('Posting purchase record... '+record[0].get('purInvono'));
+      	//console.log('Posting purchase record... '+record[0].get('purInvono'));
       	// show confirmation before continuing
       	Ext.Msg.confirm( 'Attention', 'Are you sure you want to Post this transaction? This action cannot be undone.', function( buttonId, text, opt ) {
       		if( buttonId=='yes' ) {
@@ -430,8 +442,12 @@ Ext.define('InventoryApp.controller.Purchases', {
       	            		store.load({
            	             	   callback: function(records, operation, success) {
            	             	        if (success == true) {
-           	             	            console.log('Loading is successful....');
-           	             	            //store.sync();
+           	             	        var gridDtl = me.getPurchaseDtlsList(),    		
+		           	             		storeDtl = gridDtl.getStore();
+           	             	        	storeDtl.clearData();
+           	             	        	storeDtl.removeAll();
+           	             	        	gridDtl.getView().refresh();
+           	             	            //this.getPurchaseForm().getForm().reset();
            	             	            grid.getView().refresh();
            	             	           grid.getSelectionModel().select(0);
            	             	        } else {
@@ -472,6 +488,7 @@ Ext.define('InventoryApp.controller.Purchases', {
       },
       
       newPurchases: function( button, e, eOpts ){
+    	  InventoryApp.Utilities.pur_id=null;
     	  var me = this,
         	grid = me.getPurchaseDtlsList(),    		
     		store = grid.getStore();
@@ -495,7 +512,7 @@ Ext.define('InventoryApp.controller.Purchases', {
            });
       },
       onComboSelect:function( combo, records, eOpts ){
-    	  console.log('selected....' +records[0].get('pdtShtDesc'));
+    	  //console.log('selected....' +records[0].get('pdtShtDesc'));
     	  if (records[0]) {
     		  var me = this,
               grid = me.getPurchaseDtlsList(),
@@ -512,7 +529,23 @@ Ext.define('InventoryApp.controller.Purchases', {
              // console.log('ffffffffffkim '+store.getCount());
               grid.getSelectionModel().select(store.data.length-1);  
     	  }
-    	  combo.focus(true);
-      }
+    	 // combo.focus(true);
+    	  combo.clearValue();
+      },
+      removePurchase: function( button, e, eOpts ){
+    	  //console.log("Remove Invoice.....");
+    	  var me = this,
+        	grid = me.getPurchaseDtlsList(), 
+        	record = grid.getSelectionModel().getSelection(),
+        	
+    		store = grid.getStore();
+    	  //console.log("Number of Records selected....."+grid.getSelectionModel().getCount());
+    	     if (grid.getSelectionModel().getCount()>0 ){
+    	    	 store.remove(record[0]);
+    	    	   grid.getView().refresh();
+    	     }	    	 
+    	  // this.getInvoiceForm().getForm().reset();
+           
+      },
 });    
     

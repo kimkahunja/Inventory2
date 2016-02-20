@@ -38,7 +38,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
 					          {
 					        	xtype:'displayfield',
 					        	name:'invInvono',					        	
-					        	fieldLabel: 'Invoice No.',					        	
+					        	fieldLabel: 'Sales No.',					        	
 					        	renderer: function(value){
 					        		//console.log('value11=== '+value);
 					        		if(value.trim().length==0){

@@ -49,6 +49,9 @@ Ext.define('InventoryApp.controller.Products', {
                 'grid[xtype=product.list] button#add': {
                     click: this.add
                 },
+                'grid[xtype=product.list] button#deleteProduct': {
+                    click: this.removeB
+                },
                 'window[xtype=product.edit.window] button#save': {
                     click: this.save
                 },
@@ -232,5 +235,54 @@ Ext.define('InventoryApp.controller.Products', {
     	var me = this,
         grid = me.getProductList();
     	//grid.clearFilters();
-    }
+    },
+    removeB: function( button, e, eOpts ) {
+      	var me = this,
+      		grid = me.getProductList(),
+      		plugin = grid.editingPlugin,
+      		store = grid.getStore(),
+      	    record = grid.getSelectionModel().getSelection();          	
+      	Ext.Msg.confirm( 'Attention', 'Are you sure you want to delete this Product? This action cannot be undone.', function( buttonId, text, opt ) {
+   		if( buttonId=='yes' ) {
+   			
+   			Ext.Ajax.request({
+   	               url: 'product/deleteProduct.action',
+   	            params: {
+   	                    data: Ext.encode(record[0].data)
+   	            },
+   	            
+   	            scope:this,
+   	            //method to call when the request is successful
+   	            success: function(conn, response, options, eOpts){
+   	            	var result = Ext.JSON.decode(conn.responseText, true);    
+   	            	if ( ! result)
+   	                {
+   	                   
+   	                   result =
+   	                   {
+   	                   }
+   	                   ;
+   	                   result.success = false;
+   	                   result.messages.message = conn.responseText;
+   	                }
+   	            	 if (result.success)
+   	                 {
+   	            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+   	            		store.load();  	            		       
+   	                                     
+   	                 }
+   	            	 else
+   	                 {
+   	            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+   	                   
+   	                 }
+   	            },
+   	            //method to call when the request is a failure
+   	            failure: InventoryApp.Utilities.onSaveFailure
+   	        });
+   			
+   			
+   		}
+   	})
+}
 });

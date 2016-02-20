@@ -334,4 +334,10 @@
 		AND userName= #{username,jdbcType=VARCHAR}
 		AND  password = #{password,jdbcType=VARCHAR}
      </select>
+ <update id="updatePassword" parameterType="java.util.HashMap" >
+ 	update user
+    set password = #{password,jdbcType=VARCHAR}      
+    where userName= #{username,jdbcType=VARCHAR}
+    and password=#{oldpassword,jdbcType=VARCHAR}
+ </update>    
 </mapper>

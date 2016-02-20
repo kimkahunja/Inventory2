@@ -74,7 +74,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			                                             fieldLabel: 'Product',
 			                                             displayField: 'pdtDescription',
 			                                             valueField: 'pdtCode',
-			                                             multiSelect: true,
+			                                             //multiSelect: true,
 			                                             /*store: {
 			                                                 type: 'product.stocks'
 			                                             },*/
@@ -83,8 +83,9 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			                                             forceSelection: false,   
 			                                             emptyText:'select product',
 			                                             minChars: 0, 
-			                                             //triggerAction: "all", 
-			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+			                                             queryMode:'remote',     
+			                                            // triggerAction: "all", 
+			                                            /* tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
 			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">',
 			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',			      							                                            
 			      							                                             '<div style="font-size: xx-small; color: grey;">Qty : {pdtCurrentQty}</div>',
@@ -93,7 +94,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			      							                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
 			      							                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
 			      							                                             '</div>',
-			      							                                             '</tpl>']),
+			      							                                             '</tpl>']),*/
 			                                         },
 										         ],
 							           },

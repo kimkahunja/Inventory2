@@ -35,7 +35,7 @@ Ext.define('InventoryApp.view.Login', {
                     name: 'user',
                     fieldLabel: 'User',
                     maxLength: 25,
-                    value: 'kimkahunja'
+                    //value: 'kimkahunja'
                 },
                 {
                     inputType: 'password',
@@ -44,7 +44,7 @@ Ext.define('InventoryApp.view.Login', {
                     enableKeyEvents: true,
                     id: 'password',
                     maxLength: 15,
-                    value: '123456',
+                    //value: '123456',
                     //vtype: 'customPass',
                     msgTarget: 'side'
                 }

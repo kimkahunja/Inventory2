@@ -47,7 +47,8 @@ Ext.define('InventoryApp.Application', {
           	'standard.Status', 
           	'standard.YesNo', 
           	'security.Permissions',
-          	'standard.PaymentMode'
+          	'standard.PaymentMode',
+          	'standard.TransferTypes'
           ],
      
     views: [
@@ -90,7 +91,8 @@ Ext.define('InventoryApp.Application', {
             'reports.purchases.PurchaseMainView',
             'InventoryApp.view.payment.Payment',
            // 'InventoryApp.view.payment.PaymentLanding',
-            'InventoryApp.view.payment.PaymentDtl'
+            'InventoryApp.view.payment.PaymentDtl',
+            'security.PasswordManagement'
         ],
     controllers: [
        // 'App',
@@ -110,7 +112,8 @@ Ext.define('InventoryApp.Application', {
         'security.Users',
         'reports.ProductRPT',
         'reports.InvoiceRPT',
-        'Payments'
+        'Payments',
+        'security.PasswordManagement'
     ],
     
     //autoCreateViewport: true,
