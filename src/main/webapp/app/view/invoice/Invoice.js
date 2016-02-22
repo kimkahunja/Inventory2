@@ -19,7 +19,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 					
 					{
 						
-					    xtype: 'container',
+					    xtype: 'panel',
 					    layout: 'hbox',					    
 					    items: [			          
 								{
@@ -50,7 +50,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 							    //layout: 'vbox',  
 							    frame:true,
 							    border:1,
-							    flex:1, 
+							    flex:2, 
 							    //collapsible: true,
 							    
 							    style: {
@@ -101,8 +101,9 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 							          
 							           
 							          {
-							        	  xtype: 'container',
-							        	  layout:'fit',
+							        	  xtype: 'panel',
+							        	  layout:'fit',							        	  						        	  
+							        	  height:200,
 							        	  maxHeight:300,
 							        	  items:[
 													{
@@ -141,11 +142,13 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 							          ],
 					        },
 					       {
-					        	xtype: 'container',
-							    //layout: 'vbox',  
+					        	xtype: 'panel',
+							    layout: 'fit',  
 							    frame:true,
 							    border:1,
 							    flex:1,
+							    height:300,
+							    minWidth:270,
 							    items:[
 							          {
 							        	  xtype:'invoice.invoiceparticulars'

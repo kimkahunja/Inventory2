@@ -9,6 +9,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseParticulars',{
        Ext.applyIf(me,{
     	   fieldDefaults: {
     		   allowBlank: false,
+    		   margins: 5
     	   },
     	   items:[					
 					{

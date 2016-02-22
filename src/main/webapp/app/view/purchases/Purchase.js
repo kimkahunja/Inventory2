@@ -2,6 +2,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 	extend: 'Ext.form.Panel',
     alias: 'widget.purchases.purchase',
     bodyPadding: 5,
+   // layout:'fit',
+   autoScroll:true,
     initComponent: function() {
     	  var me = this;    	  
     	 Ext.applyIf(me,{
@@ -28,8 +30,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 					},
 					{
 						
-					    xtype: 'container',
-					    layout: 'hbox',					    
+					    xtype: 'panel',
+					    layout: 'hbox',
 					    items: [			          
 								{
 									xtype: 'panel',								   
@@ -52,13 +54,14 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 								},	  
 					         
 					        {
-					        	xtype: 'container',
+					        	xtype: 'panel',
 							    //layout: 'vbox',  
 							    frame:true,
 							    border:1,
 							    flex:2, 
 							    //collapsible: true,
-							    
+							    ///layout:'fit',
+							    //height:300,
 							    style: {
 							        borderColor: '#E6E6E6',
 							        borderStyle: 'solid'
@@ -108,10 +111,11 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							          
 							           
 							          {
-							        	  xtype: 'container',
+							        	  xtype: 'panel',
+							        	 // autoScroll:true,
 							        	  layout:'fit',
-							        	  maxHeight:300,							        	  
-							        	  //width:500,
+							        	  maxHeight:200,							        	  
+							        	  height:200,
 							        	  items:[
 													{
 														xtype:'purchases.purchasedtlslist' , 
@@ -149,11 +153,13 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							          ],
 					        },
 					       {
-					        	xtype: 'container',
-							    //layout: 'vbox',  
+					        	xtype: 'panel',
+							    layout: 'fit',  
 							    frame:true,
 							    border:1,
-							    flex:1,
+							    flex:1,							   
+							    height:300,
+							    minWidth:270,
 							    items:[
 							          {
 							        	  xtype:'purchases.purchaseparticulars'

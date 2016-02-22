@@ -4,7 +4,8 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
 	requires: [
 	           'Ext.grid.RowNumberer',
 	           'Ext.grid.plugin.CellEditing',
-	       ],	
+	       ],
+	autoScroll:'auto',       
 	store: 'invoice.InvoiceDtls',
     initComponent: function() {
        var me = this;

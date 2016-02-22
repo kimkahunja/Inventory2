@@ -55,7 +55,7 @@ public class InvoiceController extends BaseController {
 			String dataDetail=GlobalCC.CheckNullValues(request.getParameter("dataDetail"));
 			String location = GlobalCC.CheckNullValues(request.getParameter("location"));
 			Invoice invoice=mapper.readValue(data, Invoice.class);
-			List<InvoiceDtls> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtls[].class));
+			List<InvoiceDtlsWrapper> invoiceDtls = Arrays.asList(mapper.readValue(dataDetail, InvoiceDtlsWrapper[].class));
 			invoice.setInvStatus("PENDING");
 			invoice.setInvLocCode(location==null?null:Integer.parseInt(location));
 			map.put("location", location);
