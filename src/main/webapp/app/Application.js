@@ -13,6 +13,7 @@ Ext.define('InventoryApp.Application', {
     requires: [
                'Ext.util.History',
                'overrides.grid.RowEditor',
+               'overrides.grid.feature.RemoteSummary',
                'Ext.util.Point',
                'Ext.ux.form.field.ClearButton',
                'Ext.ux.grid.FilterBar',

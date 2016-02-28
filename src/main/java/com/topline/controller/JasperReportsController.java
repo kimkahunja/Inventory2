@@ -56,18 +56,15 @@ public class JasperReportsController extends BaseController{
 			}
 			conn=ormDataSource.getConnection(); 
 			String filePath = null;
-			filePath = getServletContext().getRealPath(
-					"/reports/Purchases.jasper");
+			filePath = getServletContext().getRealPath("/reports/Purchases.jasper");
 			setFileReport(new File(filePath));
 			fileReport = getFileReport();
 			reportName = "Purchases";
 			
 			System.out.println("reportType --> " + reportType);
 			bytes = generateReportData();
-			ServletOutputStream servletOutputStream = response
-					.getOutputStream();
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ "Purchases.pdf");
+			ServletOutputStream servletOutputStream = response.getOutputStream();
+			response.setHeader("Content-disposition", "attachment; filename="+ "Purchases.pdf");
 			response.setContentLength(bytes.length);
 			servletOutputStream.write(bytes, 0, bytes.length);
 			servletOutputStream.flush();
@@ -94,18 +91,14 @@ public class JasperReportsController extends BaseController{
 			}
 			conn=ormDataSource.getConnection(); 
 			String filePath = null;
-			filePath = getServletContext().getRealPath(
-					"/reports/Products.jasper");
+			filePath = getServletContext().getRealPath("/reports/Products.jasper");
 			setFileReport(new File(filePath));
 			fileReport = getFileReport();
-			reportName = "Products";
-			
+			reportName = "Products";			
 			System.out.println("reportType --> " + reportType);
 			bytes = generateReportData();
-			ServletOutputStream servletOutputStream = response
-					.getOutputStream();
-			response.setHeader("Content-disposition", "attachment; filename="
-					+ "Products.pdf");
+			ServletOutputStream servletOutputStream = response.getOutputStream();
+			response.setHeader("Content-disposition", "attachment; filename="+ "Products.pdf");
 			response.setContentLength(bytes.length);
 			servletOutputStream.write(bytes, 0, bytes.length);
 			servletOutputStream.flush();

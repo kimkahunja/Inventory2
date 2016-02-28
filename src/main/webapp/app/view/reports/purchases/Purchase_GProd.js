@@ -8,7 +8,7 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GProd',{
            columns: {
                defaults: {
             	  //menuDisabled:true,
-            	   sortable:true
+            	   //sortable:true
                },
                items: [
 				Ext.create('Ext.grid.RowNumberer',
@@ -23,7 +23,8 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GProd',{
 				        {
 		                       text: 'Supplier',
 		                       dataIndex: '_purAccCode',                    
-		                       
+		                      // autoSizeColumn : true,
+		                       flex:1
 		                   }, 	
                    
                    {
@@ -58,7 +59,27 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GProd',{
            },
            features: [{
                ftype: 'summary'
-           }],         
+           }], 
+           /*viewConfig : {
+       	    listeners : {
+       	     refresh : function (dataview) {
+       	      Ext.each(dataview.panel.columns, function (column) {
+       	       if (column.autoSizeColumn === true)
+       	        column.autoSize();
+       	      })
+       	     }
+       	    }
+       	   },*/
+           dockedItems: [                         
+                         {
+                             xtype: 'pagingtoolbar',
+                             ui: 'footer',
+                             defaultButtonUI: 'default',
+                             dock: 'bottom',
+                             displayInfo: true,
+                             store: me.getStore()
+                         }
+                     ]
        });
        me.callParent( arguments );
    }        

@@ -464,5 +464,33 @@
        <if test="dateFrom !=null"  >
       	AND  pur_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
       </if>
+       LIMIT #{start,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+   </select>
+    <resultMap id="SummaryResultMap" type="com.topline.model.Summary" >
+    	 <result column="myCount" property="myCount" jdbcType="DECIMAL" />
+    	 <result column="mySum" property="mySummary" jdbcType="DECIMAL" />
+    </resultMap>
+   <select id="fetchRptPurchasesCount" parameterType="java.util.HashMap" resultMap="SummaryResultMap">
+	   SELECT COUNT(purd_id) AS myCount,SUM(purd_qty*purd_price) AS mySum
+		FROM inv_purchases_details, inv_products,inv_purchases,inv_accounts
+		WHERE purd_pdt_code=pdt_code
+        AND pur_id=purd_pur_id
+        AND acc_code=pur_acc_code
+        <if test="purId != null">
+          AND  purd_pur_id =  #{purId,jdbcType=INTEGER}
+      </if>	
+      <if test="accCode != null">
+          AND  pur_acc_code =  #{accCode,jdbcType=INTEGER}
+      </if>
+      <if test="product != null">
+          AND  pdt_code =  #{product,jdbcType=INTEGER}
+      </if>
+      <if test="purStatus != null">
+          AND  pur_status =  #{purStatus,jdbcType=VARCHAR}
+      </if>	
+       <if test="dateFrom !=null"  >
+      	AND  pur_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
+      
    </select>
 </mapper>

@@ -10,6 +10,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -45,10 +48,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
+
+
+
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
 import com.topline.model.PurchaseExample;
+import com.topline.model.Summary;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
 import com.topline.model.wrappers.PurchaseWrapper;
 import com.topline.utils.GlobalCC;
@@ -328,7 +337,8 @@ public class PurchaseController extends BaseController {
 					if (start == null) {
 						start = "0";
 					}
-					
+					map.put("start", start==null?null:new BigDecimal(start));
+					map.put("limit", limit==null?null:new BigDecimal(limit));
 					map.put("purStatus", root==null? "PENDING":status);
 					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
 					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
@@ -336,12 +346,20 @@ public class PurchaseController extends BaseController {
 					map.put("purId",purId==null?null:new BigDecimal(purId));
 					map.put("product",product==null?null:new BigDecimal(product));
 					List<PurchaseDetailWrapper>list=purchaseDetailMapper.fetchRptPurchases(map);
-					
-					if (list != null) {
-						int count = list.size();
+					List<Summary>summaryList=purchaseDetailMapper.fetchRptPurchasesCount(map);
+					//System.out.println("Summry Count==="+summary.get(Integer.parseInt("0")).getMyCount());
+					//System.out.println("Summry total==="+summary.get(Integer.parseInt("0")).getMySummary());
+					JSONObject myObj = new JSONObject();
+					JSONArray arrayObj=new JSONArray();
+					for(int i=0;i<summaryList.size();i++){
+						BigDecimal count = summaryList.get(i).getMyCount();
+						BigDecimal summary=summaryList.get(i).getMySummary();
 						data.put("count", count);
+						myObj.put("total", summary);
+						arrayObj.add(myObj);
+						data.put("summary", arrayObj);
 					}
-				
+					
 					data.put("data", list);
 					jsonResponse.setData(data);
 					jsonResponse.setSuccess(true);

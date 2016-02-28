@@ -3,8 +3,8 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GSup',{
 	alias:'widget.reports.purchases.purchasegsup',		
 	store: 'purchases.PurchaseRPTs',
     initComponent: function() {
-       var me = this;
-       Ext.applyIf(me,{          
+       var me = this;       
+       Ext.applyIf(me,{     	   
            columns: {
                defaults: {
             	  // menuDisabled:true,
@@ -23,14 +23,16 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GSup',{
 						{
 	                       text: 'Description',
 	                       dataIndex: '_purdPdtCode',
+	                      // autoSizeColumn : true,
+	                       flex:1
 	                       //menuDisabled:true,
 	                       //sortable:false
 		                   }, 	
                    
                    {
                        text: 'Unit Price',
-                       dataIndex: 'purdPrice'                                           
-                       
+                       dataIndex: 'purdPrice'                                          
+                       //summaryType: 'remote',
                    },
                    {
                        text: 'Quantity',
@@ -39,7 +41,7 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GSup',{
                    }, 
                    {
                        xtype: 'numbercolumn',
-                       summaryType: 'sum',
+                       summaryType: 'remote',
                        dataIndex: 'total',
                        text: 'Total'
                    },
@@ -57,8 +59,30 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GSup',{
                
            },
            features: [{
-               ftype: 'summary'
-           }],         
+               ftype: 'summary',
+               remoteRoot: 'data.summary', // summary key in the server response
+           }],
+           /*viewConfig : {
+        	    listeners : {
+        	     refresh : function (dataview) {
+        	      Ext.each(dataview.panel.columns, function (column) {
+        	       if (column.autoSizeColumn === true)
+        	        column.autoSize();
+        	      })
+        	     }
+        	    }
+        	   },*/
+           dockedItems: [                         
+                         {
+                             xtype: 'pagingtoolbar',
+                             ui: 'footer',
+                             defaultButtonUI: 'default',
+                             dock: 'bottom',
+                             displayInfo: true,
+                             store: me.getStore()
+                            
+                         }
+                     ]
        });
        me.callParent( arguments );
    }        

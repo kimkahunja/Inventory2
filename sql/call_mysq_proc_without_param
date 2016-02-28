@@ -1,0 +1,2 @@
+CALL update_stocks(@out_value);
+SELECT @out_value;

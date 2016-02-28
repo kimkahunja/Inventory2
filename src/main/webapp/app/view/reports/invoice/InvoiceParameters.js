@@ -89,7 +89,7 @@ Ext.define('InventoryApp.view.reports.invoice.InvoiceParameters',{
                                   minChars: 0, 
                                   hidden:true,
                                   minWidth:350,
-                                  tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+                                  /*tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
 						                                             '<div style="margin: 4px;" class="x-boundlist-item">',
 						                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',
 						                                             '<div style="font-size: xx-small; color: grey;">Measure : {_pdtUntCode}</div>',
@@ -98,7 +98,7 @@ Ext.define('InventoryApp.view.reports.invoice.InvoiceParameters',{
 						                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
 						                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
 						                                             '</div>',
-						                                             '</tpl>']),
+						                                             '</tpl>']),*/
                               },
                             {
                                 xtype: 'combobox',

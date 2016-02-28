@@ -12,15 +12,16 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase',{
                  margins: 5
              },
              items:[{
-            	 		xtype: 'container',
+            	 		xtype: 'panel',
             	 		//layout: 'vbox',
             	 		items:[	
 							{
-								xtype: 'container',
+								xtype: 'panel',
 							    //layout: 'vbox',  
 							    frame:true,
-							    border:1,
-							    flex:1,
+							    border:1,							   
+							    minWidth:500,
+							    minHeight:100,
 							    items:[
 							          {
 							        	  xtype:'reports.purchases.purchaseparameters'
@@ -29,9 +30,21 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase',{
 							          ],
 								
 							},
-           					{
-								 xtype:'reports.purchases.purchasemainview'
-           					}
+							{
+								xtype: 'panel',
+								layout:'fit',
+					        	//maxHeight:200,							        	  
+					        	height:320,
+								 flex:1,
+					        	//scrollable:true,
+								items:[
+										{
+										 xtype:'reports.purchases.purchasemainview'
+										}
+								       ]
+							}
+							
+           					
            					
                               ], 
              		}

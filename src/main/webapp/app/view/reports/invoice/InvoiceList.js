@@ -35,7 +35,11 @@ Ext.define('InventoryApp.view.reports.invoice.InvoiceList',{
 	                       text: 'Account',
 	                       dataIndex: '_purAccCode',                    
 	                       
-	                   }                
+	                   } ,
+	                   {
+	                	   text: 'Status',
+	                       dataIndex: 'invStatus', 
+	                   }
 	                   
 	               ]
 	               

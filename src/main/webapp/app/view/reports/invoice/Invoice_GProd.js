@@ -26,6 +26,8 @@ Ext.define('InventoryApp.view.reports.invoice.Invoice_GProd',{
 						{
 	                       text: 'Supplier',
 	                       dataIndex: '_purAccCode',
+	                       //autoSizeColumn : true,
+	                       flex:1
 	                      // menuDisabled:true,
 	                       //sortable:false
 		                   }, 	
@@ -59,7 +61,17 @@ Ext.define('InventoryApp.view.reports.invoice.Invoice_GProd',{
            },
            features: [{
                ftype: 'summary'
-           }],         
+           }],
+           /*viewConfig : {
+       	    listeners : {
+       	     refresh : function (dataview) {
+       	      Ext.each(dataview.panel.columns, function (column) {
+       	       if (column.autoSizeColumn === true)
+       	        column.autoSize();
+       	      })
+       	     }
+       	    }
+       	   },*/
        });
        me.callParent( arguments );
    }        

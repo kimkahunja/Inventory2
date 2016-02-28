@@ -1,0 +1,21 @@
+"data":{"summary":319100.78
+,"count":15,
+"data":[{"purdId":31,"purdPurId":14,"purdPdtCode":2,"purdQty":1.0,"purdPrice":45000.00,"purdTamount"
+:0.00,"purdDiscount":0.0,"purdBonus":0.0,"purdStatus":"","purdPreviousQty":0.0,"purdRemarks":"","purdMtradePrice"
+:0.00,"purdExpiryDt":null,"_purdPdtCode":"Sony Xperia Z Phone","total":null,"purdSerialNo":"","purInvono"
+:"4545444","purDate":"19/02/2016","purAccCode":1,"_purAccCode":"Default"},{"purdId":3,"purdPurId":4,"purdPdtCode"
+:3,"purdQty":1.0,"purdPrice":2300.00,"purdTamount":0.00,"purdDiscount":0.0,"purdBonus":0.0,"purdStatus"
+:"POSTED","purdPreviousQty":0.0,"purdRemarks":"","purdMtradePrice":0.00,"purdExpiryDt":null,"_purdPdtCode"
+:"Sony T105 Phone","total":null,"purdSerialNo":"","purInvono":"3444444","purDate":"01/01/2016","purAccCode"
+:1,"_purAccCode":"Default"},{"purdId":6,"purdPurId":6,"purdPdtCode":3,"purdQty":1.0,"purdPrice":1800
+.78,"purdTamount":0.00,"purdDiscount":0.0,"purdBonus":0.0,"purdStatus":"POSTED","purdPreviousQty":0.0
+,"purdRemarks":"","purdMtradePrice":0.00,"purdExpiryDt":null,"_purdPdtCode":"Sony T105 Phone","total"
+:null,"purdSerialNo":"","purInvono":"45000","purDate":"03/01/2016","purAccCode":1,"_purAccCode":"Default"
+},{"purdId":32,"purdPurId":14,"purdPdtCode":4,"purdQty":1.0,"purdPrice":19000.00,"purdTamount":0.00,"purdDiscount"
+:0.0,"purdBonus":0.0,"purdStatus":"","purdPreviousQty":0.0,"purdRemarks":"","purdMtradePrice":0.00,"purdExpiryDt"
+:null,"_purdPdtCode":"Wiko Highwayj","total":null,"purdSerialNo":"","purInvono":"4545444","purDate":"19
+/02/2016","purAccCode":1,"_purAccCode":"Default"},{"purdId":33,"purdPurId":14,"purdPdtCode":4,"purdQty"
+:1.0,"purdPrice":19000.00,"purdTamount":0.00,"purdDiscount":0.0,"purdBonus":0.0,"purdStatus":"","purdPreviousQty"
+:0.0,"purdRemarks":"","purdMtradePrice":0.00,"purdExpiryDt":null,"_purdPdtCode":"Wiko Highwayj","total"
+:null,"purdSerialNo":"","purInvono":"4545444","purDate":"19/02/2016","purAccCode":1,"_purAccCode":"Default"
+}]}

@@ -10,10 +10,11 @@ Ext.define('InventoryApp.store.purchases.PurchaseRPTs',{
 	//remoteSort: true,
    // remoteFilter: true,
     //remoteGroup: true,
-	//autoLoad: true,
-    pageSize: 20,
+	//autoLoad: true,	   
+    pageSize:10,
     proxy: {
-        type: 'ajax',      
+        type: 'ajax',  
+        //url:'resources/test.json',
         api: {           
             read    : 'purchase/fetchRptPurchases.action'            
         },

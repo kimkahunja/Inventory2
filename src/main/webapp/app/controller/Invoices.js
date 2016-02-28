@@ -42,7 +42,7 @@ Ext.define('InventoryApp.controller.Invoices', {
             		//edit: this.editLocation,
             		//canceledit: this.cancel,
             		beforerender: this.loadRecords,
-            		itemcontextmenu: this.showContextMenu,
+            		//itemcontextmenu: this.showContextMenu,
             		selectionchange: this.gridSelectionChange,
             		viewready: this.onViewReady,
             		//celldblclick:this.onCellClick,

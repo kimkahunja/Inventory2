@@ -13,6 +13,10 @@ import net.sf.json.JSONObject;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -212,7 +216,12 @@ public class UserController extends BaseController {
 			
 		}
 		@RequestMapping(value="/updatePassword.action")
+		@Transactional
 		private @ResponseBody String updatePassword(HttpServletRequest request){
+			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+			TransactionStatus status = txnManager.getTransaction(def);
 			try{
 				Map<String, Object> map = new HashMap<String, Object>();
 				String userName=GlobalCC.CheckNullValues(request.getParameter("userName"));
@@ -222,12 +231,22 @@ public class UserController extends BaseController {
 				map.put("username", userName);
 				map.put("oldpassword", oldPassword);
 				userMapper.updatePassword(map);
-				jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
-				jsonResponse.setSuccess(true);	
-				jsonResponse.setData(null);	        
+				Object rtnval=map.get("rtnval");
+				if(rtnval.toString().equalsIgnoreCase("S")){
+					txnManager.commit(status);
+					jsonResponse.addMessage("message", "Password successfully Updated...");
+					jsonResponse.setSuccess(true);	
+					jsonResponse.setData(null);	
+				}else{
+			    	txnManager.rollback(status);
+			    	jsonResponse.setSuccess(false);	
+					jsonResponse.setData(null);
+					jsonResponse.addMessage("message", rtnval.toString());
+				}    
 		        return jsonObject(jsonResponse);
 			}catch(Exception e){
 				e.printStackTrace();
+				txnManager.rollback(status);
 				jsonResponse.setData(null);
 				jsonResponse.setSuccess(false);
 				jsonResponse.addMessage("message", e.getLocalizedMessage());

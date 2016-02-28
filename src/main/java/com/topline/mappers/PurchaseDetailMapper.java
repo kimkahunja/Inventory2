@@ -2,7 +2,9 @@ package com.topline.mappers;
 
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
+import com.topline.model.Summary;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
+
 import java.util.List;
 import java.util.Map;
 
@@ -99,5 +101,5 @@ public interface PurchaseDetailMapper {
   //add methods
     List<PurchaseDetailWrapper> fetchPurchaseDetails(Map<String,Object> map);
     List<PurchaseDetailWrapper> fetchRptPurchases(Map<String,Object> map);
-
+    List<Summary>fetchRptPurchasesCount(Map<String,Object> map);
 }

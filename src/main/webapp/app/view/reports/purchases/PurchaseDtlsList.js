@@ -23,7 +23,9 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
 						{
 	                       text: 'Description',
 	                       dataIndex: '_purdPdtCode',
-	                       menuDisabled:true,
+	                      // autoSizeColumn : true,
+	                       flex:1
+	                       //menuDisabled:true,
 	                       //sortable:false
 		                   }, 	
                    
@@ -57,10 +59,30 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
                    
                ]
                
-           },
+           },           
            features: [{
                ftype: 'summary'
-           }],         
+           }], 
+          /* viewConfig : {
+       	    listeners : {
+       	     refresh : function (dataview) {
+       	      Ext.each(dataview.panel.columns, function (column) {
+       	       if (column.autoSizeColumn === true)
+       	        column.autoSize();
+       	      })
+       	     }
+       	    }
+       	   },*/
+           dockedItems: [                         
+                         {
+                             xtype: 'pagingtoolbar',
+                             ui: 'footer',
+                             defaultButtonUI: 'default',
+                             dock: 'bottom',
+                             displayInfo: true,
+                             store: me.getStore()
+                         }
+                     ]
        });
        me.callParent( arguments );
    }        

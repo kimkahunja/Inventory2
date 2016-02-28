@@ -31,8 +31,17 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                selector: '[xtype=reports.purchases.purchasegprod]'     
          }
        ],
-       init: function() {
+       init: function() {    	   
+    	  // console.log('getPurchasesPurchaseRPTsStore');
+    	  /*this.getPurchasesPurchaseRPTsStore().addListener('beforeload',
+    			   this.beforeLoadPurchaseRPT,
+    			    this);*/
+    	  this.getPurchasesPurchaseRPTsStore().on({
+    		  beforeload: this.beforeLoadPurchaseRPT,
+    	        scope: this
+    	    });
            this.listen({
+        	   
                controller: {},
                component: {
                	'grid[xtype=reports.purchases.purchaselist]': {               		
@@ -60,7 +69,11 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                	}
                },
                global: {},
-               store: {},
+               /*store: {
+            	   '#PurchaseRPT' : {
+            		   beforeload : this.onMainStoreLoad
+            	   }
+               },*/
                //proxy: {} 
            });
        }, 
@@ -101,8 +114,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
     	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),
     	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamTo']")[0].getValue()),
-    	   product=Ext.ComponentQuery.query("combo[name='purdPdtCodeRpt']")[0].getValue();
-    	   //console.log('AccCode=='+accCode+' status== '+status+' dateFrom== '+dateFrom+' dateTo == '+dateTo);
+    	   product=Ext.ComponentQuery.query("combo[name='purdPdtCodeRpt']")[0].getValue();    	  
     	   var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0],
      	    selection = reportGrp.getGroupValue();     	    
        	 
@@ -149,7 +161,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
         		return;
    			   } 
    			this.getPurchasegprodList().getStore().load({params: {                   
-	           	accCode: accCode, 
+	           	accCode: null, 
 	        	status:status,
 	        	dateFrom:dateFrom,
 	        	dateTo:dateTo,
@@ -210,5 +222,40 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
 			   container.add([ { xtype: 'reports.purchases.purchasegprod'  }]); 
 		   }
 	  	 
-     }
+     },
+   beforeLoadPurchaseRPT:function(myStore, operation, eOpts){
+	   var accCode=Ext.ComponentQuery.query("combo[name='purAccCodeRpt']")[0].getValue(),
+	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
+	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),
+	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamTo']")[0].getValue()),
+	   product=Ext.ComponentQuery.query("combo[name='purdPdtCodeRpt']")[0].getValue();    	  
+	   var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgPurchaseReport']")[0].getChecked()[0],
+ 	    selection = reportGrp.getGroupValue();
+	   if(selection=='G_SUP'){
+		   product=null;
+	   }else if(selection=='G_PROD'){
+		   accCode=null;
+	   }
+	   var proxy = myStore.getProxy();
+	   proxy.setExtraParam('accCode', accCode);
+	   proxy.setExtraParam('status', status);
+	   proxy.setExtraParam('dateFrom', dateFrom);
+	   proxy.setExtraParam('dateTo', dateTo);
+	   proxy.setExtraParam('root', 'N');
+	   proxy.setExtraParam('product', product);   
+	  
+   },
+   onMainStoreLoad: function(me,records,success){
+	   Ext.MessageBox.show({
+           title   : 'Data Load Error',
+           msg   : 'The data encountered a load error, please try again in a few minutes.'
+                   });
+	 /*  if(!success){
+	        Ext.MessageBox.show({
+	           title   : 'Data Load Error',
+	           msg   : 'The data encountered a load error, please try again in a few minutes.'
+	                   });
+	               }*/
+	       },
+
 });

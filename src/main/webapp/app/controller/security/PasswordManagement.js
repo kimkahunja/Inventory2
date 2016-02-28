@@ -7,12 +7,21 @@ Ext.define('InventoryApp.controller.security.PasswordManagement', {
     views: [
             'security.PasswordManagement'           
         ],
+   refs:[
+			{
+			    ref: 'PassManagementForm',
+			    selector: '[xtype=security.passwordmanagement]'
+			},
+         ],     
         init: function() {
             this.listen({
                 controller: {},
                 component: {
                 	'button#pwdSubmit':{
                 		click:this.changePassword
+                	},
+                	'window[xtype=security.passwordmanagement]':{
+                		close:this.close
                 	}
                 },
                 global: {},
@@ -21,11 +30,33 @@ Ext.define('InventoryApp.controller.security.PasswordManagement', {
             });
         }, 
  changePassword:function( button, e, eOpts ){
-	 var formPanel = button.up('form'),
-	 passwordManagement = button.up('security.passwordmanagement'),
+	 var formPanel = this.getPassManagementForm(),	 
 	 userName = InventoryApp.Utilities.userName,
-     pass = formPanel.down('textfield[name=confirmPassword]').getValue(),
-     oldPass = formPanel.down('textfield[name=oldPassword]').getValue();;
+     pass = Ext.ComponentQuery.query("textfield[name='confirmPassword']")[0].getValue(),
+     pass1 = Ext.ComponentQuery.query("textfield[name='newPassword']")[0].getValue(),     
+     oldPass = Ext.ComponentQuery.query("textfield[name='oldPassword']")[0].getValue();
+	 //console.log('userName=='+userName+' pass== '+pass+' oldPass=== '+oldPass);
+	 if(oldPass.trim().length==0){
+			Ext.Msg.show(
+                 {                    
+                    title : 'Validation',
+                    msg : 'Old Password is required...',
+                    icon : Ext.Msg.INFO,
+                    buttons : Ext.Msg.OK
+                 }
+                 );
+ 		return;
+		}else if(pass.trim().length==0||pass1.trim().length==0){
+			Ext.Msg.show(
+	                 {                    
+	                    title : 'Validation',
+	                    msg : 'New Password is required...',
+	                    icon : Ext.Msg.INFO,
+	                    buttons : Ext.Msg.OK
+	                 }
+	                 );
+	 		return;
+		}
 	 if (formPanel.getForm().isValid()) {
 		 pass = InventoryApp.util.MD5.encode(pass);
 		 oldPass=InventoryApp.util.MD5.encode(oldPass);
@@ -40,9 +71,9 @@ Ext.define('InventoryApp.controller.security.PasswordManagement', {
                  var result = Ext.JSON.decode(conn.responseText, true);              
 
                  if (result.success) {
-                	 InventoryApp.util.Alert.msg('Success!', 'Password updated successfully.');
-                	 passwordManagement.close();                     
-                     	
+                	 InventoryApp.util.Alert.msg('Success!', 'Password updated successfully.');                	 
+                	 formPanel.getForm().reset();
+                	 //window.location.reload();	
                  } else {
                  	InventoryApp.util.Util.showErrorMsg(result.messages.message);
                  }
@@ -55,5 +86,10 @@ Ext.define('InventoryApp.controller.security.PasswordManagement', {
              }
          });
 	 }
+ },
+ close:function close( panel, eOpts ){
+	 console.log("Close button clicked.");
+	 panel.removeAll();
+	 //panel.close();
  }
 });

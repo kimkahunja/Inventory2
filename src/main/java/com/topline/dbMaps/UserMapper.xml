@@ -334,10 +334,13 @@
 		AND userName= #{username,jdbcType=VARCHAR}
 		AND  password = #{password,jdbcType=VARCHAR}
      </select>
- <update id="updatePassword" parameterType="java.util.HashMap" >
+<!--  <update id="updatePassword" parameterType="java.util.HashMap" >
  	update user
     set password = #{password,jdbcType=VARCHAR}      
     where userName= #{username,jdbcType=VARCHAR}
     and password=#{oldpassword,jdbcType=VARCHAR}
- </update>    
+ </update>  -->
+ <select id="updatePassword" parameterType="java.util.HashMap" statementType="CALLABLE" resultType="hashmap">    
+	{ CALL update_password(#{username, mode=IN, jdbcType=VARCHAR},#{oldpassword, mode=IN, jdbcType=VARCHAR},#{password, mode=IN, jdbcType=VARCHAR},#{rtnval, mode=OUT, jdbcType=VARCHAR})}
+</select>   
 </mapper>
