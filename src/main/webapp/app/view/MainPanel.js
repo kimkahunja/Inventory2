@@ -14,11 +14,19 @@ Ext.define('InventoryApp.view.MainPanel', {
             closable: false,
             iconCls: 'home',
             title: 'Home',
-            layout: 'fit'
-            // items: [{
-            //     xtype: 'uxiframe',
-            //     src: ''
-            // }]
+            layout: 'fit',
+             items: [ /*{
+                 xtype: 'component',
+                 autoEl: {
+                     src: 'https://www.subway.com/menu/PDFS/MenuPDF/USA_Menu.pdf',
+                     tag: 'iframe',
+                     style: 'height: 100%; width: 100%; border: none'
+                 }
+             }*/
+              {
+            	xtype:'dashboard'  
+              }        
+                     ]
         }
     ]
 });

@@ -93,7 +93,8 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.payment.Payment',
            // 'InventoryApp.view.payment.PaymentLanding',
             'InventoryApp.view.payment.PaymentDtl',
-            'security.PasswordManagement'
+            'security.PasswordManagement',
+            'InventoryApp.view.Dashboard'
         ],
     controllers: [
        // 'App',

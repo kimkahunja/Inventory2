@@ -32,10 +32,26 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
          }
        ],
        init: function() {    	   
-    	  // console.log('getPurchasesPurchaseRPTsStore');
-    	  /*this.getPurchasesPurchaseRPTsStore().addListener('beforeload',
-    			   this.beforeLoadPurchaseRPT,
-    			    this);*/
+    	   var body=Ext.getBody();
+    	   //create the downloadframe at the init of your app
+    	    this.downloadFrame = body.createChild({
+    	                    tag: 'iframe'
+    	                        , cls: 'x-hidden'
+    	                        , id: 'iframe'
+    	                        , name: 'iframe'
+    	                });
+    	    //create the downloadform at the init of your app
+
+
+    	                this.downloadForm = body.createChild({
+    	                    tag: 'form'
+    	                        , cls: 'x-hidden'
+    	                        , id: 'form'
+    	                        , target: 'iframe'
+    	                });
+    	      
+    	        var params = new Object();
+    	        
     	  this.getPurchasesPurchaseRPTsStore().on({
     		  beforeload: this.beforeLoadPurchaseRPT,
     	        scope: this
@@ -175,7 +191,9 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
        },
        printPurchases:function( button, e, eOpts ){
     	   Ext.Ajax.request({
-               url: 'reports/purchasesRpt.action',            
+               url: 'reports/purchasesRpt.action', 
+               form: this.downloadForm,
+               isUpload: true,
             scope:this,
             //method to call when the request is successful
             //success: InventoryApp.Utilities.onSaveSuccess,
