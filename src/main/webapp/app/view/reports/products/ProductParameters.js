@@ -12,14 +12,15 @@ Ext.define('InventoryApp.view.reports.products.ProductParameters',{
                  margins: 5
              },
              items:[{
-            	 		xtype: 'container',
+            	 		xtype: 'panel',
             	 		//layout: 'vbox',
             	 		items:[	
 							{
-								xtype: 'container',
-							    //layout: 'vbox',  
-							    frame:true,
-							    border:1,
+								xtype: 'panel',
+								layout:'fit',  
+							   // frame:true,
+							  //  border:1,
+							    height:320,
 							    flex:1,
 							    items:[
 							          {

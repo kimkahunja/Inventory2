@@ -8,6 +8,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.TransactionDefinition;
@@ -31,10 +34,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
 import com.topline.model.Purchase;
+import com.topline.model.Summary;
 import com.topline.model.wrappers.InvoiceDtlsWrapper;
 import com.topline.model.wrappers.InvoiceWrapper;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
@@ -343,7 +349,8 @@ public class InvoiceController extends BaseController {
 					if (start == null) {
 						start = "0";
 					}
-					
+					map.put("start", start==null?null:new BigDecimal(start));
+					map.put("limit", limit==null?null:new BigDecimal(limit));
 					map.put("invStatus", root==null? "PENDING":status);
 					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
 					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
@@ -351,10 +358,16 @@ public class InvoiceController extends BaseController {
 					map.put("invId",invId==null?null:new BigDecimal(invId));
 					map.put("product",product==null?null:new BigDecimal(product));
 					List<InvoiceDtlsWrapper>list=invoiceDtlsMapper.fetchRptInvoices(map);
-					
-					if (list != null) {
-						int count = list.size();
+					List<Summary>summaryList=invoiceDtlsMapper.fetchRptInvoicesCount(map);
+					JSONObject myObj = new JSONObject();
+					JSONArray arrayObj=new JSONArray();
+					for(int i=0;i<summaryList.size();i++){
+						BigDecimal count = summaryList.get(i).getMyCount();
+						BigDecimal summary=summaryList.get(i).getMySummary();
 						data.put("count", count);
+						myObj.put("total", summary);
+						arrayObj.add(myObj);
+						data.put("summary", arrayObj);
 					}
 				
 					data.put("data", list);

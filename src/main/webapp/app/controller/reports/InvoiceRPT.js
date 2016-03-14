@@ -114,7 +114,9 @@ Ext.define('InventoryApp.controller.reports.InvoiceRPT', {
   	    
  	  	 if (selection=='G_INV'){ 	
  	  		   var grid =this.getInvoiceList(); 
-		   	  	this.getInvoiceList().getStore().load({params: {                   
+	 	  		 var store=this.getInvoiceList().getStore();
+	   	  		 store.currentPage = 1;
+	   	  	     store.load({params: {                   
 		           	accCode: accCode, 
 		        	status:status,
 		        	dateFrom:dateFrom,
@@ -144,7 +146,9 @@ Ext.define('InventoryApp.controller.reports.InvoiceRPT', {
                       );
       		return;
  			   }
- 			this.getInvoicegsupList().getStore().load({params: {                   
+ 			  var store=this.getInvoicegsupList().getStore();
+	   	  		 store.currentPage = 1;   
+	   	       	store.load({params: {                   
 	           	accCode: accCode, 
 	        	status:status,
 	        	dateFrom:dateFrom,
@@ -174,7 +178,9 @@ Ext.define('InventoryApp.controller.reports.InvoiceRPT', {
                       );
       		return;
  			   } 
- 			this.getInvoicegProdList().getStore().load({params: {                   
+ 			var store=this.getInvoicegProdList().getStore();
+  	  		 store.currentPage = 1; 
+  	  		 store.load({params: {                   
 	           	accCode: accCode, 
 	        	status:status,
 	        	dateFrom:dateFrom,
@@ -193,8 +199,9 @@ Ext.define('InventoryApp.controller.reports.InvoiceRPT', {
   	     container=Ext.ComponentQuery.query('[xtype=reports.reportsmainview]')[0],
   	     supplierCombo=Ext.ComponentQuery.query("combobox[name='invAccCodeRpt']")[0],
   	     productCombo=Ext.ComponentQuery.query("combobox[name='invdPdtCodeRpt']")[0];
+    	// this.clearGridStores();
     	 container.removeAll();
-	  	 if (selection=='G_INV'){
+	  	 if (selection=='G_INV'){	  		
 	  		 if(supplierCombo.isVisible){
 	  			supplierCombo.hide();
 	  		 }
@@ -202,6 +209,10 @@ Ext.define('InventoryApp.controller.reports.InvoiceRPT', {
 	  			productCombo.hide();
 	  		 }
 	  		container.add([{ xtype: 'reports.invoice.invoiceginv'  }]);
+	  		 var gridG_INV =this.getInvoiceList(), 
+			  storeG_INV=this.getInvoiceList().getStore();
+			  storeG_INV.removeAll();
+			  gridG_INV.getView().refresh();
 		   }else if(selection=='G_SUP'){
 			  /* if(!supplierCombo.isVisible){
 		  			supplierCombo.show();
@@ -209,12 +220,34 @@ Ext.define('InventoryApp.controller.reports.InvoiceRPT', {
 			   productCombo.hide();
 			   supplierCombo.show();
 			   container.add([ { xtype: 'reports.invoice.invoicegsup'  }]);
+			   var gridG_SUP =this.getInvoicegsupList(), 
+				storeG_SUP=this.getInvoicegsupList().getStore();
+				 storeG_SUP.removeAll(); 
 		   }else if(selection=='G_PROD'){
 			   supplierCombo.hide();
 			   productCombo.show();
-			   container.add([ { xtype: 'reports.invoice.invoicegprod'  }]); 
+			   container.add([ { xtype: 'reports.invoice.invoicegprod'  }]);
+			   
+			   var  storeG_PROD=this.getInvoicegProdList().getStore();
+				  storeG_PROD.removeAll();
 		   }
 	  	 
-     }
+     },
+  clearGridStores:function(){
+	  var gridG_INV =this.getInvoiceList(), 
+		  storeG_INV=this.getInvoiceList().getStore();
+		  storeG_INV.removeAll();
+		  gridG_INV.getView().refresh();
+		  //refresh G_SUP
+		  var gridG_SUP =this.getInvoicegsupList(); 
+		 //storeG_SUP=this.getInvoicegsupList().getStore();
+		  //storeG_SUP.removeAll();
+		  gridG_SUP.getView().refresh();
+		  //refresh G_PROD
+		  var gridG_PROD =this.getInvoicegProdList(); 
+		  //storeG_PROD=this.getInvoicegProdList().getStore();
+		 // storeG_PROD.removeAll();
+		  gridG_PROD.getView().refresh();
+  }   
 });
     

@@ -2,6 +2,7 @@ package com.topline.mappers;
 
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceExample;
+import com.topline.model.ReportSummary;
 import com.topline.model.wrappers.InvoiceWrapper;
 
 import java.util.List;
@@ -103,4 +104,5 @@ public interface InvoiceMapper {
     String fetchInvoiceNumber(Map<String,Object> map);
     int updateNextInvoiceNumber(Map<String,Object> map);
     Object postInvoice(Map<String,Object> map);
+    List<ReportSummary>fetchResultSummary(Map<String,Object> map);
 }

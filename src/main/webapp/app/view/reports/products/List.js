@@ -23,10 +23,11 @@ Ext.define('InventoryApp.view.reports.products.List',{
                     {
                         text: 'Name',
                         dataIndex: 'pdtDescription',
-                        renderer: function( value, metaData, record, rowIndex, colIndex, store, view ) {
+                        /*renderer: function( value, metaData, record, rowIndex, colIndex, store, view ) {
                             return value + '- ' + record.get( 'pdtShtDesc' );
-                        },
-                        width: 200,
+                        },*/
+                        width: 300,
+                        //flex:1,
                         filter: true
                     },                   
                     {

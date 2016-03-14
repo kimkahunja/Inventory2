@@ -38,11 +38,22 @@ Ext.define('InventoryApp.Application', {
                'InventoryApp.util.Util',
                'InventoryApp.model.menu.Root',
                'InventoryApp.model.menu.Item',
-              // 'InventoryApp.store.security.Permissions'
+               'InventoryApp.dashboard.Portal',
+               'InventoryApp.dashboard.Portlet',
+               'InventoryApp.dashboard.PortalColumn',               
+               'InventoryApp.dashboard.PortalDropZone',
+               'InventoryApp.dashboard.PortalPanel', 
+               'InventoryApp.dashboard.ChartPurchaseSummary',
+               'InventoryApp.dashboard.GridPortlet',
+               'Ext.chart.axis.Category'
+             //  'InventoryApp.dashboard.PortalMainContainer',  
+              
+               //'InventoryApp.store.security.Permissions'
               // 'kahunja.domain.Proxy',
               // 'ux/form/field/OperatorButton',
               // 'ux/grid/column/ActionPro',       
              //  'ux/grid/AutoResizer'
+               
            ],
     stores: [
           	'standard.Status', 

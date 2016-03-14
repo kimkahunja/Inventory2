@@ -10,7 +10,7 @@ Ext.define('InventoryApp.store.invoice.InvoiceRPTs',{
    // remoteFilter: true,
     //remoteGroup: true,
 	//autoLoad: true,
-    pageSize: 20,
+    pageSize: 10,
     proxy: {
         type: 'ajax',      
         api: {           

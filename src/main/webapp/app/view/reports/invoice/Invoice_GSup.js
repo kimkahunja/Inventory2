@@ -43,7 +43,7 @@ Ext.define('InventoryApp.view.reports.invoice.Invoice_GSup',{
                    }, 
                    {
                        xtype: 'numbercolumn',
-                       summaryType: 'sum',
+                       summaryType: 'remote',
                        dataIndex: 'total',
                        text: 'Total'
                    },
@@ -60,7 +60,8 @@ Ext.define('InventoryApp.view.reports.invoice.Invoice_GSup',{
                
            },
            features: [{
-               ftype: 'summary'
+               ftype: 'summary',
+               remoteRoot: 'data.summary', // summary key in the server response
            }], 
            /*viewConfig : {
        	    listeners : {
@@ -72,6 +73,17 @@ Ext.define('InventoryApp.view.reports.invoice.Invoice_GSup',{
        	     }
        	    }
        	   },*/
+           dockedItems: [                         
+                         {
+                             xtype: 'pagingtoolbar',
+                             ui: 'footer',
+                             defaultButtonUI: 'default',
+                             dock: 'bottom',
+                             displayInfo: true,
+                             store: me.getStore()
+                            
+                         }
+                     ]
        });
        me.callParent( arguments );
    }        

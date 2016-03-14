@@ -2,7 +2,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
     extend: 'InventoryApp.controller.Base',
     stores: [
     	'purchases.Purchases',
-    	'purchases.PurchasesDtls',
+    	'purchases.PurchasesDtlsRpt',
     	'account.AccountsRpt',
     	'purchases.PurchaseRPTs'
     ],
@@ -114,6 +114,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
      	  var me = this,
      	  grid = me.getPurchaseDtlsList(),
            store = grid.getStore();
+     	// InventoryApp.Utilities.rpt_pur_id=records[0].get('purId');
            if (records[0]) {               
                 store.clearFilter( true );
           		store.load({
@@ -135,7 +136,9 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
      	    selection = reportGrp.getGroupValue();     	    
        	 
    	  	 if (selection=='G_PUR'){
-		   	  	this.getPurchaseList().getStore().load({params: {                   
+   	  		 var store=this.getPurchaseList().getStore();
+   	  		 store.currentPage = 1;
+   	  		 store.load({params: {                   
 		           	accCode: accCode, 
 		        	status:status,
 		        	dateFrom:dateFrom,
@@ -155,7 +158,9 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                         );
         		return;
    			   }
-   			this.getPurchasegsupList().getStore().load({params: {                   
+   			var store=this.getPurchasegsupList().getStore();
+  	  		 store.currentPage = 1;  
+  	  		 store.load({params: {                   
 	           	accCode: accCode, 
 	        	status:status,
 	        	dateFrom:dateFrom,
@@ -176,7 +181,9 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
                         );
         		return;
    			   } 
-   			this.getPurchasegprodList().getStore().load({params: {                   
+   			var store=this.getPurchasegprodList().getStore();
+ 	  		 store.currentPage = 1;  
+ 	  		store.load({params: {                   
 	           	accCode: null, 
 	        	status:status,
 	        	dateFrom:dateFrom,
@@ -227,6 +234,8 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
 	  			productCombo.hide();
 	  		 }
 	  		container.add([{ xtype: 'reports.purchases.purchasegpur'  }]);
+	  		var storeG_INV=this.getPurchaseList().getStore();
+			  storeG_INV.removeAll();
 		   }else if(selection=='G_SUP'){
 			  /* if(!supplierCombo.isVisible){
 		  			supplierCombo.show();
@@ -234,10 +243,14 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
 			   productCombo.hide();
 			   supplierCombo.show();
 			   container.add([ { xtype: 'reports.purchases.purchasegsup'  }]);
+			   var storeG_SUP=this.getPurchasegsupList().getStore();
+				 storeG_SUP.removeAll(); 
 		   }else if(selection=='G_PROD'){
 			   supplierCombo.hide();
 			   productCombo.show();
 			   container.add([ { xtype: 'reports.purchases.purchasegprod'  }]); 
+			   var  storeG_PROD=this.getPurchasegprodList().getStore();
+				  storeG_PROD.removeAll();
 		   }
 	  	 
      },

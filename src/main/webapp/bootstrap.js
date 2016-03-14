@@ -22,7 +22,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "Ext.ux.Rixo": "app/ux/Rixo",
   "InventoryApp": "app",
-  "overrides.grid.RowEditor": "overrides/grid/RowEditor.js"
+  "overrides.grid.feature.RemoteSummary": "overrides/grid/feature/RemoteSummary.js"
 });
 
 Ext.ClassManager.addNameAlternateMappings({
@@ -869,7 +869,14 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.controller.reports.ProductRPT": [],
   "InventoryApp.controller.reports.PurchaseRPT": [],
   "InventoryApp.controller.security.Groups": [],
+  "InventoryApp.controller.security.PasswordManagement": [],
   "InventoryApp.controller.security.Users": [],
+  "InventoryApp.dashboard.GridPortlet": [],
+  "InventoryApp.dashboard.PortalColumn": [],
+  "InventoryApp.dashboard.PortalDropZone": [],
+  "InventoryApp.dashboard.PortalMainContainer": [],
+  "InventoryApp.dashboard.PortalPanel": [],
+  "InventoryApp.dashboard.Portlet": [],
   "InventoryApp.domain.Proxy": [],
   "InventoryApp.model.Base": [],
   "InventoryApp.model.account.Account": [],
@@ -933,6 +940,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.util.SessionMonitor": [],
   "InventoryApp.util.Util": [],
   "InventoryApp.ux.form.field.RemoteComboBox": [],
+  "InventoryApp.view.Dashboard": [],
   "InventoryApp.view.Header": [],
   "InventoryApp.view.Login": [],
   "InventoryApp.view.Main": [],
@@ -990,11 +998,13 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.view.security.Groups": [],
   "InventoryApp.view.security.GroupsEdit": [],
   "InventoryApp.view.security.GroupsList": [],
+  "InventoryApp.view.security.PasswordManagement": [],
   "InventoryApp.view.security.Profile": [],
   "InventoryApp.view.security.Users": [],
   "InventoryApp.view.security.UsersList": [],
   "InventoryApp.view.units.UnitList": [],
-  "overrides.grid.RowEditor": []
+  "overrides.grid.RowEditor": [],
+  "overrides.grid.feature.RemoteSummary": []
 });
 
 Ext.ClassManager.addNameAliasMappings({
@@ -2017,7 +2027,24 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.controller.reports.ProductRPT": [],
   "InventoryApp.controller.reports.PurchaseRPT": [],
   "InventoryApp.controller.security.Groups": [],
+  "InventoryApp.controller.security.PasswordManagement": [],
   "InventoryApp.controller.security.Users": [],
+  "InventoryApp.dashboard.GridPortlet": [
+    "widget.dashboard.gridportlet"
+  ],
+  "InventoryApp.dashboard.PortalColumn": [
+    "widget.dashboard.portalcolumn"
+  ],
+  "InventoryApp.dashboard.PortalDropZone": [],
+  "InventoryApp.dashboard.PortalMainContainer": [
+    "widget.dashboard.portalmaincontainer"
+  ],
+  "InventoryApp.dashboard.PortalPanel": [
+    "widget.dashboard.portalpanel"
+  ],
+  "InventoryApp.dashboard.Portlet": [
+    "widget.dashboard.portlet"
+  ],
   "InventoryApp.domain.Proxy": [],
   "InventoryApp.model.Base": [],
   "InventoryApp.model.account.Account": [],
@@ -2138,6 +2165,9 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.util.Util": [],
   "InventoryApp.ux.form.field.RemoteComboBox": [
     "widget.ux.form.field.remotecombobox"
+  ],
+  "InventoryApp.view.Dashboard": [
+    "widget.dashboard"
   ],
   "InventoryApp.view.Header": [
     "widget.appheader"
@@ -2308,6 +2338,9 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.view.security.GroupsList": [
     "widget.groupslist"
   ],
+  "InventoryApp.view.security.PasswordManagement": [
+    "widget.security.passwordmanagement"
+  ],
   "InventoryApp.view.security.Profile": [
     "widget.profile"
   ],
@@ -2320,7 +2353,8 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.view.units.UnitList": [
     "widget.units.unitlist"
   ],
-  "overrides.grid.RowEditor": []
+  "overrides.grid.RowEditor": [],
+  "overrides.grid.feature.RemoteSummary": []
 });
 
 Ext.setVersion("ext-theme-base", "4.2.1");

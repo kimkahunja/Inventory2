@@ -1,9 +1,9 @@
 /*
- * Store for managing Purchases dtls
+ * Store for managing Purchases dtls reports
  */
-Ext.define('InventoryApp.store.purchases.PurchasesDtls',{
+Ext.define('InventoryApp.store.purchases.PurchasesDtlsRpt',{
 	extend:'Ext.data.Store',
-	alias: 'store.purchases.purchasesdtls',
+	alias: 'store.purchases.purchasesdtlsrpt',
 	requires:[
 	          'InventoryApp.model.purchases.PurchaseDtls'
 	          ],
@@ -14,13 +14,13 @@ Ext.define('InventoryApp.store.purchases.PurchasesDtls',{
     remoteFilter: true,
     remoteGroup: true,
 	//autoLoad: true,
-    pageSize: 20,
+    pageSize: 10,
     proxy: {
         type: 'ajax',      
         api: {
-            create  : 'purchase/savePurchase.action',
-            read    : 'purchase/fetchPurchaseDtls.action',
-            update  : 'purchase/savePurchase.action',
+           // create  : 'purchase/savePurchase.action',
+            read    : 'purchase/fetchPurchaseDtls.action'
+           // update  : 'purchase/savePurchase.action',
             //destroy : 'locations/deleteLocation.action'
         },
         reader: {

@@ -1,15 +1,18 @@
 Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
 	extend:'Ext.grid.Panel',
 	alias:'widget.reports.purchases.purchasedtlslist',		
-	store: 'purchases.PurchasesDtls',
+	store: 'purchases.PurchasesDtlsRpt',	
     initComponent: function() {
-       var me = this;
-       Ext.applyIf(me,{          
+       var me = this; 
+       
+       Ext.applyIf(me,{ 
+    	  
            columns: {
                defaults: {
             	   menuDisabled:true,
             	   sortable:false
                },
+                  
                items: [
 						Ext.create('Ext.grid.RowNumberer',
 						        {
@@ -61,7 +64,8 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
                
            },           
            features: [{
-               ftype: 'summary'
+               ftype: 'summary',
+              // remoteRoot: 'data.summary', // summary key in the server response
            }], 
           /* viewConfig : {
        	    listeners : {
@@ -73,7 +77,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
        	     }
        	    }
        	   },*/
-           dockedItems: [                         
+           /*dockedItems: [                         
                          {
                              xtype: 'pagingtoolbar',
                              ui: 'footer',
@@ -81,8 +85,9 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
                              dock: 'bottom',
                              displayInfo: true,
                              store: me.getStore()
+                            //store:this.store
                          }
-                     ]
+                     ]*/
        });
        me.callParent( arguments );
    }        

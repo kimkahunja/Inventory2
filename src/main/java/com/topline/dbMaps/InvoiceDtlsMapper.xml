@@ -415,5 +415,34 @@
        <if test="dateFrom !=null"  >
       	AND  inv_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
       </if>
+       <if test="limit !=null">
+       LIMIT #{start,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+      </if>
  </select>
+ 	<resultMap id="SummaryResultMap" type="com.topline.model.Summary" >
+    	 <result column="myCount" property="myCount" jdbcType="DECIMAL" />
+    	 <result column="mySum" property="mySummary" jdbcType="DECIMAL" />
+    </resultMap>
+   <select id="fetchRptInvoicesCount" parameterType="java.util.HashMap" resultMap="SummaryResultMap" >
+	SELECT  COUNT(invd_id) AS myCount,SUM(invd_qty*invd_price) AS mySum	
+		FROM inv_invoice_dtls, inv_products,inv_invoices,inv_accounts
+		WHERE invd_pdt_code=pdt_code
+		 AND inv_id=invd_inv_id
+		 AND acc_code=inv_acc_code
+		 <if test="invId != null">
+          AND  invd_inv_id =  #{invId,jdbcType=INTEGER}
+      </if>	
+      <if test="accCode != null">
+          AND  inv_acc_code =  #{accCode,jdbcType=INTEGER}
+      </if>
+      <if test="product != null">
+          AND  pdt_code =  #{product,jdbcType=INTEGER}
+      </if>
+      <if test="invStatus != null">
+          AND  inv_status =  #{invStatus,jdbcType=VARCHAR}
+      </if>	
+       <if test="dateFrom !=null"  >
+      	AND  inv_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
+   </select>  
 </mapper>

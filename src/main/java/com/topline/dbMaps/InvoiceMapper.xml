@@ -412,5 +412,17 @@
  </update> 
   <select id="postInvoice" parameterType="java.util.HashMap" statementType="CALLABLE" resultType="hashmap">    
 	{ CALL post_invoice(#{v_inv_id, mode=IN, jdbcType=INTEGER},#{postedBy, mode=IN, jdbcType=VARCHAR},#{v_count, mode=OUT, jdbcType=INTEGER})}
-</select>    
+</select>
+<resultMap id="ResultSummaryMapper"  type="com.topline.model.ReportSummary" >    
+    <result column="label" property="label" jdbcType="VARCHAR" /> 
+    <result column="value" property="value" jdbcType="DECIMAL" />  
+  </resultMap> 
+  <select id="fetchResultSummary" parameterType="java.util.HashMap" resultMap="ResultSummaryMapper">
+  		SELECT DATE_FORMAT(inv_date,'%M') as label,sum(invd_qty*invd_price) as value
+		FROM inv_invoices, inv_invoice_dtls
+		WHERE inv_id=invd_inv_id
+		AND inv_status="POSTED"
+		AND DATE_FORMAT(inv_date,'%Y')=DATE_FORMAT(sysdate(),'%Y')
+		GROUP BY DATE_FORMAT(inv_date,'%M')
+  </select>    
 </mapper>

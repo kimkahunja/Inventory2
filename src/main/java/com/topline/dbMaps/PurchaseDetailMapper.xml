@@ -464,7 +464,10 @@
        <if test="dateFrom !=null"  >
       	AND  pur_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
       </if>
+      <if test="limit !=null">
        LIMIT #{start,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+      </if>
+      
    </select>
     <resultMap id="SummaryResultMap" type="com.topline.model.Summary" >
     	 <result column="myCount" property="myCount" jdbcType="DECIMAL" />

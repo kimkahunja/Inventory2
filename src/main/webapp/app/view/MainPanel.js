@@ -24,7 +24,7 @@ Ext.define('InventoryApp.view.MainPanel', {
                  }
              }*/
               {
-            	xtype:'dashboard'  
+            	xtype:'dashboard.portal'  
               }        
                      ]
         }

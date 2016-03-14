@@ -40,7 +40,7 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GProd',{
                    }, 
                    {
                        xtype: 'numbercolumn',
-                       summaryType: 'sum',
+                       summaryType: 'remote',
                        dataIndex: 'total',
                        text: 'Total'
                    },
@@ -58,7 +58,8 @@ Ext.define('InventoryApp.view.reports.purchases.Purchase_GProd',{
                
            },
            features: [{
-               ftype: 'summary'
+               ftype: 'summary',
+               remoteRoot: 'data.summary', // summary key in the server response
            }], 
            /*viewConfig : {
        	    listeners : {

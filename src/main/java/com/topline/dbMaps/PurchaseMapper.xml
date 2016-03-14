@@ -382,5 +382,18 @@
    </select>
     <select id="postPurchase" parameterType="java.util.HashMap" statementType="CALLABLE">    
 	{ CALL post_purchases(#{v_pur_id, mode=IN, jdbcType=INTEGER},#{postedBy, mode=IN, jdbcType=VARCHAR},#{v_count, mode=OUT, jdbcType=INTEGER})}
-</select>  
+</select> 
+  <resultMap id="ResultSummaryMapper"  type="com.topline.model.ReportSummary" >    
+    <result column="label" property="label" jdbcType="VARCHAR" /> 
+    <result column="value" property="value" jdbcType="DECIMAL" />  
+  </resultMap> 
+  <select id="fetchResultSummary" parameterType="java.util.HashMap" resultMap="ResultSummaryMapper">
+  	SELECT DATE_FORMAT(pur_date,'%M') as label,sum(purd_qty*purd_price) as value
+		FROM inv_purchases, inv_purchases_details
+		WHERE pur_id=purd_pur_id
+		AND pur_status="POSTED"
+		AND DATE_FORMAT(pur_date,'%Y')=DATE_FORMAT(sysdate(),'%Y')
+		GROUP BY DATE_FORMAT(pur_date,'%M')
+		order by DATE_FORMAT(pur_date,'%m')
+  </select>
 </mapper>

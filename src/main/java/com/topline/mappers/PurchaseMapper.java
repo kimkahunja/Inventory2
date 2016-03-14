@@ -2,6 +2,7 @@ package com.topline.mappers;
 
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseExample;
+import com.topline.model.ReportSummary;
 import com.topline.model.wrappers.PurchaseWrapper;
 import com.topline.model.wrappers.SubLocationWrapper;
 
@@ -102,5 +103,5 @@ public interface PurchaseMapper {
     int save(Purchase record);  
     List<PurchaseWrapper> fetchPurchases(Map<String,Object> map);
     Object postPurchase(Map<String,Object> map);
-    
+    List<ReportSummary>fetchResultSummary(Map<String,Object> map);
 }

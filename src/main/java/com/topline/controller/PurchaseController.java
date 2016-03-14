@@ -53,10 +53,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
 import com.topline.model.PurchaseExample;
+import com.topline.model.ReportSummary;
 import com.topline.model.Summary;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
 import com.topline.model.wrappers.PurchaseWrapper;
@@ -191,12 +193,21 @@ public class PurchaseController extends BaseController {
 							return jsonObject(jsonResponse);
 						}else{
 							map.put("purId", new BigDecimal(id));
+							map.put("start", start==null?null:new BigDecimal(start));
+							map.put("limit", limit==null?null:new BigDecimal(limit));
 						}
 					
 						List<PurchaseDetailWrapper>list=purchaseDetailMapper.fetchPurchaseDetails(map);
-						if (list != null) {
-							int count = list.size();
+						List<Summary>summaryList=purchaseDetailMapper.fetchRptPurchasesCount(map);
+						JSONObject myObj = new JSONObject();
+						JSONArray arrayObj=new JSONArray();
+						for(int i=0;i<summaryList.size();i++){
+							BigDecimal count = summaryList.get(i).getMyCount();
+							BigDecimal summary=summaryList.get(i).getMySummary();
 							data.put("count", count);
+							myObj.put("total", summary);
+							arrayObj.add(myObj);
+							data.put("summary", arrayObj);
 						}
 					
 						data.put("data", list);
@@ -360,6 +371,33 @@ public class PurchaseController extends BaseController {
 						data.put("summary", arrayObj);
 					}
 					
+					data.put("data", list);
+					jsonResponse.setData(data);
+					jsonResponse.setSuccess(true);
+					System.out.println(jsonObject(jsonResponse));
+					return jsonObject(jsonResponse);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					jsonResponse.setData(null);
+					jsonResponse.setSuccess(false);
+					jsonResponse.addMessage("message", e.getLocalizedMessage());
+					return jsonObject(jsonResponse);
+				}
+			}
+			//fetchPurchaseSummary
+			@RequestMapping(value="/fetchPurchaseSummary.action", method=RequestMethod.GET)
+			private @ResponseBody
+			String fetchPurchaseSummary(HttpServletRequest request){
+				try{
+				    HashMap<String, Object> data = new HashMap<String, Object>();					
+					Map<String, Object> map = new HashMap<String, Object>();
+					List<ReportSummary>list=purchaseMapper.fetchResultSummary(map);
+					if (list != null) {
+						int count = list.size();
+						data.put("count", count);
+					}
+				
 					data.put("data", list);
 					jsonResponse.setData(data);
 					jsonResponse.setSuccess(true);

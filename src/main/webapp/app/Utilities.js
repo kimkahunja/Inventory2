@@ -65,5 +65,6 @@ Ext.define('InventoryApp.Utilities', {
         userName:null,
         lastLogin:null,
         pur_id:null
+        
     }
 });

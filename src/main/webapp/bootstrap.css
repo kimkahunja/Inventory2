@@ -6,4 +6,5 @@
  * in the development directory to load properly (i.e., "dev mode").
  */
 @import 'build/production/InventoryApp/resources/InventoryApp-all.css';
+@import 'resources/css/portal.css';
 
