@@ -9,6 +9,9 @@ Ext.define('InventoryApp.model.security.User', {
         { name: 'username' },
         { name: 'email' },
         { name: 'picture' },
-        { name: 'groupId' }
+        { name: 'groupId' },
+        {name:'location'},
+        {name:'status'},
+        {name:'_location', persist: false}
     ]
 });

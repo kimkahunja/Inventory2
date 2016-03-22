@@ -88,6 +88,7 @@ Ext.define('InventoryApp.controller.Login', {
                         InventoryApp.Utilities.locationId=mydata.location;
                         InventoryApp.Utilities.locationDescription=mydata._location;
                         InventoryApp.Utilities.userName=mydata.username;
+                        InventoryApp.Utilities.userId=mydata.id;
                         InventoryApp.Utilities.lastLogin=new Date();
                        // console.log('mydata.username===== '+mydata.username);
                         //console.log('InventoryApp.Utilities.userName===== '+InventoryApp.Utilities.userName);

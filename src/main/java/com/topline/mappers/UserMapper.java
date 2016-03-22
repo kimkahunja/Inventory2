@@ -104,4 +104,5 @@ public interface UserMapper {
     BigDecimal countUsers(Map<String,Object> map);
     List<UserWrapper> fetchUserDetails(Map<String,Object> map);
     String updatePassword(Map<String,Object> map);
+    int updateStatus(Map<String,Object> map);
 }

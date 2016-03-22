@@ -12,7 +12,7 @@ Ext.define('InventoryApp.view.security.UsersList', {
             text: 'Username'
         },
         {
-            width: 200,
+            width: 300,
             dataIndex: 'name',
             flex: 1,
             text: 'Name'
@@ -23,6 +23,10 @@ Ext.define('InventoryApp.view.security.UsersList', {
             text: 'Email'
         },
         {
+         dataIndex:'status'	,
+         text:'Status'
+        },
+        {
             width: 150,
             dataIndex: 'groupId',
             text: 'Group',
@@ -31,6 +35,18 @@ Ext.define('InventoryApp.view.security.UsersList', {
                 var group = groupsStore.findRecord('id', value);
                 return group != null ? group.get('name') : value;
             }
+        },
+        {
+            width: 150,
+            dataIndex: '_location',
+            text: 'Location',
+           /* renderer: function(value, metaData, record ){
+                //var locationsStore = Ext.getStore('Locations');
+            	var locationsStore=Ext.StoreMgr.lookup('location.Locations');
+                var loc = locationsStore.findRecord('locCode', value);
+               // console.log('location=== '+value);
+                return loc != null ? loc.get('locShtDesc') : value;
+            }*/
         }
     ]
 });

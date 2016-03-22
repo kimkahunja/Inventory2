@@ -35,7 +35,7 @@ Ext.define('InventoryApp.view.security.Users', {
                 },
                 {
                     xtype: 'button',
-                    text: 'Delete',
+                    text: 'Deactivate',
                     itemId: 'delete',
                     iconCls: 'delete'
                 }

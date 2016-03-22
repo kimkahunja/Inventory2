@@ -29,7 +29,11 @@ Ext.define('InventoryApp.controller.security.Groups', {
         {
             ref: 'groupsList',
             selector: 'groupslist'
-        }
+        },
+        {
+            ref: 'UserList',
+            selector: '[xtype=userslist]'
+        },
     ],
 
     init: function(application) {
@@ -37,7 +41,8 @@ Ext.define('InventoryApp.controller.security.Groups', {
         this.control({
             "groupslist": {
                 viewready: this.onViewReady,
-                selectionchange: this.onSelectionChange
+                selectionchange: this.onSelectionChange,               
+        		canceledit: this.cancel,
             },
             "groupslist button#add": {
                 click: this.onButtonClickAdd
@@ -54,6 +59,9 @@ Ext.define('InventoryApp.controller.security.Groups', {
             },
             "groupsedit button#cancel": {
                 click: this.onButtonClickCancel
+            },
+            "groupslist gridview":{
+            	itemadd: this.edit
             }
         });
     },
@@ -71,7 +79,7 @@ Ext.define('InventoryApp.controller.security.Groups', {
     onSelectionChange: function (sm, records, options) {
 
     	if (records[0]) {
-            this.getGroupsEdit().getForm().loadRecord(records[0]);
+            //this.getGroupsEdit().getForm().loadRecord(records[0]);
 
             this.getGroupPermissions().getStore().load({
             	params: {
@@ -109,18 +117,30 @@ Ext.define('InventoryApp.controller.security.Groups', {
 
     onButtonClickAdd: function (button, e, options) {
 
-    	var model = Ext.create('InventoryApp.model.security.Group', {
+    	/*var model = Ext.create('InventoryApp.model.security.Group', {
     		id: 0,
     		name: null
     	});
 
-    	this.getGroupsEdit().getForm().loadRecord(model);
+    	this.getGroupsEdit().getForm().loadRecord(model);*/
+    	var me = this,
+		grid = me.getGroupsList(),
+		plugin = grid.editingPlugin,
+		store = grid.getStore();
+		// if we're already editing, don't allow new record insert
+		if( plugin.editing ) {
+			// show error message
+			Ext.Msg.alert( 'Attention', 'Please finish editing before inserting a new record' );
+			return false;
+		}
+		//console.log('add functionality is here...');
+		store.insert( 0, {} );
 
-    	this.getGroupPermissions().getStore().load();
+    	//me.getGroupPermissions().getStore().load();
 
-        this.getGroupsEdit().down('userslist').getStore().removeAll();
-
-        this.getGroupsEdit().setDisabled(false);
+        //me.getGroupsEdit().down('userslist').getStore().removeAll();
+          me.getUserList().getStore().removeAll();
+        me.getGroupsEdit().setDisabled(false);
     },
 
     onButtonClickDelete: function (button, e, options) {
@@ -209,6 +229,10 @@ Ext.define('InventoryApp.controller.security.Groups', {
     onButtonClickSave: function (button, e, options) {
 
         var store = this.getGroupsList().getStore(),
+        grid=  this.getGroupsList(),
+        recordG = grid.getSelectionModel().getSelection(),
+        id=recordG[0].get('id'),
+        name=recordG[0].get('name'),
         formPanel = button.up('form'),
         records = formPanel.down('treepanel').getView().getChecked(),
         names = [];
@@ -234,8 +258,8 @@ Ext.define('InventoryApp.controller.security.Groups', {
 	        	Ext.Ajax.request({
 	                url: 'user/saveGroup.action',
 	                params: {
-	                    id: values.id,
-	                    name: values.name,
+	                    id:id, //values.id,
+	                    name: name,//values.name,
 	                    permissions:names.toString()
 	                },
 	                success: function(conn, response, options, eOpts) {
@@ -263,5 +287,34 @@ Ext.define('InventoryApp.controller.security.Groups', {
 	            });
 	        }
         }
-    }
+    },
+    /**
+     * Cancels the edit of a record
+     * @param {Ext.grid.plugin.Editing} editor
+     * @param {Object} context
+     * @param {Object} eOpts
+     * @param {}
+     * @param {}
+     * @param {}
+     */
+    cancel: function( editor, context, eOpts ) {
+    	// if the record is a phantom, remove from store and grid
+    	if( context.record.phantom ) {
+    		context.store.remove( context.record );
+    	}
+    },
+    /**
+     * Begins edit of selected record
+     * @param {Ext.data.Model[]} records
+     * @param {Number} index
+     * @param {Object} node
+     * @param {Object} eOpts
+     */
+    edit: function( records, index, node, eOpts ) {
+    	var me = this,
+    		grid = me.getGroupsList(),
+    		plugin = grid.editingPlugin;
+    	// start edit of row
+    	plugin.startEdit( records[ 0 ], 0 );
+    },
 });

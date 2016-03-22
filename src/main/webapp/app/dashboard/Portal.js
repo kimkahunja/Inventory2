@@ -7,8 +7,7 @@
 Ext.define('InventoryApp.dashboard.Portal', {
 
     extend: 'Ext.container.Container',
-    alias: 'widget.dashboard.portal',
-   // requires: ['Ext.app.PortalPanel', 'Ext.app.PortalColumn', 'Ext.app.GridPortlet', 'Ext.app.ChartPortlet'],
+    alias: 'widget.dashboard.portal',    
 
     getTools: function(){
         return [{
@@ -62,23 +61,26 @@ Ext.define('InventoryApp.dashboard.Portal', {
                             id: 'portlet-2',
                             title: 'Portlet 2',
                             tools: this.getTools(),
-                            html: content,
+                           // html: content,
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
-                        }]
-                    },{
+                        }
+                        ]
+                    },
+                    {
                         id: 'col-2',
                         items: [{
                             id: 'portlet-3',
                             title: 'Portlet 3',
                             tools: this.getTools(),
-                            html: '<div class="portlet-content">jjjjjjjj</div>',
+                           // html: '<div class="portlet-content">jjjjjjjj</div>',
                             listeners: {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
                         }]
-                    },{
+                    },
+                    {
                         id: 'col-3',
                         items: [{
                             id: 'portlet-4',

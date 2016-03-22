@@ -28,6 +28,7 @@ public class LoginController extends BaseController {
 			//validate whether User exist
 			map.put("username", user);
 			map.put("password", null);
+			map.put("status", "A");
 			BigDecimal userCount=userMapper.countUsers(map);
 			int res;
 			 res = userCount.compareTo(new BigDecimal("1"));

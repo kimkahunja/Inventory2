@@ -15,11 +15,7 @@
             <script src="bootstrap.js"></script>
         <!-- </x-bootstrap> -->
         <script src="app.js"></script> 
-        <script src="overrides/grid/RowEditor.js"></script>  
-        <!-- 
-         <script src="app/dashboard/example.js"></script>
-         <script src="app/dashboard/include-ext.js"></script>
-         <script src="app/dashboard/options-toolbar.js"></script>    -->
+        <script src="overrides/grid/RowEditor.js"></script>          
     <!-- </x-compile> -->
 </head>
 <body></body>

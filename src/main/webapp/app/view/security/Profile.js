@@ -41,7 +41,12 @@ Ext.define('InventoryApp.view.security.Profile', {
                         },
                         {
                             fieldLabel: 'Username',
-                            name: 'username'
+                            name: 'username',
+                            listeners:{
+                            	change:function(field,newValue,oldValue,eOpts ){
+                            		field.setValue(newValue.toUpperCase());
+                            	}
+                            }
                         },
                         {
                             fieldLabel: 'Name',
@@ -50,6 +55,8 @@ Ext.define('InventoryApp.view.security.Profile', {
                         },
                         {
                             fieldLabel: 'Email',
+                            allowBlank: true,
+                            afterLabelTextTpl: '',
                             maxLength: 100,
                             name: 'email'
                         },
@@ -62,6 +69,18 @@ Ext.define('InventoryApp.view.security.Profile', {
                             queryMode: 'local',
                             store: 'security.Groups'
                         },
+                        {
+				            xtype: 'ux.form.field.remotecombobox',
+				            name: 'location',
+				            fieldLabel: 'Default Location',
+				            displayField: 'locShtDesc',
+				            valueField: 'locCode',
+				            store: {
+				                type: 'location.locations'
+				            },
+				            editable: false,
+				            emptyText: 'Select User Default Location...'				           
+				        },
                         {
                             xtype: 'filefield',
                             fieldLabel: 'Picture',
@@ -98,18 +117,19 @@ Ext.define('InventoryApp.view.security.Profile', {
                 type: 'hbox'
             },
             items: [
+				{
+				    xtype: 'button',
+				    text: 'Save',
+				    itemId: 'save',
+				    iconCls: 'save'
+				},
                 {
                     xtype: 'button',
                     text: 'Cancel',
                     itemId: 'cancel',
                     iconCls: 'cancel'
-                },
-                {
-                    xtype: 'button',
-                    text: 'Save',
-                    itemId: 'save',
-                    iconCls: 'save'
                 }
+                
             ]
         }
     ]

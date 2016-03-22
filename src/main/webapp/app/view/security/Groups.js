@@ -20,7 +20,7 @@ Ext.define('InventoryApp.view.security.Groups', {
         },
         {
             xtype: 'groupsedit',
-            flex: 2
+            flex: 3
         }
     ]
 

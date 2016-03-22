@@ -26,7 +26,11 @@ Ext.define('InventoryApp.controller.Menu', {
     ],
 
     onPanelRender: function(abstractcomponent, options) {
-        this.getMenuStore().load(function(records, op, success){
+        this.getMenuStore().load({
+        	params:{
+        		  userId:InventoryApp.Utilities.userId
+        	},
+        	callback:function(records, op, success){
 
             var menuPanel = Ext.ComponentQuery.query('mainmenu')[0];
 
@@ -53,7 +57,8 @@ Ext.define('InventoryApp.controller.Menu', {
 
                 menuPanel.add(menu);
             }); 
-        });
+        }
+    });
     },
 
     onTreepanelSelect: function(selModel, record, index, options) {

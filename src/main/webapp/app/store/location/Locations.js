@@ -10,7 +10,7 @@ Ext.define('InventoryApp.store.location.Locations',{
 	model:'InventoryApp.model.location.Location',  
 	//restPath: 'resources/categories',
 	storeId: 'Locations',
-	//autoLoad: true,
+	autoLoad: true,
     pageSize: 20,
     proxy: {
         type: 'ajax',

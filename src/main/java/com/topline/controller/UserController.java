@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.topline.mappers.UserMapper;
+import com.topline.model.Categories;
 import com.topline.model.Groups;
 import com.topline.model.GroupsExample;
 import com.topline.model.PermissionsExample;
@@ -30,6 +31,7 @@ import com.topline.model.PurchaseDetail;
 import com.topline.model.User;
 import com.topline.model.UserExample;
 import com.topline.model.wrappers.MenuWrapper;
+import com.topline.model.wrappers.UserWrapper;
 import com.topline.utils.GlobalCC;
 
 @Controller
@@ -42,8 +44,10 @@ public class UserController extends BaseController {
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			UserExample example=new UserExample();
-			List<User> list=userMapper.selectByExample(example);
+			String group = GlobalCC.CheckNullValues(request.getParameter("group"));
+			//UserExample example=new UserExample();
+			map.put("group", group==null?null:new BigDecimal(group));
+			List<UserWrapper> list=userMapper.fetchUserDetails(map);
 			if (list != null) {
 				int count = list.size();
 				data.put("count", count);
@@ -254,4 +258,68 @@ public class UserController extends BaseController {
 			}
 			
 		}
+	//save users
+		@RequestMapping(value="/saveUser.action")
+		private @ResponseBody String saveUser(HttpServletRequest request){
+			
+			
+			try{
+				ObjectMapper mapper = new ObjectMapper();
+				String data=GlobalCC.CheckNullValues(request.getParameter("data"));
+				String pass=GlobalCC.CheckNullValues(request.getParameter("pass"));
+				User user=mapper.readValue(data, User.class);
+				//System.out.println(" data "+data);		
+				user.setStatus("A");
+				if (user.getId() == null) {	
+					user.setPassword(pass);
+					userMapper.insert(user);
+					jsonResponse.addMessage("message", SAVED_SUCCESSFULLY);
+				} else {					
+					userMapper.updateByPrimaryKey(user);
+					jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+				}
+				jsonResponse.setSuccess(true);	
+				jsonResponse.setData(null);	        
+		        return jsonObject(jsonResponse);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+			
+		}
+ //inactivate user
+		@RequestMapping(value="/deactivateUser.action")
+		private @ResponseBody String deactivateUser(HttpServletRequest request){
+			try{
+				//ObjectMapper mapper = new ObjectMapper();
+				Map<String, Object> map = new HashMap<String, Object>();
+				String id=GlobalCC.CheckNullValues(request.getParameter("id"));				
+				
+				if(id==null){
+					jsonResponse.addMessage("message", "User to Deactivate not Specified");
+					jsonResponse.setSuccess(false);	
+				}else{
+					map.put("status", "I");
+					map.put("id",id==null?null:new BigDecimal(id));
+					userMapper.updateStatus(map);
+					jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
+					jsonResponse.setSuccess(true);	
+				}
+				
+				jsonResponse.setData(null);	        
+		        return jsonObject(jsonResponse);
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+			
+		}		
 }

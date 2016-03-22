@@ -35,6 +35,11 @@ Ext.define('InventoryApp.view.Login', {
                     name: 'user',
                     fieldLabel: 'User',
                     maxLength: 25,
+                    listeners:{
+                    	change:function(field,newValue,oldValue,eOpts ){
+                    		field.setValue(newValue.toUpperCase());
+                    	}
+                    }
                     //value: 'kimkahunja'
                 },
                 {

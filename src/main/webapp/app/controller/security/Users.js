@@ -30,7 +30,8 @@ Ext.define('InventoryApp.controller.security.Users', {
 
         this.control({
             "userslist": {
-                render: this.onRender
+                render: this.onRender,
+                itemdblclick: this.onButtonClickEdit,
             },
             "users button#add": {
                 click: this.onButtonClickAdd
@@ -99,14 +100,14 @@ Ext.define('InventoryApp.controller.security.Users', {
         if (store.getCount() >= 2 && record[0]){
 
             Ext.Msg.show({
-                 title:'Delete?',
-                 msg: 'Are you sure you want to delete?',
+                 title:'Deactivate?',
+                 msg: 'Are you sure you want to deactivate?',
                  buttons: Ext.Msg.YESNO,
                  icon: Ext.Msg.QUESTION,
                  fn: function (buttonId){
                     if (buttonId == 'yes'){
                         Ext.Ajax.request({
-                            url: 'php/security/deleteUser.php',
+                            url: 'user/deactivateUser.action',
                             params: {
                                 id: record[0].get('id')
                             },
@@ -116,7 +117,7 @@ Ext.define('InventoryApp.controller.security.Users', {
 
                                 if (result.success) {
 
-                                	InventoryApp.util.Alert.msg('Success!', 'User deleted.');
+                                	InventoryApp.util.Alert.msg('Success!', 'User deactivated.');
                                     store.load();
                                   
                                 } else {
@@ -134,7 +135,7 @@ Ext.define('InventoryApp.controller.security.Users', {
         } else if (store.getCount() == 1) {
             Ext.Msg.show({
                 title:'Warning',
-                msg: 'You cannot delete all the users from the application.',
+                msg: 'You cannot deactivate all the users from the application.',
                 buttons: Ext.Msg.OK,
                 icon: Ext.Msg.WARNING
             });
@@ -149,14 +150,17 @@ Ext.define('InventoryApp.controller.security.Users', {
 
         if (formPanel.getForm().isValid()) {
 
-            formPanel.getForm().submit({
-                clientValidation: true,
-                url: 'php/security/saveUser.php',
-                success: function(form, action) {
+        	 Ext.Ajax.request({
+                url: 'user/saveUser.action',
+                params:{
+                		 pass:InventoryApp.util.MD5.encode('123456'),
+                		 data:Ext.encode(formPanel.getForm().getValues())
+                		},
+                success: function(conn, response, options, eOpts){
 
-                    var result = action.result;
+                	var result = Ext.JSON.decode(conn.responseText, true);   
 
-                    console.log(result);
+                  //  console.log(result);
 
                     if (result.success) {
 
@@ -165,7 +169,7 @@ Ext.define('InventoryApp.controller.security.Users', {
                         win.close();
                       
                     } else {
-                    	InventoryApp.util.Util.showErrorMsg(result.msg);
+                    	 InventoryApp.util.Util.showErrorMsg(result.messages.message);  
                     }
                 },
                 failure: function(form, action) {

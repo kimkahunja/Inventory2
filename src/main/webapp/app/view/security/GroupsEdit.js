@@ -16,7 +16,7 @@ Ext.define('InventoryApp.view.security.GroupsEdit', {
     title: 'Edit Selected Group',
 
     items: [
-        {
+        /*{
             xtype: 'fieldset',
             height: 100,
             title: 'Group Information',
@@ -40,7 +40,7 @@ Ext.define('InventoryApp.view.security.GroupsEdit', {
                     minLength: 3
                 }
             ]
-        },
+        },*/
         {
             xtype: 'grouppermissions',
             flex: 2
@@ -63,17 +63,18 @@ Ext.define('InventoryApp.view.security.GroupsEdit', {
                 type: 'hbox'
             },
             items: [
-                {
-                    xtype: 'button',
-                    text: 'Cancel',
-                    itemId: 'cancel',
-                    iconCls: 'cancel'
-                },
+                
                 {
                     xtype: 'button',
                     text: 'Save',
                     itemId: 'save',
                     iconCls: 'save'
+                },
+                {
+                    xtype: 'button',
+                    text: 'Cancel',
+                    itemId: 'cancel',
+                    iconCls: 'cancel'
                 }
             ]
         }

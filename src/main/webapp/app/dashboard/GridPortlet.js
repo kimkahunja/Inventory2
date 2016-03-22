@@ -4,7 +4,7 @@ Ext.define('InventoryApp.dashboard.GridPortlet', {
     uses: [
         'Ext.data.ArrayStore'
     ],
-    height: 300,
+    height: 600,
     myData: [
         ['3m Co',                               71.72, 0.02,  0.03,  '9/1 12:00am'],
         ['Alcoa Inc',                           29.01, 0.42,  1.47,  '9/1 12:00am'],

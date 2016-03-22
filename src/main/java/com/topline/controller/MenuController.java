@@ -24,7 +24,7 @@ public class MenuController extends BaseController{
 		@RequestMapping(value="/fetchMenu.action", method=RequestMethod.GET)
 		private @ResponseBody
 		String fetchMenu(HttpServletRequest request){
-			BigDecimal user_id=new BigDecimal("1");
+			
 			String json=null;
 			try{				
 				
@@ -32,14 +32,15 @@ public class MenuController extends BaseController{
 				
 				String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 				String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+				String userId = GlobalCC.CheckNullValues(request.getParameter("userId"));
 				if (limit == null) {
 					limit = "50";
 				}
 				if (start == null) {
 					start = "0";
 				}
-				if(user_id !=null){
-					map.put("userId", user_id);
+				if(userId !=null){
+					map.put("userId", userId==null?null:new BigDecimal(userId));
 				}
 				
 				List<MenuWrapper>list=menuMapper.fetchMenus(map);
