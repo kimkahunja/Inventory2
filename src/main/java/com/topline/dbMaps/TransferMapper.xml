@@ -331,4 +331,20 @@
       tnsf_captured_on = #{tnsfCapturedOn,jdbcType=TIMESTAMP}
     where tnsf_id = #{tnsfId,jdbcType=INTEGER}
   </update>
+  <insert id="save" parameterType="com.topline.model.Transfer" useGeneratedKeys="true" keyProperty="tnsfId"  keyColumn="tnsf_id" >
+	  	insert into inv_transfers (tnsf_id, tnsf_type, tnsf_from_loc_code, 
+	      tnsf_to_loc_code, tnsf_date, tnsf_status, 
+	      tnsf_captured_by, tnsf_captured_on)
+	    values (#{tnsfId,jdbcType=INTEGER}, #{tnsfType,jdbcType=VARCHAR}, #{tnsfFromLocCode,jdbcType=INTEGER}, 
+	      #{tnsfToLocCode,jdbcType=INTEGER}, #{tnsfDate,jdbcType=DATE}, #{tnsfStatus,jdbcType=VARCHAR}, 
+	      #{tnsfCapturedBy,jdbcType=VARCHAR}, #{tnsfCapturedOn,jdbcType=TIMESTAMP})
+	      
+	      <selectKey keyProperty="tnsfId" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        
+  </insert>
+  <select id="postTransfer" parameterType="java.util.HashMap" statementType="CALLABLE">    
+	{ CALL post_transfer(#{transferType, mode=IN, jdbcType=VARCHAR},#{product, mode=IN, jdbcType=INTEGER},#{qty, mode=IN, jdbcType=DOUBLE},#{sourceLoc, mode=IN, jdbcType=INTEGER},#{destinationLoc, mode=IN, jdbcType=INTEGER},#{v_rtnVal, mode=OUT, jdbcType=VARCHAR})}
+</select>
 </mapper>

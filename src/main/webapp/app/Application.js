@@ -105,7 +105,9 @@ Ext.define('InventoryApp.Application', {
            // 'InventoryApp.view.payment.PaymentLanding',
             'InventoryApp.view.payment.PaymentDtl',
             'security.PasswordManagement',
-            'InventoryApp.view.Dashboard'
+            'InventoryApp.view.Dashboard',
+            'InventoryApp.view.transfer.Transfer',
+            'transfer.TransferDtls'
         ],
     controllers: [
        // 'App',
@@ -126,7 +128,8 @@ Ext.define('InventoryApp.Application', {
         'reports.ProductRPT',
         'reports.InvoiceRPT',
         'Payments',
-        'security.PasswordManagement'
+        'security.PasswordManagement',
+        'InventoryApp.controller.Transfers'
     ],
     
     //autoCreateViewport: true,

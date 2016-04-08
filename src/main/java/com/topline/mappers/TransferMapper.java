@@ -2,7 +2,10 @@ package com.topline.mappers;
 
 import com.topline.model.Transfer;
 import com.topline.model.TransferExample;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TransferMapper {
@@ -93,4 +96,6 @@ public interface TransferMapper {
      * @mbggenerated Thu Feb 04 19:48:27 EAT 2016
      */
     int updateByPrimaryKey(Transfer record);
+    int save(Transfer record);
+    Object postTransfer(Map<String,Object> map);
 }

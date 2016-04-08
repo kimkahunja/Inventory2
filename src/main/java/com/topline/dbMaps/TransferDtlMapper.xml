@@ -283,4 +283,5 @@
       tnsfd_stk_id = #{tnsfdStkId,jdbcType=INTEGER}
     where tnsfd_id = #{tnsfdId,jdbcType=INTEGER}
   </update>
+  
 </mapper>
