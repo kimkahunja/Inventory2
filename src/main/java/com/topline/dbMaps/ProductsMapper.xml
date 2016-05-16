@@ -582,5 +582,22 @@
 <select id="fetchStocks" resultMap="BaseResultMapWrapper" statementType="CALLABLE">    
 	{ CALL get_stocks(#{searchData, mode=IN, jdbcType=VARCHAR},#{location, mode=IN, jdbcType=INTEGER})}
 </select>
-   
+  <resultMap id="ProductMovementResultMap" type="com.topline.model.ProductMovement">
+  	<result column="level" property="level" jdbcType="INTEGER" />
+  	<result column="type" property="type" jdbcType="VARCHAR" />
+  	<result column="trans_date" property="transDate" jdbcType="DATE" />
+  	<result column="trans_ref" property="transRef" jdbcType="VARCHAR" />
+  	<result column="pdt_code" property="pdtCode" jdbcType="INTEGER" />
+  	<result column="pdt_description" property="pdtDescription" jdbcType="VARCHAR" />
+  	<result column="qty" property="qty" jdbcType="DOUBLE" />
+  	<result column="price" property="price" jdbcType="DECIMAL" />
+  	<result column="signed_qty" property="signedQty" jdbcType="DOUBLE" />
+  	<result column="acct_code" property="acctCode" jdbcType="INTEGER" />
+  	<result column="acct_name" property="acctName" jdbcType="VARCHAR" />
+  </resultMap>  
+  <select id="fetchProductMovement" parameterType="java.util.HashMap" resultMap="ProductMovementResultMap">
+  	SELECT level,type,trans_date,trans_ref,pdt_code,pdt_description,qty,price,signed_qty,acct_code,acct_name
+	FROM inv_products_movement_vw
+	WHERE pdt_code=#{pdtCode,jdbcType=INTEGER}  	
+  </select>
 </mapper>

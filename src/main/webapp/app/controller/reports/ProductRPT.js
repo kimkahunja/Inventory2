@@ -5,7 +5,8 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
     extend: 'InventoryApp.controller.Base',
     stores: [
         //'product.Products',
-        'product.StockRPT'
+        'product.StockRPT',
+        'product.ProductMovements'
     ],
     views: [
         'reports.products.List',        
@@ -15,7 +16,10 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
             ref: 'ProductList',
             selector: '[xtype=reports.products.list]'
         },     
-        
+        {
+            ref: 'ProductMovementWindow',
+            selector: '[xtype=report.products.productmovementwindow]'
+        },
     ],
     init: function() {
         this.listen({

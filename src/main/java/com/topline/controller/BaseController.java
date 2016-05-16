@@ -19,6 +19,8 @@ import com.topline.mappers.GroupsMapper;
 import com.topline.mappers.InvoiceDtlsMapper;
 import com.topline.mappers.InvoiceMapper;
 import com.topline.mappers.LocationsMapper;
+import com.topline.mappers.ManAdjustmentDtlMapper;
+import com.topline.mappers.ManAdjustmentMapper;
 import com.topline.mappers.MenuMapper;
 import com.topline.mappers.PaymentDtlMapper;
 import com.topline.mappers.PaymentMapper;
@@ -91,6 +93,10 @@ public class BaseController extends MultiActionController {
 	TransferMapper transferMapper;
 	@Autowired(required=true)
 	TransferDtlMapper transferDtlMapper;
+	@Autowired(required=true)
+	ManAdjustmentDtlMapper manAdjustmentDtlMapper;
+	@Autowired(required=true)
+	ManAdjustmentMapper manAdjustmentMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

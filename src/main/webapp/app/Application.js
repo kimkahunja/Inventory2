@@ -34,6 +34,7 @@ Ext.define('InventoryApp.Application', {
                'Ext.grid.column.Action',
                'Ext.toolbar.Spacer',
                'Ext.form.RadioGroup',
+               'Ext.grid.column.CheckColumn',
                'InventoryApp.Utilities',
                'InventoryApp.util.Util',
                'InventoryApp.model.menu.Root',
@@ -107,7 +108,13 @@ Ext.define('InventoryApp.Application', {
             'security.PasswordManagement',
             'InventoryApp.view.Dashboard',
             'InventoryApp.view.transfer.Transfer',
-            'transfer.TransferDtls'
+            'transfer.TransferDtls',
+            'reports.products.ProductMovementList',
+            //'report.products.ProductMovementWindow',
+            'adjustment.Adjustment',
+            'adjustment.AdjustmentDtls',
+            'systemAreas.SystemAreaWindow',
+            'systemAreas.List'
         ],
     controllers: [
        // 'App',
@@ -129,7 +136,10 @@ Ext.define('InventoryApp.Application', {
         'reports.InvoiceRPT',
         'Payments',
         'security.PasswordManagement',
-        'InventoryApp.controller.Transfers'
+        'InventoryApp.controller.Transfers',
+        'reports.ProductRPT',
+        'Adjustments',
+        //'SystemAreas'
     ],
     
     //autoCreateViewport: true,

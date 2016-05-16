@@ -47,9 +47,11 @@ Ext.define('InventoryApp.dashboard.Portal', {
                     id: 'app-portal',
                     xtype: 'dashboard.portalpanel',
                     region: 'center',
-                    items: [{
+                    items: [
+                          /* {
                         id: 'col-1',
-                        items: [{
+                        items: [
+                             {
                             id: 'portlet-1',
                             title: 'Grid Portlet',
                             tools: this.getTools(),
@@ -79,7 +81,7 @@ Ext.define('InventoryApp.dashboard.Portal', {
                                 'close': Ext.bind(this.onPortletClose, this)
                             }
                         }]
-                    },
+                    },*/
                     {
                         id: 'col-3',
                         items: [{

@@ -1,5 +1,6 @@
 package com.topline.mappers;
 
+import com.topline.model.ProductMovement;
 import com.topline.model.Products;
 import com.topline.model.ProductsExample;
 import com.topline.model.wrappers.ProductWrapper;
@@ -103,4 +104,5 @@ public interface ProductsMapper {
     List<ProductWrapper> fetchProducts(Map<String,Object> map);
     List<ProductsMapper> fetchTransProduct(Map<String,Object> map);
     List<ProductWrapper> fetchStocks(Map<String,Object> map);
+    List<ProductMovement> fetchProductMovement(Map<String,Object> map);
 }

@@ -1,0 +1,21 @@
+USE inventory;
+
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (1,'General Setups','menu_admin',null,null);
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (2,'Categories','menu_groups',1,'categories.list');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (3,'Locations','menu_users',1,'location.locations');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (4,'Units','menu_staticdata',1,'units.unitlist');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (6,'Products','menu_groups',1,'product.list');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (7,'Transactions','menu_groups',null,null);
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (8,'Purchases','menu_users',7,'purchases.purchase');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (9,'Sales','menu_staticdata',7,'invoice.invoice');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (10,'System Reports','menu_admin',null,null);
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (11,'Purchases Report','menu_users',10,'reports.purchases.purchase');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (12,'System Administration','menu_admin',null,'');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (13,'Users','menu_users',12,'users');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (14,'Groups','menu_groups',12,'groups');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (16,'Product Reports','menu_staticdata',10,'reports.products.productparameters');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (17,'Sales Reports',null,10,'reports.invoice.invoice');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (18,'Purchase Payment','menu_groups',7,'payment.payment');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (19,'Password Management','menu_groups',12,'security.passwordmanagement');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (20,'Transfers','menu_groups',7,'transfer.transfer');
+insert into `menu`(`id`,`text`,`iconCls`,`parent_id`,`className`) values (21,'Manual Stock Adjustments','menu_staticdata',7,'adjustment.adjustment');

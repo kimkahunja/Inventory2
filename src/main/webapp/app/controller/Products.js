@@ -10,7 +10,8 @@ Ext.define('InventoryApp.controller.Products', {
     views: [
         'product.List',
         'product.edit.Form',
-        'product.edit.Window'
+        'product.edit.Window',
+       // 'report.products.ProductMovementWindow'
     ],
     refs: [
         {
@@ -33,7 +34,10 @@ Ext.define('InventoryApp.controller.Products', {
             ref: 'UnitCombo',
             selector: "window[xtype=product.edit.window] combobox[name='pdtSlocCode']"
         },
-        
+        {
+            ref: 'ProductMovementWindow',
+            selector: '[xtype=report.products.productmovementwindow]'
+        },
     ],
     init: function() {
         this.listen({
@@ -44,10 +48,12 @@ Ext.define('InventoryApp.controller.Products', {
                     beforerender: this.loadRecords,
                     itemdblclick: this.edit,
                     beforeclose:this.beforeClose,
-                    //itemcontextmenu: this.showContextMenu
+                    itemcontextmenu: this.showContextMenu
                 },
                 'grid[xtype=product.list] button#add': {
                     click: this.add
+                },'grid[xtype=product.list] button#customize': {
+                    click: this.customize
                 },
                 'grid[xtype=product.list] button#deleteProduct': {
                     click: this.removeB
@@ -70,6 +76,40 @@ Ext.define('InventoryApp.controller.Products', {
             store: {},
            // proxy: {} 
         });
+    },
+    /**
+     * Displays context menu 
+     * @param {Ext.view.View} view
+     * @param {Ext.data.Model} record 
+     * @param {HTMLElement} item
+     * @param {Number} index
+     * @param {Ext.EventObject} e
+     * @param {Object} eOpts
+     */
+    showContextMenu: function( view, record, item, index, e, eOpts ) {
+    	var me = this;
+    	// stop event so browser's normal right-click action doesn't continue
+    	e.stopEvent();
+    	
+    	// if a menu doesn't already exist, create one
+    	if( !item.contextMenu ) {
+    		
+    		var rowMenu = Ext.create('Ext.menu.Menu', {
+    		     //height: 58,
+    		    // width: 140,
+    		     items: [
+    		             	{
+    					text: 'Product Movement Analysis',
+    					iconCls: 'filter',
+    					handler: function( item, e ) {
+    						me.showProductMovementWindow(record);
+    					}
+    				}
+    		             ]
+    		 });
+    		 rowMenu.showAt(e.getXY());
+    	}
+    	
     },
     /**
      * Loads the grid's store
@@ -284,5 +324,22 @@ Ext.define('InventoryApp.controller.Products', {
    			
    		}
    	})
-}
+},
+showProductMovementWindow: function( record ) {
+    var me = this,
+        win = me.getProductMovementWindow();    
+ // if window exists, show it; otherwise, create new instance
+    if( !win ) {
+        win = Ext.widget( 'report.products.productmovementwindow', {
+            title:'Product Movement Analysis'
+        });
+    }
+    // show window
+    win.show();   
+  	},
+customize: function( button, e, eOpts ) {
+	var win = Ext.create('InventoryApp.view.systemAreas.SystemAreaWindow');
+    win.setTitle('Customize Product Columns');
+    win.show();
+},  	
 });
