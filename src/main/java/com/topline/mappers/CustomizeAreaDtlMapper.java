@@ -2,7 +2,11 @@ package com.topline.mappers;
 
 import com.topline.model.CustomizeAreaDtl;
 import com.topline.model.CustomizeAreaDtlExample;
+import com.topline.model.wrappers.SystemAreasWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomizeAreaDtlMapper {
@@ -93,4 +97,7 @@ public interface CustomizeAreaDtlMapper {
      * @mbggenerated Fri May 13 19:27:13 EAT 2016
      */
     int updateByPrimaryKey(CustomizeAreaDtl record);
+    
+    //add methods
+    List<SystemAreasWrapper>fetchSystemAreas(Map<String,Object> map);
 }

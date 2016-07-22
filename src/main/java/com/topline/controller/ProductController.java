@@ -288,12 +288,13 @@ public class ProductController extends BaseController {
 				if (start == null) {
 					start = "0";
 				}
+				// System.out.println("OUUUUUT  transferType=== "+transferType+" searchData==="+searchData);
 			   if(transferType !=null){
 				   
 				   map.put("location", location == null ? null : new BigDecimal(location));
 				   map.put("searchData", searchData);
 				   if(transferType.equalsIgnoreCase("IN")){
-					   //System.out.println("transferType=== "+transferType+" searchData==="+searchData);
+					 //  System.out.println("transferType=== "+transferType+" searchData==="+searchData);
 						List<ProductsMapper> list = productMapper.fetchTransProduct(map);
 						if (list != null) {
 							int count = list.size();
@@ -301,7 +302,8 @@ public class ProductController extends BaseController {
 						}
 						data.put("data", list);
 						
-				   }else if(transferType.equalsIgnoreCase("OUT")){					 
+				   }else if(transferType.equalsIgnoreCase("OUT")){	
+					  // System.out.println("transferType2222=== "+transferType+" searchData==="+searchData);
 					   List<ProductWrapper> list = productMapper.fetchStocks(map);
 						if (list != null) {
 							int count = list.size();
@@ -394,10 +396,7 @@ public class ProductController extends BaseController {
 		@RequestMapping(value = "/fetchProductMovement.action")
 		private @ResponseBody String fetchProductMovement(HttpServletRequest request) {
 			try {
-				// initialize
-				// jsonResponse.setData(null);
-				// jsonResponse.setSuccess(false);
-				// jsonResponse.addMessage("message", null);
+				
 				HashMap<String, Object> data = new HashMap<String, Object>();
 
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -415,7 +414,7 @@ public class ProductController extends BaseController {
 					start = "0";
 				}
 
-				
+				System.out.println("fetchProductMovement==== "+pdtCode);
 				map.put("pdtCode", pdtCode);
 				
 				List<ProductMovement> list = productMapper.fetchProductMovement(map);				

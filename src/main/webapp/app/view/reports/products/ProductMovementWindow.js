@@ -2,7 +2,7 @@ Ext.define('InventoryApp.view.report.products.ProductMovementWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.report.products.productmovementwindow',
     requires: [
-        //'InventoryApp.view.reports.products.ProductMovementList'
+        'InventoryApp.view.reports.products.ProductMovementList'
     ],
     iconCls: 'icon_product',
     width: 700,
@@ -16,7 +16,7 @@ Ext.define('InventoryApp.view.report.products.ProductMovementWindow', {
         Ext.applyIf(me, {
             items: [
                 {
-                    //xtype: 'reports.products.productmovementlist'
+                    xtype: 'reports.products.productmovementlist'
                 }
             ]
         });

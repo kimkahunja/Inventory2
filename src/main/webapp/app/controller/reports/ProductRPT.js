@@ -9,7 +9,8 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
         'product.ProductMovements'
     ],
     views: [
-        'reports.products.List',        
+        'reports.products.List',  
+        'reports.products.ProductMovementList'
     ],
     refs: [
         {
@@ -32,6 +33,9 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
                 'button#printProduct':{
                		click:this.printProduct 
                	},
+               	'grid[xtype=reports.products.productmovementlist]': {                	
+                    beforerender: this.loadProdDetails,               
+                },
             },
             global: {},
             store: {},
@@ -52,6 +56,16 @@ Ext.define('InventoryApp.controller.reports.ProductRPT', {
         store.load({
         	   params:{location: InventoryApp.Utilities.locationId}
         }); 
+    },
+    loadProdDetails: function( grid, eOpts ) {
+        var me = this,
+            store = grid.getStore();
+        // clear any fliters that have been applied
+        store.clearFilter( true );
+        // load the store
+        store.load({
+     	   params:{pdtCode: InventoryApp.Utilities.pdtCode}
+        	}); 
     },
     printProduct:function( button, e, eOpts ){
  	   Ext.Ajax.request({

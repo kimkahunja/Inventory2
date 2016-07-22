@@ -411,7 +411,7 @@
 	WHERE vnum_loc_code=#{location,jdbcType=INTEGER} 
  </update> 
   <select id="postInvoice" parameterType="java.util.HashMap" statementType="CALLABLE" resultType="hashmap">    
-	{ CALL post_invoice(#{v_inv_id, mode=IN, jdbcType=INTEGER},#{postedBy, mode=IN, jdbcType=VARCHAR},#{v_count, mode=OUT, jdbcType=INTEGER})}
+	{ CALL post_invoice(#{v_inv_id, mode=IN, jdbcType=INTEGER},#{postedBy, mode=IN, jdbcType=VARCHAR},#{v_rtnVal, mode=OUT, jdbcType=VARCHAR})}
 </select>
 <resultMap id="ResultSummaryMapper"  type="com.topline.model.ReportSummary" >    
     <result column="label" property="label" jdbcType="VARCHAR" /> 

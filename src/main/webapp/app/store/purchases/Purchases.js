@@ -10,9 +10,9 @@ Ext.define('InventoryApp.store.purchases.Purchases',{
 	model:'InventoryApp.model.purchases.Purchase',  
 	//restPath: 'resources/categories',
 	storeId: 'Purchases',
-	remoteSort: true,
-    remoteFilter: true,
-    remoteGroup: true,
+	//remoteSort: false,
+    //remoteFilter: true,
+    //remoteGroup: true,
 	//autoLoad: true,
     pageSize: 20,
     proxy: {

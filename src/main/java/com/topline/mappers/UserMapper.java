@@ -105,4 +105,5 @@ public interface UserMapper {
     List<UserWrapper> fetchUserDetails(Map<String,Object> map);
     String updatePassword(Map<String,Object> map);
     int updateStatus(Map<String,Object> map);
+    String isEligible(Map<String,Object> map);
 }

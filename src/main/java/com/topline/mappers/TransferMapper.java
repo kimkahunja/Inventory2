@@ -2,6 +2,7 @@ package com.topline.mappers;
 
 import com.topline.model.Transfer;
 import com.topline.model.TransferExample;
+import com.topline.model.wrappers.TransferWrapper;
 
 import java.util.List;
 import java.util.Map;
@@ -98,4 +99,5 @@ public interface TransferMapper {
     int updateByPrimaryKey(Transfer record);
     int save(Transfer record);
     Object postTransfer(Map<String,Object> map);
+    List<TransferWrapper> fetchTransfers(Map<String,Object> map);
 }

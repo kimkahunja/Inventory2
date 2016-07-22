@@ -347,4 +347,24 @@
   <select id="postTransfer" parameterType="java.util.HashMap" statementType="CALLABLE">    
 	{ CALL post_transfer(#{transferType, mode=IN, jdbcType=VARCHAR},#{product, mode=IN, jdbcType=INTEGER},#{qty, mode=IN, jdbcType=DOUBLE},#{sourceLoc, mode=IN, jdbcType=INTEGER},#{destinationLoc, mode=IN, jdbcType=INTEGER},#{v_rtnVal, mode=OUT, jdbcType=VARCHAR})}
 </select>
+<resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.TransferWrapper" >    
+    <result column="fromLocDescription" property="_tnsfFromLocCode" jdbcType="VARCHAR" />  
+    <result column="toLocDescription" property="_tnsfToLocCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="fetchTransfers" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	  	select tnsf_id, tnsf_type, tnsf_from_loc_code, tnsf_to_loc_code, tnsf_date, tnsf_status, 
+    tnsf_captured_by, tnsf_captured_on,getLocation(tnsf_from_loc_code) as fromLocDescription,
+    getLocation(tnsf_to_loc_code) as toLocDescription
+    from inv_transfers
+    where 1+1=2
+	    <if test="status != null">
+          AND  tnsf_status =  #{status,jdbcType=VARCHAR}
+      </if> 
+      <if test="id !=null">
+      	 AND tnsf_id= #{id,jdbcType=INTEGER}
+      </if>  
+      <if test="dateFrom !=null"  >
+      	AND  tnsf_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
+     </select>
 </mapper>

@@ -321,5 +321,45 @@ public class UserController extends BaseController {
 				return jsonObject(jsonResponse);
 			}
 			
-		}		
+		}	
+		//eligible to approve 
+		@RequestMapping(value="/isEligible.action", method=RequestMethod.POST)
+		private @ResponseBody
+		String isEligible(HttpServletRequest request){
+			try{
+				HashMap<String, Object> data = new HashMap<String, Object>();
+				
+				Map<String, Object> map = new HashMap<String, Object>();		
+				
+				String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+				String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+				String area=GlobalCC.CheckNullValues(request.getParameter("area"));
+				String userName=GlobalCC.CheckNullValues(request.getParameter("userName"));
+				if (limit == null) {
+					limit = "50";
+				}
+				if (start == null) {
+					start = "0";
+				}
+				map.put("userName", userName);
+				map.put("area", area);
+				String isEligible=userMapper.isEligible(map);
+				if (isEligible != null) {
+					int count = Integer.parseInt("1");
+					data.put("count", count);
+				}
+				data.put("data", isEligible);
+				jsonResponse.setData(data);
+				jsonResponse.setSuccess(true);
+				//System.out.println(jsonObject(jsonResponse));
+				return jsonObject(jsonResponse);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+		}
 }

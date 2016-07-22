@@ -4,8 +4,9 @@ Ext.define('InventoryApp.view.systemAreas.List',{
 	requires: [
 	           'Ext.grid.RowNumberer',
 	           'Ext.grid.plugin.CellEditing',
-	       ],	
-	//store: 'systemAreas.SystemAreas',
+	       ],
+	height:300,	       
+	store: 'systemAreas.SystemAreas',
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{
@@ -41,10 +42,11 @@ Ext.define('InventoryApp.view.systemAreas.List',{
 		                   },
                    
 	                   {
+		                   xtype:'checkcolumn',	   
 	                       text: 'Show?',
-	                       dataIndex: 'ctadIsvisible',
-	                       xtype:'checkcolumn',
-	                       stopSelection: false                     
+	                       dataIndex: '_ctadIsvisible',	
+	                       width: 90,
+	                      // stopSelection: false                     
 	                       
 	                   },
                    

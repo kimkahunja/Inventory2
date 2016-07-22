@@ -283,5 +283,36 @@
       tnsfd_stk_id = #{tnsfdStkId,jdbcType=INTEGER}
     where tnsfd_id = #{tnsfdId,jdbcType=INTEGER}
   </update>
-  
+  <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.TransferDtlWrapper" >    
+    <result column="fromLocDescription" property="_tnsfFromLocCode" jdbcType="VARCHAR" />  
+    <result column="toLocDescription" property="_tnsfToLocCode" jdbcType="VARCHAR" />
+    <result column="pdt_description" property="_tnsfdPdtCode" jdbcType="VARCHAR" />
+    <result column="tnsf_type" property="tnsfType" jdbcType="VARCHAR" />
+    <result column="tnsf_date" property="tnsfDate" jdbcType="DATE" />
+    <result column="tnsf_status" property="tnsfStatus" jdbcType="VARCHAR" />    
+  </resultMap>
+  <select id="fetchRptTransfers" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
+	    select tnsfd_id, tnsfd_tnsf_id, tnsfd_pdt_code, tnsfd_qty, tnsfd_stk_id,
+		 tnsf_type,tnsf_date, tnsf_status,getLocation(tnsf_from_loc_code) as fromLocDescription,
+		    getLocation(tnsf_to_loc_code) as toLocDescription,pdt_description
+		 from inv_transfer_dtls,inv_transfers, inv_products
+		 where tnsfd_tnsf_id=tnsf_id
+		 and tnsfd_pdt_code=pdt_code
+        <if test="id != null">
+          AND  tnsfd_tnsf_id =  #{id,jdbcType=INTEGER}
+      </if>     
+      <if test="product != null">
+          AND  tnsfd_pdt_code =  #{product,jdbcType=INTEGER}
+      </if>
+      <if test="status != null">
+          AND  tnsf_status =  #{status,jdbcType=VARCHAR}
+      </if>	
+       <if test="dateFrom !=null"  >
+      	AND  tnsf_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
+      </if>
+      <if test="limit !=null">
+       LIMIT #{start,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+      </if>
+      
+   </select>
 </mapper>

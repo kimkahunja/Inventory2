@@ -14,6 +14,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.DomHelper": "ext/src/dom/Helper.js",
   "Ext.DomQuery": "ext/src/dom/Query.js",
   "Ext.EventObjectImpl": "ext/src/EventObject.js",
+  "Ext.GlobalRtlComponent": "app/dashboard/options-toolbar.js",
   "Ext.Msg": "ext/src/window/MessageBox.js",
   "Ext.Supports": "ext/src/Support.js",
   "Ext.cmd": "../../../../../../../C:/Users/kimkahunja/bin/Sencha/Cmd/6.0.2.14/plugins/src",
@@ -22,6 +23,7 @@ Ext.Loader.addClassPathMappings({
   "Ext.rtl.EventObjectImpl": "ext/src/rtl/EventObject.js",
   "Ext.ux.Rixo": "app/ux/Rixo",
   "InventoryApp": "app",
+  "InventoryApp.view.report.products.ProductMovementWindow": "app/view/reports/products/ProductMovementWindow.js",
   "overrides.grid.feature.RemoteSummary": "overrides/grid/feature/RemoteSummary.js"
 });
 
@@ -42,6 +44,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.FocusManager": [
     "Ext.FocusMgr"
   ],
+  "Ext.GlobalRtlComponent": [],
   "Ext.Img": [],
   "Ext.LoadMask": [],
   "Ext.ModelManager": [
@@ -850,6 +853,7 @@ Ext.ClassManager.addNameAlternateMappings({
   ],
   "InventoryApp.Application": [],
   "InventoryApp.Utilities": [],
+  "InventoryApp.controller.Adjustments": [],
   "InventoryApp.controller.App": [],
   "InventoryApp.controller.Base": [],
   "InventoryApp.controller.Bins": [],
@@ -864,6 +868,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.controller.Products": [],
   "InventoryApp.controller.Purchases": [],
   "InventoryApp.controller.PurchasesDtls": [],
+  "InventoryApp.controller.SystemAreas": [],
+  "InventoryApp.controller.Transfers": [],
   "InventoryApp.controller.Units": [],
   "InventoryApp.controller.reports.InvoiceRPT": [],
   "InventoryApp.controller.reports.ProductRPT": [],
@@ -871,7 +877,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.controller.security.Groups": [],
   "InventoryApp.controller.security.PasswordManagement": [],
   "InventoryApp.controller.security.Users": [],
+  "InventoryApp.dashboard.ChartPurchaseSummary": [],
   "InventoryApp.dashboard.GridPortlet": [],
+  "InventoryApp.dashboard.Portal": [],
   "InventoryApp.dashboard.PortalColumn": [],
   "InventoryApp.dashboard.PortalDropZone": [],
   "InventoryApp.dashboard.PortalMainContainer": [],
@@ -880,6 +888,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.domain.Proxy": [],
   "InventoryApp.model.Base": [],
   "InventoryApp.model.account.Account": [],
+  "InventoryApp.model.adjustment.Adjustment": [],
+  "InventoryApp.model.adjustment.AdjustmentDtl": [],
   "InventoryApp.model.categories.Category": [],
   "InventoryApp.model.dragNdrop.DragNDrop": [],
   "InventoryApp.model.invoice.Invoice": [],
@@ -893,12 +903,14 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.model.payment.Payment": [],
   "InventoryApp.model.payment.PaymentDtl": [],
   "InventoryApp.model.product.Product": [],
+  "InventoryApp.model.product.ProductMovement": [],
   "InventoryApp.model.product.Stock": [],
   "InventoryApp.model.purchases.Purchase": [],
   "InventoryApp.model.purchases.PurchaseDtls": [],
   "InventoryApp.model.purchases.PurchaseRPT": [],
   "InventoryApp.model.security.Group": [],
   "InventoryApp.model.security.User": [],
+  "InventoryApp.model.systemAreas.SystemArea": [],
   "InventoryApp.model.transfer.Transfer": [],
   "InventoryApp.model.transfer.TransferDtl": [],
   "InventoryApp.model.units.Unit": [],
@@ -909,6 +921,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.store.account.Accounts": [],
   "InventoryApp.store.account.AccountsRpt": [],
   "InventoryApp.store.account.AccountsSupplier": [],
+  "InventoryApp.store.adjustment.AdjustmentDtls": [],
+  "InventoryApp.store.adjustment.Adjustments": [],
   "InventoryApp.store.categories.Categories": [],
   "InventoryApp.store.invoice.InvoiceDtls": [],
   "InventoryApp.store.invoice.InvoiceNumbers": [],
@@ -916,14 +930,19 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.store.invoice.Invoices": [],
   "InventoryApp.store.location.Bins": [],
   "InventoryApp.store.location.Locations": [],
+  "InventoryApp.store.location.TransferLocations": [],
   "InventoryApp.store.payment.PaymentDtls1": [],
   "InventoryApp.store.payment.Payments": [],
+  "InventoryApp.store.product.ProductMovements": [],
   "InventoryApp.store.product.Products": [],
   "InventoryApp.store.product.StockRPT": [],
   "InventoryApp.store.product.Stocks": [],
+  "InventoryApp.store.product.TransferProducts": [],
   "InventoryApp.store.purchases.PurchaseRPTs": [],
   "InventoryApp.store.purchases.Purchases": [],
   "InventoryApp.store.purchases.PurchasesDtls": [],
+  "InventoryApp.store.purchases.PurchasesDtlsRpt": [],
+  "InventoryApp.store.reporting.ChartDataPurchases": [],
   "InventoryApp.store.security.Groups": [],
   "InventoryApp.store.security.Permissions": [],
   "InventoryApp.store.security.Users": [],
@@ -931,6 +950,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.store.standard.Status": [],
   "InventoryApp.store.standard.TransferTypes": [],
   "InventoryApp.store.standard.YesNo": [],
+  "InventoryApp.store.systemAreas.SystemAreas": [],
   "InventoryApp.store.transfer.TransferDtls": [],
   "InventoryApp.store.transfer.Transfers": [],
   "InventoryApp.store.units.Units": [],
@@ -947,6 +967,8 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.view.MainPanel": [],
   "InventoryApp.view.MyViewport": [],
   "InventoryApp.view.Viewport": [],
+  "InventoryApp.view.adjustment.Adjustment": [],
+  "InventoryApp.view.adjustment.AdjustmentDtls": [],
   "InventoryApp.view.authentication.CapsLockTooltip": [],
   "InventoryApp.view.categories.List": [],
   "InventoryApp.view.dragNdrop.GridToGrid": [],
@@ -976,6 +998,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.view.purchases.PurchaseLanding": [],
   "InventoryApp.view.purchases.PurchaseList": [],
   "InventoryApp.view.purchases.PurchaseParticulars": [],
+  "InventoryApp.view.report.products.ProductMovementWindow": [],
   "InventoryApp.view.reports.ReportsMainView": [],
   "InventoryApp.view.reports.invoice.Invoice": [],
   "InventoryApp.view.reports.invoice.InvoiceDtlsList": [],
@@ -985,6 +1008,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.view.reports.invoice.Invoice_GProd": [],
   "InventoryApp.view.reports.invoice.Invoice_GSup": [],
   "InventoryApp.view.reports.products.List": [],
+  "InventoryApp.view.reports.products.ProductMovementList": [],
   "InventoryApp.view.reports.products.ProductParameters": [],
   "InventoryApp.view.reports.purchases.Purchase": [],
   "InventoryApp.view.reports.purchases.PurchaseDtlsList": [],
@@ -1002,6 +1026,10 @@ Ext.ClassManager.addNameAlternateMappings({
   "InventoryApp.view.security.Profile": [],
   "InventoryApp.view.security.Users": [],
   "InventoryApp.view.security.UsersList": [],
+  "InventoryApp.view.systemAreas.List": [],
+  "InventoryApp.view.systemAreas.SystemAreaWindow": [],
+  "InventoryApp.view.transfer.Transfer": [],
+  "InventoryApp.view.transfer.TransferDtls": [],
   "InventoryApp.view.units.UnitList": [],
   "overrides.grid.RowEditor": [],
   "overrides.grid.feature.RemoteSummary": []
@@ -1025,6 +1053,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Ext.ElementLoader": [],
   "Ext.FocusManager": [],
+  "Ext.GlobalRtlComponent": [],
   "Ext.Img": [
     "widget.image",
     "widget.imagecomponent"
@@ -2008,6 +2037,7 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "InventoryApp.Application": [],
   "InventoryApp.Utilities": [],
+  "InventoryApp.controller.Adjustments": [],
   "InventoryApp.controller.App": [],
   "InventoryApp.controller.Base": [],
   "InventoryApp.controller.Bins": [],
@@ -2022,6 +2052,8 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.controller.Products": [],
   "InventoryApp.controller.Purchases": [],
   "InventoryApp.controller.PurchasesDtls": [],
+  "InventoryApp.controller.SystemAreas": [],
+  "InventoryApp.controller.Transfers": [],
   "InventoryApp.controller.Units": [],
   "InventoryApp.controller.reports.InvoiceRPT": [],
   "InventoryApp.controller.reports.ProductRPT": [],
@@ -2029,8 +2061,14 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.controller.security.Groups": [],
   "InventoryApp.controller.security.PasswordManagement": [],
   "InventoryApp.controller.security.Users": [],
+  "InventoryApp.dashboard.ChartPurchaseSummary": [
+    "widget.dashboard.chartpurchasesummary"
+  ],
   "InventoryApp.dashboard.GridPortlet": [
     "widget.dashboard.gridportlet"
+  ],
+  "InventoryApp.dashboard.Portal": [
+    "widget.dashboard.portal"
   ],
   "InventoryApp.dashboard.PortalColumn": [
     "widget.dashboard.portalcolumn"
@@ -2048,6 +2086,8 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.domain.Proxy": [],
   "InventoryApp.model.Base": [],
   "InventoryApp.model.account.Account": [],
+  "InventoryApp.model.adjustment.Adjustment": [],
+  "InventoryApp.model.adjustment.AdjustmentDtl": [],
   "InventoryApp.model.categories.Category": [],
   "InventoryApp.model.dragNdrop.DragNDrop": [],
   "InventoryApp.model.invoice.Invoice": [],
@@ -2061,12 +2101,14 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.model.payment.Payment": [],
   "InventoryApp.model.payment.PaymentDtl": [],
   "InventoryApp.model.product.Product": [],
+  "InventoryApp.model.product.ProductMovement": [],
   "InventoryApp.model.product.Stock": [],
   "InventoryApp.model.purchases.Purchase": [],
   "InventoryApp.model.purchases.PurchaseDtls": [],
   "InventoryApp.model.purchases.PurchaseRPT": [],
   "InventoryApp.model.security.Group": [],
   "InventoryApp.model.security.User": [],
+  "InventoryApp.model.systemAreas.SystemArea": [],
   "InventoryApp.model.transfer.Transfer": [],
   "InventoryApp.model.transfer.TransferDtl": [],
   "InventoryApp.model.units.Unit": [],
@@ -2084,6 +2126,12 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "InventoryApp.store.account.AccountsSupplier": [
     "store.account.accountssupplier"
+  ],
+  "InventoryApp.store.adjustment.AdjustmentDtls": [
+    "store.adjustment.adjustmentdtls"
+  ],
+  "InventoryApp.store.adjustment.Adjustments": [
+    "store.adjustment.adjustments"
   ],
   "InventoryApp.store.categories.Categories": [
     "store.categories.categories"
@@ -2106,11 +2154,17 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.store.location.Locations": [
     "store.location.locations"
   ],
+  "InventoryApp.store.location.TransferLocations": [
+    "store.location.transferlocations"
+  ],
   "InventoryApp.store.payment.PaymentDtls1": [
     "store.payment.paymentdtls"
   ],
   "InventoryApp.store.payment.Payments": [
     "store.payment.payments"
+  ],
+  "InventoryApp.store.product.ProductMovements": [
+    "store.product.productmovements"
   ],
   "InventoryApp.store.product.Products": [
     "store.product.products"
@@ -2121,6 +2175,9 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.store.product.Stocks": [
     "store.product.stocks"
   ],
+  "InventoryApp.store.product.TransferProducts": [
+    "store.product.transferproducts"
+  ],
   "InventoryApp.store.purchases.PurchaseRPTs": [
     "store.purchases.purchaserpts"
   ],
@@ -2129,6 +2186,12 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "InventoryApp.store.purchases.PurchasesDtls": [
     "store.purchases.purchasesdtls"
+  ],
+  "InventoryApp.store.purchases.PurchasesDtlsRpt": [
+    "store.purchases.purchasesdtlsrpt"
+  ],
+  "InventoryApp.store.reporting.ChartDataPurchases": [
+    "store.reporting.chartdatapurchases"
   ],
   "InventoryApp.store.security.Groups": [
     "store.security.groups"
@@ -2146,6 +2209,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "InventoryApp.store.standard.YesNo": [
     "store.standard.yesno"
+  ],
+  "InventoryApp.store.systemAreas.SystemAreas": [
+    "store.systemAreas.systemareas"
   ],
   "InventoryApp.store.transfer.TransferDtls": [
     "store.transfer.transferdtls"
@@ -2185,6 +2251,12 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.mainviewport"
   ],
   "InventoryApp.view.Viewport": [],
+  "InventoryApp.view.adjustment.Adjustment": [
+    "widget.adjustment.adjustment"
+  ],
+  "InventoryApp.view.adjustment.AdjustmentDtls": [
+    "widget.adjustment.adjustmentdtls"
+  ],
   "InventoryApp.view.authentication.CapsLockTooltip": [
     "widget.capslocktooltip"
   ],
@@ -2272,6 +2344,9 @@ Ext.ClassManager.addNameAliasMappings({
   "InventoryApp.view.purchases.PurchaseParticulars": [
     "widget.purchases.purchaseparticulars"
   ],
+  "InventoryApp.view.report.products.ProductMovementWindow": [
+    "widget.report.products.productmovementwindow"
+  ],
   "InventoryApp.view.reports.ReportsMainView": [
     "widget.reports.reportsmainview"
   ],
@@ -2298,6 +2373,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "InventoryApp.view.reports.products.List": [
     "widget.reports.products.list"
+  ],
+  "InventoryApp.view.reports.products.ProductMovementList": [
+    "widget.reports.products.productmovementlist"
   ],
   "InventoryApp.view.reports.products.ProductParameters": [
     "widget.reports.products.productparameters"
@@ -2349,6 +2427,18 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "InventoryApp.view.security.UsersList": [
     "widget.userslist"
+  ],
+  "InventoryApp.view.systemAreas.List": [
+    "widget.systemareas.list"
+  ],
+  "InventoryApp.view.systemAreas.SystemAreaWindow": [
+    "widget.systemAreas.systemareawindow"
+  ],
+  "InventoryApp.view.transfer.Transfer": [
+    "widget.transfer.transfer"
+  ],
+  "InventoryApp.view.transfer.TransferDtls": [
+    "widget.transfer.transferdtls"
   ],
   "InventoryApp.view.units.UnitList": [
     "widget.units.unitlist"

@@ -149,14 +149,16 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         layout: 'hbox',
                         combineErrors: true,
                         items: [                        
-                            {
+                           {
                                 xtype: 'textfield',
                                 name: 'pdtStrength',
                                 allowBlank: true,
                                 fieldLabel: 'Strength',
-                                emptyText:'select product strength' 	
+                                emptyText:'select product strength' ,
+                                hidden:true
+                                
                             },
-                            /*{
+                          /*   {
                                 xtype: 'displayfield',
                                 name: 'pdtCurrentQty',
                                 fieldLabel: 'Current Qty',
@@ -177,6 +179,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                 },
                                 editable: false,
                                 forceSelection: false,
+                                hidden:true,
                                 emptyText:'select a to merge qty or Not'
                             },	
                         ]

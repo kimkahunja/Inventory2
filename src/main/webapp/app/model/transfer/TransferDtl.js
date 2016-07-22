@@ -4,7 +4,7 @@
 
 Ext.define('InventoryApp.model.transfer.TransferDtl',{
 	extend:'InventoryApp.model.Base',
-	idProperty: 'tnsfId',
+	idProperty: 'tnsfdId',
 	fields:[
 	        {
 	        	//Id field

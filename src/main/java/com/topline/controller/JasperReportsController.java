@@ -44,8 +44,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView;
+
+import com.topline.utils.GlobalCC;
 
 
 @Controller
@@ -273,17 +276,18 @@ public class JasperReportsController extends BaseController{
 			Map<String, Object> model = new HashMap<String, Object>();
 			String reportType = null;
 			 String reportName= request.getParameter("reportName");
+			 
 			if (reportType == null) {
 				reportType = "pdf";
 			}
 			conn=ormDataSource.getConnection(); 
 			String filePath = null;
 			filePath = getServletContext().getRealPath("/reports/Purchases.jasper");
-			System.out.println("filePath=== "+filePath);
+			//System.out.println("filePath=== "+filePath);
 			setFileReport(new File(filePath));
 			fileReport = getFileReport();
 			reportName = "Purchases";			
-			System.out.println("reportType --> " + reportType);
+			//System.out.println("reportType --> " + reportType);
 			
 			
 			JasperPrint print = JasperFillManager.fillReport(fileReport.getPath(),parameters, conn);	
@@ -293,6 +297,49 @@ public class JasperReportsController extends BaseController{
 				
 				response.setContentType("application/pdf");
 				response.setHeader("Content-Disposition", "attachment; filename="+ "purchases.pdf");
+				
+				exportador.exportReport();
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception Occured  profileHandler-> ");
+		}
+		return;
+	}
+	@RequestMapping("/summarySales.action")
+	private void summarySales(HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		ModelAndView mv = null;
+		try{
+			parameters.clear();			
+			String reportType = null;
+			 String reportName= request.getParameter("reportName");
+			 String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
+			 String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
+			 System.out.println("dateFrom=== "+dateFrom+" dateTo== "+dateTo);
+			 parameters.put("FROM_DATE", dateFrom);
+			 parameters.put("TO_DATE", dateTo);
+			if (reportType == null) {
+				reportType = "pdf";
+			}
+			conn=ormDataSource.getConnection(); 
+			String filePath = null;
+			filePath = getServletContext().getRealPath("/reports/SummarySales.jasper");
+			//System.out.println("filePath=== "+filePath);
+			setFileReport(new File(filePath));
+			fileReport = getFileReport();
+			reportName = "Summary Sales";			
+			//System.out.println("reportType --> " + reportType);
+			
+			
+			JasperPrint print = JasperFillManager.fillReport(fileReport.getPath(),parameters, conn);	
+			Exporter<ExporterInput, PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput> exportador = new JRPdfExporter();
+				exportador.setExporterInput(new SimpleExporterInput(print));
+				exportador.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));
+				
+				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "attachment; filename="+ "SummarySales.pdf");
 				
 				exportador.exportReport();
 			

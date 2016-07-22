@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-07-09T01:28:19 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Profit_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8371212c-4a28-4acf-8147-2e00cfe43d4e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{G_InvoiceNo_COUNT}.intValue() % 2==0)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#BAAFAF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT pdt_code,pdt_sht_desc,pdt_description,(invd_qty*invd_price) AS amount,invd_bp,(( invd_qty*invd_price)-(invd_bp)) AS profit,inv_invono,inv_date 
+FROM inv_invoices, inv_invoice_dtls,inv_products
+WHERE inv_id=invd_inv_id
+AND pdt_code=invd_pdt_code
+AND inv_status="POSTED"
+AND inv_date BETWEEN cast_date('01/01/2016') AND cast_date('31/12/2016') 
+order by inv_invono,inv_acc_code]]>
+	</queryString>
+	<field name="pdt_code" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Double"/>
+	<field name="invd_bp" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="profit" class="java.lang.Double"/>
+	<field name="inv_invono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<sortField name="inv_date"/>
+	<group name="G_InvoiceNo">
+		<groupExpression><![CDATA[$F{inv_invono}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField>
+					<reportElement x="90" y="0" width="100" height="20" uuid="761f4fff-d005-435f-bcd0-7224e4656bdb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{inv_invono}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="90" height="20" uuid="8d995fed-9599-4987-8182-bc82458ca452"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sales No.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="310" y="-2" width="100" height="22" uuid="01887d3c-6b06-460b-a857-38a5f9c34116"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{inv_date}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="210" y="2" width="90" height="20" uuid="1b11aa9c-dd76-482f-8509-ea218ab8430e"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="32"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="-20" y="0" width="842" height="35" isPrintInFirstWholeBand="true" backcolor="#339999" uuid="dda596f0-7992-4647-8dc6-006414a9b006"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="180" y="1" width="410" height="30" uuid="bcc9b33b-dae8-4624-a383-fcac3bbae989"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Profit statement per sales No.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="e1c83e88-bf36-428a-85ec-99a019abfd19"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prod Code.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="0" width="70" height="20" uuid="d200a97b-d0f3-415b-9a9c-50dc697b554c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="1" width="99" height="20" uuid="371207ac-560a-4be7-a098-bdf831461b74"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="267" y="1" width="94" height="20" uuid="98104720-9612-4b4c-8bc8-08c91d0b2a0d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.P.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="1" width="104" height="20" uuid="503b95b4-e62c-48c7-8e22-9787ec172c01"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[B.P.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-290" y="27" width="1112" height="2" forecolor="#000000" uuid="c24fd49a-6055-4430-83d5-2a1b06236257"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#3059B3"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<frame>
+				<reportElement key="" style="Style1" x="0" y="0" width="822" height="20" backcolor="#FFFDFC" uuid="6d028a04-7d83-430a-9e39-318e3e780f9e"/>
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20" uuid="3fa2c0e0-43b1-4ce2-95bb-ad682ec093a7"/>
+					<textElement textAlignment="Left">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pdt_sht_desc}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="265" y="0" width="100" height="20" uuid="5c8dbc85-0a67-4905-9780-7c88bdaf35f5"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="0" width="165" height="20" uuid="a1aa5717-beaf-4e37-8cb2-89a6921c32fb"/>
+					<textElement textAlignment="Left">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pdt_description}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="365" y="-3" width="100" height="23" uuid="9700025d-24ca-4b6a-b371-72b5a8cddef1"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{invd_bp}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="465" y="-3" width="100" height="23" uuid="2b897e9b-715b-48d4-813f-815f2e098656"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="580" y="-10" width="100" height="30" uuid="6f95197b-73f6-49eb-b04b-d16c8f94d7c1"/>
+					<textFieldExpression><![CDATA[$V{G_InvoiceNo_COUNT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

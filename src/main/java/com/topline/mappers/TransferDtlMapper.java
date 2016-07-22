@@ -2,7 +2,12 @@ package com.topline.mappers;
 
 import com.topline.model.TransferDtl;
 import com.topline.model.TransferDtlExample;
+import com.topline.model.wrappers.PurchaseDetailWrapper;
+import com.topline.model.wrappers.TransferDtlWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TransferDtlMapper {
@@ -93,4 +98,5 @@ public interface TransferDtlMapper {
      * @mbggenerated Thu Feb 04 19:48:27 EAT 2016
      */
     int updateByPrimaryKey(TransferDtl record);
+    List<TransferDtlWrapper> fetchRptTransfers(Map<String,Object> map);
 }

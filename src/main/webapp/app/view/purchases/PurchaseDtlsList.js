@@ -8,6 +8,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	store: 'purchases.PurchasesDtls',
     initComponent: function() {
        var me = this;
+       //var store = Ext.create('InventoryApp.store.purchases.Purchases');
        Ext.applyIf(me,{
            selType: 'cellmodel',
            plugins: [

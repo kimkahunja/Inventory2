@@ -30,10 +30,11 @@ Ext.define('InventoryApp.controller.Transfers', {
 	        },
          ],
     init: function() {
-    	this.getProductTransferProductsStore().on({
+    	//console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkk');
+    	/*this.getProductTransferProductsStore().on({
   		  beforeload: this.beforeLoadTransferProducts,
   	        scope: this
-  	    });
+  	    });*/
     	this.listen({
             controller: {},
             component: {
@@ -56,12 +57,14 @@ Ext.define('InventoryApp.controller.Transfers', {
         });
     },
     comboChange: function( combo, records, eOpts ) {
+    	
     	if(combo.isValid()){ 
     		var transferType=records[0].get('id'),
     		sourceCombo=this.getSourceCombo(),
     		destinationCombo=this.getDestinationCombo(),
     		productCombo=this.getProductCombo(),
     		productComboStore=productCombo.getStore();
+    		productComboStore.proxy.extraParams = { transferType: transferType };
     		sourceCombo.clearValue();
     		destinationCombo.clearValue();
     		if(transferType=='IN'){

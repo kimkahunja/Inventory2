@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.topline.mappers.AccountMapper;
 import com.topline.mappers.CategoriesMapper;
+import com.topline.mappers.CustomizeAreaDtlMapper;
 import com.topline.mappers.GroupsMapper;
 import com.topline.mappers.InvoiceDtlsMapper;
 import com.topline.mappers.InvoiceMapper;
@@ -97,6 +98,8 @@ public class BaseController extends MultiActionController {
 	ManAdjustmentDtlMapper manAdjustmentDtlMapper;
 	@Autowired(required=true)
 	ManAdjustmentMapper manAdjustmentMapper;
+	@Autowired(required=true)
+	CustomizeAreaDtlMapper customizeAreaDtlMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

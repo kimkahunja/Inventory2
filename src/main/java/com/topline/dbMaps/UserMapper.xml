@@ -372,4 +372,7 @@
     set  status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER} 
 </update> 
+<select id="isEligible" parameterType="java.util.HashMap" resultType="String" >
+       SELECT isEligible(#{userName,mode=IN,jdbcType=VARCHAR},#{area,mode=IN,jdbcType=VARCHAR})
+ </select> 
 </mapper>

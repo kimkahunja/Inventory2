@@ -5,7 +5,7 @@ Ext.define('InventoryApp.controller.Products', {
     extend: 'InventoryApp.controller.Base',
     stores: [
         'product.Products',
-        'product.Stocks'
+        'product.Stocks'       
     ],
     views: [
         'product.List',
@@ -45,10 +45,11 @@ Ext.define('InventoryApp.controller.Products', {
             component: {
                 'grid[xtype=product.list]': {
                 	//edit: this.editProduct,
-                    beforerender: this.loadRecords,
+                    afterrender: this.loadRecords,
                     itemdblclick: this.edit,
                     beforeclose:this.beforeClose,
-                    itemcontextmenu: this.showContextMenu
+                    itemcontextmenu: this.showContextMenu,
+                    selectionchange: this.gridSelectionChange,
                 },
                 'grid[xtype=product.list] button#add': {
                     click: this.add
@@ -123,6 +124,7 @@ Ext.define('InventoryApp.controller.Products', {
         store.clearFilter( true );
         // load the store
         store.load();
+       
     },
     /**
      * Handles request to edit
@@ -341,5 +343,13 @@ customize: function( button, e, eOpts ) {
 	var win = Ext.create('InventoryApp.view.systemAreas.SystemAreaWindow');
     win.setTitle('Customize Product Columns');
     win.show();
-},  	
+}, 
+gridSelectionChange: function(model, records) {
+	  var me = this;
+    if (records[0]) {         
+         InventoryApp.Utilities.pdtCode= records[0].get('pdtCode');
+         //console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+    }
+	//console.log('lkkkdkdkdkdkdk');
+},
 });

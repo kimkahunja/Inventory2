@@ -412,76 +412,93 @@ Ext.define('InventoryApp.controller.Invoices', {
           }
       },
       postInvoice: function( button, e, eOpts ){
-      	var me = this,
-      	grid = me.getInvoiceList(),    		
-  		store = grid.getStore();
-      	 var record=store.findRecord('invId',InventoryApp.Utilities.inv_id);
-          //var record = grid.getSelectionModel().getSelection();
-         var  gridDtls = me.getInvoiceDtlsList(),
-         storeDtls = gridDtls.getStore(),
-         details = new Array(),
-         recordsDtls = storeDtls.getRange();
-         for (var i = 0; i < recordsDtls.length; i++) {
-        	 details.push(recordsDtls[i].data);
-         };
-         if (record !=null) {
-	        	// show confirmation before continuing
-	           	Ext.Msg.confirm( 'Attention', 'Are you sure you want to Post this transaction? This action cannot be undone.', function( buttonId, text, opt ) {
-	           		if( buttonId=='yes' ) {
-	           			
-	           			Ext.Ajax.request({
-	           	               url: 'invoice/postInvoice.action',
-	           	            params: {
-	           	                    data: Ext.encode(record.data),
-	           	                    dataDetail:Ext.encode(details),
-	           	                    location:InventoryApp.Utilities.locationId,
-	           	                    userName:InventoryApp.Utilities.userName
-	           	            },
-	           	            
-	           	            scope:this,
-	           	            //method to call when the request is successful
-	           	            //success: InventoryApp.Utilities.onSaveSuccess,
-	           	            success:function(conn, response, options, eOpts){
-	           	            	var result = Ext.JSON.decode(conn.responseText, true); 
-	           	            	if (result.success){
-	           	            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
-	           	            		store.load({
-	                	             	   callback: function(records, operation, success) {
-	                	             	        if (success == true) {
-	                	             	            //console.log('Loading is successful....');
-	                	             	            //store.sync();
-	                	             	            grid.getView().refresh();
-	                	             	           grid.getSelectionModel().select(0);
-	                	             	        } else {
-	                	             	        	 console.log('Loading is not successful....');
-	                	             	        }
-	                	             	    }
-	                	                });
-	           	            		var storeStock = Ext.create('InventoryApp.store.product.Stocks', {
-	           	         		    storeId: 'InvoiceStocks'
-	           	         		});
-	           	            		//storeStock.proxy.extraParams = { location: InventoryApp.Utilities.locationId };
-	           	            		storeStock.load({
-	           	                  	params: {
-	           	                  			location: InventoryApp.Utilities.locationId 
-	           	                        	}
-	           	                         });
-	           	            	}else{
-	           	            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
-	           	            	}
-	           	            	
-	           	            	//this.onSaveSuccess;
-	           	            },
-	           	            //method to call when the request is a failure
-	           	            failure: InventoryApp.Utilities.onSaveFailure
-	           	        });
-	           			
-	                        
-	           		}
-	           	});
-      	 }else{
-      		 InventoryApp.util.Util.showErrorMsg('One or more products should be saved before Posting can be done...');
-      	 }
+    	  var isEligible=InventoryApp.Utilities.isEligible(InventoryApp.Utilities.userName,'POSTSAL');
+    	  if(isEligible=='N'){
+    		  Ext.Msg.show(
+                      {                    
+                         title : 'Eligibility!',
+                         msg : 'You are not eligible to Post...',
+                         icon : Ext.Msg.INFO,
+                         buttons : Ext.Msg.OK
+                      }
+                      );
+      		return;
+    	  }else{
+    		  var me = this,
+    	      	grid = me.getInvoiceList(),    		
+    	  		store = grid.getStore();
+    	      	 var record=store.findRecord('invId',InventoryApp.Utilities.inv_id);
+    	          //var record = grid.getSelectionModel().getSelection();
+    	         var  gridDtls = me.getInvoiceDtlsList(),
+    	         storeDtls = gridDtls.getStore(),
+    	         details = new Array(),
+    	         recordsDtls = storeDtls.getRange();
+    	         for (var i = 0; i < recordsDtls.length; i++) {
+    	        	 details.push(recordsDtls[i].data);
+    	         };
+    	         if (record !=null) {
+    		        	// show confirmation before continuing
+    		           	Ext.Msg.confirm( 'Attention', 'Are you sure you want to Post this transaction? This action cannot be undone.', function( buttonId, text, opt ) {
+    		           		if( buttonId=='yes' ) {
+    		           			
+    		           			Ext.Ajax.request({
+    		           	               url: 'invoice/postInvoice.action',
+    		           	            params: {
+    		           	                    data: Ext.encode(record.data),
+    		           	                    dataDetail:Ext.encode(details),
+    		           	                    location:InventoryApp.Utilities.locationId,
+    		           	                    userName:InventoryApp.Utilities.userName
+    		           	            },
+    		           	            
+    		           	            scope:this,
+    		           	            //method to call when the request is successful
+    		           	            //success: InventoryApp.Utilities.onSaveSuccess,
+    		           	            success:function(conn, response, options, eOpts){
+    		           	            	var result = Ext.JSON.decode(conn.responseText, true); 
+    		           	            	if (result.success){
+    		           	            		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+    		           	            		store.load({
+    		                	             	   callback: function(records, operation, success) {
+    		                	             	        if (success == true) {
+    		                	             	            //console.log('Loading is successful....');
+    		                	             	            //store.sync();
+    		                	             	        	/*storeDtl.clearData();
+    		                   	             	        	storeDtl.removeAll();
+    		                   	             	        	gridDtl.getView().refresh();*/
+    		                	             	            grid.getView().refresh();
+    		                	             	           grid.getSelectionModel().select(0);
+    		                	             	        } else {
+    		                	             	        	 console.log('Loading is not successful....');
+    		                	             	        }
+    		                	             	    }
+    		                	                });
+    		           	            		var storeStock = Ext.create('InventoryApp.store.product.Stocks', {
+    		           	         		    storeId: 'InvoiceStocks'
+    		           	         		});
+    		           	            		//storeStock.proxy.extraParams = { location: InventoryApp.Utilities.locationId };
+    		           	            		storeStock.load({
+    		           	                  	params: {
+    		           	                  			location: InventoryApp.Utilities.locationId 
+    		           	                        	}
+    		           	                         });
+    		           	            	}else{
+    		           	            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+    		           	            	}
+    		           	            	
+    		           	            	//this.onSaveSuccess;
+    		           	            },
+    		           	            //method to call when the request is a failure
+    		           	            failure: InventoryApp.Utilities.onSaveFailure
+    		           	        });
+    		           			
+    		                        
+    		           		}
+    		           	});
+    	      	 }else{
+    	      		 InventoryApp.util.Util.showErrorMsg('One or more products should be saved before Posting can be done...');
+    	      	 }
+    	  }
+      	
       	
       	
       },

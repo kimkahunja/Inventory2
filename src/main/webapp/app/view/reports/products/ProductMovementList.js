@@ -5,7 +5,7 @@ Ext.define('InventoryApp.view.reports.products.ProductMovementList',{
 	           'Ext.grid.column.Date',
 	           'Ext.toolbar.Paging'          
 	       ],
-	store: 'product.productMovements',	
+	store: 'product.ProductMovements',	
    // width:'80%',	       
 	autoWidth:true,       
     initComponent: function() {

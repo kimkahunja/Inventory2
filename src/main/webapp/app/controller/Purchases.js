@@ -95,7 +95,22 @@ Ext.define('InventoryApp.controller.Purchases', {
                         text: 'Post this Purchase',
                         iconCls: 'accept',
                         handler: function( item, e ) {
-                            me.postPurchase( record );
+                        	var isEligible=InventoryApp.Utilities.isEligible(InventoryApp.Utilities.userName,'POSTPUR');
+                        	//console.log('isEligible==='+isEligible);
+                        	if(isEligible=='Y'){
+                        		me.postPurchase( record );
+                        	}else{
+                        		Ext.Msg.show(
+                                        {                    
+                                           title : 'Eligibility!',
+                                           msg : 'You are not eligible to Post...',
+                                           icon : Ext.Msg.INFO,
+                                           buttons : Ext.Msg.OK
+                                        }
+                                        );
+                        		return;
+                        	}
+                            
                         	//console.log('inside the post area....');
                         }
                     }
@@ -180,6 +195,7 @@ Ext.define('InventoryApp.controller.Purchases', {
                            buttons : Ext.Msg.OK
                         }
                         );
+        		return;
         	}else
         		{
         		 var me = this,
@@ -213,6 +229,7 @@ Ext.define('InventoryApp.controller.Purchases', {
               buttons : Ext.Msg.OK
            }
            );
+           return;
         }
     },
     savePurchases: function( button, e, eOpts ) {

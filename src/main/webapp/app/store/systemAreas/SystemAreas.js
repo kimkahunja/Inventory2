@@ -18,8 +18,8 @@ Ext.define('InventoryApp.store.systemAreas.SystemAreas',{
     proxy: {
         type: 'ajax',      
         api: {           
-            read    : 'transfer/fetchAdjustmentDtl.action',
-            update  : 'transfer/saveAdjustmentDtl.action'           
+            read    : 'customizeArea/fetchAreas.action',
+            update  : 'customizeArea/saveArea.action'           
         },
         reader: {
             type: 'json',

@@ -27,6 +27,10 @@ Ext.define('InventoryApp.model.systemAreas.SystemArea',{
 	        {
 	        	 name: 'ctadIsvisible',
 	             type: 'string'
+	        },
+	        {
+	        	name:'_ctadIsvisible',
+	        	type:'boolean'
 	        }
 	        ],
 });

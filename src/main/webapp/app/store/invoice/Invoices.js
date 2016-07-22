@@ -11,9 +11,9 @@ Ext.define('InventoryApp.store.invoice.Invoices',{
 	//restPath: 'resources/categories',
 	
 	storeId: 'Invoices',
-	remoteSort: true,
-    remoteFilter: true,
-    remoteGroup: true,
+	//remoteSort: true,
+   // remoteFilter: true,
+  //  remoteGroup: true,
 	//autoLoad: true,
     pageSize: 20,
     proxy: {

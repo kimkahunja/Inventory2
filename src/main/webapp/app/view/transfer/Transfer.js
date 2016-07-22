@@ -125,9 +125,9 @@ Ext.define('InventoryApp.view.transfer.Transfer',{
 								                  editable: true,
 								                  forceSelection: true,   
 								                  emptyText:'select product',
-								                  minChars: 0,
-								                  disabled:true,
-								                  queryMode:'local'
+								                  minChars: 0
+								                 // disabled:true,
+								                  //queryMode:'local'
 								              },
 									         ],
 								},

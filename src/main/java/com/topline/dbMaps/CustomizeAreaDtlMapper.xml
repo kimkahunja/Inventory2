@@ -283,7 +283,12 @@
       ctad_isVisible = #{ctadIsvisible,jdbcType=VARCHAR}
     where ctad_id = #{ctadId,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.SystemAreasWrapper" >
+   <result column="_ctadIsvisible" property="_ctadIsvisible" jdbcType="BOOLEAN" />   
+  </resultMap>
   <select id="fetchSystemAreas" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
-  	
+  	SELECT ctad_id, ctad_cta_code, ctad_column, ctad_column_desc, ctad_isVisible,if(ctad_isVisible='Y','true','false') as _ctadIsvisible  
+		FROM inv_customize_areas_dtls
+		WHERE ctad_cta_code='PROD'
   </select>
 </mapper>

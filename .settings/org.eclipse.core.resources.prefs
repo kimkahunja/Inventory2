@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/reports/Products.jrxml=UTF-8
+encoding//src/main/webapp/reports/Profit_detail.jrxml=UTF-8
+encoding//src/main/webapp/reports/Purchases.jasper=UTF-8
 encoding//src/main/webapp/reports/Purchases.jrxml=UTF-8
 encoding//src/main/webapp/reports/Purchases_G_Prod.jrxml=UTF-8
+encoding//src/main/webapp/reports/SummarySales.jrxml=UTF-8

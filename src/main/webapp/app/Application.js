@@ -4,8 +4,9 @@
         //Ext: '.',
         'Ext.ux': 'ux'
     }
-});*/
-//Ext.Loader.setPath('overrides.grid', '../grid/');
+})*/
+
+
 Ext.define('InventoryApp.Application', {
     name: 'InventoryApp',
 
@@ -14,6 +15,7 @@ Ext.define('InventoryApp.Application', {
                'Ext.util.History',
                'overrides.grid.RowEditor',
                'overrides.grid.feature.RemoteSummary',
+              // 'ux.CheckColumn',
                'Ext.util.Point',
                'Ext.ux.form.field.ClearButton',
                'Ext.ux.grid.FilterBar',
@@ -34,7 +36,10 @@ Ext.define('InventoryApp.Application', {
                'Ext.grid.column.Action',
                'Ext.toolbar.Spacer',
                'Ext.form.RadioGroup',
-               'Ext.grid.column.CheckColumn',
+               'Ext.form.action.StandardSubmit',
+               'Ext.form.field.VTypes',
+              // 'Ext.grid.column.CheckColumn',
+              // 'Ext.ux.CheckColumn',
                'InventoryApp.Utilities',
                'InventoryApp.util.Util',
                'InventoryApp.model.menu.Root',
@@ -110,11 +115,14 @@ Ext.define('InventoryApp.Application', {
             'InventoryApp.view.transfer.Transfer',
             'transfer.TransferDtls',
             'reports.products.ProductMovementList',
-            //'report.products.ProductMovementWindow',
+            'report.products.ProductMovementWindow',
             'adjustment.Adjustment',
             'adjustment.AdjustmentDtls',
             'systemAreas.SystemAreaWindow',
-            'systemAreas.List'
+            'systemAreas.List',
+            'reports.transfer.Transfer',
+            'reports.comprehensive.ComprehensiveMain',
+            'reports.comprehensive.ReportViewer'
         ],
     controllers: [
        // 'App',
@@ -139,7 +147,9 @@ Ext.define('InventoryApp.Application', {
         'InventoryApp.controller.Transfers',
         'reports.ProductRPT',
         'Adjustments',
-        //'SystemAreas'
+        'SystemAreas',
+        'reports.TransferRPT',
+        'reports.ComprehensiveRPT'
     ],
     
     //autoCreateViewport: true,

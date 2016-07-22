@@ -2,9 +2,9 @@ Ext.define('InventoryApp.view.systemAreas.SystemAreaWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.systemAreas.systemareawindow',
 
-    height: 260,
-    width: 550,
-
+    height: 350,
+    width: 350,
+    modal:true,
     requires: ['InventoryApp.util.Util'],
 
     layout: {
@@ -33,13 +33,13 @@ Ext.define('InventoryApp.view.systemAreas.SystemAreaWindow', {
 				{
 				    xtype: 'button',
 				    text: 'Save',
-				    itemId: 'save',
+				    itemId: 'saveSA',
 				    iconCls: 'save'
 				},
                 {
                     xtype: 'button',
                     text: 'Cancel',
-                    itemId: 'cancel',
+                    itemId: 'cancelSA',
                     iconCls: 'cancel'
                 }
                 

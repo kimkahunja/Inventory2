@@ -1,12 +1,13 @@
 Ext.define('InventoryApp.view.purchases.PurchaseList',{
 	extend:'Ext.grid.Panel',
 	alias:'widget.purchases.purchaselist',
-	store: 'purchases.Purchases',
+	//store:'purchases.Purchases',
   //  title:'Unauthorized Purchases',
 	initComponent: function() {
 	       var me = this;
+	       var store = Ext.create('InventoryApp.store.purchases.Purchases');
 	       Ext.applyIf(me,{	   
-	    	   
+	    	   store: store,
 	           columns: {	
 	        	   defaults: {
 	        		   autoSizeColumn : true
@@ -40,7 +41,16 @@ Ext.define('InventoryApp.view.purchases.PurchaseList',{
 	               ]
 	               
 	           },
-	                  
+	           dockedItems: [	                         
+	                         {
+	                             xtype: 'pagingtoolbar',
+	                             ui: 'footer',
+	                             defaultButtonUI: 'default',
+	                             dock: 'bottom',
+	                             displayInfo: true,
+	                             store:store
+	                         }
+	                     ]       
 	       });
 	       me.callParent( arguments );
 	   }   

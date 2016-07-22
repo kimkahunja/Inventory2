@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
@@ -298,9 +299,9 @@ public class InvoiceController extends BaseController {
 						map.put("postedBy", userName);
 						invoiceMapper.postInvoice(map);
 					}
-					Object v_count=map.get("v_count");
-					System.out.println("count===== "+v_count);
-				    if(v_count.toString().equalsIgnoreCase("1")) {
+					Object rtnVal=map.get("v_rtnVal");
+					System.out.println("Return val===== "+rtnVal);
+				    if(rtnVal.toString().equalsIgnoreCase("S")) {
 				    	txnManager.commit(status);
 				    	jsonResponse.setSuccess(true);	
 						jsonResponse.setData(null);
@@ -309,7 +310,7 @@ public class InvoiceController extends BaseController {
 				    	txnManager.rollback(status);
 				    	jsonResponse.setSuccess(false);	
 						jsonResponse.setData(null);
-						jsonResponse.addMessage("message", "Invoice Transaction not Posted...");
+						jsonResponse.addMessage("message", rtnVal.toString());
 				    }
 				    
 				    return jsonObject(jsonResponse);

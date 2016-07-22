@@ -10,6 +10,7 @@
             <link rel="stylesheet" href="resources/css/style.css"> 
             <link rel="stylesheet" type="text/css" href="resources/css/uxs.css" />
 		   <link rel="stylesheet" type="text/css" href="resources/css/overrides.css" />
+		   <link rel="stylesheet" type="text/css" href="ux/css/CheckHeader.css"/>
             <script src="ext/ext-dev.js"></script>
             <script src="bootstrap.js"></script>
         <!-- </x-bootstrap> -->
