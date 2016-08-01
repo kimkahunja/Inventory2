@@ -30,7 +30,9 @@
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 	     
-  <table tableName = "inv_customize_areas" domainObjectName = "CustomizeArea"/>
-  <table tableName = "inv_customize_areas_dtls" domainObjectName = "CustomizeAreaDtl"/>
+  <table tableName = "inv_returns" domainObjectName = "ItemReturn"/>
+  <table tableName = "inv_returns_dtls" domainObjectName = "ItemReturnDtl"/>
+  <table tableName = "inv_discrepancies" domainObjectName = "ItemDiscrepancy"/>
+  <table tableName = "inv_discrepancies_dtls" domainObjectName = "ItemDiscrepancyDtl"/>
  </context>
 </generatorConfiguration>

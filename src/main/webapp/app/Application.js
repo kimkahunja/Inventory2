@@ -122,7 +122,9 @@ Ext.define('InventoryApp.Application', {
             'systemAreas.List',
             'reports.transfer.Transfer',
             'reports.comprehensive.ComprehensiveMain',
-            'reports.comprehensive.ReportViewer'
+            'reports.comprehensive.ReportViewer',
+            'swap.SwapMainContainer',
+            //'swap.ListHolder'
         ],
     controllers: [
        // 'App',
@@ -149,7 +151,8 @@ Ext.define('InventoryApp.Application', {
         'Adjustments',
         'SystemAreas',
         'reports.TransferRPT',
-        'reports.ComprehensiveRPT'
+        'reports.ComprehensiveRPT',
+        'Swap'
     ],
     
     //autoCreateViewport: true,
