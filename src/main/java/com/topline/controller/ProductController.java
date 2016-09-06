@@ -405,8 +405,8 @@ public class ProductController extends BaseController {
 						.getParameter("limit"));
 				String start = GlobalCC.CheckNullValues(request
 						.getParameter("start"));
-				String pdtCode = GlobalCC.CheckNullValues(request
-						.getParameter("pdtCode"));				
+				String pdtCode = GlobalCC.CheckNullValues(request.getParameter("pdtCode"));	
+				String type = GlobalCC.CheckNullValues(request.getParameter("type"));
 				if (limit == null) {
 					limit = "50";
 				}
@@ -414,9 +414,9 @@ public class ProductController extends BaseController {
 					start = "0";
 				}
 
-				System.out.println("fetchProductMovement==== "+pdtCode);
+				//System.out.println("fetchProductMovement==== "+pdtCode);
 				map.put("pdtCode", pdtCode);
-				
+				map.put("type", type);
 				List<ProductMovement> list = productMapper.fetchProductMovement(map);				
 				if (list != null) {
 					int count = list.size();

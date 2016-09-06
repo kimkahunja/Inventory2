@@ -4,11 +4,11 @@ Ext.define('InventoryApp.view.swap.OriginList',{
 	requires: [
 	           'Ext.grid.RowNumberer',
 	           'Ext.grid.plugin.CellEditing',
-	           'InventoryApp.store.swap.ItemSwapDtls'
+	           'InventoryApp.store.swap.ItemOrigDtls'
 	       ],
 	initComponent: function() {
 	       var me = this;
-	       var store = Ext.create('InventoryApp.store.swap.ItemSwapDtls');
+	       var store = Ext.create('InventoryApp.store.swap.ItemOrigDtls');
 	       Ext.applyIf(me,{	   
 	    	   store: store,
 	    	   selType: 'cellmodel',

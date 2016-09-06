@@ -268,4 +268,16 @@
       dscd_qty = #{dscdQty,jdbcType=DOUBLE}
     where dscd_id = #{dscdId,jdbcType=INTEGER}
   </update>
+  <resultMap extends="BaseResultMap" id="BaseResultMapWrapper" type="com.topline.model.wrappers.ItemDiscrepancyDtlWrapper">
+  		 <result column="pdt_description" jdbcType="VARCHAR" property="_dscdPdtCode" />
+  </resultMap>
+   <select id="fetchDiscrepancyItems" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper">
+   		select dscd_id, dscd_dsc_id, dscd_pdt_code, dscd_qty,pdt_description
+   		from inv_discrepancies_dtls,inv_discrepancies,inv_products
+   		where dsc_id=dscd_dsc_id
+   		and dscd_pdt_code=pdt_code
+   		<if test="status != null">          
+         AND  dsc_status =  #{status,jdbcType=VARCHAR}
+       </if>    		
+   </select>
 </mapper>

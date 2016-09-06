@@ -124,6 +124,13 @@ Ext.define('InventoryApp.Application', {
             'reports.comprehensive.ComprehensiveMain',
             'reports.comprehensive.ReportViewer',
             'swap.SwapMainContainer',
+            'swap.SwapHeader',
+            'discrepancies.ItemDiscrepancyHolder',
+            'approvalAreas.ApprovalAreaHolder',
+            'account.AccountList',
+            'reports.products.ProductPricesWindow',
+            'taskDelivery.Tasks'
+           // 'return.ReturnMainContainer'
             //'swap.ListHolder'
         ],
     controllers: [
@@ -152,7 +159,12 @@ Ext.define('InventoryApp.Application', {
         'SystemAreas',
         'reports.TransferRPT',
         'reports.ComprehensiveRPT',
-        'Swap'
+        'Swap',
+        'ItemDiscrepancies',
+        'ItemReturns',
+        'ApprovalAreas',
+        'Accounts',
+        'Tasks'
     ],
     
     //autoCreateViewport: true,

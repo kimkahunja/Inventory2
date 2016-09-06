@@ -95,16 +95,9 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 			                                             forceSelection: true,   
 			                                             emptyText:'select product',
 			                                             minChars: 0, 
-			                                             /*tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
-			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">',
-			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Measure : {_pdtUntCode}</div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Category : {_pdtCatCode}</div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Location : {_pdtLocCode}-{_pdtSlocCode}</div>',
-			      							                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
-			      							                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
-			      							                                             '</div>',
-			      							                                             '</tpl>']),*/
+			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">{pdtShtDesc} - {pdtDescription}</div>',
+			      							                                             '</tpl>'])
 			                                         },
 										         ],
 							           },
@@ -114,8 +107,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							        	  xtype: 'panel',
 							        	 // autoScroll:true,
 							        	  layout:'fit',
-							        	  maxHeight:200,							        	  
-							        	  height:200,
+							        	  maxHeight:300,							        	  
+							        	  height:300,
 							        	  items:[
 													{
 														xtype:'purchases.purchasedtlslist' , 

@@ -54,6 +54,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 import com.topline.model.Purchase;
 import com.topline.model.PurchaseDetail;
 import com.topline.model.PurchaseDetailExample;
@@ -412,4 +413,38 @@ public class PurchaseController extends BaseController {
 					return jsonObject(jsonResponse);
 				}
 			}
+//removeItem 
+	@RequestMapping(value="/removeItem.action", method=RequestMethod.POST)
+	private @ResponseBody String removeItem(HttpServletRequest request){
+		try{
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			Map<String, Object> map = new HashMap<String, Object>();		
+			
+			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+			String purdId=GlobalCC.CheckNullValues(request.getParameter("purdId"));
+			if (limit == null) {
+				limit = "50";
+			}
+			if (start == null) {
+				start = "0";
+			}
+			if(purdId!=null){
+				purchaseDetailMapper.deleteByPrimaryKey(Integer.parseInt(purdId));
+			}
+			
+			jsonResponse.setData(null);
+			jsonResponse.setSuccess(true);
+			jsonResponse.addMessage("message", null);
+			return jsonObject(jsonResponse);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			jsonResponse.setData(null);
+			jsonResponse.setSuccess(false);
+			jsonResponse.addMessage("message", e.getLocalizedMessage());
+			return jsonObject(jsonResponse);
+		}
+	}			
 }

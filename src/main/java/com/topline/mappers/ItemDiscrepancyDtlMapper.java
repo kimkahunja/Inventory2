@@ -2,7 +2,12 @@ package com.topline.mappers;
 
 import com.topline.model.ItemDiscrepancyDtl;
 import com.topline.model.ItemDiscrepancyDtlExample;
+import com.topline.model.wrappers.ItemDiscrepancyDtlWrapper;
+import com.topline.model.wrappers.ItemReturnDtlWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ItemDiscrepancyDtlMapper {
@@ -93,4 +98,6 @@ public interface ItemDiscrepancyDtlMapper {
      * @mbggenerated Mon Aug 01 16:35:05 EAT 2016
      */
     int updateByPrimaryKey(ItemDiscrepancyDtl record);
+    //add methods
+    List<ItemDiscrepancyDtlWrapper> fetchDiscrepancyItems(Map<String,Object> map);
 }

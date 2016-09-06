@@ -356,6 +356,9 @@
 		</if>
 		<if test="group != null" >
 		AND  Group_id = #{group,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null" >
+		AND  status = #{status,jdbcType=VARCHAR}
 		</if>		
      </select>
 <!--  <update id="updatePassword" parameterType="java.util.HashMap" >

@@ -232,6 +232,107 @@ Ext.define('InventoryApp.controller.Purchases', {
            return;
         }
     },
+    saveRecord:function(){
+    	var me = this,
+        grid = me.getPurchaseDtlsList(),
+        store = grid.getStore();
+    	if(store.getCount()>0){
+    		var purInvono=Ext.ComponentQuery.query("textfield[name='purInvono']")[0].getValue(),
+    		purRefNo=Ext.ComponentQuery.query("textfield[name='purRefNo']")[0].getValue(),
+    		//purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
+    		purDate=Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),
+    		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue(),
+    		mydata=null;
+    		
+    		if (purInvono.trim().length==0){
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Invoice Number is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+    		}else if(purDate==null) {
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Purchase Date is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+    		}else if(purAccCode==null){
+    			Ext.Msg.show(
+                        {                    
+                           title : 'Validation',
+                           msg : 'Supplier is required...',
+                           icon : Ext.Msg.INFO,
+                           buttons : Ext.Msg.OK
+                        }
+                        );
+        		return;
+    		}
+    		 var model = {};
+    		 model["purId"]=InventoryApp.Utilities.pur_id;
+    		 model["purInvono"]=purInvono;
+    		 model["purRefno"]=purRefNo;
+    		 model["purDate"]=purDate;
+    		 model["purAccCode"]=purAccCode;
+    		 model["purUser"]=InventoryApp.Utilities.userName;
+    		
+    		 //-----------------------------------------
+    		 var details = new Array();
+             var records = store.getRange();
+             for (var i = 0; i < records.length; i++) {
+            	 details.push(records[i].data);
+             };
+             
+    		Ext.Ajax.request({
+                url: 'purchase/savePurchase.action',
+             params: {                   
+                     data: Ext.encode(model),
+                     dataDetail:Ext.encode(details),
+                     location:InventoryApp.Utilities.locationId
+             },
+             
+             scope:this,
+             //method to call when the request is successful
+             success: function(conn, response, options, eOpts){
+            	var result = Ext.JSON.decode(conn.responseText, true);    
+            	if ( ! result)
+                {
+                   
+                   result =
+                   {
+                   }
+                   ;
+                   result.success = false;
+                   result.messages.message = conn.responseText;
+                }
+            	 if (result.success)
+                 {
+            		  mydata=result.data.data;
+            		  InventoryApp.Utilities.pur_id=mydata;
+            		 
+            		  this.getPurchaseList().getStore().load({
+              			params: {
+                        		id: mydata
+                        	}
+              		});              
+                 }
+            	 else
+                 {
+            		 InventoryApp.util.Util.showErrorMsg(result.messages.message);                   
+                 }
+            },
+             //method to call when the request is a failure
+             failure: InventoryApp.Utilities.onSaveFailure
+         });
+    	}
+    },
     savePurchases: function( button, e, eOpts ) {
     	 var me = this,
          grid = me.getPurchaseDtlsList(),
@@ -288,7 +389,7 @@ Ext.define('InventoryApp.controller.Purchases', {
         		return;
     		}
     			
-    		
+    		console.log('InventoryApp.Utilities.pur_id '+InventoryApp.Utilities.pur_id);
     		 var model = {};
     		 model["purId"]=InventoryApp.Utilities.pur_id;
     		 model["purInvono"]=purInvono;
@@ -464,7 +565,8 @@ Ext.define('InventoryApp.controller.Purchases', {
            	             	        	storeDtl.clearData();
            	             	        	storeDtl.removeAll();
            	             	        	gridDtl.getView().refresh();
-           	             	            //this.getPurchaseForm().getForm().reset();
+           	             	           InventoryApp.Utilities.pur_id=null;
+           	             	           //this.getPurchaseForm().getForm().reset();
            	             	            grid.getView().refresh();
            	             	           grid.getSelectionModel().select(0);
            	             	        } else {
@@ -529,21 +631,57 @@ Ext.define('InventoryApp.controller.Purchases', {
            });
       },
       onComboSelect:function( combo, records, eOpts ){
-    	  //console.log('selected....' +records[0].get('pdtShtDesc'));
+    	  var purInvono=Ext.ComponentQuery.query("textfield[name='purInvono']")[0].getValue(),
+		  		purRefNo=Ext.ComponentQuery.query("textfield[name='purRefNo']")[0].getValue(),
+		  		//purDate=Ext.Date.format(Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),'d/m/Y'),
+		  		purDate=Ext.ComponentQuery.query("datefield[name='purDate']")[0].getValue(),
+		  		purAccCode=Ext.ComponentQuery.query("combo[name='purAccCode']")[0].getValue();		  		
+		  		
+		  		if (purInvono.trim().length==0){
+		  			Ext.Msg.show(
+		                      {                    
+		                         title : 'Validation',
+		                         msg : 'Invoice Number is required...',
+		                         icon : Ext.Msg.INFO,
+		                         buttons : Ext.Msg.OK
+		                      }
+		                      );
+		      		return;
+		  		}else if(purDate==null) {
+		  			Ext.Msg.show(
+		                      {                    
+		                         title : 'Validation',
+		                         msg : 'Purchase Date is required...',
+		                         icon : Ext.Msg.INFO,
+		                         buttons : Ext.Msg.OK
+		                      }
+		                      );
+		      		return;
+		  		}else if(purAccCode==null){
+		  			Ext.Msg.show(
+		                      {                    
+		                         title : 'Validation',
+		                         msg : 'Supplier is required...',
+		                         icon : Ext.Msg.INFO,
+		                         buttons : Ext.Msg.OK
+		                      }
+		                      );
+		      		return;
+		  		}
     	  if (records[0]) {
     		  var me = this,
               grid = me.getPurchaseDtlsList(),
               store = grid.getStore();
-           
+              //validate the main particulars items
+    		  
               var model = {};              
               model["purdPdtCode"] = records[0].get('pdtCode');
               model["purdQty"]=1;
               model["purdPrice"]=records[0].get('pdtBp');
-              model["_purdPdtCode"]=records[0].get('pdtDescription');
+              model["_purdPdtCode"]=records[0].get('pdtShtDesc')+' - '+records[0].get('pdtDescription');
             
               store.add(model);
-             // store.sync();
-             // console.log('ffffffffffkim '+store.getCount());
+              var theSave=this.saveRecord();
               grid.getSelectionModel().select(store.data.length-1);  
     	  }
     	 // combo.focus(true);
@@ -558,10 +696,44 @@ Ext.define('InventoryApp.controller.Purchases', {
     		store = grid.getStore();
     	  //console.log("Number of Records selected....."+grid.getSelectionModel().getCount());
     	     if (grid.getSelectionModel().getCount()>0 ){
+    	    	 var purdId=record[0].get('purdId');
     	    	 store.remove(record[0]);
     	    	   grid.getView().refresh();
     	     }	    	 
-    	  // this.getInvoiceForm().getForm().reset();
+    	  // remove from db
+    	     Ext.Ajax.request({
+                 url: 'purchase/removeItem.action',
+              params: {                   
+            	      purdId:purdId
+              },
+              
+              scope:this,
+              //method to call when the request is successful
+              success:function(conn, response, options, eOpts){
+             	var result = Ext.JSON.decode(conn.responseText, true);    
+             	if ( ! result)
+                 {
+                    
+                    result =
+                    {
+                    }
+                    ;
+                    result.success = false;
+                    result.messages.message = conn.responseText;
+                 }
+             	 if (result.success)
+                  {
+             		   
+                                      
+                  }
+             	 else
+                  {
+             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+                  }
+             },
+              //method to call when the request is a failure
+              failure: InventoryApp.Utilities.onSaveFailure
+          });
            
       },
 });    

@@ -14,11 +14,18 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.topline.mappers.AccountMapper;
+import com.topline.mappers.ApprovalAreaDtlMapper;
 import com.topline.mappers.CategoriesMapper;
 import com.topline.mappers.CustomizeAreaDtlMapper;
 import com.topline.mappers.GroupsMapper;
 import com.topline.mappers.InvoiceDtlsMapper;
 import com.topline.mappers.InvoiceMapper;
+import com.topline.mappers.ItemDiscrepancyDtlMapper;
+import com.topline.mappers.ItemDiscrepancyMapper;
+import com.topline.mappers.ItemReturnDtlMapper;
+import com.topline.mappers.ItemReturnMapper;
+import com.topline.mappers.ItemSwapDtlMapper;
+import com.topline.mappers.ItemSwapMapper;
 import com.topline.mappers.LocationsMapper;
 import com.topline.mappers.ManAdjustmentDtlMapper;
 import com.topline.mappers.ManAdjustmentMapper;
@@ -32,6 +39,8 @@ import com.topline.mappers.PurchaseMapper;
 import com.topline.mappers.StoredProcMapper;
 import com.topline.mappers.StudentMapper;
 import com.topline.mappers.SubLocationsMapper;
+import com.topline.mappers.TaskAssigneeMapper;
+import com.topline.mappers.TaskDeliveryMapper;
 import com.topline.mappers.TransferDtlMapper;
 import com.topline.mappers.TransferMapper;
 import com.topline.mappers.UnitsMapper;
@@ -100,6 +109,26 @@ public class BaseController extends MultiActionController {
 	ManAdjustmentMapper manAdjustmentMapper;
 	@Autowired(required=true)
 	CustomizeAreaDtlMapper customizeAreaDtlMapper;
+	
+	@Autowired(required=true)
+	ItemSwapMapper itemSwapMapper;
+	@Autowired(required=true)
+	ItemReturnMapper itemReturnMapper;
+	@Autowired(required=true)
+	ItemDiscrepancyMapper itemDiscrepancyMapper;
+	
+	@Autowired(required=true)
+	ItemSwapDtlMapper itemSwapDtlMapper;
+	@Autowired(required=true)
+	ItemReturnDtlMapper itemReturnDtlMapper;
+	@Autowired(required=true)
+	ItemDiscrepancyDtlMapper itemDiscrepancyDtlMapper;
+	@Autowired(required=true)
+	ApprovalAreaDtlMapper approvalAreaDtlMapper;
+	@Autowired(required=true)
+	TaskDeliveryMapper taskDeliveryMapper;
+	@Autowired(required=true)
+	TaskAssigneeMapper taskAssigneeMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

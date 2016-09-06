@@ -283,4 +283,13 @@
       dsc_captured_on = #{dscCapturedOn,jdbcType=TIMESTAMP}
     where dsc_id = #{dscId,jdbcType=INTEGER}
   </update>
+ <insert id="save" parameterType="com.topline.model.ItemDiscrepancy" useGeneratedKeys="true" keyProperty="dscId"  keyColumn="dsc_id" >
+  	insert into inv_discrepancies (dsc_id, dsc_date, dsc_status, 
+      dsc_captured_by, dsc_captured_on)
+    values (#{dscId,jdbcType=INTEGER}, #{dscDate,jdbcType=DATE}, #{dscStatus,jdbcType=VARCHAR}, 
+      #{dscCapturedBy,jdbcType=VARCHAR}, #{dscCapturedOn,jdbcType=TIMESTAMP})
+       <selectKey keyProperty="dscId" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert>  
 </mapper>

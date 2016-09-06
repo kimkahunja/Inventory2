@@ -45,8 +45,10 @@ public class UserController extends BaseController {
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			String group = GlobalCC.CheckNullValues(request.getParameter("group"));
+			String status = GlobalCC.CheckNullValues(request.getParameter("status"));
 			//UserExample example=new UserExample();
 			map.put("group", group==null?null:new BigDecimal(group));
+			map.put("status", status==null?null:status);
 			List<UserWrapper> list=userMapper.fetchUserDetails(map);
 			if (list != null) {
 				int count = list.size();

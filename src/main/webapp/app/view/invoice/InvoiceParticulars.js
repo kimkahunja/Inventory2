@@ -24,10 +24,10 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
                                 fieldLabel: 'Customer',
                                 displayField: 'accName',
                                 valueField: 'accCode',
-                                /*store: {
+                                store: {
                                     type: 'account.accounts'
-                                },*/
-                                store:Ext.create('InventoryApp.store.account.Accounts'),
+                                },
+                               // store:Ext.create('InventoryApp.store.account.Accounts'),
                               //  value: Ext.getStore( 'account.accounts' ).getAt(0).get('accCode'),
                                 editable: false,
                                 forceSelection: false,
@@ -35,7 +35,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
                                 
 
                             },
-					          {
+					        /*  {
 					        	xtype:'displayfield',
 					        	name:'invInvono',					        	
 					        	fieldLabel: 'Sales No.',					        	
@@ -49,7 +49,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceParticulars',{
 					        			return value;
 					        		}
 					        	 }
-					          },
+					          },*/
 					          {
 					        	xtype:'textfield',
 					        	name:'invRefno',					        	

@@ -2,7 +2,10 @@ package com.topline.mappers;
 
 import com.topline.model.ItemDiscrepancy;
 import com.topline.model.ItemDiscrepancyExample;
+import com.topline.model.ItemReturn;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ItemDiscrepancyMapper {
@@ -93,4 +96,6 @@ public interface ItemDiscrepancyMapper {
      * @mbggenerated Mon Aug 01 16:35:05 EAT 2016
      */
     int updateByPrimaryKey(ItemDiscrepancy record);
+  //added methods
+    int save(ItemDiscrepancy record);
 }

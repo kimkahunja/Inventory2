@@ -300,4 +300,15 @@
       swp_done_on = #{swpDoneOn,jdbcType=TIMESTAMP}
     where swp_id = #{swpId,jdbcType=INTEGER}
   </update>
+  <insert id="save" parameterType="com.topline.model.ItemSwap" useGeneratedKeys="true" keyProperty="swpId"  keyColumn="swp_id" >
+  	insert into inv_item_swap (swp_id, swp_date, swp_acc_code, 
+      swp_status, swp_done_by, swp_done_on
+      )
+    values (#{swpId,jdbcType=INTEGER}, #{swpDate,jdbcType=DATE}, #{swpAccCode,jdbcType=INTEGER}, 
+      #{swpStatus,jdbcType=VARCHAR}, #{swpDoneBy,jdbcType=VARCHAR}, #{swpDoneOn,jdbcType=TIMESTAMP}
+      )
+       <selectKey keyProperty="swpId" resultType="integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+  </insert>
 </mapper>

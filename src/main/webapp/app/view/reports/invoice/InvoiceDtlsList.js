@@ -4,10 +4,12 @@ Ext.define('InventoryApp.view.reports.invoice.InvoiceDtlsList',{
 	requires: [
 	           'Ext.grid.RowNumberer'
 	          ],	
-	store: 'invoice.InvoiceDtls',
+	//store: 'invoice.InvoiceDtls',
     initComponent: function() {
        var me = this;
-       Ext.applyIf(me,{          
+       var store = Ext.create('InventoryApp.store.invoice.InvoiceDtls');
+       Ext.applyIf(me,{  
+    	   store: store,
            columns: {
                defaults: {
             	   //menuDisabled:true,

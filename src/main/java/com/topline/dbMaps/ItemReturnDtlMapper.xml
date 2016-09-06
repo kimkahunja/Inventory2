@@ -283,4 +283,18 @@
       rtnd_price = #{rtndPrice,jdbcType=DECIMAL}
     where rtnd_id = #{rtndId,jdbcType=INTEGER}
   </update>
+  <resultMap extends="BaseResultMap" id="BaseResultMapWrapper" type="com.topline.model.wrappers.ItemReturnDtlWrapper">
+  		 <result column="pdt_description" jdbcType="VARCHAR" property="_rtndPdtCode" />
+  </resultMap>
+  <select id="fetchReturnItems" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper">
+       select rtnd_id, rtnd_rtn_id, rtnd_pdt_code, 
+         rtnd_qty, rtnd_price,pdt_description
+       from inv_returns_dtls,inv_products,inv_returns
+       where rtnd_pdt_code=pdt_code
+       and rtn_id=rtnd_rtn_id    
+       AND  rtn_acc_code =  #{accCode,jdbcType=INTEGER}
+       <if test="status != null">          
+       AND  rtn_status =  #{status,jdbcType=VARCHAR}
+       </if>       
+   </select>
 </mapper>

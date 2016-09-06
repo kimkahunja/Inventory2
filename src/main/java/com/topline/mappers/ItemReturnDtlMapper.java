@@ -2,7 +2,12 @@ package com.topline.mappers;
 
 import com.topline.model.ItemReturnDtl;
 import com.topline.model.ItemReturnDtlExample;
+import com.topline.model.wrappers.ItemReturnDtlWrapper;
+import com.topline.model.wrappers.ItemSwapDtlWrapper;
+
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ItemReturnDtlMapper {
@@ -93,4 +98,6 @@ public interface ItemReturnDtlMapper {
      * @mbggenerated Mon Aug 01 16:35:05 EAT 2016
      */
     int updateByPrimaryKey(ItemReturnDtl record);
+  //add methods
+    List<ItemReturnDtlWrapper> fetchReturnItems(Map<String,Object> map);
 }

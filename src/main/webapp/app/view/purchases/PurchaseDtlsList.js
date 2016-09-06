@@ -5,11 +5,12 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	           'Ext.grid.RowNumberer',
 	           'Ext.grid.plugin.CellEditing',
 	       ],	
-	store: 'purchases.PurchasesDtls',
+	//store: 'purchases.PurchasesDtls',
     initComponent: function() {
        var me = this;
-       //var store = Ext.create('InventoryApp.store.purchases.Purchases');
+       var store = Ext.create('InventoryApp.store.purchases.PurchasesDtls');
        Ext.applyIf(me,{
+    	   store: store,
            selType: 'cellmodel',
            plugins: [
                      {
@@ -36,6 +37,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	                       text: 'Description',
 	                       dataIndex: '_purdPdtCode',
 	                       menuDisabled:true,
+	                       flex:2
 	                       //sortable:false
 		                   }, 
 		                   {
@@ -45,37 +47,39 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 		                           xtype: 'textfield',
 		                      },
 		                      allowBlank: true,
+		                      hidden:true
 		                   },
+		                   {
+		                       text: 'Quantity',
+		                       dataIndex: 'purdQty',                    
+		                       field: {
+		                           xtype: 'numberfield',
+		                           selectOnFocus: true
+		                      },
+		                       xtype:'numbercolumn',                      
+		                       menuDisabled:true,
+		                       //sortable:false
+		                   },        
                    
-                   {
-                       text: 'Unit Price',
-                       dataIndex: 'purdPrice',
-                       xtype:'numbercolumn',
-                       editor: {
-                           xtype: 'numberfield',
-                           selectOnFocus: true
-                      },
-                      allowBlank: false,                       
-                       menuDisabled:true,                     
-                       
-                   },
-                   {
-                       text: 'Quantity',
-                       dataIndex: 'purdQty',                    
-                       field: {
-                           xtype: 'numberfield',
-                           selectOnFocus: true
-                      },
-                       xtype:'numbercolumn',                      
-                       menuDisabled:true,
-                       //sortable:false
-                   }, 
-                   {
-                       xtype: 'numbercolumn',
-                       summaryType: 'sum',
-                       dataIndex: 'total',
-                       text: 'Total'
-                   },
+		                   {
+		                       text: 'Unit Price',
+		                       dataIndex: 'purdPrice',
+		                       xtype:'numbercolumn',
+		                       editor: {
+		                           xtype: 'numberfield',
+		                           selectOnFocus: true
+		                      },
+		                      allowBlank: false,                       
+		                       menuDisabled:true,                     
+		                       
+		                   },
+		                    
+		                   {
+		                       xtype: 'numbercolumn',
+		                       summaryType: 'sum',
+		                       dataIndex: 'total',
+		                       text: 'Total'
+		                   },
                    
                ]
                

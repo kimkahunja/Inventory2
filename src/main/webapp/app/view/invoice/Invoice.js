@@ -85,16 +85,9 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			                                             minChars: 0, 
 			                                             queryMode:'remote',     
 			                                            // triggerAction: "all", 
-			                                            /* tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
-			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">',
-			      							                                             '<div><b>{pdtShtDesc} - {pdtDescription}</b></div>',			      							                                            
-			      							                                             '<div style="font-size: xx-small; color: grey;">Qty : {pdtCurrentQty}</div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Date : {purchaseDate}</div>',
-			      							                                             '<div style="font-size: xx-small; color: grey;">Reference : {prodReference}</div>',
-			      							                                             //'<div style="color: {[values.SALARY < 5000 ? "red" : "black"]};">Salary : ${SALARY}</div>',
-			      							                                             //'<div style="font-size: xx-small; color: grey;">(ID = {_pdtCatCode})</div>',
-			      							                                             '</div>',
-			      							                                             '</tpl>']),*/
+			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+				      							                                             '<div style="margin: 4px;" class="x-boundlist-item">{pdtShtDesc} - {pdtDescription}</div>',
+				      							                                             '</tpl>'])
 			                                         },
 										         ],
 							           },
@@ -103,7 +96,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 							          {
 							        	  xtype: 'panel',
 							        	  layout:'fit',							        	  						        	  
-							        	  height:200,
+							        	  height:300,
 							        	  maxHeight:300,
 							        	  items:[
 													{

@@ -2,7 +2,7 @@ Ext.define('InventoryApp.view.swap.SwapMainContainer',{
 	extend:'Ext.form.Panel',
 	alias:'widget.swap.swapmaincontainer',
 	requires: [	 
-	           'InventoryApp.view.swap.SwapHeader',
+	           //'InventoryApp.view.swap.SwapHeader',
 	           'InventoryApp.view.swap.ListHolder'
 	       ],
    initComponent: function() {
@@ -10,18 +10,8 @@ Ext.define('InventoryApp.view.swap.SwapMainContainer',{
 	   Ext.applyIf(me,{
     	   
     	   items:[
-					{
-						   xtype:'container',
-						   layout: 'vbox',
-						   items:[											
-									{
-										xtype:'swap.swapheader', 
-									},
-						          ],
-					},
-					/*{
-		        	   xtype:'swap.listholder'
-		            }*/
+					
+					
 					{
 						xtype: 'panel',					    
 					    frame:true,

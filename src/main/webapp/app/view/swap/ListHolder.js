@@ -39,7 +39,8 @@ Ext.define('InventoryApp.view.swap.ListHolder',{
 										               editable: true,
 										               forceSelection: true,   
 										               emptyText:'select product',
-										               minChars: 0 
+										               minChars: 0,
+										               allowBlank:true
 										          },
 										          {
 										        	  //original grid lov
@@ -73,7 +74,8 @@ Ext.define('InventoryApp.view.swap.ListHolder',{
 										               editable: true,
 										               forceSelection: true,   
 										               emptyText:'select product',
-										               minChars: 0 
+										               minChars: 0,
+										               allowBlank:true
 										          },
 										          {
 										        	  //original grid lov

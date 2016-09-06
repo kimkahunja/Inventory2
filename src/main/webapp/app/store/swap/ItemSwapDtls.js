@@ -17,9 +17,9 @@ Ext.define('InventoryApp.store.swap.ItemSwapDtls',{
     proxy: {
         type: 'ajax',      
         api: {
-            create  : 'swap/saveSwapDtl.action',
-            read    : 'swap/fetchSwapDtl.action',
-            update  : 'swap/saveSwapDtl.action',
+            create  : 'item/saveSwapDtl.action',
+            read    : 'item/fetchSwap.action',
+            update  : 'item/saveSwapDtl.action',
            
         },
         reader: {

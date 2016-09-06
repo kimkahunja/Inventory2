@@ -598,6 +598,11 @@
   <select id="fetchProductMovement" parameterType="java.util.HashMap" resultMap="ProductMovementResultMap">
   	SELECT level,type,trans_date,trans_ref,pdt_code,pdt_description,qty,price,signed_qty,acct_code,acct_name
 	FROM inv_products_movement_vw
-	WHERE pdt_code=#{pdtCode,jdbcType=INTEGER}  	
+	WHERE pdt_code=#{pdtCode,jdbcType=INTEGER} 
+	<if test="type != null">
+	 	AND type=#{type,jdbcType=VARCHAR}
+	</if> 
+	ORDER BY trans_date DESC	
   </select>
+  
 </mapper>

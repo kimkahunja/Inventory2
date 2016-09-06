@@ -105,4 +105,5 @@ public interface InvoiceMapper {
     int updateNextInvoiceNumber(Map<String,Object> map);
     Object postInvoice(Map<String,Object> map);
     List<ReportSummary>fetchResultSummary(Map<String,Object> map);
+    int updateByPrimaryKeyExtd(Invoice record);
 }

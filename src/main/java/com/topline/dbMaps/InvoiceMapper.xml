@@ -391,7 +391,7 @@
       inv_date, inv_acc_code, inv_user, 
       inv_status, inv_posted_by, inv_receipt_amt,inv_loc_code
       )
-    values (#{invId,jdbcType=INTEGER}, #{invInvono,jdbcType=VARCHAR}, #{invRefno,jdbcType=VARCHAR}, 
+    values (#{invId,jdbcType=INTEGER}, getInvoiceNumber(#{invLocCode,mode=IN,jdbcType=INTEGER}), #{invRefno,jdbcType=VARCHAR}, 
       #{invDate,jdbcType=DATE}, #{invAccCode,jdbcType=INTEGER}, #{invUser,jdbcType=VARCHAR}, 
       #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL},
       #{invLocCode,jdbcType=INTEGER}
@@ -424,5 +424,18 @@
 		AND inv_status="POSTED"
 		AND DATE_FORMAT(inv_date,'%Y')=DATE_FORMAT(sysdate(),'%Y')
 		GROUP BY DATE_FORMAT(inv_date,'%M')
-  </select>    
+  </select>  
+  <update id="updateByPrimaryKeyExtd" parameterType="com.topline.model.Invoice" >    
+    update inv_invoices
+    set 
+      inv_refNo = #{invRefno,jdbcType=VARCHAR},
+      inv_date = #{invDate,jdbcType=DATE},
+      inv_acc_code = #{invAccCode,jdbcType=INTEGER},
+      inv_user = #{invUser,jdbcType=VARCHAR},
+      inv_status = #{invStatus,jdbcType=VARCHAR},
+      inv_posted_by = #{invPostedBy,jdbcType=VARCHAR},
+      inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL},
+      inv_loc_code = #{invLocCode,jdbcType=INTEGER}
+    where inv_id = #{invId,jdbcType=INTEGER}
+  </update>  
 </mapper>

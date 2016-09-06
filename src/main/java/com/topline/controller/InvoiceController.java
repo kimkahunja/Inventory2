@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
@@ -66,12 +67,14 @@ public class InvoiceController extends BaseController {
 			invoice.setInvStatus("PENDING");
 			invoice.setInvLocCode(location==null?null:Integer.parseInt(location));
 			map.put("location", location);
-			System.out.println("location==== "+location);
+			//System.out.println("location==== "+location);
+			//System.out.println("invoice.getInvId()==== "+invoice.getInvId());
 			if(invoice.getInvId()==null){
-				invoiceMapper.save(invoice);
 				invoiceMapper.updateNextInvoiceNumber(map);
+				invoiceMapper.save(invoice);
+				
 			}else{
-				invoiceMapper.updateByPrimaryKey(invoice);
+				invoiceMapper.updateByPrimaryKeyExtd(invoice);
 			}
 			
 			try{
@@ -261,10 +264,11 @@ public class InvoiceController extends BaseController {
 					map.put("location", location);
 					
 					if(invoice.getInvId()==null){
-						invoiceMapper.save(invoice);
 						invoiceMapper.updateNextInvoiceNumber(map);
+						invoiceMapper.save(invoice);
+						
 					}else{
-						invoiceMapper.updateByPrimaryKey(invoice);
+						invoiceMapper.updateByPrimaryKeyExtd(invoice);
 					}
 					
 					try{
@@ -297,23 +301,25 @@ public class InvoiceController extends BaseController {
 					}else{
 						map.put("v_inv_id",invoice.getInvId());
 						map.put("postedBy", userName);
-						invoiceMapper.postInvoice(map);
+						Object rtnVal=invoiceMapper.postInvoice(map);
+						Object outVal=(String) map.get("v_rtnVal");
+						System.out.println("Return val===== "+outVal);
+						System.out.println("rtnVal val===== "+rtnVal);
+					    if(outVal.toString().equalsIgnoreCase("S")) {
+					    	txnManager.commit(status);
+					    	jsonResponse.setSuccess(true);	
+							jsonResponse.setData(null);
+							jsonResponse.addMessage("message", "Invoice Transaction successfully Posted...");
+					    }else{
+					    	txnManager.rollback(status);
+					    	jsonResponse.setSuccess(false);	
+							jsonResponse.setData(null);
+							jsonResponse.addMessage("message", outVal.toString());
+					    }
+					    
+					    return jsonObject(jsonResponse);
 					}
-					Object rtnVal=map.get("v_rtnVal");
-					System.out.println("Return val===== "+rtnVal);
-				    if(rtnVal.toString().equalsIgnoreCase("S")) {
-				    	txnManager.commit(status);
-				    	jsonResponse.setSuccess(true);	
-						jsonResponse.setData(null);
-						jsonResponse.addMessage("message", "Invoice Transaction successfully Posted...");
-				    }else{
-				    	txnManager.rollback(status);
-				    	jsonResponse.setSuccess(false);	
-						jsonResponse.setData(null);
-						jsonResponse.addMessage("message", rtnVal.toString());
-				    }
-				    
-				    return jsonObject(jsonResponse);
+					
 				}
 				
 				catch(Exception e){
@@ -384,5 +390,39 @@ public class InvoiceController extends BaseController {
 					jsonResponse.addMessage("message", e.getLocalizedMessage());
 					return jsonObject(jsonResponse);
 				}
-			}			
+			}	
+	//removeItem 
+	@RequestMapping(value="/removeItem.action", method=RequestMethod.POST)
+	private @ResponseBody String removeItem(HttpServletRequest request){
+		try{
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			Map<String, Object> map = new HashMap<String, Object>();		
+			
+			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+			String invdId=GlobalCC.CheckNullValues(request.getParameter("invdId"));
+			if (limit == null) {
+				limit = "50";
+			}
+			if (start == null) {
+				start = "0";
+			}
+			if(invdId!=null){
+				invoiceDtlsMapper.deleteByPrimaryKey(Integer.parseInt(invdId));
+			}
+			
+			jsonResponse.setData(null);
+			jsonResponse.setSuccess(true);
+			jsonResponse.addMessage("message", null);
+			return jsonObject(jsonResponse);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			jsonResponse.setData(null);
+			jsonResponse.setSuccess(false);
+			jsonResponse.addMessage("message", e.getLocalizedMessage());
+			return jsonObject(jsonResponse);
+		}
+	}			
 }

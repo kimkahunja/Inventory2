@@ -1,12 +1,12 @@
 Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
 	extend:'Ext.grid.Panel',
 	alias:'widget.reports.purchases.purchasedtlslist',		
-	store: 'purchases.PurchasesDtlsRpt',	
+	//store: 'purchases.PurchasesDtlsRpt',	
     initComponent: function() {
        var me = this; 
-       
+       var store = Ext.create('InventoryApp.store.purchases.PurchasesDtlsRpt');
        Ext.applyIf(me,{ 
-    	  
+    	   store: store,
            columns: {
                defaults: {
             	   menuDisabled:true,

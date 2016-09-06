@@ -2,7 +2,10 @@ package com.topline.mappers;
 
 import com.topline.model.ItemSwap;
 import com.topline.model.ItemSwapExample;
+import com.topline.model.Payment;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ItemSwapMapper {
@@ -93,4 +96,6 @@ public interface ItemSwapMapper {
      * @mbggenerated Thu Jul 28 15:44:37 EAT 2016
      */
     int updateByPrimaryKey(ItemSwap record);
+    //added methods
+    int save(ItemSwap record);
 }

@@ -35,6 +35,15 @@ Ext.define('InventoryApp.view.Header', {
             xtype: 'tbseparator'
         },
         {
+        	xtype:'button',
+        	text:'Alter Location',	
+        	itemId: 'AlterLoc',
+            iconCls: 'edit'
+        },
+        {
+            xtype: 'tbseparator'
+        },
+        {
         	xtype:'displayfield',
         	name:'lastLogin',	
         	labelAlign: 'right',

@@ -1,12 +1,13 @@
 Ext.define('InventoryApp.view.reports.invoice.InvoiceList',{
 	extend:'Ext.grid.Panel',
 	alias:'widget.reports.invoice.invoicelist',
-	store: 'invoice.Invoices',
+	//store: 'invoice.Invoices',
   //  title:'Pending Invoices',
 	initComponent: function() {
 	       var me = this;
+	       var store = Ext.create('InventoryApp.store.invoice.Invoices');
 	       Ext.applyIf(me,{	   
-	    	   
+	    	   store: store,
 	           columns: {	
 	        	   defaults: {
 	        		   autoSizeColumn : true

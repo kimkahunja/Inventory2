@@ -14,6 +14,16 @@ public class GlobalCC {
 		    System.out.println("Time: " + strTime);
 		return strTime;
 	}
+	public static String getCurrentDate(){
+		  SimpleDateFormat sdfdate = new SimpleDateFormat("dd/mm/yyyy");
+
+		    Date now = new Date();
+
+		    String strdate = sdfdate.format(now);
+
+		    System.out.println("Time: " + strdate);
+		return strdate;
+	}
 	 public static Date convertDate(String indate){
 	      java.util.Date utilToday = new java.util.Date();
 	      SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy");
