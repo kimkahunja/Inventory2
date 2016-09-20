@@ -14,15 +14,15 @@ Ext.define('InventoryApp.store.vat.Vat',{
     pageSize: 20,
     proxy: {
         type: 'ajax',
-        url: 'resources/vat.json',//'VatServlet',
+        url: 'vat/fetchVat.action',//'VatServlet',
         extraParams: {
             store_id: 4
         },
         reader: {
-            type: 'json',
-            totalProperty: 'count',
-            root: 'data',
-            successProperty: 'success'
+        	 type: 'json',           
+             totalProperty: 'data.count',
+             root: 'data.data',
+             successProperty: 'success'
         },
      }
 });

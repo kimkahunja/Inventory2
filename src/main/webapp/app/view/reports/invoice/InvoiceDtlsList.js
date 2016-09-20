@@ -41,7 +41,8 @@ Ext.define('InventoryApp.view.reports.invoice.InvoiceDtlsList',{
                    },
                    {
                        text: 'Quantity',
-                       dataIndex: 'invdQty'
+                       dataIndex: 'invdQty',
+                       summaryType: 'sum'
                    }, 
                    {
                        xtype: 'numbercolumn',

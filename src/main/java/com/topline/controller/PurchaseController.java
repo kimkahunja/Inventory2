@@ -99,7 +99,8 @@ public class PurchaseController extends BaseController {
 				
 				for(int i=0;i<purchaseDetail.size();i++){
 					purchaseDetail.get(i).setPurdPurId(purchase.getPurId());
-					System.out.println(purchaseDetail.get(i).getPurdPrice());
+					System.out.println("vat inclusive==="+purchaseDetail.get(i).getPurdVatInclusive());
+					purchaseDetail.get(i).setPurdVatInclusive(purchaseDetail.get(i).getPurdVatInclusive()=="true"?"Y":"N");
 					purchaseDetailMapper.insert(purchaseDetail.get(i));
 				}
 			}catch(Exception ex){
@@ -420,19 +421,25 @@ public class PurchaseController extends BaseController {
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			
 			Map<String, Object> map = new HashMap<String, Object>();		
-			
+			ObjectMapper mapper = new ObjectMapper();
 			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
-			String purdId=GlobalCC.CheckNullValues(request.getParameter("purdId"));
+			//String purdId=GlobalCC.CheckNullValues(request.getParameter("purdId"));
+			String dataDetail = GlobalCC.CheckNullValues(request.getParameter("data"));
+			List<PurchaseDetail> purchaseDetail = Arrays.asList(mapper.readValue(dataDetail, PurchaseDetail[].class));
 			if (limit == null) {
 				limit = "50";
 			}
 			if (start == null) {
 				start = "0";
 			}
-			if(purdId!=null){
-				purchaseDetailMapper.deleteByPrimaryKey(Integer.parseInt(purdId));
+			//System.out.println("Records selected==="+purchaseDetail.size());
+			for(int i=0;i<purchaseDetail.size();i++){
+				purchaseDetailMapper.deleteByPrimaryKey(purchaseDetail.get(i).getPurdId());
 			}
+			/*if(purdId!=null){
+				purchaseDetailMapper.deleteByPrimaryKey(Integer.parseInt(purdId));
+			}*/
 			
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(true);

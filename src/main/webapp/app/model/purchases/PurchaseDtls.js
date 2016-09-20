@@ -68,6 +68,20 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
 	    	  name:'purdSerialNo',
 	    	  type: 'string'
 	       },
+	       
+	       {
+	    	   name: 'purdVatInclusive', 
+	    	   type: 'bool',
+               convert: function(v){
+            	   //console.log('my value=== '+v);
+                   return (v === "Y" || v === true) ? true : false;
+               }
+           },
+	       
+	       {
+	       		name: 'purdVatRate',
+	            type: 'float'
+	       },
 	       // decorated properties
            /* {
                   name: '_purdPurId',
@@ -83,6 +97,17 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
           },
           //calculated properties
           {
+              name: 'purdVatAmt',
+              type: 'float',
+              convert: function(value, record) {
+                  if(!value) {
+                      value = record.get('purdPrice') * record.get('purdQty')*( record.get('purdVatRate')/100);
+                  }
+                  
+                  return value;
+              }
+          },
+          {
               name: 'total',
               type: 'number',
               convert: function(value, record) {
@@ -96,9 +121,11 @@ Ext.define('InventoryApp.model.purchases.PurchaseDtls',{
 	       ],
         set: function (fieldName, value) {
             this.callParent(arguments);
-            if (fieldName === 'purdPrice' || fieldName === 'purdQty') {  
-                var total = this.get('purdPrice') * this.get('purdQty');
+            
+            if (fieldName === 'purdPrice' || fieldName === 'purdQty'||fieldName === 'purdVatRate') {  
+                var total = this.get('purdPrice') * this.get('purdQty');                
                 this.set('total');
+                this.set('purdVatAmt');
             }
         }
 });

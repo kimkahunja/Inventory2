@@ -1,7 +1,7 @@
 /**
  * Generic controller for managing Invoices
  */
-Ext.define('InventoryApp.controller.Invoices', {
+Ext.define('InventoryApp.controller.Invoices1', {
     extend: 'InventoryApp.controller.Base',
     stores: [
     	'invoice.Invoices',
@@ -645,9 +645,8 @@ Ext.define('InventoryApp.controller.Invoices', {
       	
       },
       
-      newInvoice: function(button, e, eOpts ){
+      newInvoice: function( button, e, eOpts ){
     	  //console.log("New Invoice.....");
-    	  //console.log('button position==='+button.getPosition()[1]);
     	  InventoryApp.Utilities.inv_id=null;
     	  var me = this,
         	grid = me.getInvoiceDtlsList(),    		
@@ -767,51 +766,44 @@ Ext.define('InventoryApp.controller.Invoices', {
     	  //console.log("Number of Records selected....."+grid.getSelectionModel().getCount());
     	     if (grid.getSelectionModel().getCount()>0 ){
     	    	 var invdId=record[0].get('invdId');
-    	    	 
-    	    	   
-    	    	   var details = new Array();
-                   
-                   for (var i = 0; i < record.length; i++) {
-                  	 details.push(record[i].data);
-                   };
-    	    	   // remove from db
-    	    	     Ext.Ajax.request({
-    	                 url: 'invoice/removeItem.action',
-    	              params: {                   
-    	            	      data: Ext.encode(details) ,                     
-    	                      location:InventoryApp.Utilities.locationId
-    	              },
-    	              
-    	              scope:this,
-    	              //method to call when the request is successful
-    	              success:function(conn, response, options, eOpts){
-    	             	var result = Ext.JSON.decode(conn.responseText, true);    
-    	             	if ( ! result)
-    	                 {
-    	                    
-    	                    result =
-    	                    {
-    	                    }
-    	                    ;
-    	                    result.success = false;
-    	                    result.messages.message = conn.responseText;
-    	                 }
-    	             	 if (result.success)
-    	                  {
-    	             		   
-    	             		store.remove(record);
-    	     	    	    grid.getView().refresh();                
-    	                  }
-    	             	 else
-    	                  {
-    	             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
-    	                  }
-    	             },
-    	              //method to call when the request is a failure
-    	              failure: InventoryApp.Utilities.onSaveFailure
-    	          });
+    	    	 store.remove(record[0]);
+    	    	   grid.getView().refresh();
     	     }	    	 
-    	  
+    	   // remove from db
+    	     Ext.Ajax.request({
+                 url: 'invoice/removeItem.action',
+              params: {                   
+            	  	  invdId:invdId,                      
+                      location:InventoryApp.Utilities.locationId
+              },
+              
+              scope:this,
+              //method to call when the request is successful
+              success:function(conn, response, options, eOpts){
+             	var result = Ext.JSON.decode(conn.responseText, true);    
+             	if ( ! result)
+                 {
+                    
+                    result =
+                    {
+                    }
+                    ;
+                    result.success = false;
+                    result.messages.message = conn.responseText;
+                 }
+             	 if (result.success)
+                  {
+             		   
+                                      
+                  }
+             	 else
+                  {
+             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+                  }
+             },
+              //method to call when the request is a failure
+              failure: InventoryApp.Utilities.onSaveFailure
+          });
            
       },
       boxReady:function( combo, width, height, eOpts ){

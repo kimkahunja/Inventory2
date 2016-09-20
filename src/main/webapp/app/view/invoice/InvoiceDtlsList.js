@@ -7,12 +7,19 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
 	       ],
 	autoScroll:'auto',       
 	//store: 'invoice.InvoiceDtls',
+	//height:500,
+	selType: 'checkboxmodel',
+    selModel : 
+    {
+        mode : 'MULTI'
+    },   
     initComponent: function() {
        var me = this;
        var store = Ext.create('InventoryApp.store.invoice.InvoiceDtls');
        Ext.applyIf(me,{
     	   store: store,
-           selType: 'cellmodel',
+    	   maxHeight:Ext.getBody().getViewSize().height-200,
+          // selType: 'cellmodel',
            plugins: [
                      {
                          ptype: 'cellediting',
@@ -43,7 +50,8 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
 		                   }, 	
 		                   {
 		                       text: 'Quantity',
-		                       dataIndex: 'invdQty',                    
+		                       dataIndex: 'invdQty', 
+		                       summaryType: 'sum',
 		                       field: {
 		                           xtype: 'numberfield',
 		                           selectOnFocus: true
@@ -88,7 +96,37 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
            },
            features: [{
                ftype: 'summary'
-           }],         
+           }], 
+           dockedItems: [	                         
+                         {
+                             xtype: 'toolbar',
+                             dock: 'bottom',
+                             items: [
+         						{
+         						    xtype:'tbspacer',
+         						    flex:2
+         						},
+         						{
+                                    xtype: 'button',
+                                    itemId: 'invoiceRemove',
+                                    text: 'Remove',
+                                    iconCls: 'delete'
+                                },
+         						{
+                                    xtype: 'button',
+                                    itemId: 'invoiceSave',
+                                    text: 'Save',
+                                    iconCls: 'save'
+                                },
+                                {
+                                    xtype: 'button',
+                                    itemId: 'invoiceFinish',
+                                    text: 'Finish',
+                                    iconCls: 'accept'
+                                },
+                             ]
+                         }
+                     ] 
        });
        me.callParent( arguments );
    }        

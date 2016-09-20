@@ -44,6 +44,36 @@ Ext.define('InventoryApp.controller.Purchases', {
             		celldblclick:this.onCellClick,
             		//itemdblclick: this.edit,
             	},
+            	'grid[xtype=purchases.purchasedtlslist] gridview': {
+            		/*viewready: function( grid, eOpts ){
+            			var me=this;
+            			 grid.getEl().set({tabindex:1001});
+            		     me.keyNav = Ext.create('Ext.util.KeyMap', grid.el, [
+                                             {
+                                                 key: [48, 49, 50, 51, 52, 53, 54, 55, 56, 57],  // 0123456789
+                                                 fn: function(){
+                                                	// eOpts.preventDefault();
+                                                	// alert('here we go');
+                                                	 var me = this,
+                                     		  		grid = me.getPurchaseDtlsList(),
+                                     		  		plugin = grid.editingPlugin;
+                                     		  	// start edit of row
+                                     		  	var mytest=plugin.startEdit( 0, 2 );
+                                     		  	console.log('mytest==='+mytest);
+                                                 },
+                                                 scope: me
+                                             }, {
+                                                 key: 13,    // ENTER
+                                                 fn: me.onEnterKey,
+                                                 scope: me
+                                             }, {
+                                                 key: 27,    // ESC
+                                                 fn: me.onEscKey,
+                                                 scope: me
+                                             }
+                                         ]);
+            		}*/
+            	},
             	'grid[xtype=purchases.purchaselist] button#add': {
             		//click: this.add
             	},
@@ -120,6 +150,18 @@ Ext.define('InventoryApp.controller.Purchases', {
     	}
     	
     },
+    itemKeyDown:function( grid, record, item, index, e, eOpts ) {
+		 console.log('item key down...');
+		 if(e.keyCode==9) {
+			// e.preventDefault();
+			 var me = this,
+		  		grid = me.getPurchaseDtlsList(),
+		  		plugin = grid.editingPlugin;
+		  	// start edit of row
+		  	var mytest=plugin.startEdit( 0, 2 );
+		  	console.log('mytest==='+mytest);
+		 }
+	 },  
     /**
      * Loads the grid's store
      * @param {Ext.grid.Panel}
@@ -607,6 +649,12 @@ Ext.define('InventoryApp.controller.Purchases', {
       },
       
       newPurchases: function( button, e, eOpts ){
+    	/*  var me = this,
+  		grid = me.getPurchaseDtlsList(),
+  		plugin = grid.editingPlugin;
+  	// start edit of row
+  	var mytest=plugin.startEdit( 0, 2 );
+  	console.log('mytest==='+mytest);*/
     	  InventoryApp.Utilities.pur_id=null;
     	  var me = this,
         	grid = me.getPurchaseDtlsList(),    		
@@ -679,13 +727,19 @@ Ext.define('InventoryApp.controller.Purchases', {
               model["purdQty"]=1;
               model["purdPrice"]=records[0].get('pdtBp');
               model["_purdPdtCode"]=records[0].get('pdtShtDesc')+' - '+records[0].get('pdtDescription');
-            
+              model["purdVatInclusive"]='Y';
+              model["purdVatRate"]=records[0].get('_vatRate');
               store.add(model);
               var theSave=this.saveRecord();
+              
+              combo.clearValue();
+              
+              grid.getView().focus();
+              grid.getView().focusRow(store.data.length-1);
               grid.getSelectionModel().select(store.data.length-1);  
     	  }
     	 // combo.focus(true);
-    	  combo.clearValue();
+    	 // combo.clearValue();
       },
       removePurchase: function( button, e, eOpts ){
     	  //console.log("Remove Invoice.....");
@@ -694,46 +748,53 @@ Ext.define('InventoryApp.controller.Purchases', {
         	record = grid.getSelectionModel().getSelection(),
         	
     		store = grid.getStore();
-    	  //console.log("Number of Records selected....."+grid.getSelectionModel().getCount());
+    	 //console.log("Number of Records selected....."+record.length);
     	     if (grid.getSelectionModel().getCount()>0 ){
     	    	 var purdId=record[0].get('purdId');
-    	    	 store.remove(record[0]);
-    	    	   grid.getView().refresh();
+    	    	 var details = new Array();
+                
+                 for (var i = 0; i < record.length; i++) {
+                	 details.push(record[i].data);
+                 };
+    	    	   
+    	    	   // remove from db
+    	    	     Ext.Ajax.request({
+    	                 url: 'purchase/removeItem.action',
+    	              params: {                   
+    	            	      //purdId:purdId
+    	            	  data: Ext.encode(details)
+    	              },
+    	              
+    	              scope:this,
+    	              //method to call when the request is successful
+    	              success:function(conn, response, options, eOpts){
+    	             	var result = Ext.JSON.decode(conn.responseText, true);    
+    	             	if ( ! result)
+    	                 {
+    	                    
+    	                    result =
+    	                    {
+    	                    }
+    	                    ;
+    	                    result.success = false;
+    	                    result.messages.message = conn.responseText;
+    	                 }
+    	             	 if (result.success)
+    	                  {
+    	             		store.remove(record);
+    	     	    	   grid.getView().refresh();  
+    	                                      
+    	                  }
+    	             	 else
+    	                  {
+    	             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+    	                  }
+    	             },
+    	              //method to call when the request is a failure
+    	              failure: InventoryApp.Utilities.onSaveFailure
+    	          });
     	     }	    	 
-    	  // remove from db
-    	     Ext.Ajax.request({
-                 url: 'purchase/removeItem.action',
-              params: {                   
-            	      purdId:purdId
-              },
-              
-              scope:this,
-              //method to call when the request is successful
-              success:function(conn, response, options, eOpts){
-             	var result = Ext.JSON.decode(conn.responseText, true);    
-             	if ( ! result)
-                 {
-                    
-                    result =
-                    {
-                    }
-                    ;
-                    result.success = false;
-                    result.messages.message = conn.responseText;
-                 }
-             	 if (result.success)
-                  {
-             		   
-                                      
-                  }
-             	 else
-                  {
-             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
-                  }
-             },
-              //method to call when the request is a failure
-              failure: InventoryApp.Utilities.onSaveFailure
-          });
+    	 
            
       },
 });    

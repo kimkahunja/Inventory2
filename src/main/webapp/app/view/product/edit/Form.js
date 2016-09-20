@@ -20,8 +20,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
     initComponent: function() {
         var me = this;
         Ext.applyIf(me, {        	
-            fieldDefaults: {
-                allowBlank: false,
+            fieldDefaults: {                
                 labelAlign: 'right',
                 labelWidth: 90,
                 flex: 1,
@@ -51,12 +50,14 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                         },
                         items:[{                           
                             name: 'pdtShtDesc',
+                            allowBlank: false,
                             fieldLabel: 'Bar Code/Prod Code',
                             emptyText: 'Product Code',
                             flex:2
                         },
                         {                           
                             name: 'pdtDescription',
+                            allowBlank: false,
                             fieldLabel: 'Description',
                             emptyText: 'Product Description',
                             flex:4
@@ -117,6 +118,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                            {
                         	   xtype: 'ux.form.field.remotecombobox',
                                name: 'pdtCatCode',
+                               allowBlank: false,
                                 fieldLabel: 'Category',
                                 displayField: 'catDescription',
                                 valueField: 'catCode',
@@ -131,6 +133,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                             {
                                 xtype: 'ux.form.field.remotecombobox',
                                 name: 'pdtUntCode',
+                                allowBlank: false,
                                 fieldLabel: 'Unit Measure',
                                 displayField: 'untDescription',
                                 valueField: 'untCode',
@@ -168,6 +171,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                             {
                                 xtype: 'combobox',
                                 name: 'pdtMergeQty',
+                                allowBlank: true,
                                 fieldLabel: 'Merge Qty?',
                                 displayField: 'description',
                                 valueField: 'id',
@@ -242,6 +246,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
 							        {
 							            xtype: 'ux.form.field.remotecombobox',
 							            name: 'pdtLocCode',
+							            allowBlank: false,
 							            fieldLabel: 'Main Location',
 							            displayField: 'locShtDesc',
 							            valueField: 'locCode',
@@ -271,20 +276,24 @@ Ext.define('InventoryApp.view.product.edit.Form', {
 							        {
 							            xtype: 'hiddenfield',
 							            name: 'pdtStatus',
+							            allowBlank: true,
 							            value: 'ACTIVE'
 							        },
 							        {
 							            xtype: 'hiddenfield',
 							            name: 'pdtCurrentQty',
+							            allowBlank: true,
 							            value: 0
 							        },
 							        {
 							            xtype: 'hiddenfield',
 							            name: 'pdtAmount',
+							            allowBlank: true,
 							            value: 0
 							        },
 							        {
 							            xtype: 'hiddenfield',
+							            
 							            name: 'pdtCode'							            
 							        }
 							    ]
@@ -299,6 +308,7 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                        xtype: 'ux.form.field.remotecombobox',
                                        name: 'pdtVatId',
                                        fieldLabel: 'Tax Category',
+                                       allowBlank: false,
                                        displayField: 'vatDescription',
                                        valueField: 'vatId',
                                        value:'A',
@@ -306,7 +316,10 @@ Ext.define('InventoryApp.view.product.edit.Form', {
                                            type: 'vat.vat'
                                        },
                                        editable: false,
-                                       forceSelection: true
+                                       forceSelection: true,
+                                       tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
+  							                                             '<div style="margin: 4px;" class="x-boundlist-item">{vatId} - {vatDescription}-{vatRate}</div>',
+  							                                             '</tpl>'])
                                    },
                                    {
                                        xtype: 'numberfield',

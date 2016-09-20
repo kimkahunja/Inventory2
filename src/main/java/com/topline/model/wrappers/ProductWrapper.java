@@ -1,5 +1,6 @@
 package com.topline.model.wrappers;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.topline.model.Products;
@@ -13,7 +14,14 @@ public class ProductWrapper extends Products {
 	private Date purchaseDate;
 	private String stkId; 
 	private String prodReference;
+	private BigDecimal _vatRate;
 	
+	public BigDecimal get_vatRate() {
+		return _vatRate;
+	}
+	public void set_vatRate(BigDecimal _vatRate) {
+		this._vatRate = _vatRate;
+	}
 	public String getProdReference() {
 		return prodReference;
 	}

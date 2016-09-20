@@ -2,8 +2,8 @@ Ext.define('InventoryApp.view.invoice.Cash', {
     extend: 'Ext.window.Window',
     alias: 'widget.invoice.cash',
 
-    height: 300,
-    width: 300,
+    height: 200,
+    width: 600,
     modal: true,
     requires: ['InventoryApp.util.Util'
                ],
@@ -33,16 +33,90 @@ Ext.define('InventoryApp.view.invoice.Cash', {
 												{
 												    xtype: 'hiddenfield',
 												    fieldLabel: 'Label',
-												    name: 'tssgId'
+												    name: 'spymtId'
 												},
-												
 												{
-													xtype:'textfield',																									
-												    fieldLabel: 'Name',
-												    name: 'tssgName'    		                           
+												    xtype: 'hiddenfield',
+												    fieldLabel: 'Label',
+												    name: 'spymtInvId'
+												},
+												{
+													xtype:'displayfield',																									
+												    fieldLabel: 'Sales Total',
+												    name: 'spymtTotal'    		                           
+												},
+												{
+												    xtype: 'combobox',
+												    name: 'spymtPaymode',
+												    fieldLabel: 'Payment Mode',
+												    displayField: 'description',
+												    valueField: 'id',
+												    queryMode: 'local',
+												    value:'CASH',
+												    store: Ext.create('Ext.data.Store', {
+						                            	   fields : ['id','description'],
+						                                   data: [ {id:'CASH',description:'CASH'},
+						                                           {id:'CREDIT',description:'CREDIT'} 
+						                                   		]
+						                               }), 
+												    editable: false,
+												    forceSelection: false,
+												    emptyText:'select Payment Mode',
+												    minWidth:100,
 												}
 	                           		        ]
 	                           	},
+	                           	{
+	                           		xtype:'fieldcontainer',
+	                           		layout: 'hbox',	                           		
+	                           		items: [
+												
+												{
+												    xtype: 'combobox',
+												    name: 'spymtPaymethod',
+												    fieldLabel: 'Payment Method',
+												    displayField: 'description',
+												    valueField: 'id',
+												    queryMode: 'local',
+												    value:'CASH',
+												    store: Ext.create('Ext.data.Store', {
+						                            	   fields : ['id','description'],
+						                                   data: [ {id:'CASH',description:'CASH'},
+						                                           {id:'CHEQUE',description:'CHEQUE'},
+						                                           {id:'MPESA',description:'MPESA'}
+						                                   		]
+						                               }), 
+												    editable: false,
+												    forceSelection: false,
+												    emptyText:'select Payment Method',
+												    minWidth:100,
+												},
+												{
+													xtype:'textfield',																									
+												    fieldLabel: 'Reference',
+												    name: 'spymtReference',
+												    value:'CASH',
+												    disabled:true
+												},
+	                           		        ]
+	                           	},
+	                           	{
+	                           		xtype:'fieldcontainer',
+	                           		layout: 'hbox',	                           		
+	                           		items: [
+												
+												{
+													xtype:'numberfield',																									
+												    fieldLabel: 'Cash Given',
+												    name: 'spymtAmountGiven'    		                           
+												},
+												{
+													xtype:'displayfield',																									
+												    fieldLabel: 'Change',
+												    name: 'spymtChange'    		                           
+												},
+	                           		        ]
+	                           	}
 	                           ]
     		        }
     		    ],
@@ -59,14 +133,14 @@ Ext.define('InventoryApp.view.invoice.Cash', {
     		            items: [
     						{
     						    xtype: 'button',
-    						    text: 'Save',
-    						    itemId: 'saveTaskAssignee',
+    						    text: 'Process',
+    						    itemId: 'saveCash',
     						    iconCls: 'save'
     						},
     		                {
     		                    xtype: 'button',
     		                    text: 'Cancel',
-    		                    itemId: 'cancelTaskAssignee',
+    		                    itemId: 'cancelCash',
     		                    iconCls: 'cancel'
     		                }
     		                

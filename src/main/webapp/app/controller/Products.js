@@ -214,8 +214,10 @@ Ext.define('InventoryApp.controller.Products', {
 		        record.set( values );          
                
         // set values of record from form
+		        if (form.getForm().isValid()) {
+		        	 this.syncData(values,win);
+		        }
        
-        this.syncData(values,win);
         // mask to prevent extra submits
       //  Ext.getBody().mask( 'Saving Product...' );
         

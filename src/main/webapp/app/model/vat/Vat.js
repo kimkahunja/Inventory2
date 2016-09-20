@@ -19,6 +19,6 @@ Ext.define('InventoryApp.model.vat.Vat',{
 	        {
 	        	 name: 'vatDescription',
 	             type: 'string'
-	        },
+	        }
 	        ],
 });

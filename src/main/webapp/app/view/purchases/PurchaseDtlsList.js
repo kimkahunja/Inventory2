@@ -6,12 +6,18 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	           'Ext.grid.plugin.CellEditing',
 	       ],	
 	//store: 'purchases.PurchasesDtls',
+	autoScroll:'auto',       
+	selType: 'checkboxmodel',
+    selModel : 
+    {
+        mode : 'MULTI'
+    },     
     initComponent: function() {
        var me = this;
        var store = Ext.create('InventoryApp.store.purchases.PurchasesDtls');
        Ext.applyIf(me,{
     	   store: store,
-           selType: 'cellmodel',
+    	   maxHeight:Ext.getBody().getViewSize().height-220 ,           
            plugins: [
                      {
                          ptype: 'cellediting',
@@ -51,7 +57,8 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 		                   },
 		                   {
 		                       text: 'Quantity',
-		                       dataIndex: 'purdQty',                    
+		                       dataIndex: 'purdQty',   
+		                       summaryType: 'sum',
 		                       field: {
 		                           xtype: 'numberfield',
 		                           selectOnFocus: true
@@ -80,13 +87,55 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 		                       dataIndex: 'total',
 		                       text: 'Total'
 		                   },
-                   
+		                   {
+		                       xtype: 'numbercolumn',
+		                       summaryType: 'sum',
+		                       dataIndex: 'purdVatAmt',
+		                       text: 'Vat Amt'
+		                   },
+		                   {
+			                   xtype:'checkcolumn',	   
+		                       text: 'Vat Inclusive?',
+		                       dataIndex: 'purdVatInclusive',	
+		                       //width: 90	                                           
+		                       
+		                   }
                ]
                
            },
            features: [{
                ftype: 'summary'
-           }],         
+           }], 
+           dockedItems: [	                         
+                         {
+                             xtype: 'toolbar',
+                             dock: 'bottom',
+                             items: [
+              						{
+              						    xtype:'tbspacer',
+              						    flex:2
+              						},
+              						{
+                                         xtype: 'button',
+                                         itemId: 'purchaseRemove',
+                                         text: 'Remove',
+                                         iconCls: 'delete'
+                                     },
+              						{
+                                         xtype: 'button',
+                                         itemId: 'purchaseSave',
+                                         text: 'Save',
+                                         iconCls: 'save'
+                                     },
+                                     {
+                                         xtype: 'button',
+                                         itemId: 'purchaseCancel',
+                                         text: 'Cancel',
+                                         iconCls: 'cancel'
+                                     },
+                                  ]
+                         }
+                     ]    
        });
        me.callParent( arguments );
    }        

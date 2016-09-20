@@ -50,6 +50,7 @@ Ext.define('InventoryApp.view.reports.purchases.PurchaseDtlsList',{
                            xtype: 'numberfield',
                       },
                        xtype:'numbercolumn',
+                       summaryType: 'sum',
                        menuDisabled:true,
                        //sortable:false
                    }, 

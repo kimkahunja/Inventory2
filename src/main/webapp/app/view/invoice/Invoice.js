@@ -4,6 +4,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
     bodyPadding: 5,
     initComponent: function() {
     	  var me = this;  
+    	  
     	  var store = Ext.create('InventoryApp.store.product.Stocks', {
     		    storeId: 'InvoiceStocks'
     		});
@@ -95,44 +96,19 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 							           
 							          {
 							        	  xtype: 'panel',
-							        	  layout:'fit',							        	  						        	  
-							        	  height:300,
-							        	  maxHeight:300,
+							        	  //layout:'fit',
+							        	  //autoScroll: 'true',
+							        	  //overflowY: 'scroll',
+							        	 // height:500,
+							        	 // maxHeight:500,
 							        	  items:[
 													{
 														xtype:'invoice.invoicedtlslist' , 
 													  },
 							        	         ],
-							          },
+							          }						          
 							          
-							          {
-		                                     xtype: 'toolbar',		                                   
-		                                     items: [
-		                 						{
-		                 						    xtype:'tbspacer',
-		                 						    flex:2
-		                 						},
-		                 						{
-		                                            xtype: 'button',
-		                                            itemId: 'invoiceRemove',
-		                                            text: 'Remove',
-		                                            iconCls: 'delete'
-		                                        },
-		                 						{
-		                                            xtype: 'button',
-		                                            itemId: 'invoiceSave',
-		                                            text: 'Save',
-		                                            iconCls: 'save'
-		                                        },
-		                                        {
-		                                            xtype: 'button',
-		                                            itemId: 'invoiceFinish',
-		                                            text: 'Finish',
-		                                            iconCls: 'accept'
-		                                        },
-		                                     ]
-		                                 },
-							          ],
+							          ]
 					        },
 					       {
 					        	xtype: 'panel',
@@ -176,6 +152,9 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
                                 
                              ]
     	 });
+    	 //var newInvoiceButton=Ext.ComponentQuery.query('button#newInvoice')[0];
+		  //console.log('button position==='+newInvoiceButton.getPosition()[1]);
+		  //console.log('screen size=== '+Ext.getBody().getViewSize().height);
          me.callParent( arguments );
     }
 });

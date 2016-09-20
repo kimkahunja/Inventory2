@@ -545,17 +545,19 @@
     <result column="purchase_date" property="purchaseDate" jdbcType="DATE" />
     <result column="stockId" property="stkId" jdbcType="VARCHAR" /> 
     <result column="prod_reference" property="prodReference" jdbcType="VARCHAR" /> 
-    
+    <result column="VAT_DESCRIPTION" property="_pdtVatId" jdbcType="VARCHAR" /> 
+    <result column="VAT_RATE" property="_vatRate" jdbcType="DECIMAL" />
   </resultMap>
    <select id="fetchProducts" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	   select pdt_code, pdt_sht_desc, pdt_description, pdt_unt_code, pdt_loc_code, pdt_sloc_code, 
 		    pdt_cat_code, pdt_min_level, pdt_max_level, pdt_bp, pdt_sp, pdt_profit_pct, pdt_vat_id, 
 		    pdt_status, pdt_strength, pdt_current_qty, pdt_amount, pdt_op_qty, pdt_delete_by, 
-		    pdt_delete_date,pdt_merge_qty,cat_sht_desc,loc_sht_desc,sloc_sht_desc,unt_sht_desc
+		    pdt_delete_date,pdt_merge_qty,cat_sht_desc,loc_sht_desc,sloc_sht_desc,unt_sht_desc,VAT_DESCRIPTION,VAT_RATE
 		from inv_products left join inv_categories on inv_categories.cat_code = inv_products.pdt_cat_code
 		left join inv_locations on inv_locations.loc_code = inv_products.pdt_loc_code
 		left join inv_sub_locations on inv_sub_locations.sloc_code = inv_products.pdt_sloc_code
-		left join inv_units on inv_units.unt_code = inv_products.pdt_unt_code 		
+		left join inv_units on inv_units.unt_code = inv_products.pdt_unt_code 	
+		left join inv_vat on VAT_ID=pdt_vat_id	
         <if test="id != null">
           where inv_products.pdt_code=   #{id,jdbcType=INTEGER}
       </if>	
@@ -594,6 +596,7 @@
   	<result column="signed_qty" property="signedQty" jdbcType="DOUBLE" />
   	<result column="acct_code" property="acctCode" jdbcType="INTEGER" />
   	<result column="acct_name" property="acctName" jdbcType="VARCHAR" />
+  	
   </resultMap>  
   <select id="fetchProductMovement" parameterType="java.util.HashMap" resultMap="ProductMovementResultMap">
   	SELECT level,type,trans_date,trans_ref,pdt_code,pdt_description,qty,price,signed_qty,acct_code,acct_name

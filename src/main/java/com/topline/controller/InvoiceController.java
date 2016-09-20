@@ -38,10 +38,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
+
+
+import com.topline.model.Categories;
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
 import com.topline.model.Purchase;
+import com.topline.model.SalePayment;
 import com.topline.model.Summary;
 import com.topline.model.wrappers.InvoiceDtlsWrapper;
 import com.topline.model.wrappers.InvoiceWrapper;
@@ -391,27 +396,33 @@ public class InvoiceController extends BaseController {
 					return jsonObject(jsonResponse);
 				}
 			}	
-	//removeItem 
-	@RequestMapping(value="/removeItem.action", method=RequestMethod.POST)
-	private @ResponseBody String removeItem(HttpServletRequest request){
+	//save payment 
+	@RequestMapping(value="/savePayment.action", method=RequestMethod.POST)
+	private @ResponseBody String savePayment(HttpServletRequest request){
 		try{
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			
 			Map<String, Object> map = new HashMap<String, Object>();		
-			
+			ObjectMapper mapper = new ObjectMapper();
 			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
 			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
-			String invdId=GlobalCC.CheckNullValues(request.getParameter("invdId"));
+			String detail=GlobalCC.CheckNullValues(request.getParameter("data"));
+			String userName=GlobalCC.CheckNullValues(request.getParameter("userName"));
+			String total=GlobalCC.CheckNullValues(request.getParameter("total"));
+			
 			if (limit == null) {
 				limit = "50";
 			}
 			if (start == null) {
 				start = "0";
 			}
-			if(invdId!=null){
-				invoiceDtlsMapper.deleteByPrimaryKey(Integer.parseInt(invdId));
+			SalePayment pymt=mapper.readValue(detail, SalePayment.class);
+			pymt.setSpymtDoneBy(userName);
+			pymt.setSpymtDate(GlobalCC.parseSQLDate(GlobalCC.getCurrentDate()));
+			pymt.setSpymtTotal(new BigDecimal(total));
+			if(pymt.getSpymtId()==null){
+				salePaymentMapper.insert(pymt);
 			}
-			
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(true);
 			jsonResponse.addMessage("message", null);
@@ -424,5 +435,41 @@ public class InvoiceController extends BaseController {
 			jsonResponse.addMessage("message", e.getLocalizedMessage());
 			return jsonObject(jsonResponse);
 		}
-	}			
+	}	
+	//removeItem 
+		@RequestMapping(value="/removeItem.action", method=RequestMethod.POST)
+		private @ResponseBody String removeItem(HttpServletRequest request){
+			try{
+				HashMap<String, Object> data = new HashMap<String, Object>();
+				
+				Map<String, Object> map = new HashMap<String, Object>();		
+				ObjectMapper mapper = new ObjectMapper();
+				String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+				String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+				//String invdId=GlobalCC.CheckNullValues(request.getParameter("invdId"));
+				String detail=GlobalCC.CheckNullValues(request.getParameter("data"));
+				List<InvoiceDtlsWrapper> invoiceDtls = Arrays.asList(mapper.readValue(detail, InvoiceDtlsWrapper[].class));
+				if (limit == null) {
+					limit = "50";
+				}
+				if (start == null) {
+					start = "0";
+				}
+				for(int i=0;i<invoiceDtls.size();i++){
+					invoiceDtlsMapper.deleteByPrimaryKey(invoiceDtls.get(i).getInvdId());
+				}			
+				
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(true);
+				jsonResponse.addMessage("message", null);
+				return jsonObject(jsonResponse);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				jsonResponse.setData(null);
+				jsonResponse.setSuccess(false);
+				jsonResponse.addMessage("message", e.getLocalizedMessage());
+				return jsonObject(jsonResponse);
+			}
+		}		
 }

@@ -21,6 +21,9 @@
     <result column="purd_mtrade_price" property="purdMtradePrice" jdbcType="DECIMAL" />
     <result column="purd_expiry_dt" property="purdExpiryDt" jdbcType="DATE" />
     <result column="purd_serialNo" property="purdSerialNo" jdbcType="VARCHAR"  />
+    <result column="purd_vat_inclusive" property="purdVatInclusive" jdbcType="VARCHAR"  />
+    <result column="purd_vat_amt" property="purdVatAmt" jdbcType="DECIMAL" />
+    <result column="purd_vat_rate" property="purdVatRate" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -159,12 +162,13 @@
       purd_qty, purd_price, purd_tamount, 
       purd_discount, purd_bonus, purd_status, 
       purd_previous_qty, purd_remarks, purd_mtrade_price, 
-      purd_expiry_dt,purd_serialNo)
+      purd_expiry_dt,purd_serialNo,purd_vat_inclusive,purd_vat_amt,purd_vat_rate)
     values (#{purdId,jdbcType=INTEGER}, #{purdPurId,jdbcType=INTEGER}, #{purdPdtCode,jdbcType=INTEGER}, 
       #{purdQty,jdbcType=DOUBLE}, #{purdPrice,jdbcType=DECIMAL}, #{purdTamount,jdbcType=DECIMAL}, 
       #{purdDiscount,jdbcType=DOUBLE}, #{purdBonus,jdbcType=DOUBLE}, #{purdStatus,jdbcType=VARCHAR}, 
       #{purdPreviousQty,jdbcType=DOUBLE}, #{purdRemarks,jdbcType=VARCHAR}, #{purdMtradePrice,jdbcType=DECIMAL}, 
-      #{purdExpiryDt,jdbcType=DATE},#{purdSerialNo,jdbcType=VARCHAR})
+      #{purdExpiryDt,jdbcType=DATE},#{purdSerialNo,jdbcType=VARCHAR},#{purdVatInclusive,jdbcType=VARCHAR},
+      #{purdVatAmt,jdbcType=DECIMAL},#{purdVatRate,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.topline.model.PurchaseDetail" >
     <!--
@@ -434,7 +438,8 @@
   </resultMap>
    <select id="fetchPurchaseDetails" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	   SELECT purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
-		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,purd_serialNo,pdt_description
+		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, 
+		    purd_expiry_dt,purd_serialNo,pdt_description,ifnull(purd_vat_inclusive,'Y') as purd_vat_inclusive,purd_vat_amt,purd_vat_rate
 		FROM inv_purchases_details, inv_products
 		WHERE purd_pdt_code=pdt_code
         <if test="purId != null">
@@ -444,7 +449,7 @@
    <select id="fetchRptPurchases" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	   SELECT purd_id, purd_pur_id, purd_pdt_code, purd_qty, purd_price, purd_tamount, purd_discount, 
 		    purd_bonus, purd_status, purd_previous_qty, purd_remarks, purd_mtrade_price, purd_expiry_dt,purd_serialNo,pdt_description,
-        pur_invono,pur_date,pur_acc_code,acc_name
+        pur_invono,pur_date,pur_acc_code,acc_name,ifnull(purd_vat_inclusive,'Y') as purd_vat_inclusive,purd_vat_amt
 		FROM inv_purchases_details, inv_products,inv_purchases,inv_accounts
 		WHERE purd_pdt_code=pdt_code
         AND pur_id=purd_pur_id

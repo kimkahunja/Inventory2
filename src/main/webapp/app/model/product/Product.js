@@ -112,6 +112,11 @@ Ext.define('InventoryApp.model.product.Product',{
         	  name:"_pdtCatCode",
         	  type: 'string',
               persist: false
+          },
+          {
+        	  name:"_vatRate",
+        	  type: 'float',
+              persist: false
           }
 	        ],
 });

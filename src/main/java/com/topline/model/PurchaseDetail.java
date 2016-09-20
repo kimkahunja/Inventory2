@@ -119,7 +119,35 @@ public class PurchaseDetail {
     private String _purdPdtCode;
     private BigDecimal total;
     private String purdSerialNo;
-    public String getPurdSerialNo() {
+    private String purdVatInclusive;
+    private BigDecimal purdVatAmt;
+    private BigDecimal purdVatRate;
+    
+    public BigDecimal getPurdVatRate() {
+		return purdVatRate;
+	}
+
+	public void setPurdVatRate(BigDecimal purdVatRate) {
+		this.purdVatRate = purdVatRate;
+	}
+
+	public String getPurdVatInclusive() {
+		return purdVatInclusive;
+	}
+
+	public void setPurdVatInclusive(String purdVatInclusive) {
+		this.purdVatInclusive = purdVatInclusive;
+	}
+
+	public BigDecimal getPurdVatAmt() {
+		return purdVatAmt;
+	}
+
+	public void setPurdVatAmt(BigDecimal purdVatAmt) {
+		this.purdVatAmt = purdVatAmt;
+	}
+
+	public String getPurdSerialNo() {
 		return purdSerialNo;
 	}
 

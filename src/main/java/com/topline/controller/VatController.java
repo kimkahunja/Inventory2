@@ -56,7 +56,7 @@ public class VatController extends BaseController {
 
 	// fetch vat
 	@RequestMapping(value = "/fetchVat.action", method = RequestMethod.GET)
-	private @ResponseBody StandardJsonResponse fetchLocations(
+	private @ResponseBody String fetchVat(
 			HttpServletRequest request) {
 		try {
 			HashMap<String, Object> data = new HashMap<String, Object>();
@@ -76,24 +76,19 @@ public class VatController extends BaseController {
 			
 			if (list != null) {
 				int count = list.size();
-				data.put("total", count);
+				data.put("count", count);
 			}
 			
-			data.put("results", list);
+			data.put("data", list);
 			jsonResponse.setData(data);
-			
-			ObjectMapper mapper = new ObjectMapper();
-	        String json = mapper.writeValueAsString(jsonResponse);
-	        System.out.println(json);
-	        
-			return jsonResponse;
+			jsonResponse.setSuccess(true);
+			return jsonObject(jsonResponse);
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);
 			jsonResponse.addMessage("message", e.getLocalizedMessage());
-			return jsonResponse;
+			return jsonObject(jsonResponse);
 		}
 	}
 

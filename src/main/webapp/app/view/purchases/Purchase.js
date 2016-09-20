@@ -84,6 +84,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 												},*/							          
 												{
 			                                     	   xtype: 'ux.form.field.remotecombobox',
+			                                     	   tabIndex:1000,
 			                                            name: 'search',
 			                                             fieldLabel: 'Product',
 			                                             displayField: 'pdtDescription',
@@ -106,44 +107,16 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							          {
 							        	  xtype: 'panel',
 							        	 // autoScroll:true,
-							        	  layout:'fit',
-							        	  maxHeight:300,							        	  
-							        	  height:300,
+							        	  //layout:'fit',
+							        	  //maxHeight:300,							        	  
+							        	 // height:300,
 							        	  items:[
 													{
 														xtype:'purchases.purchasedtlslist' , 
 													  },
 							        	         ],
-							          },
-							          
-							          {
-		                                     xtype: 'toolbar',		                                   
-		                                     items: [
-		                 						{
-		                 						    xtype:'tbspacer',
-		                 						    flex:2
-		                 						},
-		                 						{
-		                                            xtype: 'button',
-		                                            itemId: 'purchaseRemove',
-		                                            text: 'Remove',
-		                                            iconCls: 'delete'
-		                                        },
-		                 						{
-		                                            xtype: 'button',
-		                                            itemId: 'purchaseSave',
-		                                            text: 'Save',
-		                                            iconCls: 'save'
-		                                        },
-		                                        {
-		                                            xtype: 'button',
-		                                            itemId: 'purchaseCancel',
-		                                            text: 'Cancel',
-		                                            iconCls: 'cancel'
-		                                        },
-		                                     ]
-		                                 },
-							          ],
+							          }
+							          ]
 					        },
 					       {
 					        	xtype: 'panel',
