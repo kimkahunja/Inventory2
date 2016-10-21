@@ -77,8 +77,17 @@ public class Invoice {
     private BigDecimal invReceiptAmt;
     private String _purAccCode;
     private Integer invLocCode;
+    private String invPayMode;
     
-    public Integer getInvLocCode() {
+    public String getInvPayMode() {
+		return invPayMode;
+	}
+
+	public void setInvPayMode(String invPayMode) {
+		this.invPayMode = invPayMode;
+	}
+
+	public Integer getInvLocCode() {
 		return invLocCode;
 	}
 

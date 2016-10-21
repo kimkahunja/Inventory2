@@ -32,6 +32,7 @@ import com.topline.model.wrappers.ItemReturnDtlWrapper;
 import com.topline.model.wrappers.ItemSwapDtlWrapper;
 import com.topline.model.wrappers.PaymentDtlWrapper;
 import com.topline.utils.GlobalCC;
+import com.topline.web.StandardJsonResponseImpl;
 
 @Controller
 @RequestMapping(value = "/item")
@@ -39,6 +40,7 @@ public class ItemReturnController extends BaseController {
 	//fetch Swap Original items
 	@RequestMapping(value="/fetchSwapOriginal.action", method=RequestMethod.GET)
 	private @ResponseBody String fetchSwapOriginal(HttpServletRequest request){
+		StandardJsonResponseImpl jsonResponse=new StandardJsonResponseImpl();
 		try{
 			HashMap<String, Object> data = new HashMap<String, Object>();			
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -71,6 +73,7 @@ public class ItemReturnController extends BaseController {
 	//fetch Swap Original items
 		@RequestMapping(value="/fetchSwap.action", method=RequestMethod.GET)
 		private @ResponseBody String fetchSwap(HttpServletRequest request){
+			StandardJsonResponseImpl jsonResponse=new StandardJsonResponseImpl();
 			try{
 				HashMap<String, Object> data = new HashMap<String, Object>();			
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -190,6 +193,7 @@ public class ItemReturnController extends BaseController {
 	//fetch returned items
 			@RequestMapping(value="/fetchReturns.action", method=RequestMethod.GET)
 			private @ResponseBody String fetchReturns(HttpServletRequest request){
+				StandardJsonResponseImpl jsonResponse=new StandardJsonResponseImpl();
 				try{
 					HashMap<String, Object> data = new HashMap<String, Object>();			
 					Map<String, Object> map = new HashMap<String, Object>();

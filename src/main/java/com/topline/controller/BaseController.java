@@ -16,7 +16,10 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.topline.mappers.AccountMapper;
 import com.topline.mappers.ApprovalAreaDtlMapper;
 import com.topline.mappers.CategoriesMapper;
+import com.topline.mappers.CreditSaleDtlMapper;
+import com.topline.mappers.CreditSaleMapper;
 import com.topline.mappers.CustomizeAreaDtlMapper;
+import com.topline.mappers.CustomizeAreaMapper;
 import com.topline.mappers.GroupsMapper;
 import com.topline.mappers.InvoiceDtlsMapper;
 import com.topline.mappers.InvoiceMapper;
@@ -45,6 +48,7 @@ import com.topline.mappers.TaskDeliveryMapper;
 import com.topline.mappers.TransferDtlMapper;
 import com.topline.mappers.TransferMapper;
 import com.topline.mappers.UnitsMapper;
+import com.topline.mappers.UserLocationMapper;
 import com.topline.mappers.UserMapper;
 import com.topline.mappers.VatMapper;
 import com.topline.model.wrappers.ProductWrapper;
@@ -110,7 +114,8 @@ public class BaseController extends MultiActionController {
 	ManAdjustmentMapper manAdjustmentMapper;
 	@Autowired(required=true)
 	CustomizeAreaDtlMapper customizeAreaDtlMapper;
-	
+	@Autowired(required=true)
+	CustomizeAreaMapper customizeAreaMapper;
 	@Autowired(required=true)
 	ItemSwapMapper itemSwapMapper;
 	@Autowired(required=true)
@@ -132,6 +137,13 @@ public class BaseController extends MultiActionController {
 	TaskAssigneeMapper taskAssigneeMapper;
 	@Autowired(required=true)
 	SalePaymentMapper salePaymentMapper;
+	@Autowired(required=true)
+	UserLocationMapper userLocationMapper;
+	
+	@Autowired(required=true)
+	CreditSaleMapper creditSaleMapper;
+	@Autowired(required=true)
+	CreditSaleDtlMapper creditSaleDtlMapper;
 	public String jsonObject(StandardJsonResponse jsonResponse){
 		String json=null;
 		ObjectMapper mapper = new ObjectMapper();

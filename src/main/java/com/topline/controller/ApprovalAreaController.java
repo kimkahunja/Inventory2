@@ -22,12 +22,15 @@ import com.topline.model.ApprovalAreaDtl;
 import com.topline.model.ApprovalAreaDtlExample;
 import com.topline.model.wrappers.ApprovalAreaDtlWrapper;
 import com.topline.utils.GlobalCC;
+import com.topline.web.StandardJsonResponse;
+import com.topline.web.StandardJsonResponseImpl;
 
 @Controller
 @RequestMapping(value = "/approvalArea")
 public class ApprovalAreaController extends BaseController {
 	@RequestMapping(value="/fetchApprovalAreas.action", method=RequestMethod.GET)
 	private @ResponseBody String fetchApprovalAreas(HttpServletRequest request){
+		StandardJsonResponseImpl jsonResponse=new StandardJsonResponseImpl();
 		try{
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			
@@ -39,15 +42,19 @@ public class ApprovalAreaController extends BaseController {
 			//System.out.println("user=== "+user);
 			if(user!=null){
 				map.put("user", user==null?null:new BigDecimal(user));
-				List<ApprovalAreaDtlWrapper>list=approvalAreaDtlMapper.fetchApprovalAreas(map);			
+				List<ApprovalAreaDtlWrapper>list=approvalAreaDtlMapper.fetchApprovalAreas(map);	
+				//System.out.println("approval ListCount== "+list.get(1).getAppvDescription());
+				data.clear();
 				if (list != null) {
 					int count = list.size();
 					data.put("count", count);
 					data.put("data", list);
 				}
-			}
+			}			
+			
 			jsonResponse.setData(data);
 			jsonResponse.setSuccess(true);
+			//System.out.println("approval== "+jsonObject(test));
 			return jsonObject(jsonResponse);
 		}catch(Exception e){
 			e.printStackTrace();

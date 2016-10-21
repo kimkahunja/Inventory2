@@ -350,4 +350,48 @@ public class JasperReportsController extends BaseController{
 		}
 		return;
 	}
+	@RequestMapping("/main.action")
+	private void SalesByItems(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		ModelAndView mv = null;
+		try{
+			parameters.clear();			
+			String reportType = null;
+			 String reportName= request.getParameter("reportName");
+			 String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
+			 String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
+			 String asAt=GlobalCC.CheckNullValues(request.getParameter("asAt"));
+			// System.out.println("dateFrom=== "+dateFrom+" dateTo== "+dateTo);
+			 parameters.put("FROM_DATE", dateFrom);
+			 parameters.put("TO_DATE", dateTo);
+			 parameters.put("AS_AT", asAt);
+			if (reportType == null) {
+				reportType = "pdf";
+			}
+			conn=ormDataSource.getConnection(); 
+			String filePath = null;
+			filePath = getServletContext().getRealPath("/reports/"+reportName+".jasper");
+			//System.out.println("filePath=== "+filePath);
+			setFileReport(new File(filePath));
+			fileReport = getFileReport();
+			//reportName = "Sales By Items";			
+			//System.out.println("reportType --> " + reportType);
+			
+			
+			JasperPrint print = JasperFillManager.fillReport(fileReport.getPath(),parameters, conn);	
+			Exporter<ExporterInput, PdfReportConfiguration, PdfExporterConfiguration, OutputStreamExporterOutput> exportador = new JRPdfExporter();
+				exportador.setExporterInput(new SimpleExporterInput(print));
+				exportador.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));
+				
+				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "attachment; filename="+ reportName+"."+reportType);
+				
+				exportador.exportReport();
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception Occured  profileHandler-> ");
+		}
+		return;
+	}
 } 

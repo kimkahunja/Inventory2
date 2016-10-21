@@ -49,7 +49,7 @@ public interface StandardJsonResponse {
 	/**
 	 * @param data the data to set
 	 */
-	public void setData(HashMap<String, Object> data);
+	public  void setData(HashMap<String, Object> data);
 	
 	/**
 	 * @return the data

@@ -55,7 +55,8 @@ Ext.define('InventoryApp.controller.Invoices', {
             		//itemdblclick: this.edit,
             	},
             	'grid[xtype=invoice.invoicedtlslist]': {            		
-            		itemcontextmenu: this.showContextMenu            		
+            		itemcontextmenu: this.showContextMenu,
+            		edit: this.editItems
             	},
             	'grid[xtype=invoice.invoicelist] button#add': {
             		//click: this.add
@@ -154,7 +155,11 @@ Ext.define('InventoryApp.controller.Invoices', {
     	// clear any fliters that have been applied
     	store.clearFilter( true );
     	// load the store
-    	store.load();
+    	store.load({
+        	params: {
+        		location:InventoryApp.Utilities.locationId
+        	}
+        });
     },
     loadPrices:function( grid, eOpts ) {    	
     	var me = this,
@@ -280,6 +285,7 @@ Ext.define('InventoryApp.controller.Invoices', {
      		invDate=Ext.ComponentQuery.query("datefield[name='invDate']")[0].getValue(),
      		invAccCode=Ext.ComponentQuery.query("combo[name='invAccCode']")[0].getValue(),
      		invInvono='x',//Ext.ComponentQuery.query("displayfield[name='invInvono']")[0].getValue(),
+     		invPayMode=Ext.ComponentQuery.query("combo[name='invPayMode']")[0].getValue(),
      		mydata=null; 
     		 if(invDate==null) {
      			Ext.Msg.show(
@@ -319,6 +325,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     		 model["invAccCode"]=invAccCode;
     		 model["invInvono"]=invInvono;
     		 model["invUser"]=InventoryApp.Utilities.userName;
+    		 model["invPayMode"]=invPayMode;
     		 //-----------------------------------------
     		 var details = new Array();
              var records = store.getRange();
@@ -358,7 +365,7 @@ Ext.define('InventoryApp.controller.Invoices', {
                         		id: mydata
                         	}
               		});    
-                                     
+            		  this.setSalHeader();                
                  }
             	 else
                  {
@@ -393,6 +400,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     		invDate=Ext.ComponentQuery.query("datefield[name='invDate']")[0].getValue(),
     		invAccCode=Ext.ComponentQuery.query("combo[name='invAccCode']")[0].getValue(),
     		invInvono='x',//Ext.ComponentQuery.query("displayfield[name='invInvono']")[0].getValue(),
+    		invPayMode=Ext.ComponentQuery.query("combo[name='invPayMode']")[0].getValue(),
     		mydata=null;
     		if(invDate==null) {
     			Ext.Msg.show(
@@ -427,7 +435,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     		}
     			
     		
-    		console.log('InventoryApp.Utilities.inv_id=== '+InventoryApp.Utilities.inv_id);
+    		//console.log('InventoryApp.Utilities.inv_id=== '+InventoryApp.Utilities.inv_id);
     		 var model = {};   
     		 model["invId"]=InventoryApp.Utilities.inv_id;
     		 model["invRefno"]=invRefNo;
@@ -435,6 +443,7 @@ Ext.define('InventoryApp.controller.Invoices', {
     		 model["invAccCode"]=invAccCode;
     		 model["invInvono"]=invInvono;
     		 model["invUser"]=InventoryApp.Utilities.userName;
+    		 model["invPayMode"]=invPayMode;
     		 //-----------------------------------------
     		 var details = new Array();
              var records = store.getRange();
@@ -553,6 +562,7 @@ Ext.define('InventoryApp.controller.Invoices', {
                  	}
                  });
           }
+          this.setSalHeader();
       },
       postInvoice: function( button, e, eOpts ){
     	  var isEligible=InventoryApp.Utilities.isEligible(InventoryApp.Utilities.userName,'POSTSAL');
@@ -766,50 +776,56 @@ Ext.define('InventoryApp.controller.Invoices', {
     	    
     	  //console.log("Number of Records selected....."+grid.getSelectionModel().getCount());
     	     if (grid.getSelectionModel().getCount()>0 ){
-    	    	 var invdId=record[0].get('invdId');
+    	    	 Ext.Msg.confirm( 'Attention', 'You are about to remove ('+record.length+') items.Do you wish to continue?', function( buttonId, text, opt ) {
+    	    		 if( buttonId=='yes' ) {
+    	    			 var invdId=record[0].get('invdId');
+    	    	    	 
+    	    	    	   
+    	    	    	   var details = new Array();
+    	                   
+    	                   for (var i = 0; i < record.length; i++) {
+    	                  	 details.push(record[i].data);
+    	                   };
+    	    	    	   // remove from db
+    	    	    	     Ext.Ajax.request({
+    	    	                 url: 'invoice/removeItem.action',
+    	    	              params: {                   
+    	    	            	      data: Ext.encode(details) ,                     
+    	    	                      location:InventoryApp.Utilities.locationId
+    	    	              },
+    	    	              
+    	    	              scope:this,
+    	    	              //method to call when the request is successful
+    	    	              success:function(conn, response, options, eOpts){
+    	    	             	var result = Ext.JSON.decode(conn.responseText, true);    
+    	    	             	if ( ! result)
+    	    	                 {
+    	    	                    
+    	    	                    result =
+    	    	                    {
+    	    	                    }
+    	    	                    ;
+    	    	                    result.success = false;
+    	    	                    result.messages.message = conn.responseText;
+    	    	                 }
+    	    	             	 if (result.success)
+    	    	                  {
+    	    	             		   
+    	    	             		store.remove(record);
+    	    	     	    	    grid.getView().refresh();                
+    	    	                  }
+    	    	             	 else
+    	    	                  {
+    	    	             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+    	    	                  }
+    	    	             },
+    	    	              //method to call when the request is a failure
+    	    	              failure: InventoryApp.Utilities.onSaveFailure
+    	    	          });
+		           		}
+    	    	 });
+		           		
     	    	 
-    	    	   
-    	    	   var details = new Array();
-                   
-                   for (var i = 0; i < record.length; i++) {
-                  	 details.push(record[i].data);
-                   };
-    	    	   // remove from db
-    	    	     Ext.Ajax.request({
-    	                 url: 'invoice/removeItem.action',
-    	              params: {                   
-    	            	      data: Ext.encode(details) ,                     
-    	                      location:InventoryApp.Utilities.locationId
-    	              },
-    	              
-    	              scope:this,
-    	              //method to call when the request is successful
-    	              success:function(conn, response, options, eOpts){
-    	             	var result = Ext.JSON.decode(conn.responseText, true);    
-    	             	if ( ! result)
-    	                 {
-    	                    
-    	                    result =
-    	                    {
-    	                    }
-    	                    ;
-    	                    result.success = false;
-    	                    result.messages.message = conn.responseText;
-    	                 }
-    	             	 if (result.success)
-    	                  {
-    	             		   
-    	             		store.remove(record);
-    	     	    	    grid.getView().refresh();                
-    	                  }
-    	             	 else
-    	                  {
-    	             		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
-    	                  }
-    	             },
-    	              //method to call when the request is a failure
-    	              failure: InventoryApp.Utilities.onSaveFailure
-    	          });
     	     }	    	 
     	  
            
@@ -933,6 +949,32 @@ saveCash: function(button, e, options) {
 cancelCash: function(button, e, options) {
     button.up('window').close();
 },
-
+editItems:function(editor, e, eOpts){
+	  //console.log('cell editing');
+	  if(e.record.dirty){ 
+		  if(e.record.validate().isValid()){
+			  //console.log('record updated');
+			  var theSave=this.saveRecord();
+		  }
+	  }
+	  
+},
+setSalHeader:function(){
+	 var me = this,
+	grid = me.getInvoiceList(), 
+	record = grid.getSelectionModel().getSelection(),
+	particularField=Ext.ComponentQuery.query("displayfield[name='salParticulars']")[0],
+	locField=Ext.ComponentQuery.query("displayfield[name='salLoc']")[0],
+	 location='Location Name: '+InventoryApp.Utilities.locationDescription;
+	 if(record.length){
+		 var particulars='INV:'+record[0].get('invInvono')+' TO '+record[0].get('_purAccCode');			
+		 particularField.setValue(particulars);
+		 locField.setValue(location);
+	 }else{
+		 particularField.setValue(null);
+		 locField.setValue(location);
+	 }
+		 
+}
 });
     

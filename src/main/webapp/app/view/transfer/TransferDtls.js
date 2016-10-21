@@ -6,6 +6,7 @@ Ext.define('InventoryApp.view.transfer.TransferDtls',{
 	           'Ext.grid.plugin.CellEditing',
 	       ],	
 	store: 'transfer.TransferDtls',
+	
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{

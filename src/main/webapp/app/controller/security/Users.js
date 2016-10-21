@@ -2,7 +2,8 @@ Ext.define('InventoryApp.controller.security.Users', {
     extend: 'Ext.app.Controller',
 
     requires: [
-        'InventoryApp.util.Util'
+        'InventoryApp.util.Util',
+        'InventoryApp.store.security.Users'
     ],
 
     views: [

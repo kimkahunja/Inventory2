@@ -26,22 +26,48 @@ Ext.define('InventoryApp.controller.reports.ComprehensiveRPT', {
       
        print:function( button, e, eOpts ){
     	   var dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='compParamFrom']")[0].getValue()),
-    	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='compParamTo']")[0].getValue()),  	  
+    	   dateTo=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='compParamTo']")[0].getValue()),
+    	   asAt=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='asAt']")[0].getValue()),
     	   reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgReport']")[0].getChecked()[0],
     	    selection = reportGrp.getGroupValue();  
     	   //console.log('selection=== '+selection);
     	   //Summary sales report
     	   if(selection=='R_S_sales'){
     		   Ext.create('Ext.form.Panel', {
-                   renderTo: Ext.getBody(),
+                  // renderTo: Ext.getBody(),
                    standardSubmit: true,
-                   url: 'reports/summarySales.action'
+                   url: 'reports/main.action'
                }).submit({
             	   params: {
-            		   'dateFrom': dateFrom, 
-            		   'dateTo': dateTo}
+            		   dateFrom: dateFrom, 
+            		   dateTo : dateTo,
+            		   reportName:'summarySales'
+            		   }
                			});   
-    	   }
+    	   }else if(selection=='R_S_items'){
+    		   Ext.create('Ext.form.Panel', {
+                   // renderTo: Ext.getBody(),
+                    standardSubmit: true,
+                    url: 'reports/main.action'
+                }).submit({
+             	   params: {
+             		   dateFrom: dateFrom, 
+             		   dateTo: dateTo,
+             		   reportName:'SalesByItems'
+             		   }
+                });   
+     	   }else if(selection=='R_Customer_balances'){
+     		  Ext.create('Ext.form.Panel', {
+                  // renderTo: Ext.getBody(),
+                   standardSubmit: true,
+                   url: 'reports/main.action'
+               }).submit({
+            	   params: {
+            		   asAt: asAt,             		  
+            		   reportName:'CustomerBalances'
+            		   }
+               });  
+     	   }
     	   
     	  
        },
@@ -52,16 +78,23 @@ Ext.define('InventoryApp.controller.reports.ComprehensiveRPT', {
     	     product=Ext.ComponentQuery.query("combobox[name='compPdtCodeRpt']")[0],
     	     status=Ext.ComponentQuery.query("combobox[name='compParamStatus']")[0],
     	     toDate=Ext.ComponentQuery.query("datefield[name='compParamTo']")[0],
-    	     fromDate=Ext.ComponentQuery.query("datefield[name='compParamFrom']")[0];
+    	     fromDate=Ext.ComponentQuery.query("datefield[name='compParamFrom']")[0],
+    	     asAt=Ext.ComponentQuery.query("datefield[name='asAt']")[0];
       	 	supplier.hide();
       	 	product.hide();
       	 	status.hide();
       	 	toDate.hide();
       	 	fromDate.hide();
+      	 	asAt.hide();
       	console.log('selection=== '+selection);
       	if(selection=='R_S_sales'){
       		toDate.show();
       	 	fromDate.show();
+      	}else if(selection=='R_S_items'){
+      		toDate.show();
+      	 	fromDate.show();
+      	}else if(selection=='R_Customer_balances'){
+      		asAt.show();
       	}
        }     
 

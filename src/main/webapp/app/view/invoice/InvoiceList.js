@@ -6,6 +6,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceList',{
 	initComponent: function() {
 	       var me = this;
 	       var store = Ext.create('InventoryApp.store.invoice.Invoices');
+	       store.proxy.extraParams = { location: InventoryApp.Utilities.locationId };
 	       Ext.applyIf(me,{	   
 	    	   store: store,
 	           columns: {	

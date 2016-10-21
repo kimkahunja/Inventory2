@@ -129,7 +129,11 @@ Ext.define('InventoryApp.Application', {
             'approvalAreas.ApprovalAreaHolder',
             'account.AccountList',
             'reports.products.ProductPricesWindow',
-            'taskDelivery.Tasks'
+            'taskDelivery.Tasks',
+            'systemAreas.Holder',
+            'location.SwitchLocationList',
+            'invoice.CreditSales',
+           'reports.returns.ReturnMainContainer'
            // 'return.ReturnMainContainer'
             //'swap.ListHolder'
         ],
@@ -164,7 +168,9 @@ Ext.define('InventoryApp.Application', {
         'ItemReturns',
         'ApprovalAreas',
         'Accounts',
-        'Tasks'
+        'Tasks',
+        'UserLocations',
+        'CreditSales'
     ],
     
     //autoCreateViewport: true,

@@ -9,7 +9,7 @@ Ext.define('InventoryApp.view.Header', {
     items: [
         {
             xtype: 'label',
-            html: '<div id="titleHeader"><b>Store Premier</b></div>'
+            html: '<div id="titleHeader"><b>MIDAS Premier</b></div>'
         },
         {
             xtype: 'tbfill'
@@ -36,7 +36,7 @@ Ext.define('InventoryApp.view.Header', {
         },
         {
         	xtype:'button',
-        	text:'Alter Location',	
+        	text:'switch Location',	
         	itemId: 'AlterLoc',
             iconCls: 'edit'
         },

@@ -289,6 +289,6 @@
   <select id="fetchSystemAreas" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
   	SELECT ctad_id, ctad_cta_code, ctad_column, ctad_column_desc, ctad_isVisible,if(ctad_isVisible='Y','true','false') as _ctadIsvisible  
 		FROM inv_customize_areas_dtls
-		WHERE ctad_cta_code='PROD'
+		WHERE ctad_cta_code=#{type,jdbcType=VARCHAR}
   </select>
 </mapper>

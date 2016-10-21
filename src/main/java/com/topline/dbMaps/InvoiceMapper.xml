@@ -17,6 +17,7 @@
     <result column="inv_posted_by" property="invPostedBy" jdbcType="VARCHAR" />
     <result column="inv_receipt_amt" property="invReceiptAmt" jdbcType="DECIMAL" />
      <result column="inv_loc_code" property="invLocCode" jdbcType="INTEGER" />
+     <result column="inv_pay_mode" property="invPayMode" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <!--
@@ -93,7 +94,7 @@
       This element was generated on Tue Oct 27 17:10:02 EAT 2015.
     -->
     inv_id, inv_invono, inv_refNo, inv_date, inv_acc_code, inv_user, inv_status, inv_posted_by, 
-    inv_receipt_amt,inv_loc_code
+    inv_receipt_amt,inv_loc_code,inv_pay_mode
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.topline.model.InvoiceExample" >
     <!--
@@ -361,7 +362,8 @@
       inv_status = #{invStatus,jdbcType=VARCHAR},
       inv_posted_by = #{invPostedBy,jdbcType=VARCHAR},
       inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL},
-      inv_loc_code = #{invLocCode,jdbcType=INTEGER}
+      inv_loc_code = #{invLocCode,jdbcType=INTEGER},
+      inv_pay_mode= #{invPayMode,jdbcType=VARCHAR}
     where inv_id = #{invId,jdbcType=INTEGER}
   </update>
    <resultMap id="BaseResultMapWrapper" extends="BaseResultMap" type="com.topline.model.wrappers.InvoiceWrapper" >    
@@ -369,7 +371,7 @@
   </resultMap>
    <select id="fetchInvoices" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper" >
 	  	SELECT inv_id, inv_invono, inv_refNo, inv_date, inv_acc_code, inv_user, inv_status, inv_posted_by, 
-	    inv_receipt_amt,inv_loc_code,acc_name
+	    inv_receipt_amt,inv_loc_code,acc_name,inv_pay_mode
 	    FROM inv_invoices,inv_accounts
 	    WHERE inv_acc_code=acc_code
 	    <if test="invStatus != null">
@@ -384,17 +386,20 @@
       <if test="dateFrom !=null"  >
       	AND  inv_date BETWEEN  #{dateFrom,jdbcType=DATE} AND #{dateTo,jdbcType=DATE}
       </if>
+       <if test="location !=null"  >
+       AND inv_loc_code=#{location,jdbcType=INTEGER}
+       </if>
      </select>
  <insert id="save" parameterType="com.topline.model.Invoice" useGeneratedKeys="true" keyProperty="invId"  keyColumn="inv_id" >
     
     insert into inv_invoices (inv_id, inv_invono, inv_refNo, 
       inv_date, inv_acc_code, inv_user, 
-      inv_status, inv_posted_by, inv_receipt_amt,inv_loc_code
+      inv_status, inv_posted_by, inv_receipt_amt,inv_loc_code,inv_pay_mode
       )
     values (#{invId,jdbcType=INTEGER}, getInvoiceNumber(#{invLocCode,mode=IN,jdbcType=INTEGER}), #{invRefno,jdbcType=VARCHAR}, 
       #{invDate,jdbcType=DATE}, #{invAccCode,jdbcType=INTEGER}, #{invUser,jdbcType=VARCHAR}, 
       #{invStatus,jdbcType=VARCHAR}, #{invPostedBy,jdbcType=VARCHAR}, #{invReceiptAmt,jdbcType=DECIMAL},
-      #{invLocCode,jdbcType=INTEGER}
+      #{invLocCode,jdbcType=INTEGER},#{invPayMode,jdbcType=VARCHAR}
       )
       <selectKey keyProperty="invId" resultType="integer" order="AFTER">
             SELECT LAST_INSERT_ID();
@@ -435,7 +440,8 @@
       inv_status = #{invStatus,jdbcType=VARCHAR},
       inv_posted_by = #{invPostedBy,jdbcType=VARCHAR},
       inv_receipt_amt = #{invReceiptAmt,jdbcType=DECIMAL},
-      inv_loc_code = #{invLocCode,jdbcType=INTEGER}
+      inv_loc_code = #{invLocCode,jdbcType=INTEGER},
+      inv_pay_mode= #{invPayMode,jdbcType=VARCHAR}
     where inv_id = #{invId,jdbcType=INTEGER}
   </update>  
 </mapper>

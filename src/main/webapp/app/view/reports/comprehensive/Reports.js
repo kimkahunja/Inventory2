@@ -35,6 +35,18 @@ Ext.define('InventoryApp.view.reports.comprehensive.Reports',{
 					            inputValue: 'R_S_sales'
 					        },
 					        {
+					        	xtype: 'radiofield',
+					            boxLabel: 'Sales by items report',
+					            name: 'report',
+					            inputValue: 'R_S_items'
+					        },
+					        {
+					        	xtype: 'radiofield',
+					            boxLabel: 'Customer Balances report',
+					            name: 'report',
+					            inputValue: 'R_Customer_balances'
+					        },
+					        {
 					            xtype: 'radiofield',
 					            boxLabel: 'Product cost report',
 					            name: 'report',

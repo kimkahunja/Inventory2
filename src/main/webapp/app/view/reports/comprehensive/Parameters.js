@@ -73,6 +73,14 @@ Ext.define('InventoryApp.view.reports.comprehensive.Parameters',{
 								    hidden:InventoryApp.Utilities.hideDateRange
 								},
 								{
+									xtype: 'datefield',
+								    name: 'asAt',
+								    fieldLabel: 'Run as at:',
+								    format: 'd/m/Y',
+								    minWidth:150,
+								    hidden:true
+								},
+								{
 				                     xtype: 'combobox',
 				                     name: 'compParamStatus',
 				                     fieldLabel: 'Status',

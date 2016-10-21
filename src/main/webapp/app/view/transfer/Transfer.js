@@ -106,6 +106,7 @@ Ext.define('InventoryApp.view.transfer.Transfer',{
 					        borderColor: '#E6E6E6',
 					        borderStyle: 'solid'
 					    },
+					    margin:'20',
 					    items:[
 								{
 									   xtype: 'container',
@@ -125,7 +126,8 @@ Ext.define('InventoryApp.view.transfer.Transfer',{
 								                  editable: true,
 								                  forceSelection: true,   
 								                  emptyText:'select product',
-								                  minChars: 0
+								                  minChars: 0,
+								                  allowBlank: true
 								                 // disabled:true,
 								                  //queryMode:'local'
 								              },
@@ -136,7 +138,7 @@ Ext.define('InventoryApp.view.transfer.Transfer',{
 						        	 // autoScroll:true,
 						        	  layout:'fit',
 						        	  maxHeight:200,							        	  
-						        	  height:200,
+						        	  height:200,						        	  
 						        	  items:[
 												{
 													xtype:'transfer.transferdtls', 

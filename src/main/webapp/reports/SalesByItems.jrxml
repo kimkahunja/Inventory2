@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-09-24T22:44:34 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesByItems" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2148e0da-80fc-4fe2-a596-c30c04ac255c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="FROM_DATE" class="java.lang.String"/>
+	<parameter name="TO_DATE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT cat_sht_desc,cat_description,pdt_sht_desc,pdt_description,ifnull(sum(invd_qty),0) qty,ifnull(sum(invd_qty * invd_price),0)total
+FROM (SELECT cat_sht_desc,cat_description,pdt_sht_desc,pdt_description,pdt_code
+FROM  inv_products, inv_categories
+WHERE pdt_cat_code=cat_code) AS P LEFT OUTER JOIN
+(SELECT invd_qty,invd_price,invd_pdt_code
+FROM  inv_invoices,inv_invoice_dtls 
+WHERE invd_inv_id = inv_id
+AND inv_status="POSTED"
+AND ((inv_date BETWEEN cast_date( $P{FROM_DATE} ) AND cast_date( $P{TO_DATE} )) OR($P{FROM_DATE} IS NULL))
+) AS I ON (P.pdt_code = I.invd_pdt_code)
+GROUP BY cat_sht_desc,cat_description,pdt_sht_desc,pdt_description
+ORDER BY P.cat_sht_desc, P.pdt_sht_desc]]>
+	</queryString>
+	<field name="cat_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cat_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_sht_desc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdt_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qty" class="java.lang.Double"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<variable name="CAT_TOTAL" class="java.math.BigDecimal" resetType="Group" resetGroup="Cat" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="CAT_QTY" class="java.lang.Double" resetType="Group" resetGroup="Cat" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
+	<group name="Cat">
+		<groupExpression><![CDATA[$F{cat_sht_desc}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<textField>
+					<reportElement x="0" y="0" width="300" height="20" uuid="841ff8a0-b127-4ea2-b5a4-3c2b78114440"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cat_description}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField pattern="#,##0.00">
+					<reportElement x="340" y="0" width="100" height="20" uuid="838afeb6-aaba-4c8d-bafa-d0065355d4bb"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CAT_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="250" y="0" width="90" height="20" uuid="30b80fca-02c9-4dba-b488-3c88a29b19fe"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CAT_QTY}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="242" y="20" width="100" height="1" uuid="282e5655-b953-4833-b050-34b30f9b275f"/>
+				</line>
+				<line>
+					<reportElement x="347" y="20" width="93" height="1" uuid="0e7f7236-47c0-4019-8430-0acad42b49f7">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="242" y="22" width="100" height="1" uuid="f6a93149-c45d-42f2-bf37-d91eb5bbefc6"/>
+				</line>
+				<line>
+					<reportElement x="347" y="22" width="93" height="1" uuid="2cbe592f-b938-4bb2-98e3-e5e49d253251"/>
+				</line>
+				<line>
+					<reportElement x="347" y="0" width="93" height="1" uuid="92e10a01-fc38-4b16-af64-d0102495ab45">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+				</line>
+				<line>
+					<reportElement x="242" y="0" width="100" height="1" uuid="173cd881-f0df-4639-a098-5cac80fb0baa">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="56" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="124" y="30" width="100" height="20" uuid="b9be0f64-4dcd-4046-a709-e9f4a29c0d0c"/>
+				<textElement textAlignment="Right">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FROM_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="260" y="29" width="138" height="20" uuid="f0558f30-a993-408c-b00d-3166950d762f"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TO_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="0" width="250" height="20" uuid="912f6a91-e399-4f76-858f-826ca45e411f"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sales by Items Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="31" width="36" height="18" uuid="44f1c943-ca26-498d-ad5b-e99f96130ee9"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="262" y="0" width="80" height="20" uuid="8d5c5585-c7cc-4e05-b89d-9c15bc06a4b4"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="0" width="80" height="20" uuid="abf0336a-cda1-4aac-b6a4-cf0059b2fe12"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="20" width="595" height="3" forecolor="#5BCFB4" uuid="89e7cb79-2b39-473a-935e-e10d16b5c10b"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20" uuid="97fdc4b8-0abc-4d59-a690-c3e88f817d96"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pdt_sht_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="0" width="173" height="20" uuid="dcefb382-47db-43e5-88c3-60751e8f3d06"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pdt_description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement key="" x="360" y="0" width="80" height="20" uuid="09fc612c-7355-493b-bbad-52131c12f371"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="0" width="60" height="20" uuid="0b42ec08-47d8-4aa3-a656-3f0e423d52dd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

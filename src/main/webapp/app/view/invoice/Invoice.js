@@ -17,7 +17,9 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
                  margins: 5
              },
     		 items:[
-					
+					{
+						  xtype:'invoice.invoiceparticulars'
+					},
 					{
 						
 					    xtype: 'panel',
@@ -28,7 +30,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 								    flex:1,
 								    collapsible: true,
 								    collapseDirection:'left',
-								    collapsed:true,
+								    //collapsed:true,
 								    //collapseFirst: false,
 								    //collapseMode: "header",
 								    animCollapse : false,
@@ -84,6 +86,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 			                                             forceSelection: false,   
 			                                             emptyText:'select product',
 			                                             minChars: 0, 
+			                                             maxWidth:500,
 			                                             queryMode:'remote',     
 			                                            // triggerAction: "all", 
 			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
@@ -109,23 +112,7 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
 							          }						          
 							          
 							          ]
-					        },
-					       {
-					        	xtype: 'panel',
-							    layout: 'fit',  
-							    frame:true,
-							    border:1,
-							    flex:1,
-							    height:300,
-							    minWidth:270,
-							    items:[
-							          {
-							        	  xtype:'invoice.invoiceparticulars'
-							    	  }
-
-							          ],
-					        	
-					       },
+					        }
 					    ]
 					},
 					
@@ -138,15 +125,24 @@ Ext.define('InventoryApp.view.invoice.Invoice',{
                                      ui: 'footer',
                                      items: [
                  						{
-                 						    xtype:'tbspacer',
-                 						    flex:2
-                 						},                 						
-                 						
-                 						 {
-            					            xtype: 'textfield',
-            					            name: 'topSearch',
-            					            fieldLabel: 'Search'					            
-            					        },
+										    xtype: 'fieldcontainer',
+										    layout: 'hbox',                        
+										    items: [
+										        {
+										            xtype: 'displayfield',
+										            name: 'salParticulars',
+										           fieldStyle:'font-weight:bold;color:#003168;font-size:16px;'
+										            
+										        },
+										        {
+										            xtype: 'displayfield',
+										            name: 'salLoc',
+										            fieldStyle:'font-weight:bold;color:#003168;font-size:16px;'
+										            
+										        }
+										     
+										    ]
+										}
                                      ]
                                  },
                                 

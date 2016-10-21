@@ -11,13 +11,16 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
     selModel : 
     {
         mode : 'MULTI'
-    },     
+    }, 
+   // maxWidth:900,
     initComponent: function() {
        var me = this;
        var store = Ext.create('InventoryApp.store.purchases.PurchasesDtls');
+      // console.log('width=== '+Ext.getBody().getViewSize().width);
        Ext.applyIf(me,{
     	   store: store,
-    	   maxHeight:Ext.getBody().getViewSize().height-220 ,           
+    	   maxHeight:Ext.getBody().getViewSize().height-300 , 
+    	   
            plugins: [
                      {
                          ptype: 'cellediting',
@@ -43,6 +46,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 	                       text: 'Description',
 	                       dataIndex: '_purdPdtCode',
 	                       menuDisabled:true,
+	                       maxWidth:500,
 	                       flex:2
 	                       //sortable:false
 		                   }, 
@@ -91,12 +95,14 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
 		                       xtype: 'numbercolumn',
 		                       summaryType: 'sum',
 		                       dataIndex: 'purdVatAmt',
-		                       text: 'Vat Amt'
+		                       text: 'Vat Amt',
+		                       hidden:true
 		                   },
 		                   {
 			                   xtype:'checkcolumn',	   
 		                       text: 'Vat Inclusive?',
-		                       dataIndex: 'purdVatInclusive',	
+		                       dataIndex: 'purdVatInclusive',
+		                       hidden:true
 		                       //width: 90	                                           
 		                       
 		                   }
@@ -110,6 +116,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseDtlsList',{
                          {
                              xtype: 'toolbar',
                              dock: 'bottom',
+                             maxWidth:1000,
                              items: [
               						{
               						    xtype:'tbspacer',

@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
+
 import com.topline.model.Categories;
 import com.topline.model.Invoice;
 import com.topline.model.InvoiceDtls;
@@ -49,6 +50,7 @@ import com.topline.model.Purchase;
 import com.topline.model.SalePayment;
 import com.topline.model.Summary;
 import com.topline.model.wrappers.InvoiceDtlsWrapper;
+import com.topline.model.wrappers.InvoiceSummary;
 import com.topline.model.wrappers.InvoiceWrapper;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
 import com.topline.model.wrappers.PurchaseWrapper;
@@ -58,7 +60,12 @@ import com.topline.utils.GlobalCC;
 @RequestMapping(value = "/invoice")
 public class InvoiceController extends BaseController {
 	@RequestMapping(value="/saveInvoice.action")
+	@Transactional
 	private @ResponseBody String saveInvoice(HttpServletRequest request){
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		TransactionStatus status = txnManager.getTransaction(def);
 		try{
 			HashMap<String, Object> dataM = new HashMap<String, Object>();			
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -92,13 +99,15 @@ public class InvoiceController extends BaseController {
 					invoiceDtlsMapper.insert(invoiceDtls.get(i));
 				}
 			}catch(Exception ex){
-				invoiceMapper.deleteByPrimaryKey(invoice.getInvId());
+				txnManager.rollback(status);
+				//invoiceMapper.deleteByPrimaryKey(invoice.getInvId());
 				ex.printStackTrace();
 				jsonResponse.setData(null);
 				jsonResponse.setSuccess(false);
 				jsonResponse.addMessage("message", ex.getLocalizedMessage());
 				return jsonObject(jsonResponse);
 			}
+			txnManager.commit(status);
 			jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 			dataM.put("data", invoice.getInvId());
 			jsonResponse.setSuccess(true);	
@@ -106,6 +115,7 @@ public class InvoiceController extends BaseController {
 	        return jsonObject(jsonResponse);
 		}
 		catch(Exception e){
+			txnManager.rollback(status);
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);
@@ -130,6 +140,7 @@ public class InvoiceController extends BaseController {
 					String dateFrom=GlobalCC.CheckNullValues(request.getParameter("dateFrom"));
 					String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
 					String root=GlobalCC.CheckNullValues(request.getParameter("root"));
+					String location=GlobalCC.CheckNullValues(request.getParameter("location"));
 					if (limit == null) {
 						limit = "50";
 					}
@@ -141,6 +152,7 @@ public class InvoiceController extends BaseController {
 					map.put("accCode", accCode==null?null:new BigDecimal(accCode));
 					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
 					map.put("dateTo", dateFrom==null?null:GlobalCC.parseSQLDate(dateTo));
+					map.put("location", location==null?null:new BigDecimal(location));
 					//System.out.println("id=== "+id);
 					
 					List<InvoiceWrapper>list=invoiceMapper.fetchInvoices(map);
@@ -151,7 +163,7 @@ public class InvoiceController extends BaseController {
 					data.put("data", list);
 					jsonResponse.setData(data);
 					jsonResponse.setSuccess(true);
-					System.out.println(jsonObject(jsonResponse));
+					//System.out.println(jsonObject(jsonResponse));
 					return jsonObject(jsonResponse);
 				}
 				catch(Exception e){
@@ -198,7 +210,7 @@ public class InvoiceController extends BaseController {
 					data.put("data", list);
 					jsonResponse.setData(data);
 					jsonResponse.setSuccess(true);
-					System.out.println(jsonObject(jsonResponse));
+					//System.out.println(jsonObject(jsonResponse));
 					return jsonObject(jsonResponse);
 				}
 				catch(Exception e){
@@ -236,7 +248,7 @@ public class InvoiceController extends BaseController {
 					data.put("data", invoiceNumber);
 					jsonResponse.setData(data);
 					jsonResponse.setSuccess(true);
-					System.out.println(jsonObject(jsonResponse));
+					//System.out.println(jsonObject(jsonResponse));
 					return jsonObject(jsonResponse);
 				}
 				catch(Exception e){
@@ -286,7 +298,8 @@ public class InvoiceController extends BaseController {
 							invoiceDtlsMapper.insert(invoiceDtls.get(i));
 						}
 					}catch(Exception ex){
-						invoiceMapper.deleteByPrimaryKey(invoice.getInvId());
+						txnManager.rollback(status);
+						//invoiceMapper.deleteByPrimaryKey(invoice.getInvId());
 						ex.printStackTrace();
 						jsonResponse.setData(null);
 						jsonResponse.setSuccess(false);
@@ -370,14 +383,16 @@ public class InvoiceController extends BaseController {
 					map.put("invId",invId==null?null:new BigDecimal(invId));
 					map.put("product",product==null?null:new BigDecimal(product));
 					List<InvoiceDtlsWrapper>list=invoiceDtlsMapper.fetchRptInvoices(map);
-					List<Summary>summaryList=invoiceDtlsMapper.fetchRptInvoicesCount(map);
+					List<InvoiceSummary>summaryList=invoiceDtlsMapper.fetchRptInvoicesCount(map);
 					JSONObject myObj = new JSONObject();
 					JSONArray arrayObj=new JSONArray();
 					for(int i=0;i<summaryList.size();i++){
 						BigDecimal count = summaryList.get(i).getMyCount();
 						BigDecimal summary=summaryList.get(i).getMySummary();
+						BigDecimal invdQty=summaryList.get(i).getInvdQty();
 						data.put("count", count);
 						myObj.put("total", summary);
+						myObj.put("invdQty", invdQty);
 						arrayObj.add(myObj);
 						data.put("summary", arrayObj);
 					}
@@ -385,7 +400,7 @@ public class InvoiceController extends BaseController {
 					data.put("data", list);
 					jsonResponse.setData(data);
 					jsonResponse.setSuccess(true);
-					System.out.println(jsonObject(jsonResponse));
+					//System.out.println(jsonObject(jsonResponse));
 					return jsonObject(jsonResponse);
 				}
 				catch(Exception e){
@@ -438,7 +453,12 @@ public class InvoiceController extends BaseController {
 	}	
 	//removeItem 
 		@RequestMapping(value="/removeItem.action", method=RequestMethod.POST)
+		@Transactional
 		private @ResponseBody String removeItem(HttpServletRequest request){
+			DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+			TransactionStatus status = txnManager.getTransaction(def);
 			try{
 				HashMap<String, Object> data = new HashMap<String, Object>();
 				
@@ -458,13 +478,14 @@ public class InvoiceController extends BaseController {
 				for(int i=0;i<invoiceDtls.size();i++){
 					invoiceDtlsMapper.deleteByPrimaryKey(invoiceDtls.get(i).getInvdId());
 				}			
-				
+				txnManager.commit(status);
 				jsonResponse.setData(null);
 				jsonResponse.setSuccess(true);
 				jsonResponse.addMessage("message", null);
 				return jsonObject(jsonResponse);
 			}
 			catch(Exception e){
+				txnManager.rollback(status);
 				e.printStackTrace();
 				jsonResponse.setData(null);
 				jsonResponse.setSuccess(false);

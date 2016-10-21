@@ -12,12 +12,7 @@ Ext.define('InventoryApp.view.reports.comprehensive.ReportViewer', {
         Ext.applyIf(me, {
             items: [ 
 					{
-					    xtype: 'component',
-					    autoEl: {
-					        src: 'SummarySales.pdf',
-					        tag: 'iframe',
-					        style: 'height: 100%; width: 100%; border: none'
-					    }
+					   
 					}
             ]
         });

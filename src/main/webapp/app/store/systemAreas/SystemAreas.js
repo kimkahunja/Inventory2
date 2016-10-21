@@ -1,5 +1,5 @@
 /*
- * Store for managing SystemAreas
+ * Store for managing SystemAreas dtls
  */
 Ext.define('InventoryApp.store.systemAreas.SystemAreas',{
 	extend:'Ext.data.Store',

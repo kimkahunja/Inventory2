@@ -15,18 +15,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
              },
     		 items:[
 					{
-					    xtype: 'fieldcontainer',
-					    layout: 'hbox',                        
-					    items: [
-					        {
-					            xtype: 'displayfield',
-					            name: 'topSearch',
-					            fieldLabel: 'Search',
-					            hideLabel: 'true',
-					            
-					        },
-					     
-					    ]
+						  xtype:'purchases.purchaseparticulars'
 					},
 					{
 						
@@ -39,6 +28,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 								    collapsible: true,
 								    collapseDirection:'left',
 								    //collapsed:true,
+								    animCollapse : false,
 								    height:300,
 								    maxHeight:300,
 								    title:'Unauthorized Purchases',
@@ -96,6 +86,7 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 			                                             forceSelection: true,   
 			                                             emptyText:'select product',
 			                                             minChars: 0, 
+			                                             maxWidth:500,
 			                                             tpl: Ext.create('Ext.XTemplate', ['<tpl for=".">',
 			      							                                             '<div style="margin: 4px;" class="x-boundlist-item">{pdtShtDesc} - {pdtDescription}</div>',
 			      							                                             '</tpl>'])
@@ -117,23 +108,8 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
 							        	         ],
 							          }
 							          ]
-					        },
-					       {
-					        	xtype: 'panel',
-							    layout: 'fit',  
-							    frame:true,
-							    border:1,
-							    flex:1,							   
-							    height:300,
-							    minWidth:270,
-							    items:[
-							          {
-							        	  xtype:'purchases.purchaseparticulars'
-							    	  }
-
-							          ],
-					        	
-					       },
+					        }
+					       
 					    ]
 					},
 					
@@ -146,15 +122,24 @@ Ext.define('InventoryApp.view.purchases.Purchase',{
                                      ui: 'footer',
                                      items: [
                  						{
-                 						    xtype:'tbspacer',
-                 						    flex:2
-                 						},                 						
-                 						
-                 						 {
-            					            xtype: 'textfield',
-            					            name: 'topSearch',
-            					            fieldLabel: 'Search'					            
-            					        },
+										    xtype: 'fieldcontainer',
+										    layout: 'hbox',                        
+										    items: [
+										        {
+										            xtype: 'displayfield',
+										            name: 'purParticulars',
+										           fieldStyle:'font-weight:bold;color:#003168;font-size:16px;'
+										            
+										        },
+										        {
+										            xtype: 'displayfield',
+										            name: 'purLoc',
+										            fieldStyle:'font-weight:bold;color:#003168;font-size:16px;'
+										            
+										        }
+										     
+										    ]
+										}
                                      ]
                                  },
                                 

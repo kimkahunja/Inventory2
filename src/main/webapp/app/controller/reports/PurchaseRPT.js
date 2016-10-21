@@ -255,6 +255,7 @@ Ext.define('InventoryApp.controller.reports.PurchaseRPT', {
 	  	 
      },
    beforeLoadPurchaseRPT:function(myStore, operation, eOpts){
+	  // console.log('beforeLoadPurchaseRPT');
 	   var accCode=Ext.ComponentQuery.query("combo[name='purAccCodeRpt']")[0].getValue(),
 	   status=Ext.ComponentQuery.query("combo[name='purParamStatus']")[0].getValue(),
 	   dateFrom=InventoryApp.Utilities.convertDate(Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue()),//Ext.ComponentQuery.query("datefield[name='purParamFrom']")[0].getValue(),

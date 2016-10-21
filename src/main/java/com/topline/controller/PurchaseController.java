@@ -69,7 +69,12 @@ import com.topline.utils.GlobalCC;
 @RequestMapping(value = "/purchase")
 public class PurchaseController extends BaseController {
 	@RequestMapping(value="/savePurchase.action")
+	@Transactional
 	private @ResponseBody String savePurchase(HttpServletRequest request){
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		TransactionStatus status = txnManager.getTransaction(def);
 		try{
 			ObjectMapper mapper = new ObjectMapper();
 			HashMap<String, Object> dataM = new HashMap<String, Object>();	
@@ -104,7 +109,8 @@ public class PurchaseController extends BaseController {
 					purchaseDetailMapper.insert(purchaseDetail.get(i));
 				}
 			}catch(Exception ex){
-				purchaseMapper.deleteByPrimaryKey(purchase.getPurId());
+				txnManager.rollback(status);
+				//purchaseMapper.deleteByPrimaryKey(purchase.getPurId());
 				//check this functionality here...
 				ex.printStackTrace();
 				jsonResponse.setData(null);
@@ -112,7 +118,7 @@ public class PurchaseController extends BaseController {
 				jsonResponse.addMessage("message", ex.getLocalizedMessage());
 				return jsonObject(jsonResponse);
 			}
-			
+			txnManager.commit(status);
 			jsonResponse.addMessage("message", UPDATED_SUCCESSFULLY);
 			dataM.put("data", purchase.getPurId());
 			jsonResponse.setSuccess(true);	
@@ -120,6 +126,7 @@ public class PurchaseController extends BaseController {
 	        return jsonObject(jsonResponse);
 		}
 		catch(Exception e){
+			txnManager.rollback(status);
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);
@@ -293,6 +300,7 @@ public class PurchaseController extends BaseController {
 					String dateTo=GlobalCC.CheckNullValues(request.getParameter("dateTo"));
 					String root=GlobalCC.CheckNullValues(request.getParameter("root"));
 					String purId=GlobalCC.CheckNullValues(request.getParameter("id"));
+					String location=GlobalCC.CheckNullValues(request.getParameter("location"));
 					if (limit == null) {
 						limit = "50";
 					}
@@ -305,6 +313,7 @@ public class PurchaseController extends BaseController {
 					map.put("dateFrom", dateFrom==null?null:GlobalCC.parseSQLDate(dateFrom));
 					map.put("dateTo", dateFrom==null?null:GlobalCC.parseSQLDate(dateTo));
 					map.put("purId",purId==null?null:new BigDecimal(purId));
+					map.put("location",location==null?null:new BigDecimal(location));
 					List<PurchaseWrapper>list=purchaseMapper.fetchPurchases(map);
 					
 					if (list != null) {
@@ -416,7 +425,12 @@ public class PurchaseController extends BaseController {
 			}
 //removeItem 
 	@RequestMapping(value="/removeItem.action", method=RequestMethod.POST)
+	@Transactional
 	private @ResponseBody String removeItem(HttpServletRequest request){
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		TransactionStatus status = txnManager.getTransaction(def);
 		try{
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			
@@ -440,13 +454,14 @@ public class PurchaseController extends BaseController {
 			/*if(purdId!=null){
 				purchaseDetailMapper.deleteByPrimaryKey(Integer.parseInt(purdId));
 			}*/
-			
+			txnManager.commit(status);
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(true);
 			jsonResponse.addMessage("message", null);
 			return jsonObject(jsonResponse);
 		}
 		catch(Exception e){
+			txnManager.rollback(status);
 			e.printStackTrace();
 			jsonResponse.setData(null);
 			jsonResponse.setSuccess(false);

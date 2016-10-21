@@ -1,6 +1,9 @@
 Ext.define('InventoryApp.view.approvalAreas.UserList',{
 	extend:'Ext.grid.Panel',
 	alias:'widget.approvalAreas.userlist',
+	requires:[
+	          'InventoryApp.store.security.Users'
+	          ],
 	title:'Users',
 	initComponent: function() {
 	       var me = this;

@@ -5,8 +5,9 @@ Ext.define('InventoryApp.view.systemAreas.List',{
 	           'Ext.grid.RowNumberer',
 	           'Ext.grid.plugin.CellEditing',
 	       ],
-	height:300,	       
+	//height:300,	       
 	store: 'systemAreas.SystemAreas',
+	title:'Customize Items',
     initComponent: function() {
        var me = this;
        Ext.applyIf(me,{
@@ -53,7 +54,22 @@ Ext.define('InventoryApp.view.systemAreas.List',{
                    
                ]
                
-           }        
+           },
+           dockedItems: [	                         
+                         {
+                             xtype: 'toolbar',
+                             dock: 'bottom',
+                             items: [
+         						
+         						{
+                                    xtype: 'button',
+                                    itemId: 'saveSA',
+                                    text: 'Save',
+                                    iconCls: 'accept'
+                                }
+                             ]
+                         }
+                     ] 
        });
        me.callParent( arguments );
    }        

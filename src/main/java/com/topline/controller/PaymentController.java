@@ -32,7 +32,7 @@ public class PaymentController extends BaseController{
 	private @ResponseBody String fetchPaymentDtls(HttpServletRequest request){
 		try{
 			HashMap<String, Object> data = new HashMap<String, Object>();
-			System.out.println("inside fetch Payment dtls/.....");
+			//System.out.println("inside fetch Payment dtls/.....");
 			Map<String, Object> map = new HashMap<String, Object>();		
 			
 			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));

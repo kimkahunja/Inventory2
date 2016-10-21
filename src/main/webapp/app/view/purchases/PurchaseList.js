@@ -6,6 +6,7 @@ Ext.define('InventoryApp.view.purchases.PurchaseList',{
 	initComponent: function() {
 	       var me = this;
 	       var store = Ext.create('InventoryApp.store.purchases.Purchases');
+	       store.proxy.extraParams = { location: InventoryApp.Utilities.locationId };
 	       Ext.applyIf(me,{	   
 	    	   store: store,
 	           columns: {	

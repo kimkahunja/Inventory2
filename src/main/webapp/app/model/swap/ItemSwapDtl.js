@@ -21,6 +21,10 @@ Ext.define('InventoryApp.model.swap.ItemSwapDtl',{
 		        	name: 'swpdQty',
 		            type: 'float'
 		        },
+		        {
+		        	name: 'swpdOrigSwap',
+		            type: 'string'
+		        },
 		     // decorated properties
 		           
 	            {

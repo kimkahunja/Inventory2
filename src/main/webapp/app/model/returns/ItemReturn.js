@@ -17,6 +17,19 @@ Ext.define('InventoryApp.model.returns.ItemReturn',{
 	        	type: 'date',
 	            dateFormat:'d/m/Y'
 	        },
-	        
+	        {
+	        	name:'rtnAccCode',
+	        	type: 'int'
+	        },
+	        {
+                name: 'rtnStatus',
+                type: 'string'
+            },
+	     // decorated properties
+            {
+                  name: '_rtnAccCode',
+                  type: 'string',
+                  persist: false
+            }
 	        ],
 });

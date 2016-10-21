@@ -3,7 +3,7 @@ Ext.define('InventoryApp.view.approvalAreas.ApprovalAreaHolder',{
 	alias:'widget.approvalAreas.approvalareaholder',
 	requires: [	
 	           'InventoryApp.view.approvalAreas.UserList',
-	           'InventoryApp.view.approvalAreas.AreasList'
+	           'InventoryApp.view.approvalAreas.ListHolder'
 	       ],
    layout: {
        type: 'hbox',
@@ -24,9 +24,10 @@ Ext.define('InventoryApp.view.approvalAreas.ApprovalAreaHolder',{
 						flex:1
 					},
 					{
-						xtype:'approvalAreas.areaslist',
+						xtype:'approvalAreas.listholder'	,
 						flex:3
 					}
+					
                  ], 
        });
 	   me.callParent( arguments );

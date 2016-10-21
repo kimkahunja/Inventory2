@@ -43,6 +43,10 @@ Ext.define('InventoryApp.model.invoice.Invoice',{
 	        	 name: 'invRefno',
 	             type: 'string'
 	        },
+	        {
+	        	 name: 'invPayMode',
+	             type: 'string'
+	        },
 	        // decorated properties
             {
                   name: '_purAccCode',

@@ -99,5 +99,6 @@ public interface ApprovalAreaDtlMapper {
      */
     int updateByPrimaryKey(ApprovalAreaDtl record);
     //add methods
-    List<ApprovalAreaDtlWrapper>fetchApprovalAreas(Map<String,Object> map);
+    List<ApprovalAreaDtlWrapper>fetchApprovalAreas(Map<String,Object> map); 
+  
 }

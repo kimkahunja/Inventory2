@@ -4,6 +4,7 @@ import com.topline.model.InvoiceDtls;
 import com.topline.model.InvoiceDtlsExample;
 import com.topline.model.Summary;
 import com.topline.model.wrappers.InvoiceDtlsWrapper;
+import com.topline.model.wrappers.InvoiceSummary;
 import com.topline.model.wrappers.PurchaseDetailWrapper;
 
 import java.util.List;
@@ -102,5 +103,5 @@ public interface InvoiceDtlsMapper {
   //add methods
     List<InvoiceDtlsWrapper> fetchInvoiceDtls(Map<String,Object> map);
     List<InvoiceDtlsWrapper> fetchRptInvoices(Map<String,Object> map);
-    List<Summary>fetchRptInvoicesCount(Map<String,Object> map);
+    List<InvoiceSummary>fetchRptInvoicesCount(Map<String,Object> map);
 }

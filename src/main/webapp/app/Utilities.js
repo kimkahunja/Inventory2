@@ -137,7 +137,7 @@ Ext.define('InventoryApp.Utilities', {
       //determine whether to show Supplier attribute(reporting)
         hideSupplier:true,
       //determine whether to show Product attribute(reporting)
-        hideProduct:true
-        
+        hideProduct:true      
+         
     }
 });

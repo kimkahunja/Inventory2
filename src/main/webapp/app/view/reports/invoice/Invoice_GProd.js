@@ -39,7 +39,8 @@ Ext.define('InventoryApp.view.reports.invoice.Invoice_GProd',{
                    },
                    {
                        text: 'Quantity',
-                       dataIndex: 'invdQty'
+                       dataIndex: 'invdQty',
+                       summaryType: 'remote',
                    }, 
                    {
                        xtype: 'numbercolumn',

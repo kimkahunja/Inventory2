@@ -8,7 +8,8 @@ Ext.define('InventoryApp.controller.Login', {
         'InventoryApp.util.Util',
         'InventoryApp.util.SessionMonitor',
         'InventoryApp.model.menu.Root',
-        'InventoryApp.model.menu.Item'
+        'InventoryApp.model.menu.Item',
+        'InventoryApp.view.location.AlterLocation'
     ],
 
     views: [
@@ -44,6 +45,9 @@ Ext.define('InventoryApp.controller.Login', {
             'toolbar[xtype=appheader]': {
             	 boxready:this.boxReady
             },
+            "appheader button#AlterLoc": {
+                click: this.switchLoc
+            }
         });
 
         Ext.apply(Ext.form.field.VTypes, {
@@ -168,5 +172,13 @@ Ext.define('InventoryApp.controller.Login', {
 		Ext.ComponentQuery.query("displayfield[name='userName']")[0].setValue(InventoryApp.Utilities.userName);
 		Ext.ComponentQuery.query("displayfield[name='locationDescription']")[0].setValue(InventoryApp.Utilities.locationDescription);
 		Ext.ComponentQuery.query("displayfield[name='lastLogin']")[0].setValue(InventoryApp.Utilities.lastLogin);
+	},
+	switchLoc: function(button, e, options) {
+		var win = Ext.create('InventoryApp.view.location.AlterLocation');
+       // win.setTitle('Add New Assignee');
+        win.setPosition(button.getPosition()[0]-200,button.getPosition()[1]+25);
+       // console.log('positon===x '+button.getPosition()[0]);
+        //console.log('positon===y '+button.getPosition()[1]);
+        win.show();
 	}
 });

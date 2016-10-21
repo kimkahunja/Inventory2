@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topline.mappers.CustomizeAreaMapper;
+import com.topline.model.CustomizeArea;
 import com.topline.model.CustomizeAreaDtl;
+import com.topline.model.CustomizeAreaExample;
 import com.topline.model.wrappers.SystemAreasWrapper;
 import com.topline.utils.GlobalCC;
 
@@ -60,9 +63,44 @@ public class CustomizeAreasController extends BaseController {
 			return jsonObject(jsonResponse);
 		}
 	}
+	@RequestMapping(value = "/fetchMainAreas.action", method = RequestMethod.GET)
+	private @ResponseBody String fetchMainAreas(HttpServletRequest request) {
+		try {
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			Map<String, Object> map = new HashMap<String, Object>();		
+			
+			String limit = GlobalCC.CheckNullValues(request.getParameter("limit"));
+			String start = GlobalCC.CheckNullValues(request.getParameter("start"));
+			
+			if (limit == null) {
+				limit = "50";
+			}
+			if (start == null) {
+				start = "0";
+			}
+			CustomizeAreaExample example=new CustomizeAreaExample();
+			List<CustomizeArea>list=customizeAreaMapper.selectByExample(example);			
+			if (list != null) {
+				int count = list.size();
+				data.put("count", count);
+			}
+			
+			data.put("data", list);
+			jsonResponse.setData(data);
+			jsonResponse.setSuccess(true);
+			return jsonObject(jsonResponse);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResponse.setData(null);
+			jsonResponse.setSuccess(false);
+			jsonResponse.addMessage("message", e.getLocalizedMessage());
+			return jsonObject(jsonResponse);
+		}
+	}
 	@RequestMapping(value="/saveArea.action")
 	@Transactional
-	private @ResponseBody String processpayment(HttpServletRequest request){
+	private @ResponseBody String saveArea(HttpServletRequest request){
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 

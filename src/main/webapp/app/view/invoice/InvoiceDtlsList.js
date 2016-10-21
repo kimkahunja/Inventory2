@@ -18,7 +18,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
        var store = Ext.create('InventoryApp.store.invoice.InvoiceDtls');
        Ext.applyIf(me,{
     	   store: store,
-    	   maxHeight:Ext.getBody().getViewSize().height-200,
+    	   maxHeight:Ext.getBody().getViewSize().height-300,
           // selType: 'cellmodel',
            plugins: [
                      {
@@ -45,6 +45,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
 	                       text: 'Description',
 	                       dataIndex: '_purdPdtCode',
 	                       menuDisabled:true,
+	                       maxWidth:500,
 	                       flex:2
 	                       //sortable:false
 		                   }, 	
@@ -101,6 +102,7 @@ Ext.define('InventoryApp.view.invoice.InvoiceDtlsList',{
                          {
                              xtype: 'toolbar',
                              dock: 'bottom',
+                             maxWidth:950,
                              items: [
          						{
          						    xtype:'tbspacer',

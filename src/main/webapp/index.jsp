@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
-    <title>STORE PREMIER</title>
+    <title>MIDAS</title>
     <link rel="stylesheet" href="bootstrap.css"/>
     <link rel="stylesheet" href="resources/css/app.css"/>
     <link rel="stylesheet" href="resources/css/style.css"/> 
@@ -19,5 +19,7 @@
          <script src="ux/CheckColumn.js"></script>  
     <!-- </x-compile> -->
 </head>
-<body></body>
+<body> <br><br>
+<center> <h1>MIDAS PREMIER</h1></center>
+</body>
 </html>
