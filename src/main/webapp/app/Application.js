@@ -170,7 +170,8 @@ Ext.define('InventoryApp.Application', {
         'Accounts',
         'Tasks',
         'UserLocations',
-        'CreditSales'
+        'CreditSales',
+        'reports.ReturnRPT'
     ],
     
     //autoCreateViewport: true,

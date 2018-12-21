@@ -13,9 +13,9 @@ Ext.define('InventoryApp.view.reports.returns.MainView', {
 
         Ext.applyIf(me, {
             items: [ 
-                    {
+                   /* {
                     	xtype:'reports.returns.listholder'
-                    }
+                    }*/
             ]
         });
 

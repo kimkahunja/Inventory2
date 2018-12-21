@@ -14,6 +14,7 @@ Ext.define('InventoryApp.view.returns.ReturnMainContainer',{
 						  //return product lov
 						  xtype: 'ux.form.field.remotecombobox',
 						  margin:'10',
+						  width:500,
 					    name: 'returnProdSearch',
 					    fieldLabel: 'Product',
 					    displayField: 'pdtDescription',

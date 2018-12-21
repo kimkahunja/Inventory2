@@ -18,7 +18,8 @@ Ext.define('InventoryApp.controller.reports.ComprehensiveRPT', {
                		click:this.print
                	},
                "radiogroup[itemId='rgReport']":{
-              		change:this.onRgChange
+              		change:this.onRgChange,
+              		afterrender:this.afterRgRender	
               	}
                } 
            });
@@ -67,9 +68,20 @@ Ext.define('InventoryApp.controller.reports.ComprehensiveRPT', {
             		   reportName:'CustomerBalances'
             		   }
                });  
-     	   }
+     	   }else if(selection=='R_Product_profits'){
+    		   Ext.create('Ext.form.Panel', {
+                   // renderTo: Ext.getBody(),
+                    standardSubmit: true,
+                    url: 'reports/main.action'
+                }).submit({
+             	   params: {
+             		   dateFrom: dateFrom, 
+             		   dateTo: dateTo,
+             		   reportName:'ProductProfit'
+             		   }
+                }); 
     	   
-    	  
+     	   }
        },
        onRgChange:function( field, newValue, oldValue, eOpts ){    	   
       	 var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgReport']")[0].getChecked()[0],
@@ -95,7 +107,19 @@ Ext.define('InventoryApp.controller.reports.ComprehensiveRPT', {
       	 	fromDate.show();
       	}else if(selection=='R_Customer_balances'){
       		asAt.show();
+      	}else if(selection=='R_Product_profits'){
+      		toDate.show();
+      	 	fromDate.show();
       	}
-       }     
+       } ,
+  afterRgRender:function(field,eOpts)  {
+	  var productProfits = Ext.ComponentQuery.query("radiofield[itemId='productProfits']")[0];
+	  var isEligible=InventoryApp.Utilities.isEligible(InventoryApp.Utilities.userName,'RPT_PROFIT');
+	  if(isEligible=='N'){
+		  productProfits.disable(false);
+	  }
+	 
+	 
+  }   
 
 });

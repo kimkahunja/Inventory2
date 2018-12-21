@@ -287,11 +287,16 @@
   		 <result column="pdt_description" jdbcType="VARCHAR" property="_swpdPdtCode" />
   </resultMap>
    <select id="fetchSwapItems" parameterType="java.util.HashMap" resultMap="BaseResultMapWrapper">
-       select swpd_id, swpd_swp_id, swpd_pdt_code, swpd_qty,pdt_description
+       select swpd_id, swpd_swp_id, swpd_pdt_code, swpd_qty,swpd_orig_swap,pdt_description
        from inv_item_swap_dtls,inv_products,inv_item_swap
        where swpd_pdt_code=pdt_code
-       and swp_id=swpd_swp_id    
-       AND  swp_acc_code =  #{accCode,jdbcType=INTEGER}
+       and swp_id=swpd_swp_id 
+       <if test="id != null">          
+        AND  swpd_swp_id =  #{id,jdbcType=INTEGER}
+       </if>
+       <if test="accCode != null">          
+        AND  swp_acc_code =  #{accCode,jdbcType=INTEGER}
+       </if>     
        <if test="status != null">          
        AND  swp_status =  #{status,jdbcType=VARCHAR}
        </if>

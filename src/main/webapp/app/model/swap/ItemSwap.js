@@ -18,5 +18,15 @@ Ext.define('InventoryApp.model.swap.ItemSwap',{
 		        	 name: 'swpAccCode',
 		             type: 'int'
 		        },
+		        {
+	                name: 'swpStatus',
+	                type: 'string'
+	            },
+		     // decorated properties
+	            {
+	                  name: '_swpAccCode',
+	                  type: 'string',
+	                  persist: false
+	            }
 	        ]
 });

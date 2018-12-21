@@ -382,7 +382,8 @@ public class JasperReportsController extends BaseController{
 				exportador.setExporterInput(new SimpleExporterInput(print));
 				exportador.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));
 				
-				response.setContentType("application/pdf");
+				response.setContentType("application/pdf;charset=UTF-8");
+				//response.setCharacterEncoding("");
 				response.setHeader("Content-Disposition", "attachment; filename="+ reportName+"."+reportType);
 				
 				exportador.exportReport();

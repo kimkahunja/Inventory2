@@ -383,7 +383,7 @@
           AND pur_loc_code=#{location,jdbcType=INTEGER}
         </if>
    </select>
-    <select id="postPurchase" parameterType="java.util.HashMap" statementType="CALLABLE">    
+<select id="postPurchase" parameterType="java.util.HashMap" statementType="CALLABLE">    
 	{ CALL post_purchases(#{v_pur_id, mode=IN, jdbcType=INTEGER},#{postedBy, mode=IN, jdbcType=VARCHAR},#{v_count, mode=OUT, jdbcType=INTEGER})}
 </select> 
   <resultMap id="ResultSummaryMapper"  type="com.topline.model.ReportSummary" >    

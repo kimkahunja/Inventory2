@@ -18,7 +18,7 @@ Ext.define('InventoryApp.store.swap.ItemSwaps',{
         type: 'ajax',      
         api: {
             create  : 'swap/saveSwap.action',
-            read    : 'swap/fetchSwap.action',
+            read    : 'item/fetchSwapM.action',
             update  : 'swap/saveSwap.action',
            
         },

@@ -56,7 +56,18 @@ Ext.define('InventoryApp.controller.Swap', {
                	},
                	"combobox[itemId='swpAccCode']":{
             		select:this.onCustomerSelect
-            	}
+            	},
+            	'grid[xtype=swap.originlist]': {
+            		edit: this.originEditItems,
+            		beforeedit:this.beforeEditItems
+            	},
+            	'grid[xtype=swap.swaplist]': {
+            		edit: this.swapEditItems,
+            		beforeedit:this.beforeEditItems
+            	},
+            	'button#swapPost':{
+            		click:this.post
+            	},
             },
             global: {},
             store: {},             
@@ -64,17 +75,15 @@ Ext.define('InventoryApp.controller.Swap', {
     },
     onOriginProdSelect:function( combo, records, eOpts ){
     	  //console.log('selected....' +records[0].get('pdtShtDesc'));
-    	var accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue();
-    	if(accCode==null){
-				Ext.Msg.show(
-                    {                    
-                       title : 'Customer Validation',
-                       msg : 'Customer is required...',
-                       icon : Ext.Msg.INFO,
-                       buttons : Ext.Msg.OK
-                    }
-                    );
-				 combo.clearValue();		
+    	var accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
+    	date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue();
+    	if(date==null){
+    		combo.clearValue();
+ 			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
+ 			 return;
+ 		 }else if(accCode==null){
+ 			combo.clearValue();
+ 			InventoryApp.util.Util.showErrorMsg('Customer is required');			 		
     		return;
 	      } 
     	  if (records[0]) {
@@ -88,6 +97,7 @@ Ext.define('InventoryApp.controller.Swap', {
               model["_swpdPdtCode"]=records[0].get('pdtDescription');
             
               store.add(model);
+              var origin=this.originSave();
              // store.sync();
              // console.log('ffffffffffkim '+store.getCount());
               grid.getSelectionModel().select(store.data.length-1);  
@@ -97,19 +107,18 @@ Ext.define('InventoryApp.controller.Swap', {
       },
       onSwapProdSelect:function( combo, records, eOpts ){
     	  //console.log('selected....' +records[0].get('pdtShtDesc'));
-    	  var accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue();
-      	if(accCode==null){
-  				Ext.Msg.show(
-                      {                    
-                         title : 'Customer Validation',
-                         msg : 'Customer is required...',
-                         icon : Ext.Msg.INFO,
-                         buttons : Ext.Msg.OK
-                      }
-                      );
-  				 combo.clearValue();		
+    	var accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
+      	date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue();
+      	if(date==null){
+      		combo.clearValue();
+   			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
+   			 return;
+   		 }else if(accCode==null){
+   			combo.clearValue();
+   			InventoryApp.util.Util.showErrorMsg('Customer is required');			 		
       		return;
   	      } 
+      	
     	  if (records[0]) {
     		  var me = this,
               grid = me.getSwapList(),
@@ -121,6 +130,7 @@ Ext.define('InventoryApp.controller.Swap', {
               model["_swpdPdtCode"]=records[0].get('pdtDescription');
             
               store.add(model);
+              var swap=this.swapSave();
              // store.sync();
              // console.log('ffffffffffkim '+store.getCount());
               grid.getSelectionModel().select(store.data.length-1);  
@@ -180,154 +190,269 @@ Ext.define('InventoryApp.controller.Swap', {
             store = grid.getStore(),
             gridSwap=me.getSwapList(),
             storeSwap=gridSwap.getStore();
-	  		store.load({
-				  params: {
-		           		accCode:accCode
-		           	}
-			  }); 
-	  		storeSwap.load({
-				  params: {
-		           		accCode:accCode
-		           	}
-			  });
+	  		if(accCode!=null){
+	  			store.load({
+					  params: {
+			           		accCode:accCode
+			           	}
+				  }); 
+		  		storeSwap.load({
+					  params: {
+			           		accCode:accCode
+			           	}
+				  });
+	  		}
+	  		
 		   }else if(selection=='RETURN'){			  
 			   container.add([ { xtype: 'returns.returnmaincontainer'  }]);
 			   var me = this,
 			      accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
 	              grid = me.getReturnList(),
 	              store = grid.getStore();
-	    		  store.load({
-					  params: {
-			           		accCode:accCode
-			           	}
-				  });
+			   if(accCode!=null){
+				   store.load({
+						  params: {
+				           		accCode:accCode
+				           	}
+					  }); 
+			   }
+	    		  
 		   }  	 
   },
   saveOrigin: function( button, e, eOpts ){
-  	  console.log("Save Origin.....");
-  	  var me = this,
-      	grid = me.getOriginList(),
-  		store = grid.getStore(),
-  		date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue(),
-  		accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
-  		details = new Array(),
-        records = store.getRange(),
-        origSwap='ORIG';
+  	  //console.log("Save Origin.....");
+  	  var origin=this.originSave();
+    },
+    onCustomerSelect:function( combo, records, eOpts ){
+    	var reportGrp = Ext.ComponentQuery.query("radiogroup[itemId='rgReturnSwap']")[0].getChecked()[0],
+         selection = reportGrp.getGroupValue();
+	  if (selection=='SWAP'){
+		  if (records[0]) {
+	  		  var me = this,
+	            grid = me.getOriginList(),
+	            store = grid.getStore(),
+	            gridSwap=me.getSwapList(),
+	            storeSwap=gridSwap.getStore();
+	  		     store.removeAll();
+		  		store.load({
+					  params: {
+			           		accCode:records[0].get('accCode')
+			           	}
+				  }); 
+		  		 grid.getView().refresh();
+		  		storeSwap.removeAll();
+		  		storeSwap.load({
+					  params: {
+			           		accCode:records[0].get('accCode')
+			           	}
+				  });
+		  		gridSwap.getView().refresh();
+	  	  }
+	  }
+  	 
+  	
+    }, 
+    saveSwap: function( button, e, eOpts ){
+    	  var swap=this.swapSave();
+      },
+swapSave:function(){
+	var me = this,
+	grid = me.getSwapList(),
+	store = grid.getStore();
+	 if(store.getCount()>0){
+		 var date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue(),
+ 		accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
+ 		details = new Array(),
+       records = store.getRange(),
+       origSwap='SWAP';
 	  	for (var i = 0; i < records.length; i++) {
 	   		 details.push(records[i].data);
 	    };
-  	  
+ 	  
 	  	if(date==null){
 			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
 			 return;
 		 }
 	  	Ext.Ajax.request({
-            url: 'item/saveSwapItem.action',
-         params: {                 
-                 date:date,                 
-                 accCode:accCode,
-                 origSwap:origSwap,
-                 dataDetail:Ext.encode(details),                   
-                 userName:InventoryApp.Utilities.userName
-         },
-         
-         scope:this,
-         //method to call when the request is successful
-         //success: InventoryApp.Utilities.onSaveSuccess,
-         success:function(conn, response, options, eOpts){
-         	var result = Ext.JSON.decode(conn.responseText, true); 
-         	if (result.success){
-         		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
-         		 store.load({
-          			  params: {
-        	           		accCode:accCode
-        	           	}
-        		  });
-         		 	 
-         	}else{
-         		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
-         	}
-         	
-         	//this.onSaveSuccess;
-         },
-         //method to call when the request is a failure
-         failure: InventoryApp.Utilities.onSaveFailure
-     });
-    },
-    onCustomerSelect:function( combo, records, eOpts ){
-  	  //console.log('selected....' +records[0].get('pdtShtDesc'));
-  	  if (records[0]) {
-  		  var me = this,
-            grid = me.getOriginList(),
-            store = grid.getStore(),
-            gridSwap=me.getSwapList(),
-            storeSwap=gridSwap.getStore();
-  		     store.removeAll();
-	  		store.load({
-				  params: {
-		           		accCode:records[0].get('accCode')
+           url: 'item/saveSwapItem.action',
+        params: {                 
+                date:date,                 
+                accCode:accCode,
+                origSwap:origSwap,
+                dataDetail:Ext.encode(details),                   
+                userName:InventoryApp.Utilities.userName,
+                location:InventoryApp.Utilities.locationId
+        },
+        
+        scope:this,
+        //method to call when the request is successful
+        //success: InventoryApp.Utilities.onSaveSuccess,
+        success:function(conn, response, options, eOpts){
+        	var result = Ext.JSON.decode(conn.responseText, true); 
+        	if (result.success){
+        		 //InventoryApp.util.Alert.msg('Success!', result.messages.message);
+        		 store.load({
+         			  params: {
+       	           		accCode:accCode
+       	           	}
+       		  });
+        		 	 
+        	}else{
+        		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+        	}
+        	
+        	//this.onSaveSuccess;
+        },
+        //method to call when the request is a failure
+        failure: InventoryApp.Utilities.onSaveFailure
+    }); 
+	 }
+},
+originSave:function(){
+	var me = this,
+  	grid = me.getOriginList(),
+		store = grid.getStore();
+	 if(store.getCount()>0){
+		 var date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue(),
+			accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
+			details = new Array(),
+	    records = store.getRange(),
+	    origSwap='ORIG';
+	  	for (var i = 0; i < records.length; i++) {
+	   		 details.push(records[i].data);
+	    };
+		  
+	  	if(date==null){
+			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
+			 return;
+		 }
+	  	Ext.Ajax.request({
+	        url: 'item/saveSwapItem.action',
+	     params: {                 
+	             date:date,                 
+	             accCode:accCode,
+	             origSwap:origSwap,
+	             dataDetail:Ext.encode(details),                   
+	             userName:InventoryApp.Utilities.userName,
+	             location:InventoryApp.Utilities.locationId
+	     },
+	     
+	     scope:this,
+	     //method to call when the request is successful
+	     //success: InventoryApp.Utilities.onSaveSuccess,
+	     success:function(conn, response, options, eOpts){
+	     	var result = Ext.JSON.decode(conn.responseText, true); 
+	     	if (result.success){
+	     		// InventoryApp.util.Alert.msg('Success!', result.messages.message);
+	     		 store.load({
+	      			  params: {
+	    	           		accCode:accCode
+	    	           	}
+	    		  });
+	     		 	 
+	     	}else{
+	     		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
+	     	}
+	     	
+	     	//this.onSaveSuccess;
+	     },
+	     //method to call when the request is a failure
+	     failure: InventoryApp.Utilities.onSaveFailure
+	 });
+	 }	
+},
+originEditItems:function(editor, e, eOpts){
+	 // console.log('cell editing');
+	  if(e.record.dirty){ 
+		  if(e.record.validate().isValid()){
+			 // console.log('record updated');
+			  var origin=this.originSave();
+		  }
+	  }
+	  
+	 },
+ swapEditItems:function(editor, e, eOpts){
+	 // console.log('cell editing');
+	  if(e.record.dirty){ 
+		  if(e.record.validate().isValid()){
+			 // console.log('record updated');
+			  var swap=this.swapSave();
+		  }
+	  }
+	  
+	 },	 
+ beforeEditItems:function(editor, e, eOpts){
+	 var date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue(),
+		accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue();
+ 	if(date==null){ 		
+			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
+			 return;
+		 }else if(accCode==null){			
+			InventoryApp.util.Util.showErrorMsg('Customer is required');
+			 return;
+		 } 
+ },
+ post: function( button, e, eOpts ){
+	 var date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue(),
+		accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue();
+	  if(date==null){ 		
+			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
+			 return;
+		 }else if(accCode==null){			
+			InventoryApp.util.Util.showErrorMsg('Customer is required');
+			 return;
+		 } 
+	  
+	  
+	 var me = this,
+ 	grid = me.getOriginList(),
+		store = grid.getStore(),
+		grid1 = me.getSwapList(),
+		store1 = grid1.getStore();
+	   if(store.getCount()>0){
+		   var records = store.getRange(),
+		      id= records[0].get('swpdSwpId');
+		   if(id==null){
+			   InventoryApp.util.Util.showErrorMsg('Transaction cannot be posted...');
+				 return;
+		   }else{
+			   Ext.Ajax.request({
+		              url: 'item/postSwap.action',
+		           params: {                 
+		                   id:id,                   
+		                   userName:InventoryApp.Utilities.userName,
+		                   location:InventoryApp.Utilities.locationId
+		           },
+		           
+		           scope:this,
+		           //method to call when the request is successful
+		           //success: InventoryApp.Utilities.onSaveSuccess,
+		           success:function(conn, response, options, eOpts){
+		           	var result = Ext.JSON.decode(conn.responseText, true); 
+		           	if (result.success){
+		           		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
+		           		 store.load({
+		            			  params: {
+		          	           		accCode:accCode
+		          	           	}
+		          		  });
+		           		store1.load({
+	            			  params: {
+	          	           		accCode:accCode
+	          	           	}
+	          		  });
+		           		 	 
+		           	}else{
+		           		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
 		           	}
-			  }); 
-	  		 grid.getView().refresh();
-	  		storeSwap.removeAll();
-	  		storeSwap.load({
-				  params: {
-		           		accCode:records[0].get('accCode')
-		           	}
-			  });
-	  		gridSwap.getView().refresh();
-  	  }
-  	
-    }, 
-    saveSwap: function( button, e, eOpts ){
-    	  console.log("Save Swap.....");
-    	  var me = this,
-        	grid = me.getSwapList(),
-    		store = grid.getStore(),
-    		date=Ext.ComponentQuery.query("datefield[name='swpDate']")[0].getValue(),
-    		accCode=Ext.ComponentQuery.query("combo[name='swpAccCode']")[0].getValue(),
-    		details = new Array(),
-          records = store.getRange(),
-          origSwap='SWAP';
-  	  	for (var i = 0; i < records.length; i++) {
-  	   		 details.push(records[i].data);
-  	    };
-    	  
-  	  	if(date==null){
-  			 InventoryApp.util.Util.showErrorMsg('Transaction Date is required');
-  			 return;
-  		 }
-  	  	Ext.Ajax.request({
-              url: 'item/saveSwapItem.action',
-           params: {                 
-                   date:date,                 
-                   accCode:accCode,
-                   origSwap:origSwap,
-                   dataDetail:Ext.encode(details),                   
-                   userName:InventoryApp.Utilities.userName
-           },
-           
-           scope:this,
-           //method to call when the request is successful
-           //success: InventoryApp.Utilities.onSaveSuccess,
-           success:function(conn, response, options, eOpts){
-           	var result = Ext.JSON.decode(conn.responseText, true); 
-           	if (result.success){
-           		 InventoryApp.util.Alert.msg('Success!', result.messages.message);
-           		 store.load({
-            			  params: {
-          	           		accCode:accCode
-          	           	}
-          		  });
-           		 	 
-           	}else{
-           		 InventoryApp.util.Util.showErrorMsg(result.messages.message);
-           	}
-           	
-           	//this.onSaveSuccess;
-           },
-           //method to call when the request is a failure
-           failure: InventoryApp.Utilities.onSaveFailure
-       });
-      }
+		           	
+		           	//this.onSaveSuccess;
+		           },
+		           //method to call when the request is a failure
+		           failure: InventoryApp.Utilities.onSaveFailure
+		       }); 
+		   }
+	   }
+ 		
+   }
 });           

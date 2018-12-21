@@ -291,8 +291,13 @@
          rtnd_qty, rtnd_price,pdt_description
        from inv_returns_dtls,inv_products,inv_returns
        where rtnd_pdt_code=pdt_code
-       and rtn_id=rtnd_rtn_id    
-       AND  rtn_acc_code =  #{accCode,jdbcType=INTEGER}
+       and rtn_id=rtnd_rtn_id 
+       <if test="id != null">          
+        AND  rtnd_rtn_id =  #{id,jdbcType=INTEGER}
+       </if>
+        <if test="accCode != null">          
+        AND  rtn_acc_code =  #{accCode,jdbcType=INTEGER}
+       </if>
        <if test="status != null">          
        AND  rtn_status =  #{status,jdbcType=VARCHAR}
        </if>       

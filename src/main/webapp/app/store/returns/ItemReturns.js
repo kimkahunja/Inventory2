@@ -18,7 +18,7 @@ Ext.define('InventoryApp.store.returns.ItemReturns',{
         type: 'ajax',      
         api: {
             create  : 'return/saveReturn.action',
-            read    : 'return/fetchReturns.action',
+            read    : 'item/fetchReturnM.action',
             update  : 'return/saveReturn.action',
            
         },

@@ -24,11 +24,13 @@ Ext.define('InventoryApp.view.swap.ListHolder',{
 					        	items:[
 					        	       {
 					        	    	   xtype: 'container',
+					        	    	   layout:'fit',
 										   items:[
 										          {
 										        	  //original product lov
 										        	  xtype: 'ux.form.field.remotecombobox',
 										        	  margin:'10',
+										        	  maxWidth:500,
 										              name: 'originProdSearch',
 										              fieldLabel: 'Product',
 										              displayField: 'pdtDescription',
@@ -58,12 +60,14 @@ Ext.define('InventoryApp.view.swap.ListHolder',{
 					        	title:'Swap Item(s)',
 					        	items:[
 					        	       {
-					        	    	   xtype: 'container',										    
+					        	    	   xtype: 'container',
+					        	    	   layout:'fit',
 										   items:[
 										          {
 										        	  //original product lov
 										        	  xtype: 'ux.form.field.remotecombobox',
 										        	  margin:'10',
+										        	  maxWidth:500,
 										              name: 'swapProdSearch',
 										              fieldLabel: 'Product',
 										              displayField: 'pdtDescription',
